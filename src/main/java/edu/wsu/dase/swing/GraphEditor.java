@@ -9,6 +9,7 @@ import java.text.NumberFormat;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import org.w3c.dom.Document;
@@ -425,6 +426,11 @@ public class GraphEditor extends BasicGraphEditor {
 		mxConstants.W3C_SHADOWCOLOR = "#D3D3D3";
 
 		GraphEditor editor = new GraphEditor();
-		editor.createFrame(new EditorMenuBar(editor)).setVisible(true);
+		//editor.createFrame(new EditorMenuBar(editor)).setVisible(true);
+
+		JFrame frame = new JFrame("Dase editor"); 
+		frame.add(editor);
+		frame.setJMenuBar(new EditorMenuBar(editor));
+		frame.setVisible(true);
 	}
 }

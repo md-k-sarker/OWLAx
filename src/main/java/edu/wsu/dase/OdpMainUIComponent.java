@@ -1,9 +1,12 @@
 package edu.wsu.dase;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import org.protege.editor.owl.ui.view.cls.AbstractOWLClassViewComponent;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -18,18 +21,15 @@ public class OdpMainUIComponent extends AbstractOWLClassViewComponent {
 
 	@Override
 	public void initialiseClassView() throws Exception {
-		// TODO Auto-generated method stub
-		HelloWorld frame = new HelloWorld();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(400, 320);
-		frame.setVisible(true);
-
-		add(frame);
-		setToolTipText("SWRLTab");
 		setLayout(new BorderLayout());
-		
 		GraphEditor editor = new GraphEditor();
-		add(editor);
+		add(editor, BorderLayout.CENTER);
+
+		Dimension d = new Dimension(800, 600);
+		setPreferredSize(d);
+		setSize(d);
+		setLocation(100, 50);
+		setVisible(true);
 	}
 
 	@Override
