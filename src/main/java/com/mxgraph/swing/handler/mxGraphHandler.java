@@ -695,6 +695,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 
 			if (cursor != null)
 			{
+				System.out.println("Mouse Event called()");
 				graphComponent.getGraphControl().setCursor(cursor);
 				e.consume();
 			}
@@ -739,6 +740,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 	 */
 	public void dragEnter(DropTargetDragEvent e)
 	{
+		//System.out.println("dragEnter() called");
 		JComponent component = getDropTarget(e);
 		TransferHandler th = component.getTransferHandler();
 		boolean isLocal = th instanceof mxGraphTransferHandler
@@ -753,7 +755,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 			canImport = graphComponent.isImportEnabled()
 					&& th.canImport(component, e.getCurrentDataFlavors());
 		}
-
+		
 		if (canImport)
 		{
 			transferBounds = null;
@@ -762,7 +764,8 @@ public class mxGraphHandler extends mxMouseAdapter implements
 			try
 			{
 				Transferable t = e.getTransferable();
-
+				System.out.println("dragEnter() called. "+canImport+" "+t.isDataFlavorSupported(mxGraphTransferable.dataFlavor));
+				
 				if (t.isDataFlavorSupported(mxGraphTransferable.dataFlavor))
 				{
 					mxGraphTransferable gt = (mxGraphTransferable) t

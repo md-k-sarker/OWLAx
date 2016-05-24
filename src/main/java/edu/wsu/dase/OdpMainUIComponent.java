@@ -14,6 +14,7 @@ import org.semanticweb.owlapi.model.OWLClass;
 import edu.wsu.dase.swing.GraphEditor;
 
 import edu.wsu.dase.swing.HelloWorld;
+import edu.wsu.dase.swing.editor.EditorMenuBar;
 
 public class OdpMainUIComponent extends AbstractOWLClassViewComponent {
 
@@ -23,6 +24,7 @@ public class OdpMainUIComponent extends AbstractOWLClassViewComponent {
 	public void initialiseClassView() throws Exception {
 		setLayout(new BorderLayout());
 		GraphEditor editor = new GraphEditor();
+		add(new EditorMenuBar(editor));
 		add(editor, BorderLayout.CENTER);
 
 		Dimension d = new Dimension(800, 600);

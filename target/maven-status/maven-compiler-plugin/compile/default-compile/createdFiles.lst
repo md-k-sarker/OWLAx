@@ -273,6 +273,7 @@ com\mxgraph\analysis\mxGraphAnalysis$1.class
 com\mxgraph\util\svg\NormalizingReader.class
 edu\wsu\dase\swing\editor\EditorActions$ToggleRulersItem$1.class
 com\mxgraph\util\svg\PointsParser.class
+edu\wsu\dase\OdpMainUITab.class
 com\mxgraph\swing\handler\mxVertexHandler.class
 edu\wsu\dase\swing\editor\GraphConfigDialog$11.class
 com\mxgraph\swing\util\mxGraphActions$FoldAction.class
@@ -388,6 +389,7 @@ com\mxgraph\util\png\CRC.class
 com\mxgraph\canvas\mxBasicCanvas.class
 edu\wsu\dase\swing\editor\EditorAboutFrame$2.class
 com\mxgraph\reader\mxDomOutputParser$4.class
+edu\wsu\dase\FileListTransferHandler.class
 edu\wsu\dase\swing\editor\EditorActions$SelectSpanningTreeAction.class
 com\mxgraph\swing\mxGraphComponent$10.class
 com\mxgraph\util\mxUndoableEdit$mxUndoableChange.class
@@ -460,6 +462,7 @@ edu\wsu\dase\swing\editor\GraphConfigDialog$9.class
 com\mxgraph\swing\handler\mxInsertHandler$1.class
 com\mxgraph\reader\mxDomOutputParser$20.class
 edu\wsu\dase\swing\editor\EditorActions$GridStyleAction.class
+edu\wsu\dase\FileDragDemo.class
 edu\wsu\dase\swing\editor\BasicGraphEditor$15.class
 edu\wsu\dase\swing\editor\EditorRuler.class
 com\mxgraph\util\svg\ExtendedPathIterator.class
@@ -509,12 +512,12 @@ com\mxgraph\swing\handler\mxRubberband$2.class
 edu\wsu\dase\swing\Validation$1.class
 com\mxgraph\reader\mxDomOutputParser$34.class
 edu\wsu\dase\swing\editor\EditorActions$ImportAction$1.class
-edu\wsu\dase\OdpMainUIClass.class
 com\mxgraph\analysis\mxDistanceCostFunction.class
 com\mxgraph\swing\mxGraphOutline$MouseTracker.class
 com\mxgraph\shape\mxMarkerRegistry$3.class
 com\mxgraph\swing\view\mxCellEditor$1.class
 edu\wsu\dase\swing\editor\EditorActions$StyleAction.class
+edu\wsu\dase\FileDragDemo$1.class
 edu\wsu\dase\swing\editor\EditorActions.class
 edu\wsu\dase\swing\editor\EditorToolBar$4.class
 com\mxgraph\canvas\mxSvgCanvas.class

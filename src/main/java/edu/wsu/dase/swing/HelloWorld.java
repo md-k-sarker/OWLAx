@@ -8,14 +8,11 @@ import com.mxgraph.view.mxGraph;
 public class HelloWorld extends JFrame
 {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2707712944901661771L;
 
 	public HelloWorld()
 	{
-		super("Hello, World!");
+		super("Dase, World!");
 
 		mxGraph graph = new mxGraph();
 		Object parent = graph.getDefaultParent();
@@ -23,7 +20,7 @@ public class HelloWorld extends JFrame
 		graph.getModel().beginUpdate();
 		try
 		{
-			Object v1 = graph.insertVertex(parent, null, "Hello", 20, 20, 80,
+			Object v1 = graph.insertVertex(parent, null, "Dase", 20, 20, 80,
 					30);
 			Object v2 = graph.insertVertex(parent, null, "World!", 240, 150,
 					80, 30);
