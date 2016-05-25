@@ -695,7 +695,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 
 			if (cursor != null)
 			{
-				System.out.println("Mouse Event called()");
+				//System.out.println("Mouse Event called()");
 				graphComponent.getGraphControl().setCursor(cursor);
 				e.consume();
 			}

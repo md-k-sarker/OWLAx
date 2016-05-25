@@ -103,7 +103,13 @@ public class GraphEditor extends BasicGraphEditor {
 				"label;image=/images/gear.png", 130, 50, "Label");*/
 		shapesPalette.addTemplate("Rectangle",
 				new ImageIcon(GraphEditor.class.getResource("/images/rectangle.png")), null,
-				160, 120, "");
+				160, 120, "",true);
+		shapesPalette.addTemplate("Triangle",
+				new ImageIcon(GraphEditor.class.getResource("/images/triangle.png")),
+				"triangle", 120, 160, "",false);
+		shapesPalette.addTemplate("Rhombus",
+				new ImageIcon(GraphEditor.class.getResource("/images/rhombus.png")),
+				"rhombus", 160, 160, "",false);
 		/*shapesPalette.addTemplate("Rounded Rectangle",
 				new ImageIcon(GraphEditor.class.getResource("/images/rounded.png")),
 				"rounded=1", 160, 120, "");
@@ -116,12 +122,7 @@ public class GraphEditor extends BasicGraphEditor {
 		shapesPalette.addTemplate("Double Ellipse",
 				new ImageIcon(GraphEditor.class.getResource("/images/doubleellipse.png")),
 				"ellipse;shape=doubleEllipse", 160, 160, "");*/
-		shapesPalette.addTemplate("Triangle",
-				new ImageIcon(GraphEditor.class.getResource("/images/triangle.png")),
-				"triangle", 120, 160, "");
-		shapesPalette.addTemplate("Rhombus",
-				new ImageIcon(GraphEditor.class.getResource("/images/rhombus.png")),
-				"rhombus", 160, 160, "");
+
 		/*shapesPalette.addTemplate("Horizontal Line",
 				new ImageIcon(GraphEditor.class.getResource("/images/hline.png")), "line",
 				160, 10, "");

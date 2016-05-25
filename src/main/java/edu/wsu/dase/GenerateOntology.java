@@ -2,6 +2,8 @@ package edu.wsu.dase;
 
 import org.semanticweb.owlapi.model.OWLOntology;
 
+import com.mxgraph.analysis.mxGraphAnalysis;
+import com.mxgraph.analysis.mxICostFunction;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGraphModel;
 import com.mxgraph.view.mxGraph;
@@ -20,7 +22,7 @@ public class GenerateOntology {
 		this.model = (mxGraphModel) graph.getModel();
 		this.root = graph.getDefaultParent();
 	}
-	
+
 	/**
 	 * mxICostFunction cf = mxDistanceCostFunction(); Object[] v =
 	 * graph.getChildVertices(graph.getDefaultParent()); Object[] e =
@@ -30,17 +32,21 @@ public class GenerateOntology {
 
 	public OWLOntology saveOntology() {
 
-		Object[] cells =  graph.getChildCells(root);
+		Object[] v = graph.getChildVertices(graph.getDefaultParent());
+		Object[] e = graph.getChildEdges(graph.getDefaultParent());
+		mxGraphAnalysis mga = mxGraphAnalysis.getInstance();
 		
-		for(Object cell: cells){
-			if(cell instanceof mxCell){
-				System.out.println("mxtype " + ((mxCell) cell).getValue());
+		
+
+		Object[] cells = graph.getChildCells(root);
+
+		for (Object cell : cells) {
+			if (cell instanceof mxCell) {
+				System.out.println("name " + ((mxCell) cell).getValue() + " celltype: " + ((mxCell) cell).isOWLClass());
 			}
-			//System.out.println("label: "+cell.toString());
+			// System.out.println("label: "+cell.toString());
 		}
-		
-		
-		
+
 		return null;
 	}
 }

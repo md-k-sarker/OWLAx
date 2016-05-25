@@ -227,10 +227,11 @@ public class EditorPalette extends JPanel {
 	 * @param height
 	 * @param value
 	 */
-	public void addTemplate(final String name, ImageIcon icon, String style, int width, int height, Object value) {
+	public void addTemplate(final String name, ImageIcon icon, String style, int width, int height, Object value,boolean isOWLClass) {
 		mxCell cell = new mxCell(value, new mxGeometry(0, 0, width, height), style);
 		cell.setVertex(true);
-
+		cell.setOWLClass(isOWLClass);
+		cell.setOWLNamedIndividual( !isOWLClass);
 		addTemplate(name, icon, cell);
 	}
 

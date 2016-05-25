@@ -1517,7 +1517,7 @@ public class EditorActions
 
 			if (palette != null && icon != null)
 			{
-				palette.addTemplate(name, icon, "shape=" + name, 80, 80, "");
+				palette.addTemplate(name, icon, "shape=" + name, 80, 80, "", false);
 			}
 
 			return name;
