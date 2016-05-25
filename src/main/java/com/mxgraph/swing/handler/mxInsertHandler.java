@@ -203,6 +203,7 @@ public class mxInsertHandler extends mxMouseAdapter
 	 */
 	public Object insertCell(mxRectangle bounds)
 	{
+		System.out.println("sarker.3 mxInsertHandler");
 		// FIXME: Clone prototype cell for insert
 		return graphComponent.getGraph().insertVertex(null, null, "",
 				bounds.getX(), bounds.getY(), bounds.getWidth(),

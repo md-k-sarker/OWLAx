@@ -58,7 +58,6 @@ com\mxgraph\layout\hierarchical\stage\mxCoordinateAssignment$HierarchicalEdgeSty
 edu\wsu\dase\swing\editor\BasicGraphEditor$13.class
 com\mxgraph\reader\mxDomOutputParser$11.class
 edu\wsu\dase\swing\editor\EditorActions$ToggleCreateTargetItem$1.class
-edu\wsu\dase\swing\editor\EditorMenuBar$5.class
 com\mxgraph\io\mxGdCodec.class
 edu\wsu\dase\swing\editor\EditorActions$StylesheetAction.class
 edu\wsu\dase\swing\editor\EditorToolBar.class
@@ -326,7 +325,6 @@ com\mxgraph\reader\mxSaxOutputHandler$7.class
 com\mxgraph\shape\mxMarkerRegistry$1.class
 com\mxgraph\util\png\ChunkStream.class
 edu\wsu\dase\swing\editor\EditorActions$WarningAction.class
-edu\wsu\dase\swing\editor\EditorMenuBar$6.class
 com\mxgraph\reader\mxDomOutputParser$15.class
 com\mxgraph\util\mxUndoableEdit.class
 com\mxgraph\view\mxLayoutManager$1.class
@@ -396,6 +394,7 @@ com\mxgraph\util\mxUndoableEdit$mxUndoableChange.class
 com\mxgraph\model\mxGraphModel$mxCollapseChange.class
 com\mxgraph\layout\hierarchical\stage\mxMinimumCycleRemover$2.class
 com\mxgraph\swing\handler\mxSelectionCellsHandler$2.class
+edu\wsu\dase\GenerateOntology.class
 com\mxgraph\reader\mxDomOutputParser$21.class
 com\mxgraph\view\mxGraphView$mxCurrentRootChange.class
 edu\wsu\dase\swing\editor\EditorActions$ToggleConnectModeAction.class
@@ -470,7 +469,6 @@ edu\wsu\dase\swing\editor\BasicGraphEditor$3.class
 com\mxgraph\shape\mxMarkerRegistry$4.class
 com\mxgraph\reader\mxDomOutputParser$33.class
 com\mxgraph\shape\mxConnectorShape.class
-edu\wsu\dase\swing\editor\EditorMenuBar$3.class
 com\mxgraph\reader\mxDomOutputParser$18.class
 com\mxgraph\util\mxBase64.class
 com\mxgraph\swing\mxGraphComponent$mxGraphControl$1.class
@@ -529,7 +527,6 @@ com\mxgraph\view\mxGraphSelectionModel$mxSelectionChange.class
 edu\wsu\dase\swing\editor\GraphConfigDialog.class
 com\mxgraph\reader\mxGraphViewImageReader.class
 com\mxgraph\util\mxUtils.class
-edu\wsu\dase\swing\editor\EditorMenuBar$4.class
 com\mxgraph\canvas\mxGraphicsCanvas2D.class
 com\mxgraph\generatorfunction\mxGeneratorConstFunction.class
 edu\wsu\dase\swing\editor\BasicGraphEditor$7.class
@@ -543,6 +540,7 @@ com\mxgraph\layout\mxCompactTreeLayout.class
 com\mxgraph\view\mxCellState.class
 com\mxgraph\swing\view\mxCellStatePreview.class
 com\mxgraph\util\png\mxPngEncodeParam$Palette.class
+edu\wsu\dase\swing\editor\EditorActions$SaveOntologyAction.class
 com\mxgraph\util\svg\ErrorHandler.class
 com\mxgraph\io\mxTerminalChangeCodec.class
 com\mxgraph\reader\mxSaxOutputHandler$10.class

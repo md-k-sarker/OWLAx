@@ -1413,7 +1413,9 @@ public class EditorActions
 			}
 		}
 	}
-
+	
+	
+	
 	/**
 	 *
 	 */
@@ -1448,6 +1450,37 @@ public class EditorActions
 		}
 	}
 
+	@SuppressWarnings("serial")
+	public static class SaveOntologyAction extends AbstractAction
+	{
+		/**
+		 * 
+		 */
+		public void actionPerformed(ActionEvent e)
+		{
+			BasicGraphEditor editor = getEditor(e);
+
+			if (editor != null)
+			{
+				if (!editor.isModified()
+						|| JOptionPane.showConfirmDialog(editor,
+								mxResources.get("loseChanges")) == JOptionPane.YES_OPTION)
+				{
+					mxGraph graph = editor.getGraphComponent().getGraph();
+
+					// Check modified flag and display save dialog
+					mxCell root = new mxCell();
+					root.insert(new mxCell());
+					graph.getModel().setRoot(root);
+
+					editor.setModified(false);
+					editor.setCurrentFile(null);
+					editor.getGraphComponent().zoomAndCenter();
+				}
+			}
+		}
+	}
+	
 	/**
 	 *
 	 */

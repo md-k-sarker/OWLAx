@@ -14,6 +14,7 @@ import javax.swing.UIManager;
 
 import org.w3c.dom.Document;
 
+import edu.wsu.dase.GenerateOntology;
 import edu.wsu.dase.swing.editor.BasicGraphEditor;
 import edu.wsu.dase.swing.editor.EditorMenuBar;
 import edu.wsu.dase.swing.editor.EditorPalette;
@@ -69,8 +70,8 @@ public class GraphEditor extends BasicGraphEditor {
 
 		// Creates the shapes palette
 		EditorPalette shapesPalette = insertPalette(mxResources.get("shapes"));
-		EditorPalette imagesPalette = insertPalette(mxResources.get("images"));
-		EditorPalette symbolsPalette = insertPalette(mxResources.get("symbols"));
+		/*EditorPalette imagesPalette = insertPalette(mxResources.get("images"));
+		EditorPalette symbolsPalette = insertPalette(mxResources.get("symbols"));*/
 
 		// Sets the edge template to be used for creating new edges if an edge
 		// is clicked in the shape palette
@@ -81,7 +82,7 @@ public class GraphEditor extends BasicGraphEditor {
 				if (tmp instanceof mxGraphTransferable) {
 					mxGraphTransferable t = (mxGraphTransferable) tmp;
 					Object cell = t.getCells()[0];
-
+					
 					if (graph.getModel().isEdge(cell)) {
 						((CustomGraph) graph).setEdgeTemplate(cell);
 					}
@@ -91,7 +92,7 @@ public class GraphEditor extends BasicGraphEditor {
 		});
 
 		// Adds some template cells for dropping into the graph
-		shapesPalette.addTemplate("Container",
+	/*	shapesPalette.addTemplate("Container",
 				new ImageIcon(GraphEditor.class.getResource("/images/swimlane.png")),
 				"swimlane", 280, 280, "Container");
 		shapesPalette.addTemplate("Icon",
@@ -99,11 +100,11 @@ public class GraphEditor extends BasicGraphEditor {
 				"icon;image=/images/wrench.png", 70, 70, "Icon");
 		shapesPalette.addTemplate("Label",
 				new ImageIcon(GraphEditor.class.getResource("/images/rounded.png")),
-				"label;image=/images/gear.png", 130, 50, "Label");
+				"label;image=/images/gear.png", 130, 50, "Label");*/
 		shapesPalette.addTemplate("Rectangle",
 				new ImageIcon(GraphEditor.class.getResource("/images/rectangle.png")), null,
 				160, 120, "");
-		shapesPalette.addTemplate("Rounded Rectangle",
+		/*shapesPalette.addTemplate("Rounded Rectangle",
 				new ImageIcon(GraphEditor.class.getResource("/images/rounded.png")),
 				"rounded=1", 160, 120, "");
 		shapesPalette.addTemplate("Double Rectangle",
@@ -114,14 +115,14 @@ public class GraphEditor extends BasicGraphEditor {
 				"ellipse", 160, 160, "");
 		shapesPalette.addTemplate("Double Ellipse",
 				new ImageIcon(GraphEditor.class.getResource("/images/doubleellipse.png")),
-				"ellipse;shape=doubleEllipse", 160, 160, "");
+				"ellipse;shape=doubleEllipse", 160, 160, "");*/
 		shapesPalette.addTemplate("Triangle",
 				new ImageIcon(GraphEditor.class.getResource("/images/triangle.png")),
 				"triangle", 120, 160, "");
 		shapesPalette.addTemplate("Rhombus",
 				new ImageIcon(GraphEditor.class.getResource("/images/rhombus.png")),
 				"rhombus", 160, 160, "");
-		shapesPalette.addTemplate("Horizontal Line",
+		/*shapesPalette.addTemplate("Horizontal Line",
 				new ImageIcon(GraphEditor.class.getResource("/images/hline.png")), "line",
 				160, 10, "");
 		shapesPalette.addTemplate("Hexagon",
@@ -136,11 +137,11 @@ public class GraphEditor extends BasicGraphEditor {
 		shapesPalette.addTemplate("Cloud",
 				new ImageIcon(GraphEditor.class.getResource("/images/cloud.png")),
 				"ellipse;shape=cloud", 160, 120, "");
-
+*/
 		shapesPalette.addEdgeTemplate("Straight",
 				new ImageIcon(GraphEditor.class.getResource("/images/straight.png")),
 				"straight", 120, 120, "");
-		shapesPalette.addEdgeTemplate("Horizontal Connector",
+		/*shapesPalette.addEdgeTemplate("Horizontal Connector",
 				new ImageIcon(GraphEditor.class.getResource("/images/connect.png")), null,
 				100, 100, "");
 		shapesPalette.addEdgeTemplate("Vertical Connector",
@@ -148,12 +149,12 @@ public class GraphEditor extends BasicGraphEditor {
 				"vertical", 100, 100, "");
 		shapesPalette.addEdgeTemplate("Entity Relation",
 				new ImageIcon(GraphEditor.class.getResource("/images/entity.png")), "entity",
-				100, 100, "");
+				100, 100, "");*/
 		shapesPalette.addEdgeTemplate("Arrow",
 				new ImageIcon(GraphEditor.class.getResource("/images/arrow.png")), "arrow",
 				120, 120, "");
 
-		imagesPalette.addTemplate("Bell",
+		/*imagesPalette.addTemplate("Bell",
 				new ImageIcon(GraphEditor.class.getResource("/images/bell.png")),
 				"image;image=/images/bell.png", 50, 50, "Bell");
 		imagesPalette.addTemplate("Box",
@@ -225,7 +226,7 @@ public class GraphEditor extends BasicGraphEditor {
 				"roundImage;image=/images/terminate.png", 80, 80, "Terminate");
 		symbolsPalette.addTemplate("Timer",
 				new ImageIcon(GraphEditor.class.getResource("/images/timer.png")),
-				"roundImage;image=/images/timer.png", 80, 80, "Timer");
+				"roundImage;image=/images/timer.png", 80, 80, "Timer");*/
 	}
 
 	/**
@@ -426,6 +427,7 @@ public class GraphEditor extends BasicGraphEditor {
 		mxConstants.W3C_SHADOWCOLOR = "#D3D3D3";
 
 		GraphEditor editor = new GraphEditor();
+		GenerateOntology ontologyobj = new GenerateOntology(editor);
 		//editor.createFrame(new EditorMenuBar(editor)).setVisible(true);
 
 		JFrame frame = new JFrame("Dase editor"); 

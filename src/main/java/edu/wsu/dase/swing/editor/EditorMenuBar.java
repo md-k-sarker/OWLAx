@@ -90,14 +90,17 @@ public class EditorMenuBar extends JMenuBar
 
 		// Creates the file menu
 		System.out.println("sarker.3 "+ mxResources.get("file"));
+		
 		menu = add(new JMenu(mxResources.get("file")));
+		
+		//menu.add(editor.bind(mxResources.get("Save Ontology"), new SaveOntologyAction(), "/images/ontology.png"));
 
 		menu.add(editor.bind(mxResources.get("new"), new NewAction(), "/images/new.gif"));
-		menu.add(editor.bind(mxResources.get("openFile"), new OpenAction(), "/images/open.gif"));
-		menu.add(editor.bind(mxResources.get("importStencil"), new ImportAction(), "/images/open.gif"));
+		//menu.add(editor.bind(mxResources.get("openFile"), new OpenAction(), "/images/open.gif"));
+		//menu.add(editor.bind(mxResources.get("importStencil"), new ImportAction(), "/images/open.gif"));
 
 		menu.addSeparator();
-
+		
 		menu.add(editor.bind(mxResources.get("save"), new SaveAction(false), "/images/save.gif"));
 		menu.add(editor.bind(mxResources.get("saveAs"), new SaveAction(true), "/images/saveas.gif"));
 
@@ -133,7 +136,7 @@ public class EditorMenuBar extends JMenuBar
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("warning"), new WarningAction()));
+		//menu.add(editor.bind(mxResources.get("warning"), new WarningAction()));
 		menu.add(editor.bind(mxResources.get("edit"), mxGraphActions.getEditAction()));
 
 		// Creates the view menu
@@ -142,9 +145,6 @@ public class EditorMenuBar extends JMenuBar
 		JMenuItem item = menu.add(new TogglePropertyItem(graphComponent, mxResources.get("pageLayout"), "PageVisible", true,
 				new ActionListener()
 				{
-					/**
-					 * 
-					 */
 					public void actionPerformed(ActionEvent e)
 					{
 						if (graphComponent.isPageVisible() && graphComponent.isCenterPage())
@@ -243,9 +243,9 @@ public class EditorMenuBar extends JMenuBar
 		populateFormatMenu(menu, editor);
 
 		// Creates the shape menu
-		menu = add(new JMenu(mxResources.get("shape")));
+		//menu = add(new JMenu(mxResources.get("shape")));
 
-		populateShapeMenu(menu, editor);
+		//populateShapeMenu(menu, editor);
 
 		// Creates the diagram menu
 		menu = add(new JMenu(mxResources.get("diagram")));
@@ -275,7 +275,7 @@ public class EditorMenuBar extends JMenuBar
 		submenu.add(editor.bind(mxResources.get("line"), new GridStyleAction(mxGraphComponent.GRID_STYLE_LINE)));
 		submenu.add(editor.bind(mxResources.get("cross"), new GridStyleAction(mxGraphComponent.GRID_STYLE_CROSS)));
 
-		menu.addSeparator();
+		/*menu.addSeparator();
 
 		submenu = (JMenu) menu.add(new JMenu(mxResources.get("layout")));
 
@@ -316,7 +316,7 @@ public class EditorMenuBar extends JMenuBar
 
 		submenu.add(editor.bind(mxResources.get("selectTree"), new SelectSpanningTreeAction(false)));
 		submenu.add(editor.bind(mxResources.get("selectDirectedTree"), new SelectSpanningTreeAction(true)));
-
+*/
 		menu.addSeparator();
 
 		submenu = (JMenu) menu.add(new JMenu(mxResources.get("stylesheet")));
@@ -327,16 +327,13 @@ public class EditorMenuBar extends JMenuBar
 				"/resources/default-style.xml")));
 
 		// Creates the options menu
-		menu = add(new JMenu(mxResources.get("options")));
+		//menu = add(new JMenu(mxResources.get("options")));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("display")));
+		/*submenu = (JMenu) menu.add(new JMenu(mxResources.get("display")));
 		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("buffering"), "TripleBuffered", true));
 
 		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("preferPageSize"), "PreferPageSize", true, new ActionListener()
 		{
-			/**
-			 * 
-			 */
 			public void actionPerformed(ActionEvent e)
 			{
 				graphComponent.zoomAndCenter();
@@ -351,20 +348,17 @@ public class EditorMenuBar extends JMenuBar
 
 		submenu.add(editor.bind(mxResources.get("tolerance"), new PromptPropertyAction(graphComponent, "Tolerance")));
 
-		submenu.add(editor.bind(mxResources.get("dirty"), new ToggleDirtyAction()));
+		submenu.add(editor.bind(mxResources.get("dirty"), new ToggleDirtyAction()));*/
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("zoom")));
+		//submenu = (JMenu) menu.add(new JMenu(mxResources.get("zoom")));
 
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("centerZoom"), "CenterZoom", true));
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("zoomToSelection"), "KeepSelectionVisibleOnZoom", true));
+		//submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("centerZoom"), "CenterZoom", true));
+		//submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("zoomToSelection"), "KeepSelectionVisibleOnZoom", true));
 
-		submenu.addSeparator();
+	//	submenu.addSeparator();
 
-		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("centerPage"), "CenterPage", true, new ActionListener()
+	/*	submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("centerPage"), "CenterPage", true, new ActionListener()
 		{
-			/**
-			 * 
-			 */
 			public void actionPerformed(ActionEvent e)
 			{
 				if (graphComponent.isPageVisible() && graphComponent.isCenterPage())
@@ -380,12 +374,12 @@ public class EditorMenuBar extends JMenuBar
 
 		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("dragEnabled"), "DragEnabled"));
 		submenu.add(new TogglePropertyItem(graph, mxResources.get("dropEnabled"), "DropEnabled"));
+*/
+	//	submenu.addSeparator();
 
-		submenu.addSeparator();
+		//submenu.add(new TogglePropertyItem(graphComponent.getGraphHandler(), mxResources.get("imagePreview"), "ImagePreview"));
 
-		submenu.add(new TogglePropertyItem(graphComponent.getGraphHandler(), mxResources.get("imagePreview"), "ImagePreview"));
-
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("labels")));
+	/*	submenu = (JMenu) menu.add(new JMenu(mxResources.get("labels")));
 
 		submenu.add(new TogglePropertyItem(graph, mxResources.get("htmlLabels"), "HtmlLabels", true));
 		submenu.add(new TogglePropertyItem(graph, mxResources.get("showLabels"), "LabelsVisible", true));
@@ -399,9 +393,9 @@ public class EditorMenuBar extends JMenuBar
 
 		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("handleReturn"), "EnterStopsCellEditing"));
 
-		menu.addSeparator();
+		menu.addSeparator();*/
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("connections")));
+		/*submenu = (JMenu) menu.add(new JMenu(mxResources.get("connections")));
 
 		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("connectable"), "Connectable"));
 		submenu.add(new TogglePropertyItem(graph, mxResources.get("connectableEdges"), "ConnectableEdges"));
@@ -423,10 +417,10 @@ public class EditorMenuBar extends JMenuBar
 		submenu.addSeparator();
 
 		submenu.add(new TogglePropertyItem(graph, mxResources.get("allowLoops"), "AllowLoops"));
-		submenu.add(new TogglePropertyItem(graph, mxResources.get("multigraph"), "Multigraph"));
+		submenu.add(new TogglePropertyItem(graph, mxResources.get("multigraph"), "Multigraph"));*/
 
 		// Creates the window menu
-		menu = add(new JMenu(mxResources.get("window")));
+		/*menu = add(new JMenu(mxResources.get("window")));
 
 		UIManager.LookAndFeelInfo[] lafs = UIManager.getInstalledLookAndFeels();
 
@@ -436,9 +430,9 @@ public class EditorMenuBar extends JMenuBar
 			
 			menu.add(new AbstractAction(lafs[i].getName())
 			{
-				/**
+				*//**
 				 * 
-				 */
+				 *//*
 				private static final long serialVersionUID = 7588919504149148501L;
 
 				public void actionPerformed(ActionEvent e)
@@ -446,10 +440,10 @@ public class EditorMenuBar extends JMenuBar
 					editor.setLookAndFeel(clazz);
 				}
 			});
-		}
+		}*/
 
 		// Creates a developer menu
-		menu = add(new JMenu("Generate"));
+		/*menu = add(new JMenu("Generate"));
 		menu.add(editor.bind("Null Graph", new InsertGraph(GraphType.NULL, aGraph)));
 		menu.add(editor.bind("Complete Graph", new InsertGraph(GraphType.COMPLETE, aGraph)));
 		menu.add(editor.bind("Grid", new InsertGraph(GraphType.GRID, aGraph)));
@@ -506,15 +500,15 @@ public class EditorMenuBar extends JMenuBar
 		item = menu.add(new JMenuItem(mxResources.get("aboutGraphEditor")));
 		item.addActionListener(new ActionListener()
 		{
-			/*
+			
 			 * (non-Javadoc)
 			 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-			 */
+			 
 			public void actionPerformed(ActionEvent e)
 			{
 				editor.about();
 			}
-		});
+		});*/
 	}
 
 	/**
@@ -664,19 +658,19 @@ public class EditorMenuBar extends JMenuBar
 		submenu.add(editor.bind(mxResources.get("straight"), new SetStyleAction("straight"),
 				"/images/straight.gif"));
 
-		submenu.add(editor.bind(mxResources.get("horizontal"), new SetStyleAction(""), "/images/connect.gif"));
-		submenu.add(editor.bind(mxResources.get("vertical"), new SetStyleAction("vertical"),
-				"/images/vertical.gif"));
+		//submenu.add(editor.bind(mxResources.get("horizontal"), new SetStyleAction(""), "/images/connect.gif"));
+		//submenu.add(editor.bind(mxResources.get("vertical"), new SetStyleAction("vertical"),
+		//		"/images/vertical.gif"));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("entityRelation"), new SetStyleAction("edgeStyle=mxEdgeStyle.EntityRelation"),
-				"/images/entity.gif"));
+		//submenu.add(editor.bind(mxResources.get("entityRelation"), new SetStyleAction("edgeStyle=mxEdgeStyle.EntityRelation"),
+		//		"/images/entity.gif"));
 		submenu.add(editor.bind(mxResources.get("arrow"), new SetStyleAction("arrow"), "/images/arrow.gif"));
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("plain"), new ToggleAction(mxConstants.STYLE_NOEDGESTYLE)));
+		//submenu.add(editor.bind(mxResources.get("plain"), new ToggleAction(mxConstants.STYLE_NOEDGESTYLE)));
 
 		menu.addSeparator();
 
@@ -780,7 +774,7 @@ public class EditorMenuBar extends JMenuBar
 
 		menu.add(editor.bind(mxResources.get("rounded"), new ToggleAction(mxConstants.STYLE_ROUNDED)));
 
-		menu.add(editor.bind(mxResources.get("style"), new StyleAction()));
+		//menu.add(editor.bind(mxResources.get("style"), new StyleAction()));
 	}
 
 	/**
