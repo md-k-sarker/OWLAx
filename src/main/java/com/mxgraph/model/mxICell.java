@@ -74,6 +74,20 @@ public interface mxICell
 	 * @return Returns true if the cell is an edge.
 	 */
 	boolean isEdge();
+	
+	/**
+	 * Returns true if the cell is a class.
+	 * 
+	 * @return Returns true if the cell is a vertex.
+	 */
+	boolean isOWLClass();
+
+	/**
+	 * Returns true if the cell is an NamedIndividual.
+	 * 
+	 * @return Returns true if the cell is an edge.
+	 */
+	boolean isOWLNamedIndividual();
 
 	/**
 	 * Returns true if the cell is connectable.

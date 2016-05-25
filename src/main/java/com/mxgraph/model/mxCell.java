@@ -68,7 +68,7 @@ public class mxCell implements mxICell, Cloneable, Serializable
 	 * connectable, visible and collapsed. Default values are false, false,
 	 * true, true and false respectively.
 	 */
-	protected boolean vertex = false, edge = false, connectable = true,
+	protected boolean vertex = false, edge = false, owlClass= false, owlNamedIndividual = false, connectable = true,
 			visible = true, collapsed = false;
 
 	/**
@@ -588,6 +588,8 @@ public class mxCell implements mxICell, Cloneable, Serializable
 		clone.setConnectable(isConnectable());
 		clone.setEdge(isEdge());
 		clone.setVertex(isVertex());
+		clone.setEdge(isOWLClass());
+		clone.setVertex(isOWLNamedIndividual());
 		clone.setVisible(isVisible());
 		clone.setParent(null);
 		clone.setSource(null);
@@ -619,6 +621,31 @@ public class mxCell implements mxICell, Cloneable, Serializable
 		}
 
 		return value;
+	}
+
+	public boolean isOWLClass() {
+		// TODO Auto-generated method stub
+		return owlClass;
+	}
+
+	public boolean isOWLNamedIndividual() {
+		// TODO Auto-generated method stub
+		return owlNamedIndividual;
+	}
+	/* (non-Javadoc)
+	 * @see com.mxgraph.model.mxICell#setOWLNamedIndividual(boolean)
+	 */
+	public void setOWLNamedIndividual(boolean owlNamedIndividual)
+	{
+		this.owlNamedIndividual = owlNamedIndividual;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.mxgraph.model.mxICell#setOWLClass(boolean)
+	 */
+	public void setOWLClass(boolean owlClass)
+	{
+		this.owlClass = owlClass;
 	}
 
 }

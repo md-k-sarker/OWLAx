@@ -206,6 +206,22 @@ public interface mxIGraphModel
 	 * @return Returns true if the given cell is an edge.
 	 */
 	boolean isEdge(Object cell);
+	
+	/**
+	 * Returns true if the given cell is a vertex.
+	 * 
+	 * @param cell Cell that represents the possible vertex.
+	 * @return Returns true if the given cell is a vertex.
+	 */
+	boolean isOWLClass(Object cell);
+
+	/**
+	 * Returns true if the given cell is an edge.
+	 * 
+	 * @param cell Cell that represents the possible edge.
+	 * @return Returns true if the given cell is an edge.
+	 */
+	boolean isOWLNamedIndividual(Object cell);
 
 	/**
 	 * Returns true if the given cell is connectable.

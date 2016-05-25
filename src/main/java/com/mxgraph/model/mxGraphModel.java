@@ -886,6 +886,22 @@ public class mxGraphModel extends mxEventSource implements mxIGraphModel,
 	{
 		return (cell instanceof mxICell) ? ((mxICell) cell).isEdge() : false;
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.mxgraph.model.mxIGraphModel#isVertex(Object)
+	 */
+	public boolean isOWLClass(Object cell)
+	{
+		return (cell instanceof mxICell) ? ((mxICell) cell).isOWLClass() : false;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.mxgraph.model.mxIGraphModel#isEdge(Object)
+	 */
+	public boolean isOWLNamedIndividual(Object cell)
+	{
+		return (cell instanceof mxICell) ? ((mxICell) cell).isOWLNamedIndividual() : false;
+	}
 
 	/* (non-Javadoc)
 	 * @see com.mxgraph.model.mxIGraphModel#isConnectable(Object)
