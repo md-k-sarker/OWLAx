@@ -72,6 +72,8 @@ import com.mxgraph.util.png.mxPngImageEncoder;
 import com.mxgraph.util.png.mxPngTextDecoder;
 import com.mxgraph.view.mxGraph;
 
+import edu.wsu.dase.GenerateOntology;
+
 /**
  *
  */
@@ -1454,7 +1456,7 @@ public class EditorActions
 	public static class SaveOntologyAction extends AbstractAction
 	{
 		/**
-		 * 
+		 * sarker.3 saving ontology
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
@@ -1462,20 +1464,12 @@ public class EditorActions
 
 			if (editor != null)
 			{
-				if (!editor.isModified()
-						|| JOptionPane.showConfirmDialog(editor,
-								mxResources.get("loseChanges")) == JOptionPane.YES_OPTION)
 				{
 					mxGraph graph = editor.getGraphComponent().getGraph();
 
 					// Check modified flag and display save dialog
-					mxCell root = new mxCell();
-					root.insert(new mxCell());
-					graph.getModel().setRoot(root);
-
-					editor.setModified(false);
-					editor.setCurrentFile(null);
-					editor.getGraphComponent().zoomAndCenter();
+					GenerateOntology ge = new GenerateOntology(editor);
+					ge.saveOntology();
 				}
 			}
 		}

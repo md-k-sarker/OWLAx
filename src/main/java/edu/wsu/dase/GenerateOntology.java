@@ -7,6 +7,7 @@ import com.mxgraph.model.mxGraphModel;
 import com.mxgraph.view.mxGraph;
 
 import edu.wsu.dase.swing.GraphEditor;
+import edu.wsu.dase.swing.editor.BasicGraphEditor;
 
 public class GenerateOntology {
 
@@ -14,19 +15,31 @@ public class GenerateOntology {
 	Object root;
 	mxGraphModel model;
 
-	public GenerateOntology(GraphEditor editor) {
+	public GenerateOntology(BasicGraphEditor editor) {
 		this.graph = editor.getGraphComponent().getGraph();
 		this.model = (mxGraphModel) graph.getModel();
 		this.root = graph.getDefaultParent();
 	}
+	
+	/**
+	 * mxICostFunction cf = mxDistanceCostFunction(); Object[] v =
+	 * graph.getChildVertices(graph.getDefaultParent()); Object[] e =
+	 * graph.getChildEdges(graph.getDefaultParent()); mxGraphAnalysis mga =
+	 * mxGraphAnalysis.getInstance();
+	 */
 
 	public OWLOntology saveOntology() {
 
-		mxCell[] cells = (mxCell[]) graph.getChildCells(root);
+		Object[] cells =  graph.getChildCells(root);
 		
-		for(mxCell cell: cells){
-			System.out.println("label: "+cell.getValue());
+		for(Object cell: cells){
+			if(cell instanceof mxCell){
+				System.out.println("mxtype " + ((mxCell) cell).getValue());
+			}
+			//System.out.println("label: "+cell.toString());
 		}
+		
+		
 		
 		return null;
 	}

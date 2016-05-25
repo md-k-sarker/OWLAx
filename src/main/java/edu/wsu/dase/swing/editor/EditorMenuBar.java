@@ -31,6 +31,7 @@ import edu.wsu.dase.swing.editor.EditorActions.GridColorAction;
 import edu.wsu.dase.swing.editor.EditorActions.GridStyleAction;
 import edu.wsu.dase.swing.editor.EditorActions.HistoryAction;
 import edu.wsu.dase.swing.editor.EditorActions.ImportAction;
+import edu.wsu.dase.swing.editor.EditorActions.SaveOntologyAction;
 import edu.wsu.dase.swing.editor.EditorActions.KeyValueAction;
 import edu.wsu.dase.swing.editor.EditorActions.NewAction;
 import edu.wsu.dase.swing.editor.EditorActions.OpenAction;
@@ -93,7 +94,7 @@ public class EditorMenuBar extends JMenuBar
 		
 		menu = add(new JMenu(mxResources.get("file")));
 		
-		//menu.add(editor.bind(mxResources.get("Save Ontology"), new SaveOntologyAction(), "/images/ontology.png"));
+		menu.add(editor.bind("Save Ontology", new SaveOntologyAction(), "/images/ontology.gif"));
 
 		menu.add(editor.bind(mxResources.get("new"), new NewAction(), "/images/new.gif"));
 		//menu.add(editor.bind(mxResources.get("openFile"), new OpenAction(), "/images/open.gif"));
