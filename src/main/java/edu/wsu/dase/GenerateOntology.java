@@ -18,13 +18,17 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyFormat;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.PrefixManager;
 import org.semanticweb.owlapi.model.parameters.ChangeApplied;
+import org.semanticweb.owlapi.util.DefaultPrefixManager;
 
 import edu.wsu.dase.IRIResolver;
 import edu.wsu.dase.ProtegeIRIResolver;
@@ -55,7 +59,8 @@ public class GenerateOntology {
 	OWLModelManager owlModelManager;
 	OWLOntologyManager owlOntologyManager;
 	OWLOntology activeOntology;
-	ProtegeIRIResolver iriResolver;
+	//ProtegeIRIResolver iriResolver;
+	PrefixManager pm;
 
 	public GenerateOntology(BasicGraphEditor editor) {
 		this.editor = editor;
@@ -74,7 +79,7 @@ public class GenerateOntology {
 
 		makeDeclarations(v);
 		createOWLAxioms(e);
-
+		saveOWLAxioms();
 		return null;
 	}
 
@@ -86,15 +91,21 @@ public class GenerateOntology {
 
 		activeOntology = owlModelManager.getActiveOntology();
 
+		pm = new DefaultPrefixManager();
+
 		if (activeOntology != null) {
 			owlOntologyID = activeOntology.getOntologyID();
-			ontologyBaseURI = owlOntologyID.getOntologyIRI().get().getNamespace();
-			iriResolver = new ProtegeIRIResolver(owlModelManager.getOWLEntityFinder(),
+			ontologyBaseURI = owlOntologyID.getOntologyIRI().get().toQuotedString();
+			ontologyBaseURI = ontologyBaseURI.substring(1, ontologyBaseURI.length() - 1) + "#";
+			/*iriResolver = new ProtegeIRIResolver(owlModelManager.getOWLEntityFinder(),
 					owlModelManager.getOWLEntityRenderer());
 
-			iriResolver.updatePrefixes(activeOntology);
+			iriResolver.updatePrefixes(activeOntology);*/
 
-			System.out.println(ontologyBaseURI);
+			// String base = "http://example.com/owl/families/#";
+			pm.setDefaultPrefix(ontologyBaseURI);
+			
+			System.out.println("base uri: " + ontologyBaseURI);
 		}
 
 	}
@@ -110,10 +121,11 @@ public class GenerateOntology {
 
 	private void createOWLClass(String name) {
 
-		Optional<IRI> newIRI = iriResolver.prefixedName2IRI(name); // IRI.create("http://swat.cse.lehigh.edu/onto/univ-bench.owl#",
-																	// name);
+		// Optional<IRI> newIRI = iriResolver.prefixedName2IRI(name); //
+		// IRI.create("http://swat.cse.lehigh.edu/onto/univ-bench.owl#",
+		// name);
 
-		OWLClass newClass = owlDataFactory.getOWLClass(newIRI.get());
+		OWLClass newClass = owlDataFactory.getOWLClass(name, pm);
 
 		OWLAxiom declareaxiom = owlDataFactory.getOWLDeclarationAxiom(newClass);
 
@@ -122,13 +134,13 @@ public class GenerateOntology {
 		owlOntologyManager.applyChange(addaxiom);
 
 		for (OWLClass cls : activeOntology.getClassesInSignature()) {
-			// System.out.println(cls.getIRI());
+			System.out.println("class: " + cls.getIRI());
 		}
 	}
 
 	private void createOWLNamedIndividual(String name) {
-		Optional<IRI> newIRI = iriResolver.prefixedName2IRI(name);
-		OWLNamedIndividual newIndividual = owlDataFactory.getOWLNamedIndividual(newIRI.get());
+		// Optional<IRI> newIRI = iriResolver.prefixedName2IRI(name);
+		OWLNamedIndividual newIndividual = owlDataFactory.getOWLNamedIndividual(name, pm);
 
 		OWLAxiom declareaxiom = owlDataFactory.getOWLDeclarationAxiom(newIndividual);
 
@@ -213,27 +225,24 @@ public class GenerateOntology {
 
 	private OWLAxiom createOWLAxiom(String src, AxiomType role, String dest) {
 
-		IRI srcIRI = IRI.create(src);
-		IRI destIRI = IRI.create(dest);
-
 		OWLAxiom axiom = null;
 		if (role == AxiomType.SUBCLASS_OF) {
-			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLClass(srcIRI),
-					owlDataFactory.getOWLClass(destIRI));
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLClass(src, pm),
+					owlDataFactory.getOWLClass(dest, pm));
 		} else if (role == AxiomType.EQUIVALENT_CLASSES) {
-			axiom = owlDataFactory.getOWLEquivalentClassesAxiom(owlDataFactory.getOWLClass(srcIRI),
-					owlDataFactory.getOWLClass(destIRI));
+			axiom = owlDataFactory.getOWLEquivalentClassesAxiom(owlDataFactory.getOWLClass(src, pm),
+					owlDataFactory.getOWLClass(dest, pm));
 		} else if (role == AxiomType.DISJOINT_CLASSES) {
-			axiom = owlDataFactory.getOWLDisjointClassesAxiom(owlDataFactory.getOWLClass(srcIRI),
-					owlDataFactory.getOWLClass(destIRI));
+			axiom = owlDataFactory.getOWLDisjointClassesAxiom(owlDataFactory.getOWLClass(src, pm),
+					owlDataFactory.getOWLClass(dest, pm));
 		} else if (role == AxiomType.CLASS_ASSERTION) {
 
 		} else if (role == AxiomType.SAME_INDIVIDUAL) {
-			axiom = owlDataFactory.getOWLSameIndividualAxiom(owlDataFactory.getOWLNamedIndividual(srcIRI),
-					owlDataFactory.getOWLNamedIndividual(destIRI));
+			axiom = owlDataFactory.getOWLSameIndividualAxiom(owlDataFactory.getOWLNamedIndividual(src, pm),
+					owlDataFactory.getOWLNamedIndividual(dest, pm));
 		} else if (role == AxiomType.DIFFERENT_INDIVIDUALS) {
-			axiom = owlDataFactory.getOWLDifferentIndividualsAxiom(owlDataFactory.getOWLNamedIndividual(srcIRI),
-					owlDataFactory.getOWLNamedIndividual(destIRI));
+			axiom = owlDataFactory.getOWLDifferentIndividualsAxiom(owlDataFactory.getOWLNamedIndividual(src, pm),
+					owlDataFactory.getOWLNamedIndividual(dest, pm));
 		} else if (role == AxiomType.OBJECT_PROPERTY_ASSERTION) {
 
 		} else if (role == AxiomType.NEGATIVE_OBJECT_PROPERTY_ASSERTION) {

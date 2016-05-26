@@ -33,7 +33,7 @@ public class OdpMainUIComponent extends AbstractOWLClassViewComponent {
 		setLayout(new BorderLayout());
 		editor = new GraphEditor();
 		
-		add(new EditorMenuBar(editor),BorderLayout.EAST);
+		add(new EditorMenuBar(editor),BorderLayout.NORTH);
 		add(editor, BorderLayout.CENTER);
 
 		Dimension d = new Dimension(800, 600);
