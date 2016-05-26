@@ -622,8 +622,7 @@ public class mxGraphModel extends mxEventSource implements mxIGraphModel,
 	 */
 	public Object getTerminal(Object edge, boolean isSource)
 	{
-		return (edge instanceof mxICell) ? ((mxICell) edge)
-				.getTerminal(isSource) : null;
+		return (edge instanceof mxICell) ? ((mxICell) edge).getTerminal(isSource) : null;
 	}
 
 	/* (non-Javadoc)

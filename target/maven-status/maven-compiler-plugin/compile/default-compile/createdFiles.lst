@@ -46,6 +46,7 @@ com\mxgraph\util\svg\AbstractParser.class
 com\mxgraph\view\mxMultiplicity.class
 com\mxgraph\view\mxLayoutManager$2.class
 com\mxgraph\analysis\mxUnionFind.class
+edu\wsu\dase\OdpMainUIComponent$ODPTabListener.class
 com\mxgraph\reader\mxSaxOutputHandler$18.class
 com\mxgraph\swing\view\mxCellEditor$NoLinefeedHtmlEditorKit.class
 com\mxgraph\shape\mxLineShape.class
@@ -169,6 +170,7 @@ com\mxgraph\layout\hierarchical\stage\mxMinimumCycleRemover.class
 com\mxgraph\layout\mxStackLayout.class
 edu\wsu\dase\swing\editor\GraphConfigDialog$3.class
 com\mxgraph\view\mxEdgeStyle$1.class
+edu\wsu\dase\DefaultIRIResolver.class
 com\mxgraph\swing\handler\mxRotationHandler$1.class
 com\mxgraph\reader\mxSaxOutputHandler$4.class
 com\mxgraph\reader\mxDomOutputParser$38.class
@@ -251,6 +253,7 @@ com\mxgraph\shape\mxStencilRegistry.class
 edu\wsu\dase\swing\editor\SchemaEditorToolBar$2.class
 com\mxgraph\swing\mxGraphOutline$1.class
 com\mxgraph\reader\mxSaxOutputHandler$33.class
+edu\wsu\dase\IRIResolver.class
 com\mxgraph\reader\mxSaxOutputHandler$19.class
 com\mxgraph\util\png\mxPngEncodeParam$RGB.class
 edu\wsu\dase\swing\editor\GraphConfigDialog$10.class
@@ -318,6 +321,7 @@ edu\wsu\dase\swing\UserObject.class
 edu\wsu\dase\swing\editor\BasicGraphEditor$6.class
 com\mxgraph\reader\mxDomOutputParser$36.class
 com\mxgraph\layout\mxCircleLayout.class
+edu\wsu\dase\ProtegeIRIResolver.class
 com\mxgraph\swing\handler\mxMovePreview$2.class
 com\mxgraph\reader\mxSaxOutputHandler$12.class
 edu\wsu\dase\swing\editor\EditorPalette$4.class
@@ -554,6 +558,7 @@ com\mxgraph\view\mxPerimeter$1.class
 com\mxgraph\analysis\mxGraphStructure$2.class
 com\mxgraph\layout\hierarchical\model\mxGraphHierarchyRank.class
 com\mxgraph\reader\mxDomOutputParser$24.class
+edu\wsu\dase\OdpMainUIComponent$1.class
 edu\wsu\dase\swing\CustomCanvas$SwingCanvas.class
 edu\wsu\dase\swing\editor\EditorActions$BackgroundAction.class
 edu\wsu\dase\swing\UserObject$2.class

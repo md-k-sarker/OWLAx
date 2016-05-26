@@ -1465,7 +1465,7 @@ public class EditorActions
 			if (editor != null)
 			{
 				{
-					mxGraph graph = editor.getGraphComponent().getGraph();
+					//mxGraph graph = editor.getGraphComponent().getGraph();
 
 					// Check modified flag and display save dialog
 					GenerateOntology ge = new GenerateOntology(editor);

@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<!--this is comment -->
- 	<parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
-    </parent>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
 
 	<groupId>edu.wsu.dase</groupId>
 	<artifactId>odp</artifactId>
@@ -18,15 +18,33 @@
 	<url>https://github.com/protegeproject/swrltab-plugin/wiki</url>
 	<packaging>bundle</packaging>
 
-	
+
 
 	<dependencies>
 
-		 <dependency>
-            <groupId>edu.stanford.protege</groupId>
-            <artifactId>protege-editor-owl</artifactId>
-            <version>5.0.0-RC1</version>
-        </dependency>
+		<dependency>
+			<groupId>edu.stanford.protege</groupId>
+			<artifactId>protege-editor-owl</artifactId>
+			<version>5.0.0-RC1</version>
+		</dependency>
+
+<!-- 		<dependency>
+			<groupId>org.checkerframework</groupId>
+			<artifactId>checker</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.checkerframework</groupId>
+			<artifactId>checker-qual</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.checkerframework</groupId>
+			<artifactId>jdk8</artifactId>
+			<version>2.0.0</version>
+		</dependency> -->
 
 	</dependencies>
 
@@ -35,6 +53,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
 			</plugin>
 
 			<plugin>
@@ -53,11 +75,11 @@
 						</Embed-Dependency>
 						<Import-Package>
 							com.ibm.icu.*;resolution:=optional,
-                            org.eclipse.swt.*;resolution:=optional,
-                            org.eclipse.jface.*;resolution:=optional,
-                            org.protege.editor.core.*;version="5.0.0",
-                            org.protege.editor.owl.*;version="5.0.0",
-                            *
+							org.eclipse.swt.*;resolution:=optional,
+							org.eclipse.jface.*;resolution:=optional,
+							org.protege.editor.core.*;version="5.0.0",
+							org.protege.editor.owl.*;version="5.0.0",
+							*
 						</Import-Package>
 					</instructions>
 

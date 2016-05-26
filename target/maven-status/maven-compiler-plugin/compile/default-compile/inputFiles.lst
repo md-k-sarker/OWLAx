@@ -86,6 +86,7 @@ C:\Users\student\workspace\odp\src\main\java\com\mxgraph\layout\hierarchical\mod
 C:\Users\student\workspace\odp\src\main\java\com\mxgraph\swing\util\mxGraphActions.java
 C:\Users\student\workspace\odp\src\main\java\com\mxgraph\io\mxRootChangeCodec.java
 C:\Users\student\workspace\odp\src\main\java\com\mxgraph\shape\mxStencil.java
+C:\Users\student\workspace\odp\src\main\java\edu\wsu\dase\ProtegeIRIResolver.java
 C:\Users\student\workspace\odp\src\main\java\com\mxgraph\canvas\mxICanvas.java
 C:\Users\student\workspace\odp\src\main\java\com\mxgraph\layout\orthogonal\model\mxPointSequence.java
 C:\Users\student\workspace\odp\src\main\java\edu\wsu\dase\swing\editor\SchemaEditorMenuBar.java
@@ -191,6 +192,7 @@ C:\Users\student\workspace\odp\src\main\java\com\mxgraph\util\svg\ShapeProducer.
 C:\Users\student\workspace\odp\src\main\java\edu\wsu\dase\swing\editor\ShadowBorder.java
 C:\Users\student\workspace\odp\src\main\java\edu\wsu\dase\swing\editor\BasicGraphEditor.java
 C:\Users\student\workspace\odp\src\main\java\edu\wsu\dase\swing\editor\SchemaGraphComponent.java
+C:\Users\student\workspace\odp\src\main\java\edu\wsu\dase\IRIResolver.java
 C:\Users\student\workspace\odp\src\main\java\com\mxgraph\reader\mxGraphViewReader.java
 C:\Users\student\workspace\odp\src\main\java\edu\wsu\dase\swing\CustomCanvas.java
 C:\Users\student\workspace\odp\src\main\java\com\mxgraph\util\mxLine.java
@@ -203,6 +205,7 @@ C:\Users\student\workspace\odp\src\main\java\com\mxgraph\layout\mxIGraphLayout.j
 C:\Users\student\workspace\odp\src\main\java\edu\wsu\dase\swing\editor\EditorRuler.java
 C:\Users\student\workspace\odp\src\main\java\edu\wsu\dase\swing\Stencils.java
 C:\Users\student\workspace\odp\src\main\java\com\mxgraph\swing\view\mxInteractiveCanvas.java
+C:\Users\student\workspace\odp\src\main\java\edu\wsu\dase\DefaultIRIResolver.java
 C:\Users\student\workspace\odp\src\main\java\com\mxgraph\analysis\mxUnionFind.java
 C:\Users\student\workspace\odp\src\main\java\com\mxgraph\shape\mxCylinderShape.java
 C:\Users\student\workspace\odp\src\main\java\com\mxgraph\util\mxLightweightLabel.java

@@ -428,12 +428,13 @@ public class GraphEditor extends BasicGraphEditor {
 		mxConstants.W3C_SHADOWCOLOR = "#D3D3D3";
 
 		GraphEditor editor = new GraphEditor();
-		GenerateOntology ontologyobj = new GenerateOntology(editor);
+		//GenerateOntology ontologyobj = new GenerateOntology(editor);
 		//editor.createFrame(new EditorMenuBar(editor)).setVisible(true);
 
 		JFrame frame = new JFrame("Dase editor"); 
 		frame.add(editor);
 		frame.setJMenuBar(new EditorMenuBar(editor));
+		frame.setSize(800, 600);
 		frame.setVisible(true);
 	}
 }

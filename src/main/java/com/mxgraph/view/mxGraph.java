@@ -446,7 +446,7 @@ public class mxGraph extends mxEventSource
 	 * Specifies if loops (aka self-references) are allowed.
 	 * Default is false.
 	 */
-	protected boolean allowLoops = false;
+	protected boolean allowLoops = true;
 
 	/**
 	 * Specifies the multiplicities to be used for validation of the graph.

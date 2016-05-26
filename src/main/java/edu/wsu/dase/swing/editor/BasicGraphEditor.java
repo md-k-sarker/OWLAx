@@ -32,6 +32,8 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import org.protege.editor.owl.model.OWLModelManager;
+
 import com.mxgraph.layout.mxCircleLayout;
 import com.mxgraph.layout.mxCompactTreeLayout;
 import com.mxgraph.layout.mxEdgeLabelLayout;
@@ -62,6 +64,8 @@ public class BasicGraphEditor extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -6561623072112577140L;
+	
+	private OWLModelManager protegeOWLModelManager;
 
 	/**
 	 * Adds required resources for i18n
@@ -142,6 +146,14 @@ public class BasicGraphEditor extends JPanel {
 			setModified(true);
 		}
 	};
+	
+	public OWLModelManager getProtegeOWLModelManager(){
+		return protegeOWLModelManager;
+	}
+	
+	public void setProtegeOWLModelManager(OWLModelManager protegeOWLModelManager){
+		this.protegeOWLModelManager =  protegeOWLModelManager;
+	}
 
 	/**
 	 * 
