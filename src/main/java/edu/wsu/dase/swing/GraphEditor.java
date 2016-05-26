@@ -149,10 +149,10 @@ public class GraphEditor extends BasicGraphEditor {
 		 */
 		shapesPalette.addEdgeTemplate("Straight", new ImageIcon(GraphEditor.class.getResource("/images/straight.png")),
 				"straight", 120, 120, "");
-		/*
-		 * shapesPalette.addEdgeTemplate("Horizontal Connector", new
-		 * ImageIcon(GraphEditor.class.getResource("/images/connect.png")),
-		 * null, 100, 100, ""); shapesPalette.addEdgeTemplate(
+		 shapesPalette.addEdgeTemplate("Connector", new
+		  ImageIcon(GraphEditor.class.getResource("/images/connect.png")),
+		  null, 100, 100, "");
+		 /*shapesPalette.addEdgeTemplate(
 		 * "Vertical Connector", new
 		 * ImageIcon(GraphEditor.class.getResource("/images/vertical.png")),
 		 * "vertical", 100, 100, ""); shapesPalette.addEdgeTemplate(
