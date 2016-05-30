@@ -7,8 +7,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.semanticweb.owlapi.model.EntityType;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import edu.wsu.dase.util.Constants;
+import edu.wsu.dase.util.CustomEntityType;
 
 /**
  * Cells are the elements of the graph model. They represent the state of the
@@ -66,6 +70,7 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 	 */
 	protected boolean vertex = false, edge = false, owlClass = false, owlNamedIndividual = false, connectable = true,
 			visible = true, collapsed = false;
+	protected CustomEntityType entityType;
 
 	/**
 	 * Reference to the parent cell and source and target terminals for edges.
@@ -235,6 +240,19 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 	public void setOWLClass(boolean owlClass) {
 		this.owlClass = owlClass;
 	}
+	
+	@Override
+	public CustomEntityType getEntityType() {
+		// TODO Auto-generated method stub
+		return this.entityType;
+	}
+
+	@Override
+	public void setEntityType(CustomEntityType entityType) {
+		// TODO Auto-generated method stub
+		this.entityType = entityType;
+		//System.out.println("After setting: "+entityType +"\t"+this.entityType);
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -245,6 +263,7 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 		return owlNamedIndividual;
 	}
 
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -629,7 +648,7 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 	 * Returns a clone of the cell.
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		System.out.println("sarker.3 cloning cell");
+		//System.out.println("sarker.3 cloning cell");
 		mxCell clone = (mxCell) super.clone();
 
 		clone.setValue(cloneValue());

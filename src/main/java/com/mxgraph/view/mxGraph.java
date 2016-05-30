@@ -2679,7 +2679,7 @@ public class mxGraph extends mxEventSource
 	public void cellsAdded(Object[] cells, Object parent, Integer index,
 			Object source, Object target, boolean absolute)
 	{
-		System.out.println("sarker.3 cellsAdded called." +((mxCell)cells[0]).getValue());
+		//System.out.println("sarker.3 cellsAdded called." +((mxCell)cells[0]).getValue());
 		cellsAdded(cells, parent, index, source, target, absolute, true);
 	}
 

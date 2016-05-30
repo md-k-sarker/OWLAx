@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 //import org.checkerframework.checker.nullness.qual.NonNull;
 import org.protege.editor.owl.model.OWLModelManager;
@@ -32,10 +33,12 @@ public class OdpMainUIComponent extends AbstractOWLClassViewComponent {
 	public void initialiseClassView() throws Exception {
 		setLayout(new BorderLayout());
 		editor = new GraphEditor();
-		
-		add(new EditorMenuBar(editor),BorderLayout.NORTH);
+
+		add(new EditorMenuBar(editor), BorderLayout.NORTH);
 		add(editor, BorderLayout.CENTER);
 
+		JFrame mainWindow = (javax.swing.JFrame) SwingUtilities.windowForComponent(this);
+		editor.setProtegeMainWindow(mainWindow);
 		Dimension d = new Dimension(800, 600);
 		setPreferredSize(d);
 		setSize(d);
@@ -69,14 +72,14 @@ public class OdpMainUIComponent extends AbstractOWLClassViewComponent {
 	@Override
 	public void disposeView() {
 		// TODO Auto-generated method stub
-		   super.dispose();
-		    getOWLModelManager().removeListener(this.listener);
+		super.dispose();
+		getOWLModelManager().removeListener(this.listener);
 
 	}
 
 	private class ODPTabListener implements OWLModelManagerListener {
 		@Override
-		public void handleChange( OWLModelManagerChangeEvent event) {
+		public void handleChange(OWLModelManagerChangeEvent event) {
 
 			if (event.getType() == EventType.ACTIVE_ONTOLOGY_CHANGED) {
 				update();

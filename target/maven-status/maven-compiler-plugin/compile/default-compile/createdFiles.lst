@@ -286,6 +286,7 @@ com\mxgraph\swing\util\mxMorphing$1.class
 com\mxgraph\swing\mxGraphOutline$3.class
 com\mxgraph\swing\util\mxGraphActions$SelectAction.class
 com\mxgraph\reader\mxSaxOutputHandler$2.class
+edu\wsu\dase\util\Constants.class
 com\mxgraph\swing\util\mxGraphActions$LayerAction.class
 edu\wsu\dase\swing\editor\EditorPalette$2.class
 edu\wsu\dase\swing\editor\EditorActions$ToggleOutlineItem$1$1.class
@@ -476,6 +477,7 @@ com\mxgraph\shape\mxConnectorShape.class
 com\mxgraph\reader\mxDomOutputParser$18.class
 com\mxgraph\util\mxBase64.class
 com\mxgraph\swing\mxGraphComponent$mxGraphControl$1.class
+edu\wsu\dase\util\CustomEntityType.class
 com\mxgraph\shape\mxArrowShape.class
 com\mxgraph\shape\mxRectangleShape.class
 edu\wsu\dase\swing\editor\EditorMenuBar.class

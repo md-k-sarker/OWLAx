@@ -116,9 +116,9 @@ public class mxConstants
 	public static double LABEL_SCALE_BUFFER = 0.9;
 
 	/**
-	 * Defines the default marker size. Default is 6.
+	 * Defines the default marker size. Default is 8.
 	 */
-	public static int DEFAULT_MARKERSIZE = 6;
+	public static int DEFAULT_MARKERSIZE = 8;
 
 	/**
 	 * Defines the default image size. Default is 24.

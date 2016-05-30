@@ -3,6 +3,11 @@
  */
 package com.mxgraph.model;
 
+import org.semanticweb.owlapi.model.EntityType;
+
+import edu.wsu.dase.util.Constants;
+import edu.wsu.dase.util.CustomEntityType;
+
 /**
  * Defines the requirements for a cell that can be used in an mxGraphModel.
  */
@@ -88,6 +93,18 @@ public interface mxICell
 	 * @return Returns true if the cell is an edge.
 	 */
 	boolean isOWLNamedIndividual();
+	
+	/**
+	 * Returns OWLentityType 
+	 * @return Returns OWLentityType of the cell.
+	 */
+	CustomEntityType getEntityType();
+	
+	/**
+	 * Set OWLentityType 
+	 * @Set OWLentityType of the cell.
+	 */
+	void setEntityType(CustomEntityType entityType);
 
 	/**
 	 * Returns true if the cell is connectable.

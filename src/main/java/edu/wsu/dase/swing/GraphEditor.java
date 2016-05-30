@@ -74,6 +74,7 @@ public class GraphEditor extends BasicGraphEditor {
 	 */
 	public GraphEditor(String appTitle, mxGraphComponent component) {
 		super(appTitle, component);
+
 		final mxGraph graph = graphComponent.getGraph();
 
 		// Creates the shapes palette
@@ -113,19 +114,23 @@ public class GraphEditor extends BasicGraphEditor {
 		 * ImageIcon(GraphEditor.class.getResource("/images/rounded.png")),
 		 * "label;image=/images/gear.png", 130, 50, "Label");
 		 */
-		shapesPalette.addTemplate("Rectangle", new ImageIcon(GraphEditor.class.getResource("/images/rectangle.png")),
-				null, 160, 120, "", true);
-		shapesPalette.addTemplate("Triangle", new ImageIcon(GraphEditor.class.getResource("/images/triangle.png")),
-				"triangle", 120, 160, "", false);
-		shapesPalette.addTemplate("Rhombus", new ImageIcon(GraphEditor.class.getResource("/images/rhombus.png")),
-				"rhombus", 160, 160, "", false);
+		shapesPalette.addTemplate("Class", new ImageIcon(GraphEditor.class.getResource("/images/rectangle.png")), null,
+				160, 120, "");
 		/*
-		 * shapesPalette.addTemplate("Rounded Rectangle", new
-		 * ImageIcon(GraphEditor.class.getResource("/images/rounded.png")),
-		 * "rounded=1", 160, 120, ""); shapesPalette.addTemplate(
-		 * "Double Rectangle", new
-		 * ImageIcon(GraphEditor.class.getResource("/images/doublerectangle.png"
-		 * )), "rectangle;shape=doubleRectangle", 160, 120, "");
+		 * shapesPalette.addTemplate("Individual", new
+		 * ImageIcon(GraphEditor.class.getResource("/images/triangle.png")),
+		 * "triangle", 120, 160, "");
+		 */
+		shapesPalette.addTemplate("Named Individual",
+				new ImageIcon(GraphEditor.class.getResource("/images/rhombus.png")), "rhombus", 160, 160, "");
+		shapesPalette.addTemplate("Datatype", new ImageIcon(GraphEditor.class.getResource("/images/rounded.png")),
+				"rounded=1", 160, 120, "");
+
+		shapesPalette.addTemplate("Literal",
+				new ImageIcon(GraphEditor.class.getResource("/images/doublerectangle.png")),
+				"rectangle;shape=doubleRectangle", 160, 120, "");
+
+		/*
 		 * shapesPalette.addTemplate("Ellipse", new
 		 * ImageIcon(GraphEditor.class.getResource("/images/ellipse.png")),
 		 * "ellipse", 160, 160, ""); shapesPalette.addTemplate("Double Ellipse",
@@ -147,21 +152,25 @@ public class GraphEditor extends BasicGraphEditor {
 		 * ImageIcon(GraphEditor.class.getResource("/images/cloud.png")),
 		 * "ellipse;shape=cloud", 160, 120, "");
 		 */
-		shapesPalette.addEdgeTemplate("Straight", new ImageIcon(GraphEditor.class.getResource("/images/straight.png")),
-				"straight", 120, 120, "");
-		 shapesPalette.addEdgeTemplate("Connector", new
-		  ImageIcon(GraphEditor.class.getResource("/images/connect.png")),
-		  null, 100, 100, "");
-		 /*shapesPalette.addEdgeTemplate(
-		 * "Vertical Connector", new
+		/*
+		 * shapesPalette.addEdgeTemplate("Straight", new
+		 * ImageIcon(GraphEditor.class.getResource("/images/straight.png")),
+		 * "straight", 120, 120, "");
+		 */
+		shapesPalette.addEdgeTemplate("DataProperty",
+				new ImageIcon(GraphEditor.class.getResource("/images/connect.png")), null, 100, 100, "");
+		shapesPalette.addEdgeTemplate("ObjectProperty",
+				new ImageIcon(GraphEditor.class.getResource("/images/connect.png")), null, 100, 100, "");
+		/*
+		 * shapesPalette.addEdgeTemplate( "Vertical Connector", new
 		 * ImageIcon(GraphEditor.class.getResource("/images/vertical.png")),
 		 * "vertical", 100, 100, ""); shapesPalette.addEdgeTemplate(
 		 * "Entity Relation", new
 		 * ImageIcon(GraphEditor.class.getResource("/images/entity.png")),
 		 * "entity", 100, 100, "");
 		 */
-		shapesPalette.addEdgeTemplate("Arrow", new ImageIcon(GraphEditor.class.getResource("/images/arrow.png")),
-				"arrow", 120, 120, "");
+		shapesPalette.addEdgeTemplate("AnnotationProperty",
+				new ImageIcon(GraphEditor.class.getResource("/images/arrow.png")), "arrow", 120, 120, "");
 
 		/*
 		 * imagesPalette.addTemplate("Bell", new
@@ -330,69 +339,25 @@ public class GraphEditor extends BasicGraphEditor {
 		 * Prints out some useful information about the cell in the tooltip.
 		 */
 		public String getToolTipForCell(Object cell) {
+			// have to change
 			String tip = "<html>";
 			mxGeometry geo = getModel().getGeometry(cell);
 			mxCellState state = getView().getState(cell);
 
+			mxCell src = (mxCell) getModel().getTerminal(cell, true);
+			mxCell trg = (mxCell) getModel().getTerminal(cell, false);
+			tip = ((mxCell) cell).getValue().toString();
+
 			if (getModel().isEdge(cell)) {
-				tip += "points={";
-
-				if (geo != null) {
-					List<mxPoint> points = geo.getPoints();
-
-					if (points != null) {
-						Iterator<mxPoint> it = points.iterator();
-
-						while (it.hasNext()) {
-							mxPoint point = it.next();
-							tip += "[x=" + numberFormat.format(point.getX()) + ",y=" + numberFormat.format(point.getY())
-									+ "],";
-						}
-
-						tip = tip.substring(0, tip.length() - 1);
-					}
+				if (src != null) {
+					tip = src.getValue().toString() + " -> " + tip;
 				}
-
-				tip += "}<br>";
-				tip += "absPoints={";
-
-				if (state != null) {
-
-					for (int i = 0; i < state.getAbsolutePointCount(); i++) {
-						mxPoint point = state.getAbsolutePoint(i);
-						tip += "[x=" + numberFormat.format(point.getX()) + ",y=" + numberFormat.format(point.getY())
-								+ "],";
-					}
-
-					tip = tip.substring(0, tip.length() - 1);
+				if (trg != null) {
+					tip = tip + " -> " + trg.getValue().toString();
 				}
-
-				tip += "}";
 			} else {
-				tip += "geo=[";
 
-				if (geo != null) {
-					tip += "x=" + numberFormat.format(geo.getX()) + ",y=" + numberFormat.format(geo.getY()) + ",width="
-							+ numberFormat.format(geo.getWidth()) + ",height=" + numberFormat.format(geo.getHeight());
-				}
-
-				tip += "]<br>";
-				tip += "state=[";
-
-				if (state != null) {
-					tip += "x=" + numberFormat.format(state.getX()) + ",y=" + numberFormat.format(state.getY())
-							+ ",width=" + numberFormat.format(state.getWidth()) + ",height="
-							+ numberFormat.format(state.getHeight());
-				}
-
-				tip += "]";
 			}
-
-			mxPoint trans = getView().getTranslate();
-
-			tip += "<br>scale=" + numberFormat.format(getView().getScale()) + ", translate=[x="
-					+ numberFormat.format(trans.getX()) + ",y=" + numberFormat.format(trans.getY()) + "]";
-			tip += "</html>";
 
 			return tip;
 		}

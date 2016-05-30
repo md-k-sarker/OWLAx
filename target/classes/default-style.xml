@@ -84,7 +84,7 @@
 	</add>
 	<add as="line">
 		<add as="shape" value="line"/>
-		<add as="strokeWidth" value="4"/>
+		<add as="strokeWidth" value="6"/>
 		<add as="labelBackgroundColor" value="white"/>
 		<add as="verticalAlign" value="top"/>
 		<add as="spacingTop" value="8"/>

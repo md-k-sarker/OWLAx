@@ -2,10 +2,12 @@ package edu.wsu.dase;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.annotation.Resource;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -15,15 +17,20 @@ import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.AddAxiom;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.model.OWLOntologyFormat;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.PrefixManager;
@@ -45,6 +52,8 @@ import com.mxgraph.view.mxGraph.mxICellVisitor;
 
 import edu.wsu.dase.swing.GraphEditor;
 import edu.wsu.dase.swing.editor.BasicGraphEditor;
+import edu.wsu.dase.util.Constants;
+import edu.wsu.dase.util.CustomEntityType;
 
 public class GenerateOntology {
 
@@ -59,7 +68,7 @@ public class GenerateOntology {
 	OWLModelManager owlModelManager;
 	OWLOntologyManager owlOntologyManager;
 	OWLOntology activeOntology;
-	//ProtegeIRIResolver iriResolver;
+	// ProtegeIRIResolver iriResolver;
 	PrefixManager pm;
 
 	public GenerateOntology(BasicGraphEditor editor) {
@@ -73,11 +82,15 @@ public class GenerateOntology {
 
 	public OWLOntology saveOntology() {
 
-		changes = new ArrayList<OWLOntologyChange>();
-		Object[] v = graph.getChildVertices(graph.getDefaultParent());
-		Object[] e = graph.getChildEdges(graph.getDefaultParent());
+		cleanActiveOntology();
 
+		changes = new ArrayList<OWLOntologyChange>();
+
+		Object[] v = graph.getChildVertices(graph.getDefaultParent());
 		makeDeclarations(v);
+		Object[] e = graph.getChildEdges(graph.getDefaultParent());
+		makeDeclarations(e);
+
 		createOWLAxioms(e);
 		saveOWLAxioms();
 		return null;
@@ -97,25 +110,105 @@ public class GenerateOntology {
 			owlOntologyID = activeOntology.getOntologyID();
 			ontologyBaseURI = owlOntologyID.getOntologyIRI().get().toQuotedString();
 			ontologyBaseURI = ontologyBaseURI.substring(1, ontologyBaseURI.length() - 1) + "#";
-			/*iriResolver = new ProtegeIRIResolver(owlModelManager.getOWLEntityFinder(),
-					owlModelManager.getOWLEntityRenderer());
-
-			iriResolver.updatePrefixes(activeOntology);*/
+			/*
+			 * iriResolver = new
+			 * ProtegeIRIResolver(owlModelManager.getOWLEntityFinder(),
+			 * owlModelManager.getOWLEntityRenderer());
+			 * 
+			 * iriResolver.updatePrefixes(activeOntology);
+			 */
 
 			// String base = "http://example.com/owl/families/#";
 			pm.setDefaultPrefix(ontologyBaseURI);
-			
+
 			System.out.println("base uri: " + ontologyBaseURI);
 		}
 
 	}
 
+	private void cleanActiveOntology() {
+		Set<OWLAxiom> axiomsToRemove;
+		for (OWLOntology o : activeOntology.getImportsClosure()) {
+			axiomsToRemove = new HashSet<OWLAxiom>();
+			for (OWLAxiom ax : o.getAxioms()) {
+				axiomsToRemove.add(ax);
+				System.out.println("to remove from " + o.getOntologyID().getOntologyIRI() + ": " + ax);
+			}
+			System.out.println("Before: " + o.getAxiomCount());
+			owlOntologyManager.removeAxioms(o, axiomsToRemove);
+			System.out.println("After: " + o.getAxiomCount());
+		}
+	}
+
 	private void saveOWLAxioms() {
 		if (changes != null) {
 			if (ChangeApplied.SUCCESSFULLY == owlOntologyManager.applyChanges(changes)) {
-				JOptionPane.showInternalMessageDialog(editor.getParent(), "Changes Integrated with Protege.",
+				JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), "Changes Integrated with Protege.",
 						"Changes Saved", 1);
 			}
+		}
+	}
+
+	private void createOWLLiteral(String name) {
+
+		// don't need to create OWLLiteral
+		/*
+		 * OWLLiteral annoprop = owlDataFactory.getOWLLiteral(name);
+		 * 
+		 * OWLAxiom declareaxiom =
+		 * owlDataFactory.getOWLDeclarationAxiom(annoprop);
+		 * 
+		 * AddAxiom addaxiom = new AddAxiom(activeOntology, declareaxiom);
+		 * 
+		 * owlOntologyManager.applyChange(addaxiom);
+		 * 
+		 * for (OWLAnnotationProperty cls :
+		 * activeOntology.getAnnotationPropertiesInSignature()) {
+		 * System.out.println("OWLAnnotationProperty: " + cls.getIRI()); }
+		 */
+	}
+
+	private void createOWLAnnotationProperty(String name) {
+
+		OWLAnnotationProperty annoprop = owlDataFactory.getOWLAnnotationProperty(name, pm);
+
+		OWLAxiom declareaxiom = owlDataFactory.getOWLDeclarationAxiom(annoprop);
+
+		AddAxiom addaxiom = new AddAxiom(activeOntology, declareaxiom);
+
+		owlOntologyManager.applyChange(addaxiom);
+
+		for (OWLAnnotationProperty cls : activeOntology.getAnnotationPropertiesInSignature()) {
+			System.out.println("OWLAnnotationProperty: " + cls.getIRI());
+		}
+	}
+
+	private void createOWLDataProperty(String name) {
+
+		OWLDataProperty dataprop = owlDataFactory.getOWLDataProperty(name, pm);
+
+		OWLAxiom declareaxiom = owlDataFactory.getOWLDeclarationAxiom(dataprop);
+
+		AddAxiom addaxiom = new AddAxiom(activeOntology, declareaxiom);
+
+		owlOntologyManager.applyChange(addaxiom);
+
+		for (OWLDataProperty cls : activeOntology.getDataPropertiesInSignature()) {
+			System.out.println("OWLDataProperty: " + cls.getIRI());
+		}
+	}
+
+	private void createOWLObjectProperty(String name) {
+
+		OWLObjectProperty objprop = owlDataFactory.getOWLObjectProperty(name, pm);
+		OWLAxiom declareaxiom = owlDataFactory.getOWLDeclarationAxiom(objprop);
+
+		AddAxiom addaxiom = new AddAxiom(activeOntology, declareaxiom);
+
+		owlOntologyManager.applyChange(addaxiom);
+
+		for (OWLObjectProperty cls : activeOntology.getObjectPropertiesInSignature()) {
+			System.out.println("OWLObjectProperty: " + cls.getIRI());
 		}
 	}
 
@@ -148,8 +241,8 @@ public class GenerateOntology {
 
 		owlOntologyManager.applyChange(addaxiom);
 
-		for (OWLClass cls : activeOntology.getClassesInSignature()) {
-			// System.out.println(cls.getIRI());
+		for (OWLNamedIndividual ind : activeOntology.getIndividualsInSignature()) {
+			System.out.println("ind: " + ind.getIRI());
 		}
 	}
 
@@ -159,13 +252,28 @@ public class GenerateOntology {
 			if (vertex instanceof mxCell) {
 				mxCell cell = (mxCell) vertex;
 				if (cell.getValue().toString().length() > 0) {
-					if (cell.isOWLClass()) {
+					CustomEntityType CustomEntityType = cell.getEntityType();
+					System.out.println("cell entity type: " + CustomEntityType.toString());
+
+					if (CustomEntityType == CustomEntityType.CLASS) {
 						createOWLClass(cell.getValue().toString());
-					} else if (cell.isOWLNamedIndividual()) {
+					} else if (CustomEntityType == CustomEntityType.NAMED_INDIVIDUAL) {
 						createOWLNamedIndividual(cell.getValue().toString());
+					} else if (CustomEntityType == CustomEntityType.OBJECT_PROPERTY) {
+						String[] multValues = getCellValues(cell.getValue().toString());
+						for (String val : multValues) {
+							createOWLObjectProperty(val);
+						}
+					} else if (CustomEntityType == CustomEntityType.DATA_PROPERTY) {
+						createOWLDataProperty(cell.getValue().toString());
+					} else if (CustomEntityType == CustomEntityType.ANNOTATION_PROPERTY) {
+						createOWLAnnotationProperty(cell.getValue().toString());
+					} else if (CustomEntityType == CustomEntityType.LITERAL) {
+						createOWLLiteral(cell.getValue().toString());
 					}
 				} else {
-					JOptionPane.showInternalMessageDialog(editor.getParent(),
+
+					JOptionPane.showMessageDialog(editor.getProtegeMainWindow(),
 							"Entity has no name. \nEntity must have a name.", "Entity Without Name", 1);
 					return false;
 				}
@@ -178,7 +286,8 @@ public class GenerateOntology {
 	private AxiomType getAxiomType(String role) {
 		String trimmedRole = role.replace("_", "");
 		for (AxiomType at : AxiomType.AXIOM_TYPES) {
-			System.out.println("given: " + role + " trimmed: " + trimmedRole + " .matched: " + at.toString());
+			// System.out.println("given: " + role + " trimmed: " + trimmedRole
+			// + " .matched: " + at.toString());
 			if (at.getName().toLowerCase().equals(role.toLowerCase())
 					|| at.getName().toLowerCase().equals(trimmedRole.toLowerCase())) {
 				return at;
@@ -192,27 +301,39 @@ public class GenerateOntology {
 		for (Object edge : edges) {
 			if (edge instanceof mxCell) {
 				mxCell edgeCell = (mxCell) edge;
+
 				if (edgeCell.getValue().toString().length() > 0) {
 
 					mxCell src = (mxCell) graph.getModel().getTerminal(edge, true);
 					mxCell trg = (mxCell) graph.getModel().getTerminal(edge, false);
-					if (src != null && trg != null) {
-						AxiomType axiomtype = getAxiomType(edgeCell.getValue().toString());
 
-						if (axiomtype != null) {
+					AxiomType axiomtype = getAxiomType(edgeCell.getValue().toString());
+					CustomEntityType CustomEntityType = edgeCell.getEntityType();
+
+					// axiom type matched with predefined axiomtypes
+					if (axiomtype != null) {
+						if (src != null && trg != null) {
 							OWLAxiom tmpAxiom = createOWLAxiom(src.getValue().toString(), axiomtype,
 									trg.getValue().toString());
 							OWLOntologyChange change = new AddAxiom(activeOntology, tmpAxiom);
 							changes.add(change);
 							System.out.println("axiom: " + tmpAxiom.toString());
-						} else {
-							System.out.println("Axiom Type does not match with any existing Axiom Types.");
+						} else if (src != null && trg == null) {
 
+						}
+
+					} else { // axiom type doesn't match with predefined
+								// axiomtypes
+						List<OWLAxiom> tmpAxioms = createOWLAxiom(src, edgeCell, trg);
+						for (OWLAxiom tmpAxiom : tmpAxioms) {
+							OWLOntologyChange change = new AddAxiom(activeOntology, tmpAxiom);
+							changes.add(change);
+							System.out.println("axiom: " + tmpAxiom.toString());
 						}
 					}
 
 				} else {
-					JOptionPane.showInternalMessageDialog(editor.getParent(), "Entity has no name can't save.",
+					JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), "Entity has no name can't save.",
 							"Entity Without Name", 1);
 					return null;
 				}
@@ -243,8 +364,6 @@ public class GenerateOntology {
 		} else if (role == AxiomType.DIFFERENT_INDIVIDUALS) {
 			axiom = owlDataFactory.getOWLDifferentIndividualsAxiom(owlDataFactory.getOWLNamedIndividual(src, pm),
 					owlDataFactory.getOWLNamedIndividual(dest, pm));
-		} else if (role == AxiomType.OBJECT_PROPERTY_ASSERTION) {
-
 		} else if (role == AxiomType.NEGATIVE_OBJECT_PROPERTY_ASSERTION) {
 
 		} else if (role == AxiomType.NEGATIVE_DATA_PROPERTY_ASSERTION) {
@@ -314,4 +433,73 @@ public class GenerateOntology {
 		return axiom;
 	}
 
+	private List<OWLAxiom> createOWLAxiom(mxCell src, mxCell edge, mxCell dest) {
+		List<OWLAxiom> axioms = new ArrayList<OWLAxiom>();
+
+		OWLAxiom axiom = null; // , axiom2 = null, axiom3 = null;
+
+		if (edge.getEntityType().equals(CustomEntityType.OBJECT_PROPERTY)) {
+
+			String[] multValues = getCellValues(edge.getValue().toString());
+			for (String val : multValues) {
+
+				OWLObjectProperty objprop = owlDataFactory.getOWLObjectProperty(val, pm);
+				if (src.getEntityType().equals(CustomEntityType.CLASS)
+						&& dest.getEntityType().equals(CustomEntityType.CLASS)) {
+
+					axiom = owlDataFactory.getOWLObjectPropertyDomainAxiom(objprop,
+							owlDataFactory.getOWLClass(src.getValue().toString(), pm));
+					axioms.add(axiom);
+					axiom = owlDataFactory.getOWLObjectPropertyRangeAxiom(objprop,
+							owlDataFactory.getOWLClass(dest.getValue().toString(), pm));
+
+					axioms.add(axiom);
+				} else if (src.getEntityType().equals(CustomEntityType.NAMED_INDIVIDUAL)
+						&& dest.getEntityType().equals(CustomEntityType.NAMED_INDIVIDUAL)) {
+					axiom = owlDataFactory.getOWLObjectPropertyAssertionAxiom(objprop,
+							owlDataFactory.getOWLNamedIndividual(src.getValue().toString(), pm),
+							owlDataFactory.getOWLNamedIndividual(dest.getValue().toString(), pm));
+					axioms.add(axiom);
+				}
+			}
+		} else if (edge.getEntityType().equals(CustomEntityType.DATA_PROPERTY)) {
+			OWLDataProperty dataprop = owlDataFactory.getOWLDataProperty(edge.getValue().toString(), pm);
+
+			if (src.getEntityType().equals(CustomEntityType.CLASS)) {
+				axiom = owlDataFactory.getOWLDataPropertyDomainAxiom(dataprop,
+						owlDataFactory.getOWLClass(src.getValue().toString(), pm));
+				axioms.add(axiom);
+			}
+			if (src.getEntityType().equals(CustomEntityType.CLASS)
+					&& dest.getEntityType().equals(CustomEntityType.DATATYPE)) {
+				OWLDatatype odt = getOWLDataType(dest.getValue().toString());
+				axiom = owlDataFactory.getOWLDataPropertyRangeAxiom(dataprop, odt);
+				axioms.add(axiom);
+			}
+			if (src.getEntityType().equals(CustomEntityType.NAMED_INDIVIDUAL)
+					&& dest.getEntityType().equals(CustomEntityType.LITERAL)) {
+				OWLLiteral literal = owlDataFactory.getOWLLiteral(dest.getValue().toString());
+				OWLNamedIndividual ind = owlDataFactory.getOWLNamedIndividual(src.getValue().toString(), pm);
+				axiom = owlDataFactory.getOWLDataPropertyAssertionAxiom(dataprop, ind, literal);
+				// System.out.println("inside: axiom: "+axiom);
+				axioms.add(axiom);
+			}
+		}
+
+		return axioms;
+	}
+
+	private OWLDatatype getOWLDataType(String value) {
+		OWLDatatype odt = owlDataFactory.getOWLDatatype(value, pm);
+		System.out.println("odt: " + odt.toString());
+		return odt;
+	}
+
+	private String[] getCellValues(String cellVal) {
+		if (cellVal.length() > 0) {
+			cellVal = cellVal.trim();
+			return cellVal.split(",");
+		}
+		return null;
+	}
 }

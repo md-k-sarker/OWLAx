@@ -64,9 +64,9 @@ public class BasicGraphEditor extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -6561623072112577140L;
-	
-	private OWLModelManager protegeOWLModelManager;
 
+	private OWLModelManager protegeOWLModelManager;
+	private JFrame protegeMainWindow;
 	/**
 	 * Adds required resources for i18n
 	 */
@@ -146,13 +146,21 @@ public class BasicGraphEditor extends JPanel {
 			setModified(true);
 		}
 	};
-	
-	public OWLModelManager getProtegeOWLModelManager(){
+
+	public OWLModelManager getProtegeOWLModelManager() {
 		return protegeOWLModelManager;
 	}
-	
-	public void setProtegeOWLModelManager(OWLModelManager protegeOWLModelManager){
-		this.protegeOWLModelManager =  protegeOWLModelManager;
+
+	public void setProtegeOWLModelManager(OWLModelManager protegeOWLModelManager) {
+		this.protegeOWLModelManager = protegeOWLModelManager;
+	}
+
+	public JFrame getProtegeMainWindow() {
+		return this.protegeMainWindow;
+	}
+
+	public void setProtegeMainWindow(JFrame protegeMainFrame) {
+		this.protegeMainWindow = protegeMainFrame;
 	}
 
 	/**
@@ -580,7 +588,7 @@ public class BasicGraphEditor extends JPanel {
 				action.actionPerformed(new ActionEvent(getGraphComponent(), e.getID(), e.getActionCommand()));
 			}
 		};
-		//System.out.println(name+ " iconurl: "+iconUrl);
+		// System.out.println(name+ " iconurl: "+iconUrl);
 		newAction.putValue(Action.SHORT_DESCRIPTION, action.getValue(Action.SHORT_DESCRIPTION));
 
 		return newAction;

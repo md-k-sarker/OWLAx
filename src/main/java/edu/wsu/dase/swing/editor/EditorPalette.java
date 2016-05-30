@@ -26,6 +26,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
 
+import org.semanticweb.owlapi.model.EntityType;
+
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.swing.util.mxGraphTransferable;
@@ -35,6 +37,10 @@ import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxEventSource;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
+
+import edu.wsu.dase.util.Constants;
+import edu.wsu.dase.util.CustomEntityType;
+
 import com.mxgraph.util.mxEventSource.mxIEventListener;
 
 public class EditorPalette extends JPanel {
@@ -214,7 +220,18 @@ public class EditorPalette extends JPanel {
 
 		mxCell cell = new mxCell(value, geometry, style);
 		cell.setEdge(true);
-
+		//System.out.println("Before setting: name== " + name);
+		if (name.toLowerCase().replace(" ", "")
+				.equals(CustomEntityType.OBJECT_PROPERTY.toString().replace("_", "").toLowerCase())) {
+			cell.setEntityType(CustomEntityType.OBJECT_PROPERTY);
+		} else if (name.toLowerCase().replace(" ", "")
+				.equals(CustomEntityType.DATA_PROPERTY.toString().replace("_", "").toLowerCase())) {
+			cell.setEntityType(CustomEntityType.DATA_PROPERTY);
+		} else if (name.toLowerCase().replace(" ", "")
+				.equals(CustomEntityType.ANNOTATION_PROPERTY.toString().replace("_", "").toLowerCase())) {
+			cell.setEntityType(CustomEntityType.ANNOTATION_PROPERTY);
+		}
+		//System.out.println("After Setting:  name== " + cell.getEntityType() + "\n\n");
 		addTemplate(name, icon, cell);
 	}
 
@@ -227,11 +244,27 @@ public class EditorPalette extends JPanel {
 	 * @param height
 	 * @param value
 	 */
-	public void addTemplate(final String name, ImageIcon icon, String style, int width, int height, Object value,boolean isOWLClass) {
+	public void addTemplate(final String name, ImageIcon icon, String style, int width, int height, Object value) {
 		mxCell cell = new mxCell(value, new mxGeometry(0, 0, width, height), style);
 		cell.setVertex(true);
-		cell.setOWLClass(isOWLClass);
-		cell.setOWLNamedIndividual( !isOWLClass);
+		// cell.setOWLClass(isOWLClass);
+		// cell.setOWLNamedIndividual(!isOWLClass);
+		//System.out.println("Before setting: name== " + name);
+		if (name.toLowerCase().replace(" ", "").equals(CustomEntityType.CLASS.toString().replace("_", "").toLowerCase())) {
+			cell.setEntityType(CustomEntityType.CLASS);
+		} else if (name.toLowerCase().replace(" ", "")
+				.equals(CustomEntityType.NAMED_INDIVIDUAL.toString().replace("_", "").toLowerCase())) {
+			cell.setEntityType(CustomEntityType.NAMED_INDIVIDUAL);
+		} else if (name.toLowerCase().replace(" ", "")
+				.equals(CustomEntityType.DATATYPE.toString().replace("_", "").toLowerCase())) {
+			cell.setEntityType(CustomEntityType.DATATYPE);
+		}else if (name.toLowerCase().replace(" ", "")
+				.equals(CustomEntityType.LITERAL.toString().replace("_", "").toLowerCase())) {
+			cell.setEntityType(CustomEntityType.LITERAL);
+		}
+		//System.out.println("After Setting:  name== " + cell.getEntityType() + "\n\n");
+		// System.out.println("cell is isOWLNamedIndividual: " +
+		// cell.isOWLNamedIndividual());
 		addTemplate(name, icon, cell);
 	}
 

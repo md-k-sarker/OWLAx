@@ -764,7 +764,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 			try
 			{
 				Transferable t = e.getTransferable();
-				System.out.println("sarker.3 dragEnter() called. "+canImport+" "+t.isDataFlavorSupported(mxGraphTransferable.dataFlavor));
+				//System.out.println("sarker.3 dragEnter() called. "+canImport+" "+t.isDataFlavorSupported(mxGraphTransferable.dataFlavor));
 				
 				if (t.isDataFlavorSupported(mxGraphTransferable.dataFlavor))
 				{
