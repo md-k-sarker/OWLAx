@@ -115,20 +115,20 @@ public class GraphEditor extends BasicGraphEditor {
 		 * "label;image=/images/gear.png", 130, 50, "Label");
 		 */
 		shapesPalette.addTemplate("Class", new ImageIcon(GraphEditor.class.getResource("/images/rectangle.png")), null,
-				160, 120, "");
+				100, 80, "");
 		/*
 		 * shapesPalette.addTemplate("Individual", new
 		 * ImageIcon(GraphEditor.class.getResource("/images/triangle.png")),
 		 * "triangle", 120, 160, "");
 		 */
 		shapesPalette.addTemplate("Named Individual",
-				new ImageIcon(GraphEditor.class.getResource("/images/rhombus.png")), "rhombus", 160, 160, "");
+				new ImageIcon(GraphEditor.class.getResource("/images/rhombus.png")), "rhombus", 100, 100, "");
 		shapesPalette.addTemplate("Datatype", new ImageIcon(GraphEditor.class.getResource("/images/rounded.png")),
 				"rounded=1", 160, 120, "");
 
 		shapesPalette.addTemplate("Literal",
 				new ImageIcon(GraphEditor.class.getResource("/images/doublerectangle.png")),
-				"rectangle;shape=doubleRectangle", 160, 120, "");
+				"rectangle;shape=doubleRectangle", 100, 80, "");
 
 		/*
 		 * shapesPalette.addTemplate("Ellipse", new
@@ -158,9 +158,9 @@ public class GraphEditor extends BasicGraphEditor {
 		 * "straight", 120, 120, "");
 		 */
 		shapesPalette.addEdgeTemplate("DataProperty",
-				new ImageIcon(GraphEditor.class.getResource("/images/connect.png")), null, 100, 100, "");
+				new ImageIcon(GraphEditor.class.getResource("/images/connect.png")), null, 70, 70, "");
 		shapesPalette.addEdgeTemplate("ObjectProperty",
-				new ImageIcon(GraphEditor.class.getResource("/images/connect.png")), null, 100, 100, "");
+				new ImageIcon(GraphEditor.class.getResource("/images/connect.png")), null, 70, 70, "");
 		/*
 		 * shapesPalette.addEdgeTemplate( "Vertical Connector", new
 		 * ImageIcon(GraphEditor.class.getResource("/images/vertical.png")),
@@ -170,7 +170,7 @@ public class GraphEditor extends BasicGraphEditor {
 		 * "entity", 100, 100, "");
 		 */
 		shapesPalette.addEdgeTemplate("AnnotationProperty",
-				new ImageIcon(GraphEditor.class.getResource("/images/arrow.png")), "arrow", 120, 120, "");
+				new ImageIcon(GraphEditor.class.getResource("/images/arrow.png")), "arrow", 70, 70, "");
 
 		/*
 		 * imagesPalette.addTemplate("Bell", new

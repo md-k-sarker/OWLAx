@@ -58,8 +58,7 @@ import com.mxgraph.view.mxPerimeter.mxPerimeterFunction;
  * and <code>previous</code> properties contain the new and previous root,
  * respectively.
  */
-public class mxGraphView extends mxEventSource
-{
+public class mxGraphView extends mxEventSource {
 	/**
 	 *
 	 */
@@ -102,8 +101,7 @@ public class mxGraphView extends mxEventSource
 	 * @param graph
 	 *            Reference to the enclosing graph.
 	 */
-	public mxGraphView(mxGraph graph)
-	{
+	public mxGraphView(mxGraph graph) {
 		this.graph = graph;
 	}
 
@@ -112,24 +110,21 @@ public class mxGraphView extends mxEventSource
 	 * 
 	 * @return Returns the enclosing graph.
 	 */
-	public mxGraph getGraph()
-	{
+	public mxGraph getGraph() {
 		return graph;
 	}
 
 	/**
 	 * Returns the dictionary that maps from cells to states.
 	 */
-	public Hashtable<Object, mxCellState> getStates()
-	{
+	public Hashtable<Object, mxCellState> getStates() {
 		return states;
 	}
 
 	/**
 	 * Returns the dictionary that maps from cells to states.
 	 */
-	public void setStates(Hashtable<Object, mxCellState> states)
-	{
+	public void setStates(Hashtable<Object, mxCellState> states) {
 		this.states = states;
 	}
 
@@ -138,24 +133,21 @@ public class mxGraphView extends mxEventSource
 	 * 
 	 * @return Returns the diagram bounds.
 	 */
-	public mxRectangle getGraphBounds()
-	{
+	public mxRectangle getGraphBounds() {
 		return graphBounds;
 	}
 
 	/**
 	 * Sets the graph bounds.
 	 */
-	public void setGraphBounds(mxRectangle value)
-	{
+	public void setGraphBounds(mxRectangle value) {
 		graphBounds = value;
 	}
 
 	/**
 	 * Returns the current root.
 	 */
-	public Object getCurrentRoot()
-	{
+	public Object getCurrentRoot() {
 		return currentRoot;
 	}
 
@@ -167,10 +159,8 @@ public class mxGraphView extends mxEventSource
 	 *            hierarchy.
 	 * @return Returns the object that represents the current root.
 	 */
-	public Object setCurrentRoot(Object root)
-	{
-		if (currentRoot != root)
-		{
+	public Object setCurrentRoot(Object root) {
+		if (currentRoot != root) {
 			mxCurrentRootChange change = new mxCurrentRootChange(this, root);
 			change.execute();
 			mxUndoableEdit edit = new mxUndoableEdit(this, false);
@@ -192,26 +182,21 @@ public class mxGraphView extends mxEventSource
 	 * @param dy
 	 *            Y-coordinate of the translation.
 	 */
-	public void scaleAndTranslate(double scale, double dx, double dy)
-	{
+	public void scaleAndTranslate(double scale, double dx, double dy) {
 		double previousScale = this.scale;
 		Object previousTranslate = translate.clone();
 
-		if (scale != this.scale || dx != translate.getX()
-				|| dy != translate.getY())
-		{
+		if (scale != this.scale || dx != translate.getX() || dy != translate.getY()) {
 			this.scale = scale;
 			translate = new mxPoint(dx, dy);
 
-			if (isEventsEnabled())
-			{
+			if (isEventsEnabled()) {
 				revalidate();
 			}
 		}
 
-		fireEvent(new mxEventObject(mxEvent.SCALE_AND_TRANSLATE, "scale",
-				scale, "previousScale", previousScale, "translate", translate,
-				"previousTranslate", previousTranslate));
+		fireEvent(new mxEventObject(mxEvent.SCALE_AND_TRANSLATE, "scale", scale, "previousScale", previousScale,
+				"translate", translate, "previousTranslate", previousTranslate));
 	}
 
 	/**
@@ -219,8 +204,7 @@ public class mxGraphView extends mxEventSource
 	 * 
 	 * @return Returns the scale.
 	 */
-	public double getScale()
-	{
+	public double getScale() {
 		return scale;
 	}
 
@@ -231,22 +215,20 @@ public class mxGraphView extends mxEventSource
 	 * @param value
 	 *            New scale to be used.
 	 */
-	public void setScale(double value)
-	{
+	public void setScale(double value) {
+		
+		System.out.println("sarker.3 scale value: " + value+"\n\n");
 		double previousScale = scale;
 
-		if (scale != value)
-		{
+		if (scale != value) {
 			scale = value;
 
-			if (isEventsEnabled())
-			{
+			if (isEventsEnabled()) {
 				revalidate();
 			}
 		}
 
-		fireEvent(new mxEventObject(mxEvent.SCALE, "scale", scale,
-				"previousScale", previousScale));
+		fireEvent(new mxEventObject(mxEvent.SCALE, "scale", scale, "previousScale", previousScale));
 	}
 
 	/**
@@ -254,8 +236,7 @@ public class mxGraphView extends mxEventSource
 	 * 
 	 * @return Returns the translation.
 	 */
-	public mxPoint getTranslate()
-	{
+	public mxPoint getTranslate() {
 		return translate;
 	}
 
@@ -267,24 +248,18 @@ public class mxGraphView extends mxEventSource
 	 * @param value
 	 *            New translation to be used.
 	 */
-	public void setTranslate(mxPoint value)
-	{
+	public void setTranslate(mxPoint value) {
 		Object previousTranslate = translate.clone();
 
-		if (value != null
-				&& (value.getX() != translate.getX() || value.getY() != translate
-						.getY()))
-		{
+		if (value != null && (value.getX() != translate.getX() || value.getY() != translate.getY())) {
 			translate = value;
 
-			if (isEventsEnabled())
-			{
+			if (isEventsEnabled()) {
 				revalidate();
 			}
 		}
 
-		fireEvent(new mxEventObject(mxEvent.TRANSLATE, "translate", translate,
-				"previousTranslate", previousTranslate));
+		fireEvent(new mxEventObject(mxEvent.TRANSLATE, "translate", translate, "previousTranslate", previousTranslate));
 	}
 
 	/**
@@ -294,8 +269,7 @@ public class mxGraphView extends mxEventSource
 	 * @param cells
 	 * @return Returns the bounding box for the given cells.
 	 */
-	public mxRectangle getBounds(Object[] cells)
-	{
+	public mxRectangle getBounds(Object[] cells) {
 		return getBounds(cells, false);
 	}
 
@@ -306,8 +280,7 @@ public class mxGraphView extends mxEventSource
 	 * @param cells
 	 * @return Returns the bounding box for the given cells.
 	 */
-	public mxRectangle getBoundingBox(Object[] cells)
-	{
+	public mxRectangle getBoundingBox(Object[] cells) {
 		return getBounds(cells, true);
 	}
 
@@ -318,33 +291,23 @@ public class mxGraphView extends mxEventSource
 	 * @param cells
 	 * @return Returns the bounding box for the given cells.
 	 */
-	public mxRectangle getBounds(Object[] cells, boolean boundingBox)
-	{
+	public mxRectangle getBounds(Object[] cells, boolean boundingBox) {
 		mxRectangle result = null;
 
-		if (cells != null && cells.length > 0)
-		{
+		if (cells != null && cells.length > 0) {
 			mxIGraphModel model = graph.getModel();
 
-			for (int i = 0; i < cells.length; i++)
-			{
-				if (model.isVertex(cells[i]) || model.isEdge(cells[i]))
-				{
+			for (int i = 0; i < cells.length; i++) {
+				if (model.isVertex(cells[i]) || model.isEdge(cells[i])) {
 					mxCellState state = getState(cells[i]);
 
-					if (state != null)
-					{
-						mxRectangle tmp = (boundingBox) ? state
-								.getBoundingBox() : state;
+					if (state != null) {
+						mxRectangle tmp = (boundingBox) ? state.getBoundingBox() : state;
 
-						if (tmp != null)
-						{
-							if (result == null)
-							{
+						if (tmp != null) {
+							if (result == null) {
 								result = new mxRectangle(tmp);
-							}
-							else
-							{
+							} else {
 								result.add(tmp);
 							}
 						}
@@ -359,8 +322,7 @@ public class mxGraphView extends mxEventSource
 	/**
 	 * Removes all existing cell states and invokes validate.
 	 */
-	public void reload()
-	{
+	public void reload() {
 		states.clear();
 		validate();
 	}
@@ -368,8 +330,7 @@ public class mxGraphView extends mxEventSource
 	/**
 	 * 
 	 */
-	public void revalidate()
-	{
+	public void revalidate() {
 		invalidate();
 		validate();
 	}
@@ -377,8 +338,7 @@ public class mxGraphView extends mxEventSource
 	/**
 	 * Invalidates all cell states.
 	 */
-	public void invalidate()
-	{
+	public void invalidate() {
 		invalidate(null);
 	}
 
@@ -390,22 +350,17 @@ public class mxGraphView extends mxEventSource
 	 * @param force
 	 * @param recurse
 	 */
-	public void clear(Object cell, boolean force, boolean recurse)
-	{
+	public void clear(Object cell, boolean force, boolean recurse) {
 		removeState(cell);
 
-		if (recurse && (force || cell != currentRoot))
-		{
+		if (recurse && (force || cell != currentRoot)) {
 			mxIGraphModel model = graph.getModel();
 			int childCount = model.getChildCount(cell);
 
-			for (int i = 0; i < childCount; i++)
-			{
+			for (int i = 0; i < childCount; i++) {
 				clear(model.getChildAt(cell, i), force, recurse);
 			}
-		}
-		else
-		{
+		} else {
 			invalidate(cell);
 		}
 	}
@@ -414,24 +369,20 @@ public class mxGraphView extends mxEventSource
 	 * Invalidates the state of the given cell, all its descendants and
 	 * connected edges.
 	 */
-	public void invalidate(Object cell)
-	{
+	public void invalidate(Object cell) {
 		mxIGraphModel model = graph.getModel();
 		cell = (cell != null) ? cell : model.getRoot();
 		mxCellState state = getState(cell);
 
-		if (state == null || !state.isInvalid())
-		{
-			if (state != null)
-			{
+		if (state == null || !state.isInvalid()) {
+			if (state != null) {
 				state.setInvalid(true);
 			}
 
 			// Recursively invalidates all descendants
 			int childCount = model.getChildCount(cell);
 
-			for (int i = 0; i < childCount; i++)
-			{
+			for (int i = 0; i < childCount; i++) {
 				Object child = model.getChildAt(cell, i);
 				invalidate(child);
 			}
@@ -439,8 +390,7 @@ public class mxGraphView extends mxEventSource
 			// Propagates invalidation to all connected edges
 			int edgeCount = model.getEdgeCount(cell);
 
-			for (int i = 0; i < edgeCount; i++)
-			{
+			for (int i = 0; i < edgeCount; i++) {
 				invalidate(model.getEdgeAt(cell, i));
 			}
 		}
@@ -450,18 +400,16 @@ public class mxGraphView extends mxEventSource
 	 * First validates all bounds and then validates all points recursively on
 	 * all visible cells.
 	 */
-	public void validate()
-	{
-		mxRectangle graphBounds = getBoundingBox(validateCellState(validateCell((currentRoot != null) ? currentRoot
-				: graph.getModel().getRoot())));
+	public void validate() {
+		mxRectangle graphBounds = getBoundingBox(
+				validateCellState(validateCell((currentRoot != null) ? currentRoot : graph.getModel().getRoot())));
 		setGraphBounds((graphBounds != null) ? graphBounds : new mxRectangle());
 	}
 
 	/**
 	 * Shortcut to validateCell with visible set to true.
 	 */
-	public mxRectangle getBoundingBox(mxCellState state)
-	{
+	public mxRectangle getBoundingBox(mxCellState state) {
 		return getBoundingBox(state, true);
 	}
 
@@ -474,35 +422,25 @@ public class mxGraphView extends mxEventSource
 	 * @param recurse
 	 *            Boolean indicating if the children should be included.
 	 */
-	public mxRectangle getBoundingBox(mxCellState state, boolean recurse)
-	{
+	public mxRectangle getBoundingBox(mxCellState state, boolean recurse) {
 		mxRectangle bbox = null;
 
-		if (state != null)
-		{
-			if (state.getBoundingBox() != null)
-			{
+		if (state != null) {
+			if (state.getBoundingBox() != null) {
 				bbox = (mxRectangle) state.getBoundingBox().clone();
 			}
 
-			if (recurse)
-			{
+			if (recurse) {
 				mxIGraphModel model = graph.getModel();
 				int childCount = model.getChildCount(state.getCell());
 
-				for (int i = 0; i < childCount; i++)
-				{
-					mxRectangle bounds = getBoundingBox(
-							getState(model.getChildAt(state.getCell(), i)), true);
+				for (int i = 0; i < childCount; i++) {
+					mxRectangle bounds = getBoundingBox(getState(model.getChildAt(state.getCell(), i)), true);
 
-					if (bounds != null)
-					{
-						if (bbox == null)
-						{
+					if (bounds != null) {
+						if (bbox == null) {
 							bbox = bounds;
-						}
-						else
-						{
+						} else {
 							bbox.add(bounds);
 						}
 					}
@@ -516,8 +454,7 @@ public class mxGraphView extends mxEventSource
 	/**
 	 * Shortcut to validateCell with visible set to true.
 	 */
-	public Object validateCell(Object cell)
-	{
+	public Object validateCell(Object cell) {
 		return validateCell(cell, true);
 	}
 
@@ -531,28 +468,20 @@ public class mxGraphView extends mxEventSource
 	 * @param visible
 	 *            Boolean indicating if the cell should be visible.
 	 */
-	public Object validateCell(Object cell, boolean visible)
-	{
-		if (cell != null)
-		{
+	public Object validateCell(Object cell, boolean visible) {
+		if (cell != null) {
 			visible = visible && graph.isCellVisible(cell);
 			mxCellState state = getState(cell, visible);
 
-			if (state != null && !visible)
-			{
+			if (state != null && !visible) {
 				removeState(cell);
-			}
-			else
-			{
+			} else {
 				mxIGraphModel model = graph.getModel();
 				int childCount = model.getChildCount(cell);
 
-				for (int i = 0; i < childCount; i++)
-				{
-					validateCell(
-							model.getChildAt(cell, i),
-							visible
-									&& (!graph.isCellCollapsed(cell) || cell == currentRoot));
+				for (int i = 0; i < childCount; i++) {
+					validateCell(model.getChildAt(cell, i),
+							visible && (!graph.isCellCollapsed(cell) || cell == currentRoot));
 				}
 			}
 		}
@@ -563,8 +492,7 @@ public class mxGraphView extends mxEventSource
 	/**
 	 * Shortcut to validateCellState with recurse set to true.
 	 */
-	public mxCellState validateCellState(Object cell)
-	{
+	public mxCellState validateCellState(Object cell) {
 		return validateCellState(cell, true);
 	}
 
@@ -577,49 +505,37 @@ public class mxGraphView extends mxEventSource
 	 *            Boolean indicating if the children of the cell should be
 	 *            validated.
 	 */
-	public mxCellState validateCellState(Object cell, boolean recurse)
-	{
+	public mxCellState validateCellState(Object cell, boolean recurse) {
 		mxCellState state = null;
 
-		if (cell != null)
-		{
+		if (cell != null) {
 			state = getState(cell);
 
-			if (state != null)
-			{
+			if (state != null) {
 				mxIGraphModel model = graph.getModel();
 
-				if (state.isInvalid())
-				{
+				if (state.isInvalid()) {
 					state.setInvalid(false);
 
-					if (cell != currentRoot)
-					{
+					if (cell != currentRoot) {
 						validateCellState(model.getParent(cell), false);
 					}
 
-					state.setVisibleTerminalState(
-							validateCellState(getVisibleTerminal(cell, true),
-									false), true);
-					state.setVisibleTerminalState(
-							validateCellState(getVisibleTerminal(cell, false),
-									false), false);
-					
+					state.setVisibleTerminalState(validateCellState(getVisibleTerminal(cell, true), false), true);
+					state.setVisibleTerminalState(validateCellState(getVisibleTerminal(cell, false), false), false);
+
 					updateCellState(state);
 
-					if (model.isEdge(cell) || model.isVertex(cell))
-					{
+					if (model.isEdge(cell) || model.isVertex(cell)) {
 						updateLabelBounds(state);
 						updateBoundingBox(state);
 					}
 				}
 
-				if (recurse)
-				{
+				if (recurse) {
 					int childCount = model.getChildCount(cell);
 
-					for (int i = 0; i < childCount; i++)
-					{
+					for (int i = 0; i < childCount; i++) {
 						validateCellState(model.getChildAt(cell, i));
 					}
 				}
@@ -635,99 +551,71 @@ public class mxGraphView extends mxEventSource
 	 * @param state
 	 *            Cell state to be updated.
 	 */
-	public void updateCellState(mxCellState state)
-	{
+	public void updateCellState(mxCellState state) {
 		state.getAbsoluteOffset().setX(0);
 		state.getAbsoluteOffset().setY(0);
 		state.getOrigin().setX(0);
 		state.getOrigin().setY(0);
 		state.setLength(0);
 
-		if (state.getCell() != currentRoot)
-		{
+		if (state.getCell() != currentRoot) {
 			mxIGraphModel model = graph.getModel();
 			mxCellState pState = getState(model.getParent(state.getCell()));
 
-			if (pState != null && pState.getCell() != currentRoot)
-			{
-				state.getOrigin().setX(
-						state.getOrigin().getX() + pState.getOrigin().getX());
-				state.getOrigin().setY(
-						state.getOrigin().getY() + pState.getOrigin().getY());
+			if (pState != null && pState.getCell() != currentRoot) {
+				state.getOrigin().setX(state.getOrigin().getX() + pState.getOrigin().getX());
+				state.getOrigin().setY(state.getOrigin().getY() + pState.getOrigin().getY());
 			}
 
 			mxPoint offset = graph.getChildOffsetForCell(state.getCell());
 
-			if (offset != null)
-			{
-				state.getOrigin()
-						.setX(state.getOrigin().getX() + offset.getX());
-				state.getOrigin()
-						.setY(state.getOrigin().getY() + offset.getY());
+			if (offset != null) {
+				state.getOrigin().setX(state.getOrigin().getX() + offset.getX());
+				state.getOrigin().setY(state.getOrigin().getY() + offset.getY());
 			}
 
 			mxGeometry geo = graph.getCellGeometry(state.getCell());
 
-			if (geo != null)
-			{
-				if (!model.isEdge(state.getCell()))
-				{
+			if (geo != null) {
+				if (!model.isEdge(state.getCell())) {
 					mxPoint origin = state.getOrigin();
 					offset = geo.getOffset();
 
-					if (offset == null)
-					{
+					if (offset == null) {
 						offset = EMPTY_POINT;
 					}
 
-					if (geo.isRelative() && pState != null)
-					{
-						if (model.isEdge(pState.getCell()))
-						{
+					if (geo.isRelative() && pState != null) {
+						if (model.isEdge(pState.getCell())) {
 							mxPoint orig = getPoint(pState, geo);
-							
-							if (orig != null)
-							{
-								origin.setX(origin.getX()
-										+ (orig.getX() / scale) - pState.getOrigin().getX()
+
+							if (orig != null) {
+								origin.setX(origin.getX() + (orig.getX() / scale) - pState.getOrigin().getX()
 										- translate.getX());
-								origin.setY(origin.getY()
-										+ (orig.getY() / scale) - pState.getOrigin().getY()
+								origin.setY(origin.getY() + (orig.getY() / scale) - pState.getOrigin().getY()
 										- translate.getY());
 							}
+						} else {
+							origin.setX(origin.getX() + geo.getX() * pState.getWidth() / scale + offset.getX());
+							origin.setY(origin.getY() + geo.getY() * pState.getHeight() / scale + offset.getY());
 						}
-						else
-						{
-							origin.setX(origin.getX() + geo.getX()
-									* pState.getWidth() / scale + offset.getX());
-							origin.setY(origin.getY() + geo.getY()
-									* pState.getHeight() / scale
-									+ offset.getY());
-						}
-					}
-					else
-					{
-						state.setAbsoluteOffset(new mxPoint(scale
-								* offset.getX(), scale * offset.getY()));
+					} else {
+						state.setAbsoluteOffset(new mxPoint(scale * offset.getX(), scale * offset.getY()));
 						origin.setX(origin.getX() + geo.getX());
 						origin.setY(origin.getY() + geo.getY());
 					}
 				}
 
-				state.setX(scale
-						* (translate.getX() + state.getOrigin().getX()));
-				state.setY(scale
-						* (translate.getY() + state.getOrigin().getY()));
+				state.setX(scale * (translate.getX() + state.getOrigin().getX()));
+				state.setY(scale * (translate.getY() + state.getOrigin().getY()));
 				state.setWidth(scale * geo.getWidth());
 				state.setHeight(scale * geo.getHeight());
 
-				if (model.isVertex(state.getCell()))
-				{
+				if (model.isVertex(state.getCell())) {
 					updateVertexState(state, geo);
 				}
 
-				if (model.isEdge(state.getCell()))
-				{
+				if (model.isEdge(state.getCell())) {
 					updateEdgeState(state, geo);
 				}
 
@@ -740,8 +628,7 @@ public class mxGraphView extends mxEventSource
 	/**
 	 * Validates the given cell state.
 	 */
-	public void updateVertexState(mxCellState state, mxGeometry geo)
-	{
+	public void updateVertexState(mxCellState state, mxGeometry geo) {
 		// LATER: Add support for rotation
 		updateVertexLabelOffset(state);
 	}
@@ -749,8 +636,7 @@ public class mxGraphView extends mxEventSource
 	/**
 	 * Validates the given cell state.
 	 */
-	public void updateEdgeState(mxCellState state, mxGeometry geo)
-	{
+	public void updateEdgeState(mxCellState state, mxGeometry geo) {
 		mxCellState source = state.getVisibleTerminalState(true);
 		mxCellState target = state.getVisibleTerminalState(false);
 
@@ -760,29 +646,22 @@ public class mxGraphView extends mxEventSource
 		if ((graph.getModel().getTerminal(state.getCell(), true) != null && source == null)
 				|| (source == null && geo.getTerminalPoint(true) == null)
 				|| (graph.getModel().getTerminal(state.getCell(), false) != null && target == null)
-				|| (target == null && geo.getTerminalPoint(false) == null))
-		{
+				|| (target == null && geo.getTerminalPoint(false) == null)) {
 			clear(state.getCell(), true, true);
-		}
-		else
-		{
+		} else {
 			updateFixedTerminalPoints(state, source, target);
 			updatePoints(state, geo.getPoints(), source, target);
 			updateFloatingTerminalPoints(state, source, target);
 
 			if (state.getCell() != getCurrentRoot()
-					&& (state.getAbsolutePointCount() < 2
-							|| state.getAbsolutePoint(0) == null || state
-							.getAbsolutePoint(state.getAbsolutePointCount() - 1) == null))
-			{
+					&& (state.getAbsolutePointCount() < 2 || state.getAbsolutePoint(0) == null
+							|| state.getAbsolutePoint(state.getAbsolutePointCount() - 1) == null)) {
 				// This will remove edges with invalid points from the list of
 				// states in the view.
 				// Happens if the one of the terminals and the corresponding
 				// terminal point is null.
 				clear(state.getCell(), true, true);
-			}
-			else
-			{
+			} else {
 				updateEdgeBounds(state);
 				state.setAbsoluteOffset(getPoint(state, geo));
 			}
@@ -796,55 +675,38 @@ public class mxGraphView extends mxEventSource
 	 * @param state
 	 *            Cell state whose absolute offset should be updated.
 	 */
-	public void updateVertexLabelOffset(mxCellState state)
-	{
-		String horizontal = mxUtils.getString(state.getStyle(),
-				mxConstants.STYLE_LABEL_POSITION, mxConstants.ALIGN_CENTER);
+	public void updateVertexLabelOffset(mxCellState state) {
+		String horizontal = mxUtils.getString(state.getStyle(), mxConstants.STYLE_LABEL_POSITION,
+				mxConstants.ALIGN_CENTER);
 
-		if (horizontal.equals(mxConstants.ALIGN_LEFT))
-		{
-			state.absoluteOffset.setX(state.absoluteOffset.getX()
-					- state.getWidth());
-		}
-		else if (horizontal.equals(mxConstants.ALIGN_RIGHT))
-		{
-			state.absoluteOffset.setX(state.absoluteOffset.getX()
-					+ state.getWidth());
+		if (horizontal.equals(mxConstants.ALIGN_LEFT)) {
+			state.absoluteOffset.setX(state.absoluteOffset.getX() - state.getWidth());
+		} else if (horizontal.equals(mxConstants.ALIGN_RIGHT)) {
+			state.absoluteOffset.setX(state.absoluteOffset.getX() + state.getWidth());
 		}
 
-		String vertical = mxUtils.getString(state.getStyle(),
-				mxConstants.STYLE_VERTICAL_LABEL_POSITION,
+		String vertical = mxUtils.getString(state.getStyle(), mxConstants.STYLE_VERTICAL_LABEL_POSITION,
 				mxConstants.ALIGN_MIDDLE);
 
-		if (vertical.equals(mxConstants.ALIGN_TOP))
-		{
-			state.absoluteOffset.setY(state.absoluteOffset.getY()
-					- state.getHeight());
-		}
-		else if (vertical.equals(mxConstants.ALIGN_BOTTOM))
-		{
-			state.absoluteOffset.setY(state.absoluteOffset.getY()
-					+ state.getHeight());
+		if (vertical.equals(mxConstants.ALIGN_TOP)) {
+			state.absoluteOffset.setY(state.absoluteOffset.getY() - state.getHeight());
+		} else if (vertical.equals(mxConstants.ALIGN_BOTTOM)) {
+			state.absoluteOffset.setY(state.absoluteOffset.getY() + state.getHeight());
 		}
 	}
 
 	/**
 	 * Updates the label of the given state.
 	 */
-	public void updateLabel(mxCellState state)
-	{
+	public void updateLabel(mxCellState state) {
 		String label = graph.getLabel(state.getCell());
 		Map<String, Object> style = state.getStyle();
 
 		// Applies word wrapping to non-HTML labels and stores the result in the
 		// state
-		if (label != null
-				&& label.length() > 0
-				&& !graph.isHtmlLabel(state.getCell())
+		if (label != null && label.length() > 0 && !graph.isHtmlLabel(state.getCell())
 				&& !graph.getModel().isEdge(state.getCell())
-				&& mxUtils.getString(style, mxConstants.STYLE_WHITE_SPACE,
-						"nowrap").equals("wrap"))
-		{
+				&& mxUtils.getString(style, mxConstants.STYLE_WHITE_SPACE, "nowrap").equals("wrap")) {
 			double w = getWordWrapWidth(state);
 
 			// The lines for wrapping within the given width are calculated for
@@ -859,16 +721,13 @@ public class mxGraphView extends mxEventSource
 			// the wrapped lines are constant overing scaling, at the expense
 			// the
 			// label bounds will vary.
-			String[] lines = mxUtils.wordWrap(label,
-					mxUtils.getFontMetrics(mxUtils.getFont(state.getStyle())),
+			String[] lines = mxUtils.wordWrap(label, mxUtils.getFontMetrics(mxUtils.getFont(state.getStyle())),
 					w * mxConstants.LABEL_SCALE_BUFFER);
 
-			if (lines.length > 0)
-			{
+			if (lines.length > 0) {
 				StringBuffer buffer = new StringBuffer();
 
-				for (String line : lines)
-				{
+				for (String line : lines) {
 					buffer.append(line + '\n');
 				}
 
@@ -882,31 +741,22 @@ public class mxGraphView extends mxEventSource
 	/**
 	 * Returns the width for wrapping the label of the given state at scale 1.
 	 */
-	public double getWordWrapWidth(mxCellState state)
-	{
+	public double getWordWrapWidth(mxCellState state) {
 		Map<String, Object> style = state.getStyle();
-		boolean horizontal = mxUtils.isTrue(style,
-				mxConstants.STYLE_HORIZONTAL, true);
+		boolean horizontal = mxUtils.isTrue(style, mxConstants.STYLE_HORIZONTAL, true);
 		double w = 0;
 
 		// Computes the available width for the wrapped label
-		if (horizontal)
-		{
-			w = (state.getWidth() / scale) - 2 * mxConstants.LABEL_INSET - 2
-					* mxUtils.getDouble(style, mxConstants.STYLE_SPACING)
+		if (horizontal) {
+			w = (state.getWidth() / scale) - 2 * mxConstants.LABEL_INSET
+					- 2 * mxUtils.getDouble(style, mxConstants.STYLE_SPACING)
 					- mxUtils.getDouble(style, mxConstants.STYLE_SPACING_LEFT)
 					- mxUtils.getDouble(style, mxConstants.STYLE_SPACING_RIGHT);
-		}
-		else
-		{
-			w = (state.getHeight() / scale)
-					- 2
-					* mxConstants.LABEL_INSET
-					- 2
-					* mxUtils.getDouble(style, mxConstants.STYLE_SPACING)
+		} else {
+			w = (state.getHeight() / scale) - 2 * mxConstants.LABEL_INSET
+					- 2 * mxUtils.getDouble(style, mxConstants.STYLE_SPACING)
 					- mxUtils.getDouble(style, mxConstants.STYLE_SPACING_TOP)
-					+ mxUtils
-							.getDouble(style, mxConstants.STYLE_SPACING_BOTTOM);
+					+ mxUtils.getDouble(style, mxConstants.STYLE_SPACING_BOTTOM);
 		}
 
 		return w;
@@ -915,44 +765,32 @@ public class mxGraphView extends mxEventSource
 	/**
 	 * Updates the label bounds in the given state.
 	 */
-	public void updateLabelBounds(mxCellState state)
-	{
+	public void updateLabelBounds(mxCellState state) {
 		Object cell = state.getCell();
 		Map<String, Object> style = state.getStyle();
-		String overflow = mxUtils.getString(style, mxConstants.STYLE_OVERFLOW,
-				"");
+		String overflow = mxUtils.getString(style, mxConstants.STYLE_OVERFLOW, "");
 
-		if (overflow.equals("fill"))
-		{
+		if (overflow.equals("fill")) {
 			state.setLabelBounds(new mxRectangle(state));
-		}
-		else if (state.getLabel() != null)
-		{
+		} else if (state.getLabel() != null) {
 			// For edges, the width of the geometry is used for wrapping HTML
 			// labels or no wrapping is applied if the width is set to 0
 			mxRectangle vertexBounds = state;
 
-			if (graph.getModel().isEdge(cell))
-			{
+			if (graph.getModel().isEdge(cell)) {
 				mxGeometry geo = graph.getCellGeometry(cell);
 
-				if (geo != null && geo.getWidth() > 0)
-				{
-					vertexBounds = new mxRectangle(0, 0, geo.getWidth()
-							* this.getScale(), 0);
-				}
-				else
-				{
+				if (geo != null && geo.getWidth() > 0) {
+					vertexBounds = new mxRectangle(0, 0, geo.getWidth() * this.getScale(), 0);
+				} else {
 					vertexBounds = null;
 				}
 			}
 
-			state.setLabelBounds(mxUtils.getLabelPaintBounds(state.getLabel(),
-					style, graph.isHtmlLabel(cell), state.getAbsoluteOffset(),
-					vertexBounds, scale, graph.getModel().isEdge(cell)));
+			state.setLabelBounds(mxUtils.getLabelPaintBounds(state.getLabel(), style, graph.isHtmlLabel(cell),
+					state.getAbsoluteOffset(), vertexBounds, scale, graph.getModel().isEdge(cell)));
 
-			if (overflow.equals("width"))
-			{
+			if (overflow.equals("width")) {
 				state.getLabelBounds().setX(state.getX());
 				state.getLabelBounds().setWidth(state.getWidth());
 			}
@@ -965,8 +803,7 @@ public class mxGraphView extends mxEventSource
 	 * @param state
 	 *            Cell state whose bounding box should be updated.
 	 */
-	public mxRectangle updateBoundingBox(mxCellState state)
-	{
+	public mxRectangle updateBoundingBox(mxCellState state) {
 		// Gets the cell bounds and adds shadows and markers
 		mxRectangle rect = new mxRectangle(state);
 		Map<String, Object> style = state.getStyle();
@@ -974,19 +811,13 @@ public class mxGraphView extends mxEventSource
 		// Adds extra pixels for the marker and stroke assuming
 		// that the border stroke is centered around the bounds
 		// and the first pixel is drawn inside the bounds
-		double strokeWidth = Math.max(
-				1,
-				Math.round(mxUtils.getInt(style, mxConstants.STYLE_STROKEWIDTH,
-						1) * scale));
+		double strokeWidth = Math.max(1, Math.round(mxUtils.getInt(style, mxConstants.STYLE_STROKEWIDTH, 1) * scale));
 		strokeWidth -= Math.max(1, strokeWidth / 2);
 
-		if (graph.getModel().isEdge(state.getCell()))
-		{
+		if (graph.getModel().isEdge(state.getCell())) {
 			int ms = 0;
 
-			if (style.containsKey(mxConstants.STYLE_ENDARROW)
-					|| style.containsKey(mxConstants.STYLE_STARTARROW))
-			{
+			if (style.containsKey(mxConstants.STYLE_ENDARROW) || style.containsKey(mxConstants.STYLE_STARTARROW)) {
 				ms = (int) Math.round(mxConstants.DEFAULT_MARKERSIZE * scale);
 			}
 
@@ -994,64 +825,43 @@ public class mxGraphView extends mxEventSource
 			rect.grow(ms + strokeWidth);
 
 			// Adds worst case border for an arrow shape
-			if (mxUtils.getString(style, mxConstants.STYLE_SHAPE, "").equals(
-					mxConstants.SHAPE_ARROW))
-			{
+			if (mxUtils.getString(style, mxConstants.STYLE_SHAPE, "").equals(mxConstants.SHAPE_ARROW)) {
 				rect.grow(mxConstants.ARROW_WIDTH / 2);
 			}
-		}
-		else
-		{
+		} else {
 			rect.grow(strokeWidth);
 		}
 
 		// Adds extra pixels for the shadow
-		if (mxUtils.isTrue(style, mxConstants.STYLE_SHADOW))
-		{
+		if (mxUtils.isTrue(style, mxConstants.STYLE_SHADOW)) {
 			rect.setWidth(rect.getWidth() + mxConstants.SHADOW_OFFSETX);
 			rect.setHeight(rect.getHeight() + mxConstants.SHADOW_OFFSETY);
 		}
 
 		// Adds oversize images in labels
-		if (mxUtils.getString(style, mxConstants.STYLE_SHAPE, "").equals(
-				mxConstants.SHAPE_LABEL))
-		{
-			if (mxUtils.getString(style, mxConstants.STYLE_IMAGE) != null)
-			{
-				double w = mxUtils.getInt(style, mxConstants.STYLE_IMAGE_WIDTH,
-						mxConstants.DEFAULT_IMAGESIZE) * scale;
-				double h = mxUtils.getInt(style,
-						mxConstants.STYLE_IMAGE_HEIGHT,
-						mxConstants.DEFAULT_IMAGESIZE)
-						* scale;
+		if (mxUtils.getString(style, mxConstants.STYLE_SHAPE, "").equals(mxConstants.SHAPE_LABEL)) {
+			if (mxUtils.getString(style, mxConstants.STYLE_IMAGE) != null) {
+				double w = mxUtils.getInt(style, mxConstants.STYLE_IMAGE_WIDTH, mxConstants.DEFAULT_IMAGESIZE) * scale;
+				double h = mxUtils.getInt(style, mxConstants.STYLE_IMAGE_HEIGHT, mxConstants.DEFAULT_IMAGESIZE) * scale;
 
 				double x = state.getX();
 				double y = 0;
 
-				String imgAlign = mxUtils.getString(style,
-						mxConstants.STYLE_IMAGE_ALIGN, mxConstants.ALIGN_LEFT);
-				String imgValign = mxUtils.getString(style,
-						mxConstants.STYLE_IMAGE_VERTICAL_ALIGN,
+				String imgAlign = mxUtils.getString(style, mxConstants.STYLE_IMAGE_ALIGN, mxConstants.ALIGN_LEFT);
+				String imgValign = mxUtils.getString(style, mxConstants.STYLE_IMAGE_VERTICAL_ALIGN,
 						mxConstants.ALIGN_MIDDLE);
 
-				if (imgAlign.equals(mxConstants.ALIGN_RIGHT))
-				{
+				if (imgAlign.equals(mxConstants.ALIGN_RIGHT)) {
 					x += state.getWidth() - w;
-				}
-				else if (imgAlign.equals(mxConstants.ALIGN_CENTER))
-				{
+				} else if (imgAlign.equals(mxConstants.ALIGN_CENTER)) {
 					x += (state.getWidth() - w) / 2;
 				}
 
-				if (imgValign.equals(mxConstants.ALIGN_TOP))
-				{
+				if (imgValign.equals(mxConstants.ALIGN_TOP)) {
 					y = state.getY();
-				}
-				else if (imgValign.equals(mxConstants.ALIGN_BOTTOM))
-				{
+				} else if (imgValign.equals(mxConstants.ALIGN_BOTTOM)) {
 					y = state.getY() + state.getHeight() - h;
-				}
-				else
+				} else
 				// MIDDLE
 				{
 					y = state.getY() + (state.getHeight() - h) / 2;
@@ -1089,13 +899,9 @@ public class mxGraphView extends mxEventSource
 	 * @param target
 	 *            Cell state which represents the target terminal.
 	 */
-	public void updateFixedTerminalPoints(mxCellState edge, mxCellState source,
-			mxCellState target)
-	{
-		updateFixedTerminalPoint(edge, source, true,
-				graph.getConnectionConstraint(edge, source, true));
-		updateFixedTerminalPoint(edge, target, false,
-				graph.getConnectionConstraint(edge, target, false));
+	public void updateFixedTerminalPoints(mxCellState edge, mxCellState source, mxCellState target) {
+		updateFixedTerminalPoint(edge, source, true, graph.getConnectionConstraint(edge, source, true));
+		updateFixedTerminalPoint(edge, target, false, graph.getConnectionConstraint(edge, target, false));
 	}
 
 	/**
@@ -1104,28 +910,22 @@ public class mxGraphView extends mxEventSource
 	 * @param edge
 	 *            Cell state whose initial terminal points should be updated.
 	 */
-	public void updateFixedTerminalPoint(mxCellState edge,
-			mxCellState terminal, boolean source,
-			mxConnectionConstraint constraint)
-	{
+	public void updateFixedTerminalPoint(mxCellState edge, mxCellState terminal, boolean source,
+			mxConnectionConstraint constraint) {
 		mxPoint pt = null;
 
-		if (constraint != null)
-		{
+		if (constraint != null) {
 			pt = graph.getConnectionPoint(terminal, constraint);
 		}
 
-		if (pt == null && terminal == null)
-		{
+		if (pt == null && terminal == null) {
 			mxPoint orig = edge.getOrigin();
 			mxGeometry geo = graph.getCellGeometry(edge.getCell());
 			pt = geo.getTerminalPoint(source);
 
-			if (pt != null)
-			{
-				pt = new mxPoint(scale
-						* (translate.getX() + pt.getX() + orig.getX()), scale
-						* (translate.getY() + pt.getY() + orig.getY()));
+			if (pt != null) {
+				pt = new mxPoint(scale * (translate.getX() + pt.getX() + orig.getX()),
+						scale * (translate.getY() + pt.getY() + orig.getY()));
 			}
 		}
 
@@ -1145,27 +945,19 @@ public class mxGraphView extends mxEventSource
 	 * @param target
 	 *            Cell state that represents the target terminal.
 	 */
-	public void updatePoints(mxCellState edge, List<mxPoint> points,
-			mxCellState source, mxCellState target)
-	{
-		if (edge != null)
-		{
+	public void updatePoints(mxCellState edge, List<mxPoint> points, mxCellState source, mxCellState target) {
+		if (edge != null) {
 			List<mxPoint> pts = new ArrayList<mxPoint>();
 			pts.add(edge.getAbsolutePoint(0));
-			mxEdgeStyleFunction edgeStyle = getEdgeStyle(edge, points, source,
-					target);
+			mxEdgeStyleFunction edgeStyle = getEdgeStyle(edge, points, source, target);
 
-			if (edgeStyle != null)
-			{
+			if (edgeStyle != null) {
 				mxCellState src = getTerminalPort(edge, source, true);
 				mxCellState trg = getTerminalPort(edge, target, false);
 
 				edgeStyle.apply(edge, src, trg, points, pts);
-			}
-			else if (points != null)
-			{
-				for (int i = 0; i < points.size(); i++)
-				{
+			} else if (points != null) {
+				for (int i = 0; i < points.size(); i++) {
 					pts.add(transformControlPoint(edge, points.get(i)));
 				}
 			}
@@ -1178,55 +970,43 @@ public class mxGraphView extends mxEventSource
 	/**
 	 * Transforms the given control point to an absolute point.
 	 */
-	public mxPoint transformControlPoint(mxCellState state, mxPoint pt)
-	{
+	public mxPoint transformControlPoint(mxCellState state, mxPoint pt) {
 		mxPoint origin = state.getOrigin();
 
-		return new mxPoint(scale
-				* (pt.getX() + translate.getX() + origin.getX()), scale
-				* (pt.getY() + translate.getY() + origin.getY()));
+		return new mxPoint(scale * (pt.getX() + translate.getX() + origin.getX()),
+				scale * (pt.getY() + translate.getY() + origin.getY()));
 	}
 
 	/**
 	 * Returns the edge style function to be used to compute the absolute points
 	 * for the given state, control points and terminals.
 	 */
-	public mxEdgeStyleFunction getEdgeStyle(mxCellState edge,
-			List<mxPoint> points, Object source, Object target)
-	{
+	public mxEdgeStyleFunction getEdgeStyle(mxCellState edge, List<mxPoint> points, Object source, Object target) {
 		Object edgeStyle = null;
 
-		if (source != null && source == target)
-		{
+		if (source != null && source == target) {
 			edgeStyle = edge.getStyle().get(mxConstants.STYLE_LOOP);
 
-			if (edgeStyle == null)
-			{
+			if (edgeStyle == null) {
 				edgeStyle = graph.getDefaultLoopStyle();
 			}
-		}
-		else if (!mxUtils.isTrue(edge.getStyle(),
-				mxConstants.STYLE_NOEDGESTYLE, false))
-		{
+		} else if (!mxUtils.isTrue(edge.getStyle(), mxConstants.STYLE_NOEDGESTYLE, false)) {
 			edgeStyle = edge.getStyle().get(mxConstants.STYLE_EDGE);
 		}
 
 		// Converts string values to objects
-		if (edgeStyle instanceof String)
-		{
+		if (edgeStyle instanceof String) {
 			String str = String.valueOf(edgeStyle);
 			Object tmp = mxStyleRegistry.getValue(str);
 
-			if (tmp == null)
-			{
+			if (tmp == null) {
 				tmp = mxUtils.eval(str);
 			}
 
 			edgeStyle = tmp;
 		}
 
-		if (edgeStyle instanceof mxEdgeStyleFunction)
-		{
+		if (edgeStyle instanceof mxEdgeStyleFunction) {
 			return (mxEdgeStyleFunction) edgeStyle;
 		}
 
@@ -1244,19 +1024,15 @@ public class mxGraphView extends mxEventSource
 	 * @param target
 	 *            Cell state that represents the target terminal.
 	 */
-	public void updateFloatingTerminalPoints(mxCellState state,
-			mxCellState source, mxCellState target)
-	{
+	public void updateFloatingTerminalPoints(mxCellState state, mxCellState source, mxCellState target) {
 		mxPoint p0 = state.getAbsolutePoint(0);
 		mxPoint pe = state.getAbsolutePoint(state.getAbsolutePointCount() - 1);
 
-		if (pe == null && target != null)
-		{
+		if (pe == null && target != null) {
 			updateFloatingTerminalPoint(state, target, source, false);
 		}
 
-		if (p0 == null && source != null)
-		{
+		if (p0 == null && source != null) {
 			updateFloatingTerminalPoint(state, source, target, true);
 		}
 	}
@@ -1274,18 +1050,13 @@ public class mxGraphView extends mxEventSource
 	 * @param source
 	 *            Boolean indicating if start is the source terminal state.
 	 */
-	public void updateFloatingTerminalPoint(mxCellState edge,
-			mxCellState start, mxCellState end, boolean source)
-	{
+	public void updateFloatingTerminalPoint(mxCellState edge, mxCellState start, mxCellState end, boolean source) {
 		start = getTerminalPort(edge, start, source);
 		mxPoint next = getNextPoint(edge, end, source);
-		double border = mxUtils.getDouble(edge.getStyle(),
-				mxConstants.STYLE_PERIMETER_SPACING);
+		double border = mxUtils.getDouble(edge.getStyle(), mxConstants.STYLE_PERIMETER_SPACING);
 		border += mxUtils.getDouble(edge.getStyle(),
-				(source) ? mxConstants.STYLE_SOURCE_PERIMETER_SPACING
-						: mxConstants.STYLE_TARGET_PERIMETER_SPACING);
-		mxPoint pt = getPerimeterPoint(start, next, graph.isOrthogonal(edge),
-				border);
+				(source) ? mxConstants.STYLE_SOURCE_PERIMETER_SPACING : mxConstants.STYLE_TARGET_PERIMETER_SPACING);
+		mxPoint pt = getPerimeterPoint(start, next, graph.isOrthogonal(edge), border);
 		edge.setAbsoluteTerminalPoint(pt, source);
 	}
 
@@ -1293,21 +1064,15 @@ public class mxGraphView extends mxEventSource
 	 * Returns a cell state that represents the source or target terminal or
 	 * port for the given edge.
 	 */
-	public mxCellState getTerminalPort(mxCellState state, mxCellState terminal,
-			boolean source)
-	{
-		String key = (source) ? mxConstants.STYLE_SOURCE_PORT
-				: mxConstants.STYLE_TARGET_PORT;
+	public mxCellState getTerminalPort(mxCellState state, mxCellState terminal, boolean source) {
+		String key = (source) ? mxConstants.STYLE_SOURCE_PORT : mxConstants.STYLE_TARGET_PORT;
 		String id = mxUtils.getString(state.style, key);
 
-		if (id != null && graph.getModel() instanceof mxGraphModel)
-		{
-			mxCellState tmp = getState(((mxGraphModel) graph.getModel())
-					.getCell(id));
+		if (id != null && graph.getModel() instanceof mxGraphModel) {
+			mxCellState tmp = getState(((mxGraphModel) graph.getModel()).getCell(id));
 
 			// Only uses ports where a cell state exists
-			if (tmp != null)
-			{
+			if (tmp != null) {
 				terminal = tmp;
 			}
 		}
@@ -1320,9 +1085,7 @@ public class mxGraphView extends mxEventSource
 	 * between the perimeter and the line between the center of the shape and
 	 * the given point.
 	 */
-	public mxPoint getPerimeterPoint(mxCellState terminal, mxPoint next,
-			boolean orthogonal)
-	{
+	public mxPoint getPerimeterPoint(mxCellState terminal, mxPoint next, boolean orthogonal) {
 		return getPerimeterPoint(terminal, next, orthogonal, 0);
 	}
 
@@ -1343,27 +1106,21 @@ public class mxGraphView extends mxEventSource
 	 * @param border
 	 *            Optional border between the perimeter and the shape.
 	 */
-	public mxPoint getPerimeterPoint(mxCellState terminal, mxPoint next,
-			boolean orthogonal, double border)
-	{
+	public mxPoint getPerimeterPoint(mxCellState terminal, mxPoint next, boolean orthogonal, double border) {
 		mxPoint point = null;
 
-		if (terminal != null)
-		{
+		if (terminal != null) {
 			mxPerimeterFunction perimeter = getPerimeterFunction(terminal);
 
-			if (perimeter != null && next != null)
-			{
+			if (perimeter != null && next != null) {
 				mxRectangle bounds = getPerimeterBounds(terminal, border);
 
-				if (bounds.getWidth() > 0 || bounds.getHeight() > 0)
-				{
+				if (bounds.getWidth() > 0 || bounds.getHeight() > 0) {
 					point = perimeter.apply(bounds, terminal, next, orthogonal);
 				}
 			}
 
-			if (point == null)
-			{
+			if (point == null) {
 				point = getPoint(terminal);
 			}
 		}
@@ -1376,10 +1133,9 @@ public class mxGraphView extends mxEventSource
 	 * 
 	 * @return Returns the x-coordinate of the routing center point.
 	 */
-	public double getRoutingCenterX(mxCellState state)
-	{
-		float f = (state.getStyle() != null) ? mxUtils.getFloat(
-				state.getStyle(), mxConstants.STYLE_ROUTING_CENTER_X) : 0;
+	public double getRoutingCenterX(mxCellState state) {
+		float f = (state.getStyle() != null) ? mxUtils.getFloat(state.getStyle(), mxConstants.STYLE_ROUTING_CENTER_X)
+				: 0;
 
 		return state.getCenterX() + f * state.getWidth();
 	}
@@ -1389,10 +1145,9 @@ public class mxGraphView extends mxEventSource
 	 * 
 	 * @return Returns the y-coordinate of the routing center point.
 	 */
-	public double getRoutingCenterY(mxCellState state)
-	{
-		float f = (state.getStyle() != null) ? mxUtils.getFloat(
-				state.getStyle(), mxConstants.STYLE_ROUTING_CENTER_Y) : 0;
+	public double getRoutingCenterY(mxCellState state) {
+		float f = (state.getStyle() != null) ? mxUtils.getFloat(state.getStyle(), mxConstants.STYLE_ROUTING_CENTER_Y)
+				: 0;
 
 		return state.getCenterY() + f * state.getHeight();
 	}
@@ -1400,12 +1155,9 @@ public class mxGraphView extends mxEventSource
 	/**
 	 * Returns the perimeter bounds for the given terminal, edge pair.
 	 */
-	public mxRectangle getPerimeterBounds(mxCellState terminal, double border)
-	{
-		if (terminal != null)
-		{
-			border += mxUtils.getDouble(terminal.getStyle(),
-					mxConstants.STYLE_PERIMETER_SPACING);
+	public mxRectangle getPerimeterBounds(mxCellState terminal, double border) {
+		if (terminal != null) {
+			border += mxUtils.getDouble(terminal.getStyle(), mxConstants.STYLE_PERIMETER_SPACING);
 		}
 
 		return terminal.getPerimeterBounds(border * scale);
@@ -1414,26 +1166,22 @@ public class mxGraphView extends mxEventSource
 	/**
 	 * Returns the perimeter function for the given state.
 	 */
-	public mxPerimeterFunction getPerimeterFunction(mxCellState state)
-	{
+	public mxPerimeterFunction getPerimeterFunction(mxCellState state) {
 		Object perimeter = state.getStyle().get(mxConstants.STYLE_PERIMETER);
 
 		// Converts string values to objects
-		if (perimeter instanceof String)
-		{
+		if (perimeter instanceof String) {
 			String str = String.valueOf(perimeter);
 			Object tmp = mxStyleRegistry.getValue(str);
 
-			if (tmp == null)
-			{
+			if (tmp == null) {
 				tmp = mxUtils.eval(str);
 			}
 
 			perimeter = tmp;
 		}
 
-		if (perimeter instanceof mxPerimeterFunction)
-		{
+		if (perimeter instanceof mxPerimeterFunction) {
 			return (mxPerimeterFunction) perimeter;
 		}
 
@@ -1453,22 +1201,17 @@ public class mxGraphView extends mxEventSource
 	 *            should be returned.
 	 * @return Returns the nearest point of the opposite side.
 	 */
-	public mxPoint getNextPoint(mxCellState edge, mxCellState opposite,
-			boolean source)
-	{
+	public mxPoint getNextPoint(mxCellState edge, mxCellState opposite, boolean source) {
 		List<mxPoint> pts = edge.getAbsolutePoints();
 		mxPoint point = null;
 
-		if (pts != null && pts.size() >= 2)
-		{
+		if (pts != null && pts.size() >= 2) {
 			int count = pts.size();
-			int index = (source) ? Math.min(1, count - 1) : Math.max(0,
-					count - 2);
+			int index = (source) ? Math.min(1, count - 1) : Math.max(0, count - 2);
 			point = pts.get(index);
 		}
 
-		if (point == null && opposite != null)
-		{
+		if (point == null && opposite != null) {
 			point = new mxPoint(opposite.getCenterX(), opposite.getCenterY());
 		}
 
@@ -1486,16 +1229,13 @@ public class mxGraphView extends mxEventSource
 	 *            be returned.
 	 * @return Returns the visible source or target terminal.
 	 */
-	public Object getVisibleTerminal(Object edge, boolean source)
-	{
+	public Object getVisibleTerminal(Object edge, boolean source) {
 		mxIGraphModel model = graph.getModel();
 		Object result = model.getTerminal(edge, source);
 		Object best = result;
 
-		while (result != null && result != currentRoot)
-		{
-			if (!graph.isCellVisible(best) || graph.isCellCollapsed(result))
-			{
+		while (result != null && result != currentRoot) {
+			if (!graph.isCellVisible(best) || graph.isCellCollapsed(result)) {
 				best = result;
 			}
 
@@ -1503,8 +1243,7 @@ public class mxGraphView extends mxEventSource
 		}
 
 		// Checks if the result is not a layer
-		if (model.getParent(best) == model.getRoot())
-		{
+		if (model.getParent(best) == model.getRoot()) {
 			best = null;
 		}
 
@@ -1518,20 +1257,16 @@ public class mxGraphView extends mxEventSource
 	 * @param state
 	 *            Cell state whose bounds should be updated.
 	 */
-	public void updateEdgeBounds(mxCellState state)
-	{
+	public void updateEdgeBounds(mxCellState state) {
 		List<mxPoint> points = state.getAbsolutePoints();
 		mxPoint p0 = points.get(0);
 		mxPoint pe = points.get(points.size() - 1);
 
-		if (p0.getX() != pe.getX() || p0.getY() != pe.getY())
-		{
+		if (p0.getX() != pe.getX() || p0.getY() != pe.getY()) {
 			double dx = pe.getX() - p0.getX();
 			double dy = pe.getY() - p0.getY();
 			state.setTerminalDistance(Math.sqrt(dx * dx + dy * dy));
-		}
-		else
-		{
+		} else {
 			state.setTerminalDistance(0);
 		}
 
@@ -1544,12 +1279,10 @@ public class mxGraphView extends mxEventSource
 		double maxX = minX;
 		double maxY = minY;
 
-		for (int i = 1; i < points.size(); i++)
-		{
+		for (int i = 1; i < points.size(); i++) {
 			mxPoint tmp = points.get(i);
 
-			if (tmp != null)
-			{
+			if (tmp != null) {
 				double dx = pt.getX() - tmp.getX();
 				double dy = pt.getY() - tmp.getY();
 
@@ -1578,8 +1311,7 @@ public class mxGraphView extends mxEventSource
 	/**
 	 * Returns the absolute center point along the given edge.
 	 */
-	public mxPoint getPoint(mxCellState state)
-	{
+	public mxPoint getPoint(mxCellState state) {
 		return getPoint(state, null);
 	}
 
@@ -1594,14 +1326,11 @@ public class mxGraphView extends mxEventSource
 	 * @return Returns the mxpoint that represents the absolute location of the
 	 *         given relative geometry.
 	 */
-	public mxPoint getPoint(mxCellState state, mxGeometry geometry)
-	{
+	public mxPoint getPoint(mxCellState state, mxGeometry geometry) {
 		double x = state.getCenterX();
 		double y = state.getCenterY();
 
-		if (state.getSegments() != null
-				&& (geometry == null || geometry.isRelative()))
-		{
+		if (state.getSegments() != null && (geometry == null || geometry.isRelative())) {
 			double gx = (geometry != null) ? geometry.getX() / 2 : 0;
 			int pointCount = state.getAbsolutePointCount();
 			double dist = (gx + 0.5) * state.getLength();
@@ -1610,8 +1339,7 @@ public class mxGraphView extends mxEventSource
 			double length = 0;
 			int index = 1;
 
-			while (dist > length + segment && index < pointCount - 1)
-			{
+			while (dist > length + segment && index < pointCount - 1) {
 				length += segment;
 				segment = segments[index++];
 			}
@@ -1620,19 +1348,16 @@ public class mxGraphView extends mxEventSource
 			mxPoint p0 = state.getAbsolutePoint(index - 1);
 			mxPoint pe = state.getAbsolutePoint(index);
 
-			if (p0 != null && pe != null)
-			{
+			if (p0 != null && pe != null) {
 				double gy = 0;
 				double offsetX = 0;
 				double offsetY = 0;
 
-				if (geometry != null)
-				{
+				if (geometry != null) {
 					gy = geometry.getY();
 					mxPoint offset = geometry.getOffset();
 
-					if (offset != null)
-					{
+					if (offset != null) {
 						offsetX = offset.getX();
 						offsetY = offset.getY();
 					}
@@ -1646,13 +1371,10 @@ public class mxGraphView extends mxEventSource
 				x = p0.getX() + dx * factor + (nx * gy + offsetX) * scale;
 				y = p0.getY() + dy * factor - (ny * gy - offsetY) * scale;
 			}
-		}
-		else if (geometry != null)
-		{
+		} else if (geometry != null) {
 			mxPoint offset = geometry.getOffset();
 
-			if (offset != null)
-			{
+			if (offset != null) {
 				x += offset.getX();
 				y += offset.getY();
 			}
@@ -1665,17 +1387,14 @@ public class mxGraphView extends mxEventSource
 	 * Gets the relative point that describes the given, absolute label position
 	 * for the given edge state.
 	 */
-	public mxPoint getRelativePoint(mxCellState edgeState, double x, double y)
-	{
+	public mxPoint getRelativePoint(mxCellState edgeState, double x, double y) {
 		mxIGraphModel model = graph.getModel();
 		mxGeometry geometry = model.getGeometry(edgeState.getCell());
 
-		if (geometry != null)
-		{
+		if (geometry != null) {
 			int pointCount = edgeState.getAbsolutePointCount();
 
-			if (geometry.isRelative() && pointCount > 1)
-			{
+			if (geometry.isRelative() && pointCount > 1) {
 				double totalLength = edgeState.getLength();
 				double[] segments = edgeState.getSegments();
 
@@ -1689,16 +1408,14 @@ public class mxGraphView extends mxEventSource
 				double tmp = 0;
 				double length = 0;
 
-				for (int i = 2; i < pointCount; i++)
-				{
+				for (int i = 2; i < pointCount; i++) {
 					tmp += segments[i - 2];
 					pe = edgeState.getAbsolutePoint(i);
 
 					line = new Line2D.Double(p0.getPoint(), pe.getPoint());
 					double dist = line.ptSegDistSq(x, y);
 
-					if (dist < minDist)
-					{
+					if (dist < minDist) {
 						minDist = dist;
 						index = i - 1;
 						length = tmp;
@@ -1731,37 +1448,28 @@ public class mxGraphView extends mxEventSource
 				py = ySegment - py;
 				double dotprod = px * xSegment + py * ySegment;
 
-				if (dotprod <= 0.0)
-				{
+				if (dotprod <= 0.0) {
 					projlenSq = 0;
-				}
-				else
-				{
-					projlenSq = dotprod * dotprod
-							/ (xSegment * xSegment + ySegment * ySegment);
+				} else {
+					projlenSq = dotprod * dotprod / (xSegment * xSegment + ySegment * ySegment);
 				}
 
 				double projlen = Math.sqrt(projlenSq);
 
-				if (projlen > seg)
-				{
+				if (projlen > seg) {
 					projlen = seg;
 				}
 
-				double yDistance = Line2D.ptLineDist(p0.getX(), p0.getY(),
-						pe.getX(), pe.getY(), x, y);
-				int direction = Line2D.relativeCCW(p0.getX(), p0.getY(),
-						pe.getX(), pe.getY(), x, y);
+				double yDistance = Line2D.ptLineDist(p0.getX(), p0.getY(), pe.getX(), pe.getY(), x, y);
+				int direction = Line2D.relativeCCW(p0.getX(), p0.getY(), pe.getX(), pe.getY(), x, y);
 
-				if (direction == -1)
-				{
+				if (direction == -1) {
 					yDistance = -yDistance;
 				}
 
 				// Constructs the relative point for the label
-				return new mxPoint(
-						Math.round(((totalLength / 2 - length - projlen) / totalLength)
-								* -2), Math.round(yDistance / scale));
+				return new mxPoint(Math.round(((totalLength / 2 - length - projlen) / totalLength) * -2),
+						Math.round(yDistance / scale));
 			}
 		}
 
@@ -1773,16 +1481,13 @@ public class mxGraphView extends mxEventSource
 	 * states that are not null, that is, the returned array may have less
 	 * elements than the given array.
 	 */
-	public mxCellState[] getCellStates(Object[] cells)
-	{
+	public mxCellState[] getCellStates(Object[] cells) {
 		List<mxCellState> result = new ArrayList<mxCellState>(cells.length);
 
-		for (int i = 0; i < cells.length; i++)
-		{
+		for (int i = 0; i < cells.length; i++) {
 			mxCellState state = getState(cells[i]);
 
-			if (state != null)
-			{
+			if (state != null) {
 				result.add(state);
 			}
 		}
@@ -1799,8 +1504,7 @@ public class mxGraphView extends mxEventSource
 	 *            Cell whose state should be returned.
 	 * @return Returns the state for the given cell.
 	 */
-	public mxCellState getState(Object cell)
-	{
+	public mxCellState getState(Object cell) {
 		return getState(cell, false);
 	}
 
@@ -1815,16 +1519,13 @@ public class mxGraphView extends mxEventSource
 	 *            not yet exist.
 	 * @return Returns the state for the given cell.
 	 */
-	public mxCellState getState(Object cell, boolean create)
-	{
+	public mxCellState getState(Object cell, boolean create) {
 		mxCellState state = null;
 
-		if (cell != null)
-		{
+		if (cell != null) {
 			state = states.get(cell);
 
-			if (state == null && create && graph.isCellVisible(cell))
-			{
+			if (state == null && create && graph.isCellVisible(cell)) {
 				state = createState(cell);
 				states.put(cell, state);
 			}
@@ -1840,8 +1541,7 @@ public class mxGraphView extends mxEventSource
 	 *            mxCell for which the mxCellState should be removed.
 	 * @return Returns the mxCellState that has been removed.
 	 */
-	public mxCellState removeState(Object cell)
-	{
+	public mxCellState removeState(Object cell) {
 		return (cell != null) ? (mxCellState) states.remove(cell) : null;
 	}
 
@@ -1852,16 +1552,14 @@ public class mxGraphView extends mxEventSource
 	 *            Cell for which a new state should be created.
 	 * @return Returns a new state for the given cell.
 	 */
-	public mxCellState createState(Object cell)
-	{
+	public mxCellState createState(Object cell) {
 		return new mxCellState(this, cell, graph.getCellStyle(cell));
 	}
 
 	/**
 	 * Action to change the current root in a view.
 	 */
-	public static class mxCurrentRootChange implements mxUndoableChange
-	{
+	public static class mxCurrentRootChange implements mxUndoableChange {
 
 		/**
 		 * 
@@ -1881,22 +1579,18 @@ public class mxGraphView extends mxEventSource
 		/**
 		 * Constructs a change of the current root in the given view.
 		 */
-		public mxCurrentRootChange(mxGraphView view, Object root)
-		{
+		public mxCurrentRootChange(mxGraphView view, Object root) {
 			this.view = view;
 			this.root = root;
 			this.previous = this.root;
 			this.up = (root == null);
 
-			if (!up)
-			{
+			if (!up) {
 				Object tmp = view.getCurrentRoot();
 				mxIGraphModel model = view.graph.getModel();
 
-				while (tmp != null)
-				{
-					if (tmp == root)
-					{
+				while (tmp != null) {
+					if (tmp == root) {
 						up = true;
 						break;
 					}
@@ -1909,51 +1603,43 @@ public class mxGraphView extends mxEventSource
 		/**
 		 * Returns the graph view where the change happened.
 		 */
-		public mxGraphView getView()
-		{
+		public mxGraphView getView() {
 			return view;
 		}
 
 		/**
 		 * Returns the root.
 		 */
-		public Object getRoot()
-		{
+		public Object getRoot() {
 			return root;
 		}
 
 		/**
 		 * Returns the previous root.
 		 */
-		public Object getPrevious()
-		{
+		public Object getPrevious() {
 			return previous;
 		}
 
 		/**
 		 * Returns true if the drilling went upwards.
 		 */
-		public boolean isUp()
-		{
+		public boolean isUp() {
 			return up;
 		}
 
 		/**
 		 * Changes the current root of the view.
 		 */
-		public void execute()
-		{
+		public void execute() {
 			Object tmp = view.getCurrentRoot();
 			view.currentRoot = previous;
 			previous = tmp;
 
-			mxPoint translate = view.graph.getTranslateForRoot(view
-					.getCurrentRoot());
+			mxPoint translate = view.graph.getTranslateForRoot(view.getCurrentRoot());
 
-			if (translate != null)
-			{
-				view.translate = new mxPoint(-translate.getX(),
-						translate.getY());
+			if (translate != null) {
+				view.translate = new mxPoint(-translate.getX(), translate.getY());
 			}
 
 			// Removes all existing cell states and revalidates
@@ -1961,8 +1647,7 @@ public class mxGraphView extends mxEventSource
 			up = !up;
 
 			String eventName = (up) ? mxEvent.UP : mxEvent.DOWN;
-			view.fireEvent(new mxEventObject(eventName, "root",
-					view.currentRoot, "previous", previous));
+			view.fireEvent(new mxEventObject(eventName, "root", view.currentRoot, "previous", previous));
 		}
 
 	}

@@ -61,7 +61,7 @@ public class mxRectangle extends mxPoint
 	public mxRectangle(double x, double y, double width, double height)
 	{
 		super(x, y);
-
+		
 		setWidth(width);
 		setHeight(height);
 	}

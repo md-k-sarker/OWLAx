@@ -78,7 +78,7 @@ public class mxConstants
 	/**
 	 * Defines the default start size for swimlanes. Default is 40.
 	 */
-	public static int DEFAULT_STARTSIZE = 40;
+	public static int DEFAULT_STARTSIZE = 20;
 
 	/**
 	 * Default line height for text output. Default is 1.2. This is ignored for HTML in
@@ -123,7 +123,7 @@ public class mxConstants
 	/**
 	 * Defines the default image size. Default is 24.
 	 */
-	public static int DEFAULT_IMAGESIZE = 24;
+	public static int DEFAULT_IMAGESIZE = 20;
 
 	/**
 	 * Defines the default opacity for stencils shadows. Default is 1.

@@ -4,7 +4,7 @@
 		<add as="fillColor" value="#adc5ff"/>
 		<add as="gradientColor" value="#7d85df"/>
 		<add as="strokeColor" value="#5d65df"/>
-		<add as="fontSize" value="12"/>
+		<add as="fontSize" value="16"/>
 		<add as="fontColor" value="#1d258f"/>
 		<add as="fontFamily" value="Verdana"/>
 	</add>
@@ -13,7 +13,7 @@
 		<add as="rounded" value="1"/>
 		<add as="edgeStyle" value="elbowEdgeStyle"/>
 		<add as="strokeColor" value="#5d65df"/>
-		<add as="fontSize" value="11"/>
+		<add as="fontSize" value="16"/>
 		<add as="fontColor" value="#1d258f"/>
 		<add as="fontFamily" value="Verdana"/>
 	</add>
@@ -25,8 +25,8 @@
 		<add as="verticalAlign" value="middle"/>
 		<add as="spacing" value="2"/>
 		<add as="spacingLeft" value="40"/>
-		<add as="imageWidth" value="24"/>
-		<add as="imageHeight" value="24"/>
+		<add as="imageWidth" value="32"/>
+		<add as="imageHeight" value="32"/>
 		<add as="rounded" value="1"/>
 		<add as="shadow" value="1"/>
 		<add as="glass" value="1"/>
@@ -84,7 +84,7 @@
 	</add>
 	<add as="line">
 		<add as="shape" value="line"/>
-		<add as="strokeWidth" value="4"/>
+		<add as="strokeWidth" value="6"/>
 		<add as="labelBackgroundColor" value="white"/>
 		<add as="verticalAlign" value="top"/>
 		<add as="spacingTop" value="8"/>

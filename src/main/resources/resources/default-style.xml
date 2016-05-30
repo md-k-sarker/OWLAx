@@ -25,8 +25,8 @@
 		<add as="verticalAlign" value="middle"/>
 		<add as="spacing" value="2"/>
 		<add as="spacingLeft" value="40"/>
-		<add as="imageWidth" value="32"/>
-		<add as="imageHeight" value="32"/>
+		<add as="imageWidth" value="24"/>
+		<add as="imageHeight" value="24"/>
 		<add as="rounded" value="1"/>
 		<add as="shadow" value="1"/>
 		<add as="glass" value="1"/>
