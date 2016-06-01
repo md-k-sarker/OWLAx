@@ -7,11 +7,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.semanticweb.owlapi.model.EntityType;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import edu.wsu.dase.util.Constants;
 import edu.wsu.dase.util.CustomEntityType;
 
 /**

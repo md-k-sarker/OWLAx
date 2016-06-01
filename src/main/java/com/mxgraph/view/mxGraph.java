@@ -2368,7 +2368,7 @@ public class mxGraph extends mxEventSource
 	public Object insertVertex(Object parent, String id, Object value,
 			double x, double y, double width, double height)
 	{
-		System.out.println("sarker.3 mxGraph");
+		//System.out.println("sarker.3 mxGraph");
 		return insertVertex(parent, id, value, x, y, width, height, null);
 	}
 
@@ -2391,7 +2391,7 @@ public class mxGraph extends mxEventSource
 	public Object insertVertex(Object parent, String id, Object value,
 			double x, double y, double width, double height, String style)
 	{
-		System.out.println("sarker.3 mxGraph.java");
+		//System.out.println("sarker.3 mxGraph.java");
 		return insertVertex(parent, id, value, x, y, width, height, style,
 				false);
 	}
@@ -2417,7 +2417,7 @@ public class mxGraph extends mxEventSource
 			double x, double y, double width, double height, String style,
 			boolean relative)
 	{
-		System.out.println("sarker.3 mxGraph.java insertVertex");
+		//System.out.println("sarker.3 mxGraph.java insertVertex");
 		Object vertex = createVertex(parent, id, value, x, y, width, height,
 				style, relative);
 
@@ -2544,7 +2544,7 @@ public class mxGraph extends mxEventSource
 	public Object addEdge(Object edge, Object parent, Object source,
 			Object target, Integer index)
 	{
-		System.out.println("sarker.3 addEdge called");
+		//System.out.println("sarker.3 addEdge called");
 		return addCell(edge, parent, index, source, target);
 	}
 
@@ -2556,7 +2556,7 @@ public class mxGraph extends mxEventSource
 	 */
 	public Object addCell(Object cell)
 	{
-		System.out.println("sarker.3 addCell called");
+		//System.out.println("sarker.3 addCell called");
 		return addCell(cell, null);
 	}
 

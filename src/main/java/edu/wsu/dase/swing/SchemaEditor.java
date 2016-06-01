@@ -6,16 +6,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JToolBar;
 import javax.swing.UIManager;
 
-import edu.wsu.dase.swing.editor.BasicGraphEditor;
-import edu.wsu.dase.swing.editor.EditorPalette;
-import edu.wsu.dase.swing.editor.SchemaEditorMenuBar;
-import edu.wsu.dase.swing.editor.SchemaEditorToolBar;
-import edu.wsu.dase.swing.editor.SchemaGraphComponent;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.util.mxRectangle;
 import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
+
+import edu.wsu.dase.swing.editor.BasicGraphEditor;
+import edu.wsu.dase.swing.editor.EditorPalette;
+import edu.wsu.dase.swing.editor.SchemaEditorMenuBar;
+import edu.wsu.dase.swing.editor.SchemaEditorToolBar;
+import edu.wsu.dase.swing.editor.SchemaGraphComponent;
 
 public class SchemaEditor extends BasicGraphEditor
 {

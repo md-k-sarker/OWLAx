@@ -24,7 +24,7 @@
 		to store multiple view -->
 	<extension id="daseViewComplicated"
 		point="org.protege.editor.core.application.WorkspaceTab">
-		<label value="Ontology-Design-Pattern" />
+		<label value="Ontology Design Pattern" />
 		<class value="org.protege.editor.owl.ui.OWLWorkspaceViewsTab" />
 		<index value="X" />
 		<editorKitId value="OWLEditorKit" />

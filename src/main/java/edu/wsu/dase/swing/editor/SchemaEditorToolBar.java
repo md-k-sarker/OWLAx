@@ -10,18 +10,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.TransferHandler;
 
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.util.mxGraphActions;
+import com.mxgraph.util.mxEvent;
+import com.mxgraph.util.mxEventObject;
+import com.mxgraph.util.mxEventSource.mxIEventListener;
+import com.mxgraph.util.mxResources;
+import com.mxgraph.view.mxGraphView;
+
 import edu.wsu.dase.swing.editor.EditorActions.HistoryAction;
 import edu.wsu.dase.swing.editor.EditorActions.NewAction;
 import edu.wsu.dase.swing.editor.EditorActions.OpenAction;
 import edu.wsu.dase.swing.editor.EditorActions.PrintAction;
 import edu.wsu.dase.swing.editor.EditorActions.SaveAction;
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.swing.util.mxGraphActions;
-import com.mxgraph.util.mxEvent;
-import com.mxgraph.util.mxEventObject;
-import com.mxgraph.util.mxResources;
-import com.mxgraph.util.mxEventSource.mxIEventListener;
-import com.mxgraph.view.mxGraphView;
 
 public class SchemaEditorToolBar extends JToolBar
 {

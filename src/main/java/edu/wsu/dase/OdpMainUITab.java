@@ -2,19 +2,10 @@ package edu.wsu.dase;
 
 import java.awt.BorderLayout;
 
-import javax.swing.JButton;
-
-//import org.checkerframework.checker.nullness.qual.NonNull;
-import org.protege.editor.owl.model.event.EventType;
-import org.protege.editor.owl.model.event.OWLModelManagerChangeEvent;
-import org.protege.editor.owl.model.event.OWLModelManagerListener;
 import org.protege.editor.owl.ui.OWLWorkspaceViewsTab;
 
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
-
-import edu.wsu.dase.swing.GraphEditor;
-import edu.wsu.dase.swing.editor.EditorMenuBar;
 
 public class OdpMainUITab extends OWLWorkspaceViewsTab {
 
@@ -24,7 +15,7 @@ public class OdpMainUITab extends OWLWorkspaceViewsTab {
 	public void initialise() {
 		// TODO Auto-generated method stub
 		super.initialise();
-		setToolTipText("SWRLTab");
+		setToolTipText("ODP Protege Plugin");
 		setLayout(new BorderLayout());
 		/*
 		GraphEditor editor = new GraphEditor();

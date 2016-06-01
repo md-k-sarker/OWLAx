@@ -217,7 +217,7 @@ public class mxGraphView extends mxEventSource {
 	 */
 	public void setScale(double value) {
 		
-		System.out.println("sarker.3 scale value: " + value+"\n\n");
+		//System.out.println("sarker.3 scale value: " + value+"\n\n");
 		double previousScale = scale;
 
 		if (scale != value) {

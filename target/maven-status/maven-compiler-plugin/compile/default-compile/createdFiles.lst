@@ -170,7 +170,6 @@ com\mxgraph\layout\hierarchical\stage\mxMinimumCycleRemover.class
 com\mxgraph\layout\mxStackLayout.class
 edu\wsu\dase\swing\editor\GraphConfigDialog$3.class
 com\mxgraph\view\mxEdgeStyle$1.class
-edu\wsu\dase\DefaultIRIResolver.class
 com\mxgraph\swing\handler\mxRotationHandler$1.class
 com\mxgraph\reader\mxSaxOutputHandler$4.class
 com\mxgraph\reader\mxDomOutputParser$38.class
@@ -253,7 +252,6 @@ com\mxgraph\shape\mxStencilRegistry.class
 edu\wsu\dase\swing\editor\SchemaEditorToolBar$2.class
 com\mxgraph\swing\mxGraphOutline$1.class
 com\mxgraph\reader\mxSaxOutputHandler$33.class
-edu\wsu\dase\IRIResolver.class
 com\mxgraph\reader\mxSaxOutputHandler$19.class
 com\mxgraph\util\png\mxPngEncodeParam$RGB.class
 edu\wsu\dase\swing\editor\GraphConfigDialog$10.class
@@ -322,7 +320,6 @@ edu\wsu\dase\swing\UserObject.class
 edu\wsu\dase\swing\editor\BasicGraphEditor$6.class
 com\mxgraph\reader\mxDomOutputParser$36.class
 com\mxgraph\layout\mxCircleLayout.class
-edu\wsu\dase\ProtegeIRIResolver.class
 com\mxgraph\swing\handler\mxMovePreview$2.class
 com\mxgraph\reader\mxSaxOutputHandler$12.class
 edu\wsu\dase\swing\editor\EditorPalette$4.class
@@ -392,7 +389,6 @@ com\mxgraph\util\png\CRC.class
 com\mxgraph\canvas\mxBasicCanvas.class
 edu\wsu\dase\swing\editor\EditorAboutFrame$2.class
 com\mxgraph\reader\mxDomOutputParser$4.class
-edu\wsu\dase\FileListTransferHandler.class
 edu\wsu\dase\swing\editor\EditorActions$SelectSpanningTreeAction.class
 com\mxgraph\swing\mxGraphComponent$10.class
 com\mxgraph\util\mxUndoableEdit$mxUndoableChange.class
@@ -466,7 +462,6 @@ edu\wsu\dase\swing\editor\GraphConfigDialog$9.class
 com\mxgraph\swing\handler\mxInsertHandler$1.class
 com\mxgraph\reader\mxDomOutputParser$20.class
 edu\wsu\dase\swing\editor\EditorActions$GridStyleAction.class
-edu\wsu\dase\FileDragDemo.class
 edu\wsu\dase\swing\editor\BasicGraphEditor$15.class
 edu\wsu\dase\swing\editor\EditorRuler.class
 com\mxgraph\util\svg\ExtendedPathIterator.class
@@ -522,7 +517,6 @@ com\mxgraph\swing\mxGraphOutline$MouseTracker.class
 com\mxgraph\shape\mxMarkerRegistry$3.class
 com\mxgraph\swing\view\mxCellEditor$1.class
 edu\wsu\dase\swing\editor\EditorActions$StyleAction.class
-edu\wsu\dase\FileDragDemo$1.class
 edu\wsu\dase\swing\editor\EditorActions.class
 edu\wsu\dase\swing\editor\EditorToolBar$4.class
 com\mxgraph\canvas\mxSvgCanvas.class

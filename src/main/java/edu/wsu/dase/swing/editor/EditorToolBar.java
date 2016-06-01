@@ -14,6 +14,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.TransferHandler;
 
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.util.mxGraphActions;
+import com.mxgraph.util.mxConstants;
+import com.mxgraph.util.mxEvent;
+import com.mxgraph.util.mxEventObject;
+import com.mxgraph.util.mxEventSource.mxIEventListener;
+import com.mxgraph.util.mxResources;
+import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.mxGraphView;
+
 import edu.wsu.dase.swing.editor.EditorActions.ColorAction;
 import edu.wsu.dase.swing.editor.EditorActions.FontStyleAction;
 import edu.wsu.dase.swing.editor.EditorActions.HistoryAction;
@@ -22,15 +32,6 @@ import edu.wsu.dase.swing.editor.EditorActions.NewAction;
 import edu.wsu.dase.swing.editor.EditorActions.OpenAction;
 import edu.wsu.dase.swing.editor.EditorActions.PrintAction;
 import edu.wsu.dase.swing.editor.EditorActions.SaveAction;
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.swing.util.mxGraphActions;
-import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxEvent;
-import com.mxgraph.util.mxEventObject;
-import com.mxgraph.util.mxResources;
-import com.mxgraph.util.mxEventSource.mxIEventListener;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
 
 public class EditorToolBar extends JToolBar {
 
@@ -111,7 +112,7 @@ public class EditorToolBar extends JToolBar {
 		final JComboBox sizeCombo = new JComboBox(new Object[] { "6pt", "8pt", "9pt", "10pt", "12pt", "14pt", "18pt",
 				"24pt", "30pt", "36pt", "48pt", "60pt" });
 		sizeCombo.setEditable(true);
-		sizeCombo.setSelectedIndex(2);
+		sizeCombo.setSelectedIndex(7);
 		sizeCombo.setMinimumSize(new Dimension(65, 0));
 		sizeCombo.setPreferredSize(new Dimension(65, 0));
 		sizeCombo.setMaximumSize(new Dimension(65, 100));

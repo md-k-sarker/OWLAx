@@ -2,7 +2,7 @@
 	<add as="defaultVertex">
 		<add as="shape" value="label"/>
 		<add as="perimeter" value="rectanglePerimeter"/>
-		<add as="fontSize" value="11"/>
+		<add as="fontSize" value="24"/>
 		<add as="align" value="center"/>
 		<add as="verticalAlign" value="middle"/>
 		<add as="strokeColor" value="black"/>
@@ -12,7 +12,7 @@
 		<add as="shape" value="connector"/>
 		<add as="labelBackgroundColor" value="white"/>
 		<add as="endArrow" value="classic"/>
-		<add as="fontSize" value="10"/>
+		<add as="fontSize" value="22"/>
 		<add as="align" value="center"/>
 		<add as="verticalAlign" value="middle"/>
 		<add as="strokeColor" value="black"/>

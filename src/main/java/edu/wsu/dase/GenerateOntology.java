@@ -1,58 +1,38 @@
 package edu.wsu.dase;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
-import javax.annotation.Resource;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 //import org.checkerframework.checker.nullness.qual.NonNull;
 import org.protege.editor.owl.model.OWLModelManager;
-import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.AddAxiom;
 import org.semanticweb.owlapi.model.AxiomType;
-import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDatatype;
-import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
-import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
-import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.PrefixManager;
 import org.semanticweb.owlapi.model.parameters.ChangeApplied;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 
-import edu.wsu.dase.IRIResolver;
-import edu.wsu.dase.ProtegeIRIResolver;
-
-import com.mxgraph.analysis.mxAnalysisGraph;
-import com.mxgraph.analysis.mxGraphAnalysis;
-import com.mxgraph.analysis.mxGraphStructure;
-import com.mxgraph.analysis.mxICostFunction;
-import com.mxgraph.analysis.mxTraversal;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGraphModel;
 import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraph.mxICellVisitor;
 
-import edu.wsu.dase.swing.GraphEditor;
 import edu.wsu.dase.swing.editor.BasicGraphEditor;
-import edu.wsu.dase.util.Constants;
 import edu.wsu.dase.util.CustomEntityType;
 
 public class GenerateOntology {
@@ -121,7 +101,7 @@ public class GenerateOntology {
 			// String base = "http://example.com/owl/families/#";
 			pm.setDefaultPrefix(ontologyBaseURI);
 
-			System.out.println("base uri: " + ontologyBaseURI);
+			//System.out.println("base uri: " + ontologyBaseURI);
 		}
 
 	}
@@ -132,11 +112,11 @@ public class GenerateOntology {
 			axiomsToRemove = new HashSet<OWLAxiom>();
 			for (OWLAxiom ax : o.getAxioms()) {
 				axiomsToRemove.add(ax);
-				System.out.println("to remove from " + o.getOntologyID().getOntologyIRI() + ": " + ax);
+				//System.out.println("to remove from " + o.getOntologyID().getOntologyIRI() + ": " + ax);
 			}
-			System.out.println("Before: " + o.getAxiomCount());
+			//System.out.println("Before: " + o.getAxiomCount());
 			owlOntologyManager.removeAxioms(o, axiomsToRemove);
-			System.out.println("After: " + o.getAxiomCount());
+			//System.out.println("After: " + o.getAxiomCount());
 		}
 	}
 
@@ -179,7 +159,7 @@ public class GenerateOntology {
 		owlOntologyManager.applyChange(addaxiom);
 
 		for (OWLAnnotationProperty cls : activeOntology.getAnnotationPropertiesInSignature()) {
-			System.out.println("OWLAnnotationProperty: " + cls.getIRI());
+			//System.out.println("OWLAnnotationProperty: " + cls.getIRI());
 		}
 	}
 
@@ -194,7 +174,7 @@ public class GenerateOntology {
 		owlOntologyManager.applyChange(addaxiom);
 
 		for (OWLDataProperty cls : activeOntology.getDataPropertiesInSignature()) {
-			System.out.println("OWLDataProperty: " + cls.getIRI());
+			//System.out.println("OWLDataProperty: " + cls.getIRI());
 		}
 	}
 
@@ -208,7 +188,7 @@ public class GenerateOntology {
 		owlOntologyManager.applyChange(addaxiom);
 
 		for (OWLObjectProperty cls : activeOntology.getObjectPropertiesInSignature()) {
-			System.out.println("OWLObjectProperty: " + cls.getIRI());
+			//System.out.println("OWLObjectProperty: " + cls.getIRI());
 		}
 	}
 
@@ -227,7 +207,7 @@ public class GenerateOntology {
 		owlOntologyManager.applyChange(addaxiom);
 
 		for (OWLClass cls : activeOntology.getClassesInSignature()) {
-			System.out.println("class: " + cls.getIRI());
+			//System.out.println("class: " + cls.getIRI());
 		}
 	}
 
@@ -242,7 +222,7 @@ public class GenerateOntology {
 		owlOntologyManager.applyChange(addaxiom);
 
 		for (OWLNamedIndividual ind : activeOntology.getIndividualsInSignature()) {
-			System.out.println("ind: " + ind.getIRI());
+			//System.out.println("ind: " + ind.getIRI());
 		}
 	}
 
@@ -253,7 +233,7 @@ public class GenerateOntology {
 				mxCell cell = (mxCell) vertex;
 				if (cell.getValue().toString().length() > 0) {
 					CustomEntityType CustomEntityType = cell.getEntityType();
-					System.out.println("cell entity type: " + CustomEntityType.toString());
+					//System.out.println("cell entity type: " + CustomEntityType.toString());
 
 					if (CustomEntityType == CustomEntityType.CLASS) {
 						createOWLClass(cell.getValue().toString());
@@ -317,7 +297,7 @@ public class GenerateOntology {
 									trg.getValue().toString());
 							OWLOntologyChange change = new AddAxiom(activeOntology, tmpAxiom);
 							changes.add(change);
-							System.out.println("axiom: " + tmpAxiom.toString());
+							//System.out.println("axiom: " + tmpAxiom.toString());
 						} else if (src != null && trg == null) {
 
 						}
@@ -328,7 +308,7 @@ public class GenerateOntology {
 						for (OWLAxiom tmpAxiom : tmpAxioms) {
 							OWLOntologyChange change = new AddAxiom(activeOntology, tmpAxiom);
 							changes.add(change);
-							System.out.println("axiom: " + tmpAxiom.toString());
+							//System.out.println("axiom: " + tmpAxiom.toString());
 						}
 					}
 
@@ -491,7 +471,7 @@ public class GenerateOntology {
 
 	private OWLDatatype getOWLDataType(String value) {
 		OWLDatatype odt = owlDataFactory.getOWLDatatype(value, pm);
-		System.out.println("odt: " + odt.toString());
+		//System.out.println("odt: " + odt.toString());
 		return odt;
 	}
 

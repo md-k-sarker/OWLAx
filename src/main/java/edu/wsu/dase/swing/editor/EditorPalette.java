@@ -26,8 +26,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
 
-import org.semanticweb.owlapi.model.EntityType;
-
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.swing.util.mxGraphTransferable;
@@ -35,13 +33,11 @@ import com.mxgraph.swing.util.mxSwingConstants;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxEventSource;
+import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
 
-import edu.wsu.dase.util.Constants;
 import edu.wsu.dase.util.CustomEntityType;
-
-import com.mxgraph.util.mxEventSource.mxIEventListener;
 
 public class EditorPalette extends JPanel {
 

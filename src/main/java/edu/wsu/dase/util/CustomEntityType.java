@@ -1,6 +1,12 @@
 package edu.wsu.dase.util;
 
-import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.*;
+import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.OWL_ANNOTATION_PROPERTY;
+import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.OWL_CLASS;
+import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.OWL_DATA_PROPERTY;
+import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.OWL_NAMED_INDIVIDUAL;
+import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.OWL_OBJECT_PROPERTY;
+import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.RDFS_DATATYPE;
+import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.RDFS_LITERAL;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -9,7 +15,6 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.HasIRI;
 import org.semanticweb.owlapi.model.HasPrefixedName;
 import org.semanticweb.owlapi.model.HasShortForm;

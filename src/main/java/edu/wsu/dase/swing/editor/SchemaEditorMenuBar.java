@@ -11,6 +11,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
 import javax.swing.UIManager;
 
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.util.mxGraphActions;
+import com.mxgraph.util.mxPoint;
+import com.mxgraph.util.mxResources;
+import com.mxgraph.view.mxGraph;
+
 import edu.wsu.dase.swing.editor.EditorActions.BackgroundAction;
 import edu.wsu.dase.swing.editor.EditorActions.BackgroundImageAction;
 import edu.wsu.dase.swing.editor.EditorActions.ExitAction;
@@ -35,11 +41,6 @@ import edu.wsu.dase.swing.editor.EditorActions.TogglePropertyItem;
 import edu.wsu.dase.swing.editor.EditorActions.ToggleRulersItem;
 import edu.wsu.dase.swing.editor.EditorActions.WarningAction;
 import edu.wsu.dase.swing.editor.EditorActions.ZoomPolicyAction;
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.swing.util.mxGraphActions;
-import com.mxgraph.util.mxPoint;
-import com.mxgraph.util.mxResources;
-import com.mxgraph.view.mxGraph;
 
 public class SchemaEditorMenuBar extends JMenuBar
 {

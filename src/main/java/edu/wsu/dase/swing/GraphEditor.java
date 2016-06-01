@@ -6,26 +6,13 @@ import java.awt.Color;
 import java.awt.Point;
 import java.net.URL;
 import java.text.NumberFormat;
-import java.util.Iterator;
-import java.util.List;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import org.protege.editor.owl.model.OWLModelManager;
-import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLNamedIndividual;
-import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.model.PrefixManager;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.w3c.dom.Document;
 
-import edu.wsu.dase.GenerateOntology;
-import edu.wsu.dase.swing.editor.BasicGraphEditor;
-import edu.wsu.dase.swing.editor.EditorMenuBar;
-import edu.wsu.dase.swing.editor.EditorPalette;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
@@ -38,11 +25,14 @@ import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
-import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxResources;
 import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
+
+import edu.wsu.dase.swing.editor.BasicGraphEditor;
+import edu.wsu.dase.swing.editor.EditorMenuBar;
+import edu.wsu.dase.swing.editor.EditorPalette;
 
 public class GraphEditor extends BasicGraphEditor {
 	/**
@@ -103,6 +93,25 @@ public class GraphEditor extends BasicGraphEditor {
 
 		});
 
+		shapesPalette.addTemplate("Class", new ImageIcon(GraphEditor.class.getResource("/images/rectangle.png")), null,
+				100, 80, "");
+
+		shapesPalette.addTemplate("Named Individual",
+				new ImageIcon(GraphEditor.class.getResource("/images/rhombus.png")), "rhombus", 100, 80, "");
+
+		shapesPalette.addTemplate("Datatype", new ImageIcon(GraphEditor.class.getResource("/images/rounded.png")),
+				"rounded=1", 100, 80, "");
+
+		shapesPalette.addTemplate("Literal",
+				new ImageIcon(GraphEditor.class.getResource("/images/doublerectangle.png")),
+				"rectangle;shape=doubleRectangle", 100, 80, "");
+
+		shapesPalette.addEdgeTemplate("Data Property",
+				new ImageIcon(GraphEditor.class.getResource("/images/arrow.png")), "arrow", 70, 90, "");
+
+		shapesPalette.addEdgeTemplate("Object Property",
+				new ImageIcon(GraphEditor.class.getResource("/images/connect.png")), null, 70, 70, "");
+
 		// Adds some template cells for dropping into the graph
 		/*
 		 * shapesPalette.addTemplate("Container", new
@@ -114,21 +123,12 @@ public class GraphEditor extends BasicGraphEditor {
 		 * ImageIcon(GraphEditor.class.getResource("/images/rounded.png")),
 		 * "label;image=/images/gear.png", 130, 50, "Label");
 		 */
-		shapesPalette.addTemplate("Class", new ImageIcon(GraphEditor.class.getResource("/images/rectangle.png")), null,
-				100, 80, "");
+
 		/*
 		 * shapesPalette.addTemplate("Individual", new
 		 * ImageIcon(GraphEditor.class.getResource("/images/triangle.png")),
 		 * "triangle", 120, 160, "");
 		 */
-		shapesPalette.addTemplate("Named Individual",
-				new ImageIcon(GraphEditor.class.getResource("/images/rhombus.png")), "rhombus", 100, 100, "");
-		shapesPalette.addTemplate("Datatype", new ImageIcon(GraphEditor.class.getResource("/images/rounded.png")),
-				"rounded=1", 160, 120, "");
-
-		shapesPalette.addTemplate("Literal",
-				new ImageIcon(GraphEditor.class.getResource("/images/doublerectangle.png")),
-				"rectangle;shape=doubleRectangle", 100, 80, "");
 
 		/*
 		 * shapesPalette.addTemplate("Ellipse", new
@@ -157,10 +157,7 @@ public class GraphEditor extends BasicGraphEditor {
 		 * ImageIcon(GraphEditor.class.getResource("/images/straight.png")),
 		 * "straight", 120, 120, "");
 		 */
-		shapesPalette.addEdgeTemplate("Data Property",
-				new ImageIcon(GraphEditor.class.getResource("/images/connect.png")), null, 70, 70, "");
-		shapesPalette.addEdgeTemplate("Object Property",
-				new ImageIcon(GraphEditor.class.getResource("/images/arrow.png")), null, 70, 70, "");
+
 		/*
 		 * shapesPalette.addEdgeTemplate( "Vertical Connector", new
 		 * ImageIcon(GraphEditor.class.getResource("/images/vertical.png")),
@@ -169,8 +166,11 @@ public class GraphEditor extends BasicGraphEditor {
 		 * ImageIcon(GraphEditor.class.getResource("/images/entity.png")),
 		 * "entity", 100, 100, "");
 		 */
-		/*shapesPalette.addEdgeTemplate("AnnotationProperty",
-				new ImageIcon(GraphEditor.class.getResource("/images/arrow.png")), "arrow", 70, 70, "");*/
+		/*
+		 * shapesPalette.addEdgeTemplate("AnnotationProperty", new
+		 * ImageIcon(GraphEditor.class.getResource("/images/arrow.png")),
+		 * "arrow", 70, 70, "");
+		 */
 
 		/*
 		 * imagesPalette.addTemplate("Bell", new

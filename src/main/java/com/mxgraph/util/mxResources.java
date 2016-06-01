@@ -48,7 +48,7 @@ public class mxResources
 	 */
 	public static void add(String basename)
 	{
-		System.out.println("sarker.3 "+basename);
+		//System.out.println("sarker.3 "+basename);
 		bundles.addFirst(PropertyResourceBundle.getBundle(basename));
 	}
 	

@@ -26,7 +26,7 @@ public class ClickHandler extends JFrame
 		graph.getModel().beginUpdate();
 		try
 		{
-			System.out.println("Sarker.3 ClickHandler");
+			//System.out.println("Sarker.3 ClickHandler");
 		   Object v1 = graph.insertVertex(parent, null, "Hello", 20, 20, 80,
 		         30);
 		   Object v2 = graph.insertVertex(parent, null, "World!",

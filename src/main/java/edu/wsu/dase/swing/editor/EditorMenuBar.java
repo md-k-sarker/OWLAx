@@ -12,52 +12,14 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
-import javax.swing.UIManager;
 
 import com.mxgraph.analysis.StructuralException;
-import com.mxgraph.analysis.mxGraphProperties.GraphType;
 import com.mxgraph.analysis.mxAnalysisGraph;
 import com.mxgraph.analysis.mxGraphProperties;
+import com.mxgraph.analysis.mxGraphProperties.GraphType;
 import com.mxgraph.analysis.mxGraphStructure;
 import com.mxgraph.analysis.mxTraversal;
 import com.mxgraph.costfunction.mxCostFunction;
-import edu.wsu.dase.swing.editor.EditorActions.AlignCellsAction;
-import edu.wsu.dase.swing.editor.EditorActions.AutosizeAction;
-import edu.wsu.dase.swing.editor.EditorActions.BackgroundAction;
-import edu.wsu.dase.swing.editor.EditorActions.BackgroundImageAction;
-import edu.wsu.dase.swing.editor.EditorActions.ColorAction;
-import edu.wsu.dase.swing.editor.EditorActions.ExitAction;
-import edu.wsu.dase.swing.editor.EditorActions.GridColorAction;
-import edu.wsu.dase.swing.editor.EditorActions.GridStyleAction;
-import edu.wsu.dase.swing.editor.EditorActions.HistoryAction;
-import edu.wsu.dase.swing.editor.EditorActions.ImportAction;
-import edu.wsu.dase.swing.editor.EditorActions.SaveOntologyAction;
-import edu.wsu.dase.swing.editor.EditorActions.KeyValueAction;
-import edu.wsu.dase.swing.editor.EditorActions.NewAction;
-import edu.wsu.dase.swing.editor.EditorActions.OpenAction;
-import edu.wsu.dase.swing.editor.EditorActions.PageBackgroundAction;
-import edu.wsu.dase.swing.editor.EditorActions.PageSetupAction;
-import edu.wsu.dase.swing.editor.EditorActions.PrintAction;
-import edu.wsu.dase.swing.editor.EditorActions.PromptPropertyAction;
-import edu.wsu.dase.swing.editor.EditorActions.PromptValueAction;
-import edu.wsu.dase.swing.editor.EditorActions.SaveAction;
-import edu.wsu.dase.swing.editor.EditorActions.ScaleAction;
-import edu.wsu.dase.swing.editor.EditorActions.SelectShortestPathAction;
-import edu.wsu.dase.swing.editor.EditorActions.SelectSpanningTreeAction;
-import edu.wsu.dase.swing.editor.EditorActions.SetLabelPositionAction;
-import edu.wsu.dase.swing.editor.EditorActions.SetStyleAction;
-import edu.wsu.dase.swing.editor.EditorActions.StyleAction;
-import edu.wsu.dase.swing.editor.EditorActions.StylesheetAction;
-import edu.wsu.dase.swing.editor.EditorActions.ToggleAction;
-import edu.wsu.dase.swing.editor.EditorActions.ToggleConnectModeAction;
-import edu.wsu.dase.swing.editor.EditorActions.ToggleCreateTargetItem;
-import edu.wsu.dase.swing.editor.EditorActions.ToggleDirtyAction;
-import edu.wsu.dase.swing.editor.EditorActions.ToggleGridItem;
-import edu.wsu.dase.swing.editor.EditorActions.ToggleOutlineItem;
-import edu.wsu.dase.swing.editor.EditorActions.TogglePropertyItem;
-import edu.wsu.dase.swing.editor.EditorActions.ToggleRulersItem;
-import edu.wsu.dase.swing.editor.EditorActions.WarningAction;
-import edu.wsu.dase.swing.editor.EditorActions.ZoomPolicyAction;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.util.mxGraphActions;
@@ -67,6 +29,35 @@ import com.mxgraph.util.mxResources;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphView;
 
+import edu.wsu.dase.swing.editor.EditorActions.AlignCellsAction;
+import edu.wsu.dase.swing.editor.EditorActions.AutosizeAction;
+import edu.wsu.dase.swing.editor.EditorActions.BackgroundAction;
+import edu.wsu.dase.swing.editor.EditorActions.BackgroundImageAction;
+import edu.wsu.dase.swing.editor.EditorActions.ColorAction;
+import edu.wsu.dase.swing.editor.EditorActions.ExitAction;
+import edu.wsu.dase.swing.editor.EditorActions.GridColorAction;
+import edu.wsu.dase.swing.editor.EditorActions.GridStyleAction;
+import edu.wsu.dase.swing.editor.EditorActions.HistoryAction;
+import edu.wsu.dase.swing.editor.EditorActions.KeyValueAction;
+import edu.wsu.dase.swing.editor.EditorActions.NewAction;
+import edu.wsu.dase.swing.editor.EditorActions.PageBackgroundAction;
+import edu.wsu.dase.swing.editor.EditorActions.PageSetupAction;
+import edu.wsu.dase.swing.editor.EditorActions.PrintAction;
+import edu.wsu.dase.swing.editor.EditorActions.PromptPropertyAction;
+import edu.wsu.dase.swing.editor.EditorActions.PromptValueAction;
+import edu.wsu.dase.swing.editor.EditorActions.SaveAction;
+import edu.wsu.dase.swing.editor.EditorActions.SaveOntologyAction;
+import edu.wsu.dase.swing.editor.EditorActions.ScaleAction;
+import edu.wsu.dase.swing.editor.EditorActions.SetLabelPositionAction;
+import edu.wsu.dase.swing.editor.EditorActions.SetStyleAction;
+import edu.wsu.dase.swing.editor.EditorActions.StylesheetAction;
+import edu.wsu.dase.swing.editor.EditorActions.ToggleAction;
+import edu.wsu.dase.swing.editor.EditorActions.ToggleGridItem;
+import edu.wsu.dase.swing.editor.EditorActions.ToggleOutlineItem;
+import edu.wsu.dase.swing.editor.EditorActions.TogglePropertyItem;
+import edu.wsu.dase.swing.editor.EditorActions.ToggleRulersItem;
+import edu.wsu.dase.swing.editor.EditorActions.ZoomPolicyAction;
+
 public class EditorMenuBar extends JMenuBar
 {
 
@@ -74,6 +65,8 @@ public class EditorMenuBar extends JMenuBar
 	 * 
 	 */
 	private static final long serialVersionUID = 4060203894740766714L;
+	
+	private final String GENERATE_ONTOLOGY = "Generate Ontology";
 
 	public enum AnalyzeType
 	{
@@ -90,11 +83,11 @@ public class EditorMenuBar extends JMenuBar
 		JMenu submenu = null;
 
 		// Creates the file menu
-		System.out.println("sarker.3 "+ mxResources.get("file"));
+		//System.out.println("sarker.3 "+ mxResources.get("file"));
 		
 		menu = add(new JMenu(mxResources.get("file")));
 		
-		menu.add(editor.bind("Save Ontology", new SaveOntologyAction(), "/images/ontology.gif"));
+		menu.add(editor.bind(GENERATE_ONTOLOGY, new SaveOntologyAction(), "/images/ontology.gif"));
 
 		menu.add(editor.bind(mxResources.get("new"), new NewAction(), "/images/new.gif"));
 		//menu.add(editor.bind(mxResources.get("openFile"), new OpenAction(), "/images/open.gif"));

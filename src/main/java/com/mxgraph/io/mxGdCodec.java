@@ -3,12 +3,12 @@
  */
 package com.mxgraph.io;
 
-import com.mxgraph.model.mxGraphModel;
-import com.mxgraph.view.mxGraph;
-
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.HashMap;
+
+import com.mxgraph.model.mxGraphModel;
+import com.mxgraph.view.mxGraph;
 
 /**
  * Parses a GD .txt file and imports it in the given graph.<br/>

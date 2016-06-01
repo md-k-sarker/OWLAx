@@ -3,9 +3,6 @@
  */
 package com.mxgraph.model;
 
-import org.semanticweb.owlapi.model.EntityType;
-
-import edu.wsu.dase.util.Constants;
 import edu.wsu.dase.util.CustomEntityType;
 
 /**
