@@ -12,39 +12,31 @@
 
 	<groupId>edu.wsu.dase</groupId>
 	<artifactId>odp</artifactId>
-	<version>1.0.0-beta-52</version>
-	<name>Ontology Design Pattern Plugin Protege 5.0+</name>
-	<description>odp Plugin for Desktop Protege 5.0+</description>
-	<url>https://github.com/protegeproject/swrltab-plugin/wiki</url>
+	<version>1.0.0-beta-0</version>
+	<name>ODP Plugin Protege 5.0+</name>
+	<description>Ontology Design Pattern Plugin for Desktop Protege 5.0+</description>
+	<!-- <url>https://github.com/protegeproject/swrltab-plugin/wiki</url> -->
 	<packaging>bundle</packaging>
 
-
-
+	<developers>
+		<developer>
+			<name>Md Kamruzzaman Sarker</name>
+			<email>mdkamruzzamansarker@@gmail.com</email>
+		</developer>
+	</developers>
 	<dependencies>
 
 		<dependency>
 			<groupId>edu.stanford.protege</groupId>
 			<artifactId>protege-editor-owl</artifactId>
-			<version>5.0.0-RC1</version>
+			<version>[4.0.0,)</version>
 		</dependency>
 
-<!-- 		<dependency>
-			<groupId>org.checkerframework</groupId>
-			<artifactId>checker</artifactId>
-			<version>2.0.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.checkerframework</groupId>
-			<artifactId>checker-qual</artifactId>
-			<version>2.0.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.checkerframework</groupId>
-			<artifactId>jdk8</artifactId>
-			<version>2.0.0</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.checkerframework</groupId> <artifactId>checker</artifactId> 
+			<version>2.0.0</version> </dependency> <dependency> <groupId>org.checkerframework</groupId> 
+			<artifactId>checker-qual</artifactId> <version>2.0.0</version> </dependency> 
+			<dependency> <groupId>org.checkerframework</groupId> <artifactId>jdk8</artifactId> 
+			<version>2.0.0</version> </dependency> -->
 
 	</dependencies>
 

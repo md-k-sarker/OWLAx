@@ -497,6 +497,7 @@ com\mxgraph\swing\mxGraphComponent$mxGraphControl.class
 com\mxgraph\swing\util\mxCellOverlay.class
 com\mxgraph\layout\mxParallelEdgeLayout.class
 edu\wsu\dase\swing\editor\BasicGraphEditor$2.class
+edu\wsu\dase\swing\HelloWorld$1.class
 com\mxgraph\layout\mxOrganicLayout.class
 com\mxgraph\util\png\IDATOutputStream.class
 edu\wsu\dase\swing\editor\GraphConfigDialog$8.class

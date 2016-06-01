@@ -157,10 +157,10 @@ public class GraphEditor extends BasicGraphEditor {
 		 * ImageIcon(GraphEditor.class.getResource("/images/straight.png")),
 		 * "straight", 120, 120, "");
 		 */
-		shapesPalette.addEdgeTemplate("DataProperty",
+		shapesPalette.addEdgeTemplate("Data Property",
 				new ImageIcon(GraphEditor.class.getResource("/images/connect.png")), null, 70, 70, "");
-		shapesPalette.addEdgeTemplate("ObjectProperty",
-				new ImageIcon(GraphEditor.class.getResource("/images/connect.png")), null, 70, 70, "");
+		shapesPalette.addEdgeTemplate("Object Property",
+				new ImageIcon(GraphEditor.class.getResource("/images/arrow.png")), null, 70, 70, "");
 		/*
 		 * shapesPalette.addEdgeTemplate( "Vertical Connector", new
 		 * ImageIcon(GraphEditor.class.getResource("/images/vertical.png")),
@@ -169,8 +169,8 @@ public class GraphEditor extends BasicGraphEditor {
 		 * ImageIcon(GraphEditor.class.getResource("/images/entity.png")),
 		 * "entity", 100, 100, "");
 		 */
-		shapesPalette.addEdgeTemplate("AnnotationProperty",
-				new ImageIcon(GraphEditor.class.getResource("/images/arrow.png")), "arrow", 70, 70, "");
+		/*shapesPalette.addEdgeTemplate("AnnotationProperty",
+				new ImageIcon(GraphEditor.class.getResource("/images/arrow.png")), "arrow", 70, 70, "");*/
 
 		/*
 		 * imagesPalette.addTemplate("Bell", new
