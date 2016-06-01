@@ -1,6 +1,12 @@
 package edu.wsu.dase.swing;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
@@ -27,6 +33,25 @@ public class HelloWorld extends JFrame {
 
 		mxGraphComponent graphComponent = new mxGraphComponent(graph);
 		getContentPane().add(graphComponent);
+
+		JPanel pnl = new JPanel();
+		JButton btn = new JButton("Clicke me");
+		btn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("clicked on Button");
+			}
+		});
+		pnl.add(btn);
+
+		if(JOptionPane.OK_OPTION == JOptionPane.showOptionDialog(this, pnl, "Create Class", JOptionPane.PLAIN_MESSAGE,
+				JOptionPane.PLAIN_MESSAGE, null, null, null)){
+			
+		}
+	
+
 	}
 
 	public static void main(String[] args) {
@@ -34,6 +59,7 @@ public class HelloWorld extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(400, 320);
 		frame.setVisible(true);
+
 	}
 
 }

@@ -13,7 +13,7 @@
 	<groupId>edu.wsu.dase</groupId>
 	<artifactId>odp</artifactId>
 	<version>1.0.0-beta-52</version>
-	<name>odp Protege 5.0+ Plugin</name>
+	<name>Ontology Design Pattern Plugin Protege 5.0+</name>
 	<description>odp Plugin for Desktop Protege 5.0+</description>
 	<url>https://github.com/protegeproject/swrltab-plugin/wiki</url>
 	<packaging>bundle</packaging>

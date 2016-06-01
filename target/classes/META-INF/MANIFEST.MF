@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1464584689058
+Bnd-LastModified: 1464665697772
 Build-Jdk: 1.8.0_91
 Built-By: student
 Bundle-Activator: org.protege.editor.owl.ProtegeOWL
 Bundle-Description: odp Plugin for Desktop Protege 5.0+
 Bundle-ManifestVersion: 2
-Bundle-Name: odp Protege 5.0+ Plugin
+Bundle-Name: Ontology Design Pattern Plugin Protege 5.0+
 Bundle-SymbolicName: odp;singleton:=true
 Bundle-Version: 1.0.0.beta-52
 Created-By: Apache Maven Bundle Plugin
