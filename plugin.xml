@@ -12,30 +12,32 @@
 		<editorKitId value="OWLEditorKit" />
 	</extension> -->
 
+<!-- not using 
 	<extension id="daseViewComponent"
 		point="org.protege.editor.core.application.ViewComponent">
 		<label value="Ontology Design Pattern" />
 		<class value="edu.wsu.dase.OdpMainUIComponent" />
 		<category value="@org.protege.ontologycategory">
 		</category>
-	</extension>
+	</extension>  -->
+
 
 	<!-- class value must be org.protege.editor.owl.ui.OWLWorkspaceViewsTab 
 		to store multiple view -->
-	<extension id="daseViewComplicated"
+<!-- not using 	<extension id="daseViewComplicated"
 		point="org.protege.editor.core.application.WorkspaceTab">
 		<label value="Ontology Design Pattern" />
 		<class value="org.protege.editor.owl.ui.OWLWorkspaceViewsTab" />
 		<index value="X" />
 		<editorKitId value="OWLEditorKit" />
 		<defaultViewConfigFileName value="custom.layout.xml" />
-	</extension>
+	</extension>  -->
 
-<!--	<extension id="SWRLTab" point="org.protege.editor.core.application.WorkspaceTab">
+	<extension id="SWRLTab" point="org.protege.editor.core.application.WorkspaceTab">
 		<label value="ODP-by-Dase"/>
 		<class value="edu.wsu.dase.OdpMainUITab"/>
 		<index value="X"/>
 		<editorKitId value="OWLEditorKit"/>
-  </extension>  -->
+  </extension>  
 
 </plugin>

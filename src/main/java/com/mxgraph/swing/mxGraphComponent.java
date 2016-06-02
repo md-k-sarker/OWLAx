@@ -176,9 +176,9 @@ public class mxGraphComponent extends JScrollPane implements Printable
 	public static ImageIcon DEFAULT_WARNING_ICON = null;
 
 	/**
-	 * Specifies the default page scale. Default is 1.4
+	 * Specifies the default page scale. Default is 1
 	 */
-	public static final double DEFAULT_PAGESCALE = 1.4;
+	public static final double DEFAULT_PAGESCALE = 1;
 
 	/**
 	 * Loads the collapse and expand icons.

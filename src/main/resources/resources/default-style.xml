@@ -52,12 +52,12 @@
 		<add as="elbow" value="vertical"/>
 	</add>
 	<add as="straight">
-		<add as="shape" value="connector"/>
-		<add as="endArrow" value="classic"/>
-		<add as="edgeStyle" value="none"/>
+		<add as="shape" value="arrow"/>
+		<add as="fillColor" value="green"/>
 	</add>
 	<add as="arrow">
 		<add as="shape" value="arrow"/>
+		<add as="fillColor" value="none"/>
 	</add>
 	<add as="swimlane">
 		<add as="shape" value="swimlane"/>

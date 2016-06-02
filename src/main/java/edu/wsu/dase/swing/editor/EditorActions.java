@@ -72,7 +72,7 @@ import com.mxgraph.util.png.mxPngImageEncoder;
 import com.mxgraph.util.png.mxPngTextDecoder;
 import com.mxgraph.view.mxGraph;
 
-import edu.wsu.dase.GenerateOntology;
+import edu.wsu.dase.IntegrateOntologyWithProtege;
 
 /**
  *
@@ -1468,8 +1468,8 @@ public class EditorActions
 					//mxGraph graph = editor.getGraphComponent().getGraph();
 
 					// Check modified flag and display save dialog
-					GenerateOntology ge = new GenerateOntology(editor);
-					ge.saveOntology();
+					IntegrateOntologyWithProtege ge = new IntegrateOntologyWithProtege(editor);
+					ge.generateOntology();
 				}
 			}
 		}

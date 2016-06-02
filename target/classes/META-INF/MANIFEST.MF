@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1464806527716
+Bnd-LastModified: 1464901149659
 Build-Jdk: 1.8.0_91
 Built-By: student
 Bundle-Activator: org.protege.editor.owl.ProtegeOWL
@@ -46,17 +46,15 @@ Export-Package: com.mxgraph.analysis;uses:="com.mxgraph.costfunction,com
  ext.html,org.w3c.dom";version="1.0.0",com.mxgraph.util.png;version="1.0
  .0",com.mxgraph.util.svg;version="1.0.0",com.mxgraph.view;uses:="com.mx
  graph.canvas,com.mxgraph.layout,com.mxgraph.model,com.mxgraph.util";ver
- sion="1.0.0",edu.wsu.dase;uses:="edu.wsu.dase.swing.editor,org.protege.
- editor.owl.ui,org.protege.editor.owl.ui.view.cls,org.semanticweb.owlapi
- .model";version="1.0.0",edu.wsu.dase.swing;uses:="com.mxgraph.swing,com
- .mxgraph.swing.view,com.mxgraph.view,edu.wsu.dase.swing.editor,javax.sw
- ing";version="1.0.0",edu.wsu.dase.swing.editor;uses:="com.mxgraph.analy
- sis,com.mxgraph.layout,com.mxgraph.model,com.mxgraph.swing,com.mxgraph.
- swing.handler,com.mxgraph.swing.util,com.mxgraph.util,com.mxgraph.view,
- javax.swing,javax.swing.border,javax.swing.filechooser,javax.swing.tabl
- e,org.protege.editor.owl.model";version="1.0.0",edu.wsu.dase.util;uses:
- ="javax.annotation,org.semanticweb.owlapi.model,org.semanticweb.owlapi.
- vocab";version="1.0.0"
+ sion="1.0.0",edu.wsu.dase;uses:="com.mxgraph.swing,com.mxgraph.view,edu
+ .wsu.dase.swing.editor,org.protege.editor.owl.ui,org.protege.editor.owl
+ .ui.view.cls,org.semanticweb.owlapi.model";version="1.0.0",edu.wsu.dase
+ .swing.editor;uses:="com.mxgraph.analysis,com.mxgraph.layout,com.mxgrap
+ h.model,com.mxgraph.swing,com.mxgraph.swing.handler,com.mxgraph.swing.u
+ til,com.mxgraph.util,com.mxgraph.view,javax.swing,javax.swing.border,ja
+ vax.swing.filechooser,javax.swing.table,org.protege.editor.owl.model";v
+ ersion="1.0.0",edu.wsu.dase.util;uses:="javax.annotation,org.semanticwe
+ b.owlapi.model,org.semanticweb.owlapi.vocab";version="1.0.0"
 Import-Package: org.protege.editor.owl;version="5.0.0",org.protege.edito
  r.owl.model;version="5.0.0",org.protege.editor.owl.model.event;version=
  "5.0.0",org.protege.editor.owl.ui;version="5.0.0",org.protege.editor.ow
@@ -68,14 +66,13 @@ Import-Package: org.protege.editor.owl;version="5.0.0",org.protege.edito
  ph.model,com.mxgraph.shape,com.mxgraph.swing,com.mxgraph.swing.handler,
  com.mxgraph.swing.util,com.mxgraph.swing.view,com.mxgraph.util,com.mxgr
  aph.util.png,com.mxgraph.util.svg,com.mxgraph.view,edu.wsu.dase,edu.wsu
- .dase.swing,edu.wsu.dase.swing.editor,edu.wsu.dase.util,javax.annotatio
- n,javax.imageio,javax.swing,javax.swing.border,javax.swing.filechooser,
- javax.swing.plaf,javax.swing.table,javax.swing.text,javax.swing.text.ht
- ml,javax.xml.parsers,javax.xml.transform,javax.xml.transform.dom,javax.
- xml.transform.stream,org.semanticweb.owlapi.model;version="[4.2,5)",org
- .semanticweb.owlapi.model.parameters;version="[4.2,5)",org.semanticweb.
- owlapi.util;version="[4.2,5)",org.semanticweb.owlapi.vocab;version="[4.
- 2,5)",org.slf4j;version="[1.7,2)",org.w3c.dom,org.xml.sax,org.xml.sax.h
- elpers
+ .dase.swing.editor,edu.wsu.dase.util,javax.annotation,javax.imageio,jav
+ ax.swing,javax.swing.border,javax.swing.filechooser,javax.swing.plaf,ja
+ vax.swing.table,javax.swing.text,javax.swing.text.html,javax.xml.parser
+ s,javax.xml.transform,javax.xml.transform.dom,javax.xml.transform.strea
+ m,org.semanticweb.owlapi.model;version="[4.2,5)",org.semanticweb.owlapi
+ .model.parameters;version="[4.2,5)",org.semanticweb.owlapi.util;version
+ ="[4.2,5)",org.semanticweb.owlapi.vocab;version="[4.2,5)",org.slf4j;ver
+ sion="[1.7,2)",org.w3c.dom,org.xml.sax,org.xml.sax.helpers
 Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
 Tool: Bnd-3.0.0.201509101326

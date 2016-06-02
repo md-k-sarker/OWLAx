@@ -217,15 +217,21 @@ public class EditorPalette extends JPanel {
 		mxCell cell = new mxCell(value, geometry, style);
 		cell.setEdge(true);
 		//System.out.println("Before setting: name== " + name);
-		if (name.toLowerCase().replace(" ", "")
-				.equals(CustomEntityType.OBJECT_PROPERTY.toString().replace("_", "").toLowerCase())) {
+		if (name.toLowerCase()
+				.equals(CustomEntityType.OBJECT_PROPERTY.getName().toLowerCase())) {
 			cell.setEntityType(CustomEntityType.OBJECT_PROPERTY);
-		} else if (name.toLowerCase().replace(" ", "")
-				.equals(CustomEntityType.DATA_PROPERTY.toString().replace("_", "").toLowerCase())) {
+		} else if (name.toLowerCase()
+				.equals(CustomEntityType.DATA_PROPERTY.getName().toLowerCase())) {
 			cell.setEntityType(CustomEntityType.DATA_PROPERTY);
-		} else if (name.toLowerCase().replace(" ", "")
-				.equals(CustomEntityType.ANNOTATION_PROPERTY.toString().replace("_", "").toLowerCase())) {
+		} else if (name.toLowerCase()
+				.equals(CustomEntityType.ANNOTATION_PROPERTY.getName().toLowerCase())) {
 			cell.setEntityType(CustomEntityType.ANNOTATION_PROPERTY);
+		}else if (name.toLowerCase()
+				.equals(CustomEntityType.RDFTYPE.getName().toLowerCase())) {
+			cell.setEntityType(CustomEntityType.RDFTYPE);
+		}else if (name.toLowerCase()
+				.equals(CustomEntityType.RDFSSUBCLASS_OF.getName().toLowerCase())) {
+			cell.setEntityType(CustomEntityType.RDFSSUBCLASS_OF);
 		}
 		//System.out.println("After Setting:  name== " + cell.getEntityType() + "\n\n");
 		addTemplate(name, icon, cell);
@@ -246,16 +252,16 @@ public class EditorPalette extends JPanel {
 		// cell.setOWLClass(isOWLClass);
 		// cell.setOWLNamedIndividual(!isOWLClass);
 		//System.out.println("Before setting: name== " + name);
-		if (name.toLowerCase().replace(" ", "").equals(CustomEntityType.CLASS.toString().replace("_", "").toLowerCase())) {
+		if (name.toLowerCase().equals(CustomEntityType.CLASS.getName().toLowerCase())) {
 			cell.setEntityType(CustomEntityType.CLASS);
 		} else if (name.toLowerCase().replace(" ", "")
-				.equals(CustomEntityType.NAMED_INDIVIDUAL.toString().replace("_", "").toLowerCase())) {
+				.equals(CustomEntityType.NAMED_INDIVIDUAL.getName().toLowerCase())) {
 			cell.setEntityType(CustomEntityType.NAMED_INDIVIDUAL);
 		} else if (name.toLowerCase().replace(" ", "")
-				.equals(CustomEntityType.DATATYPE.toString().replace("_", "").toLowerCase())) {
+				.equals(CustomEntityType.DATATYPE.getName().toLowerCase())) {
 			cell.setEntityType(CustomEntityType.DATATYPE);
 		}else if (name.toLowerCase().replace(" ", "")
-				.equals(CustomEntityType.LITERAL.toString().replace("_", "").toLowerCase())) {
+				.equals(CustomEntityType.LITERAL.getName().toLowerCase())) {
 			cell.setEntityType(CustomEntityType.LITERAL);
 		}
 		//System.out.println("After Setting:  name== " + cell.getEntityType() + "\n\n");

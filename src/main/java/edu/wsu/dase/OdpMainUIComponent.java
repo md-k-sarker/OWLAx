@@ -16,7 +16,6 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.wsu.dase.swing.GraphEditor;
 import edu.wsu.dase.swing.editor.EditorMenuBar;
 
 public class OdpMainUIComponent extends AbstractOWLClassViewComponent {
