@@ -27,33 +27,35 @@ public class OdpMainUITab extends OWLWorkspaceViewsTab {
 	@Override
 	public void initialise() {
 
-		setLayout(new BorderLayout());
-		editor = new GraphEditor();
-
-		add(new EditorMenuBar(editor), BorderLayout.NORTH);
-		add(editor, BorderLayout.CENTER);
-
-		JFrame mainWindow = (javax.swing.JFrame) SwingUtilities.windowForComponent(this);
-		editor.setProtegeMainWindow(mainWindow);
-		Dimension d = new Dimension(800, 600);
-		setPreferredSize(d);
-		setSize(d);
-		setLocation(100, 50);
-		setVisible(true);
-
+		super.initialise();
 		if (getOWLModelManager() != null) {
-			getOWLModelManager().addListener(listener);
-		}
 
-		update();
+			setLayout(new BorderLayout());
+			editor = new GraphEditor();
+
+			add(new EditorMenuBar(editor), BorderLayout.NORTH);
+			add(editor, BorderLayout.CENTER);
+
+			JFrame mainWindow = (javax.swing.JFrame) SwingUtilities.windowForComponent(this);
+			editor.setProtegeMainWindow(mainWindow);
+			Dimension d = new Dimension(800, 600);
+			setPreferredSize(d);
+			setSize(d);
+			setLocation(100, 50);
+			setVisible(true);
+
+			getOWLModelManager().addListener(listener);
+			update();
+		} else
+			log.warn("ODP initialization failed - no model manager");
+
 	}
 
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		getOWLModelManager().removeListener(this.listener);
 		super.dispose();
-
+		getOWLModelManager().removeListener(this.listener);
 	}
 
 	private void update() {

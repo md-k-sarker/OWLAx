@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1464901149659
+Bnd-LastModified: 1464919542697
 Build-Jdk: 1.8.0_91
 Built-By: student
 Bundle-Activator: org.protege.editor.owl.ProtegeOWL

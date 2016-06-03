@@ -540,4 +540,30 @@ public class IntegrateOntologyWithProtege {
 		}
 		return null;
 	}
+	 //@formatter:off
+	/*
+	 *information
+	
+	1. class(A)------objectProperty(P)-------class(B)
+		someValues of P.B < subclass of A
+		A subclass of allValues of P.B
+	 
+		1.1 class----objectproperty-----individual  ?  discuss tomorrow
+		1.2 class----dataProperty-----literal  ?  discuss tomorrow
+		1.3 class----dataProperty-----literal  ?  discuss tomorrow
+	
+	2. individual ---------------individual
+		2.1 ind----objectproperty[must]---ind   ?
+		2.2 ind---dataProperty --literal          ?
+		2.3 ind ---objectproperty---class          ? not probably
+		2.4 ind------rdf-type-----class		?         [////getowlclassassertionaxiom]
+
+
+    3. data type ----------------datatype  [not allowed]
+
+    4. literal --------------------literal            ?
+   
+
+	*/
+	//@formatter:on
 }

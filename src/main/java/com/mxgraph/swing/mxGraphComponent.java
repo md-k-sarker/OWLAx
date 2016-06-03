@@ -978,7 +978,6 @@ public class mxGraphComponent extends JScrollPane implements Printable
 	{
 		double oldValue = pageScale;
 		pageScale = value;
-
 		firePropertyChange("pageScale", oldValue, pageScale);
 	}
 

@@ -345,7 +345,7 @@ public class GraphEditor extends BasicGraphEditor {
 		 * the middle control point of edges is double clicked (flipped).
 		 */
 		public CustomGraph() {
-			setAlternateEdgeStyle("edgeStyle=mxEdgeStyle.ElbowConnector;elbow=vertical");
+			//setAlternateEdgeStyle("edgeStyle=mxEdgeStyle.ElbowConnector;elbow=vertical");
 		}
 
 		/**

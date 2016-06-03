@@ -335,7 +335,7 @@ public class mxGraph extends mxEventSource
 	/**
 	 * Specifies the return value for edges in isLabelMovable. Default is true.
 	 */
-	protected boolean edgeLabelsMovable = true;
+	protected boolean edgeLabelsMovable = false;
 
 	/**
 	 * Specifies the return value for vertices in isLabelMovable. Default is false.
@@ -2228,7 +2228,11 @@ public class mxGraph extends mxEventSource
 	 */
 	public Object[] cloneCells(Object[] cells)
 	{
-
+		/*
+		 * System.out.println("sarker.3 Cloning cells"); for (StackTraceElement
+		 * ste : Thread.currentThread().getStackTrace()) {
+		 * System.out.println(ste); }
+		 */
 		return cloneCells(cells, true);
 	}
 
@@ -2679,7 +2683,7 @@ public class mxGraph extends mxEventSource
 	public void cellsAdded(Object[] cells, Object parent, Integer index,
 			Object source, Object target, boolean absolute)
 	{
-		//System.out.println("sarker.3 cellsAdded called." +((mxCell)cells[0]).getValue());
+		//System.out.println("sarker.3 cellsAdded called." +((mxCell)cells[0]).getValue()); 
 		cellsAdded(cells, parent, index, source, target, absolute, true);
 	}
 
