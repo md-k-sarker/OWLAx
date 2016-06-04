@@ -286,11 +286,17 @@ public class GraphEditor extends BasicGraphEditor {
 		public CustomGraphComponent(mxGraph graph) {
 			super(graph);
 
+			
 			// Sets switches typically used in an editor
+			setCenterPage(true);
 			setPageVisible(true);
 			setGridVisible(true);
 			setToolTips(true);
-			getConnectionHandler().setCreateTarget(true);
+			
+			//creating annonying auto copying target
+			//getConnectionHandler().setCreateTarget(true);
+			//get rid from annonying auto copying
+			getConnectionHandler().setEnabled(false);
 
 			// Loads the defalt stylesheet from an external file
 			mxCodec codec = new mxCodec();
@@ -301,6 +307,7 @@ public class GraphEditor extends BasicGraphEditor {
 			// Sets the background to white
 			getViewport().setOpaque(true);
 			getViewport().setBackground(Color.WHITE);
+			
 		}
 
 		/**

@@ -125,6 +125,7 @@ com\mxgraph\reader\mxDomOutputParser$6.class
 com\mxgraph\util\svg\ParseException.class
 com\mxgraph\layout\hierarchical\stage\mxCoordinateAssignment$AreaSpatialCache.class
 com\mxgraph\layout\mxEdgeLabelLayout.class
+edu\wsu\dase\CustomCanvas$2.class
 edu\wsu\dase\swing\editor\GraphConfigDialog$25$1.class
 com\mxgraph\layout\hierarchical\stage\mxCoordinateAssignment.class
 edu\wsu\dase\swing\editor\GraphConfigDialog$5.class
@@ -152,6 +153,7 @@ com\mxgraph\analysis\mxFibonacciHeap.class
 com\mxgraph\layout\mxOrganicLayout$CellWrapper.class
 edu\wsu\dase\swing\editor\JTableRenderer$MyTable$1.class
 com\mxgraph\layout\hierarchical\model\mxGraphHierarchyEdge.class
+edu\wsu\dase\CustomCanvas$SwingCanvas.class
 edu\wsu\dase\swing\editor\EditorActions$ExitAction.class
 com\mxgraph\io\mxRootChangeCodec.class
 com\mxgraph\view\mxGraph.class
@@ -202,6 +204,7 @@ com\mxgraph\util\png\mxPngEncodeParam.class
 edu\wsu\dase\swing\editor\SchemaEditorMenuBar$1.class
 com\mxgraph\layout\hierarchical\model\mxGraphAbstractHierarchyCell.class
 com\mxgraph\swing\mxGraphComponent$1.class
+edu\wsu\dase\HelloWorld.class
 edu\wsu\dase\swing\editor\EditorAboutFrame$1.class
 com\mxgraph\swing\mxGraphComponent$8.class
 com\mxgraph\view\mxStyleRegistry.class
@@ -371,6 +374,7 @@ edu\wsu\dase\swing\editor\GraphConfigDialog$16.class
 com\mxgraph\view\mxEdgeStyle.class
 edu\wsu\dase\swing\editor\EditorActions$ToggleGridItem.class
 com\mxgraph\swing\util\mxMorphing.class
+edu\wsu\dase\CustomCanvas.class
 com\mxgraph\util\png\CRC.class
 com\mxgraph\canvas\mxBasicCanvas.class
 edu\wsu\dase\swing\editor\EditorAboutFrame$2.class
@@ -438,6 +442,7 @@ com\mxgraph\shape\mxIMarker.class
 com\mxgraph\view\mxEdgeStyle$2.class
 com\mxgraph\analysis\mxGraphProperties$GraphType.class
 com\mxgraph\swing\util\mxGraphActions$EditAction.class
+edu\wsu\dase\CustomCanvas$1.class
 com\mxgraph\reader\mxDomOutputParser$40.class
 com\mxgraph\swing\view\mxCellEditor$2.class
 com\mxgraph\view\mxEdgeStyle$7.class
