@@ -43,7 +43,8 @@ public class mxElbowEdgeHandler extends mxEdgeHandler
 
 		if (index == 1)
 		{
-			return mxResources.get("doubleClickOrientation");
+			//double click is disabled and tooltip text also disabled
+			//return mxResources.get("doubleClickOrientation");
 		}
 
 		return null;

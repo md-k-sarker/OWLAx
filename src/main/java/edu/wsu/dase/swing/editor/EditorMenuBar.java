@@ -647,22 +647,22 @@ public class EditorMenuBar extends JMenuBar
 
 		submenu.add(editor.bind(mxResources.get("linewidth"), new PromptValueAction(mxConstants.STYLE_STROKEWIDTH, "Linewidth")));
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("connector")));
+		//submenu = (JMenu) menu.add(new JMenu(mxResources.get("connector")));
 
-		submenu.add(editor.bind(mxResources.get("straight"), new SetStyleAction("straight"),
-				"/images/straight.gif"));
+		//submenu.add(editor.bind(mxResources.get("straight"), new SetStyleAction("straight"),
+			//	"/images/straight.gif"));
 
 		//submenu.add(editor.bind(mxResources.get("horizontal"), new SetStyleAction(""), "/images/connect.gif"));
 		//submenu.add(editor.bind(mxResources.get("vertical"), new SetStyleAction("vertical"),
 		//		"/images/vertical.gif"));
 
-		submenu.addSeparator();
+		//submenu.addSeparator();
 
 		//submenu.add(editor.bind(mxResources.get("entityRelation"), new SetStyleAction("edgeStyle=mxEdgeStyle.EntityRelation"),
 		//		"/images/entity.gif"));
-		submenu.add(editor.bind(mxResources.get("arrow"), new SetStyleAction("arrow"), "/images/arrow.gif"));
+		//submenu.add(editor.bind(mxResources.get("arrow"), new SetStyleAction("arrow"), "/images/arrow.gif"));
 
-		submenu.addSeparator();
+		//submenu.addSeparator();
 
 		//submenu.add(editor.bind(mxResources.get("plain"), new ToggleAction(mxConstants.STYLE_NOEDGESTYLE)));
 
@@ -766,7 +766,7 @@ public class EditorMenuBar extends JMenuBar
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("rounded"), new ToggleAction(mxConstants.STYLE_ROUNDED)));
+		//menu.add(editor.bind(mxResources.get("rounded"), new ToggleAction(mxConstants.STYLE_ROUNDED)));
 
 		//menu.add(editor.bind(mxResources.get("style"), new StyleAction()));
 	}

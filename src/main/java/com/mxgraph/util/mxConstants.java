@@ -212,14 +212,14 @@ public class mxConstants
 	public static int ARROW_SPACING = 10;
 
 	/**
-	 * Defines the width of the arrow shape. Default is 30.
+	 * Defines the width of the arrow shape. Default is 20.
 	 */
-	public static int ARROW_WIDTH = 30;
+	public static int ARROW_WIDTH = 20;
 
 	/**
-	 * Defines the size of the arrowhead in the arrow shape. Default is 30.
+	 * Defines the size of the arrowhead in the arrow shape. Default is 15.
 	 */
-	public static int ARROW_SIZE = 30;
+	public static int ARROW_SIZE = 15;
 
 	/**
 	 * Defines the value for none. Default is "none".

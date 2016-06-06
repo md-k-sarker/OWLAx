@@ -54,10 +54,10 @@ public class GraphEditor extends BasicGraphEditor {
 	 */
 	public static URL url = null;
 
-	private int edgeWidth = 80;
-	private int edgeHeight = 100;
-	private int vertexWidth = 90;
-	private int vertexHeight = 75;
+	private int edgeWidth = 60;
+	private int edgeHeight = 80;
+	private int vertexWidth = 60;
+	private int vertexHeight = 50;
 
 	// GraphEditor.class.getResource("/images/connector.gif");
 
