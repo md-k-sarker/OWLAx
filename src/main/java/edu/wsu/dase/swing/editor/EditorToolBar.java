@@ -170,6 +170,11 @@ public class EditorToolBar extends JToolBar {
 				ignoreZoomChange = true;
 
 				try {
+					/*System.out.println("\n\n\nscale: " +view.getScale());
+					for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
+					    System.out.println(ste);
+					}
+					System.out.println("\n\n\n");*/
 					zoomCombo.setSelectedItem((int) Math.round(100 * view.getScale()) + "%");
 				} finally {
 					ignoreZoomChange = false;

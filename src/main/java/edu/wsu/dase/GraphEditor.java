@@ -60,7 +60,6 @@ public class GraphEditor extends BasicGraphEditor {
 	private int vertexHeight = 50;
 	private int edgeStrokeWidth = 3;
 	private int edgEendSize = 8;
-	
 
 	// GraphEditor.class.getResource("/images/connector.gif");
 
@@ -183,14 +182,19 @@ public class GraphEditor extends BasicGraphEditor {
 		 * "ellipse;shape=cloud", 160, 120, "");
 		 */
 
-		/*shapesPalette.addEdgeTemplate("Straight", new ImageIcon(GraphEditor.class.getResource("/images/straight.png")),
-				"edgeStyle=mxEdgeStyle.OrthConnector;strokeWidth=3;strokeColor=black;endArrow=block;endSize=5", 120,
-				120, "");
-
-		shapesPalette.addEdgeTemplate("Vertical Connector",
-				new ImageIcon(GraphEditor.class.getResource("/images/vertical.png")), "vertical", 100, 100, "");
-		shapesPalette.addEdgeTemplate("Entity Relation",
-				new ImageIcon(GraphEditor.class.getResource("/images/entity.png")), "entity", 100, 100, "");*/
+		/*
+		 * shapesPalette.addEdgeTemplate("Straight", new
+		 * ImageIcon(GraphEditor.class.getResource("/images/straight.png")),
+		 * "edgeStyle=mxEdgeStyle.OrthConnector;strokeWidth=3;strokeColor=black;endArrow=block;endSize=5",
+		 * 120, 120, "");
+		 * 
+		 * shapesPalette.addEdgeTemplate("Vertical Connector", new
+		 * ImageIcon(GraphEditor.class.getResource("/images/vertical.png")),
+		 * "vertical", 100, 100, ""); shapesPalette.addEdgeTemplate(
+		 * "Entity Relation", new
+		 * ImageIcon(GraphEditor.class.getResource("/images/entity.png")),
+		 * "entity", 100, 100, "");
+		 */
 
 		/*
 		 * shapesPalette.addEdgeTemplate("AnnotationProperty", new
@@ -372,24 +376,32 @@ public class GraphEditor extends BasicGraphEditor {
 		 */
 		public String getToolTipForCell(Object cell) {
 			// have to change
-			String tip = "<html>";
+			String headTip = "<html>";
 			mxGeometry geo = getModel().getGeometry(cell);
 			mxCellState state = getView().getState(cell);
 
 			mxCell src = (mxCell) getModel().getTerminal(cell, true);
 			mxCell trg = (mxCell) getModel().getTerminal(cell, false);
-			tip = ((mxCell) cell).getValue().toString();
+			mxCell thiscell = (mxCell) cell;
 
-			if (getModel().isEdge(cell)) {
+			headTip = headTip + "<h4>Entity Type: " + thiscell.getEntityType().getName() + "</h4>" + "<p>";
+
+			String paragraphTip = thiscell.getValue().toString();
+			// tip = tip + "<p>" + thiscell.getValue().toString();
+
+			if (getModel().isEdge(thiscell)) {
 				if (src != null) {
-					tip = src.getValue().toString() + " -> " + tip;
+					if (src.getValue().toString().length() > 0)
+						paragraphTip = src.getValue().toString() + " -> " + paragraphTip;
 				}
 				if (trg != null) {
-					tip = tip + " -> " + trg.getValue().toString();
+					if (trg.getValue().toString().length() > 0)
+						paragraphTip = paragraphTip + " -> " + trg.getValue().toString();
 				}
 			} else {
 
 			}
+			String tip = headTip + paragraphTip + "</p></html>";
 
 			return tip;
 		}
