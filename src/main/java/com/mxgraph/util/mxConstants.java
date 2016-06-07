@@ -207,9 +207,9 @@ public class mxConstants
 
 	/**
 	 * Defines the spacing between the arrow shape and its terminals. Default
-	 * is 10.
+	 * is 0.
 	 */
-	public static int ARROW_SPACING = 10;
+	public static int ARROW_SPACING = 0;
 
 	/**
 	 * Defines the width of the arrow shape. Default is 20.

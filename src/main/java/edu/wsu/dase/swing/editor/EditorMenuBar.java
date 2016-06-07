@@ -668,7 +668,7 @@ public class EditorMenuBar extends JMenuBar
 
 		menu.addSeparator();
 
-		submenu = (JMenu) menu.add(new JMenu(mxResources.get("linestart")));
+		/*submenu = (JMenu) menu.add(new JMenu(mxResources.get("linestart")));
 
 		submenu.add(editor.bind(mxResources.get("open"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.ARROW_OPEN),
 				"/images/open_start.gif"));
@@ -688,10 +688,10 @@ public class EditorMenuBar extends JMenuBar
 
 		submenu.add(editor.bind(mxResources.get("none"), new KeyValueAction(mxConstants.STYLE_STARTARROW, mxConstants.NONE)));
 		submenu.add(editor.bind(mxResources.get("size"), new PromptValueAction(mxConstants.STYLE_STARTSIZE, "Linestart Size")));
-
+*/
 		submenu = (JMenu) menu.add(new JMenu(mxResources.get("lineend")));
 
-		submenu.add(editor.bind(mxResources.get("open"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_OPEN),
+		/*submenu.add(editor.bind(mxResources.get("open"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_OPEN),
 				"/images/open_end.gif"));
 		submenu.add(editor.bind(mxResources.get("classic"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_CLASSIC),
 				"/images/classic_end.gif"));
@@ -708,6 +708,7 @@ public class EditorMenuBar extends JMenuBar
 		submenu.addSeparator();
 
 		submenu.add(editor.bind(mxResources.get("none"), new KeyValueAction(mxConstants.STYLE_ENDARROW, mxConstants.NONE)));
+		*/
 		submenu.add(editor.bind(mxResources.get("size"), new PromptValueAction(mxConstants.STYLE_ENDSIZE, "Lineend Size")));
 
 		menu.addSeparator();

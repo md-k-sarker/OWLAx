@@ -58,6 +58,9 @@ public class GraphEditor extends BasicGraphEditor {
 	private int edgeHeight = 80;
 	private int vertexWidth = 60;
 	private int vertexHeight = 50;
+	private int edgeStrokeWidth = 3;
+	private int edgEendSize = 8;
+	
 
 	// GraphEditor.class.getResource("/images/connector.gif");
 
@@ -100,7 +103,8 @@ public class GraphEditor extends BasicGraphEditor {
 		});
 
 		shapesPalette.addTemplate(CustomEntityType.CLASS.getName(),
-				new ImageIcon(GraphEditor.class.getResource("/images/rectangle.png")), "rectangle", vertexWidth, vertexHeight, "");
+				new ImageIcon(GraphEditor.class.getResource("/images/rectangle.png")), "rectangle", vertexWidth,
+				vertexHeight, "");
 
 		shapesPalette.addTemplate(CustomEntityType.NAMED_INDIVIDUAL.getName(),
 				new ImageIcon(GraphEditor.class.getResource("/images/ellipse.png")),
@@ -115,16 +119,22 @@ public class GraphEditor extends BasicGraphEditor {
 				"rectangle;shape=doubleRectangle;fillColor=white;gradientColor=white", vertexWidth, vertexHeight, "");
 
 		shapesPalette.addEdgeTemplate(CustomEntityType.OBJECT_PROPERTY.getName(),
-				new ImageIcon(GraphEditor.class.getResource("/images/arrowblack.png")), "straight", edgeWidth, edgeHeight, "");
+				new ImageIcon(GraphEditor.class.getResource("/images/arrowblack.png")),
+				"edgeStyle=mxEdgeStyle.OrthConnector;strokeWidth=3;strokeColor=black;endArrow=classic;endSize=8",
+				edgeWidth, edgeHeight, "");
 
 		shapesPalette.addEdgeTemplate(CustomEntityType.DATA_PROPERTY.getName(),
-				new ImageIcon(GraphEditor.class.getResource("/images/arrow.png")), "arrow", edgeWidth, edgeHeight, "");
+				new ImageIcon(GraphEditor.class.getResource("/images/dataproperty .png")),
+				"edgeStyle=mxEdgeStyle.OrthConnector;strokeWidth=3;strokeColor=#999999;endArrow=block;endSize=8",
+				edgeWidth, edgeHeight, "");
 
 		shapesPalette.addEdgeTemplate(CustomEntityType.RDFTYPE.getName(),
-				new ImageIcon(GraphEditor.class.getResource("/images/connect.png")), null, edgeWidth, edgeHeight, CustomEntityType.RDFTYPE.getName());
+				new ImageIcon(GraphEditor.class.getResource("/images/connect.png")), null, edgeWidth, edgeHeight,
+				CustomEntityType.RDFTYPE.getName());
 
 		shapesPalette.addEdgeTemplate(CustomEntityType.RDFSSUBCLASS_OF.getName(),
-				new ImageIcon(GraphEditor.class.getResource("/images/connect.png")), null, edgeWidth, edgeHeight, CustomEntityType.RDFSSUBCLASS_OF.getName());
+				new ImageIcon(GraphEditor.class.getResource("/images/connect.png")), null, edgeWidth, edgeHeight,
+				CustomEntityType.RDFSSUBCLASS_OF.getName());
 
 		/*
 		 * shapesPalette.addTemplate("Named Individual", new
@@ -172,20 +182,16 @@ public class GraphEditor extends BasicGraphEditor {
 		 * ImageIcon(GraphEditor.class.getResource("/images/cloud.png")),
 		 * "ellipse;shape=cloud", 160, 120, "");
 		 */
-		/*
-		 * shapesPalette.addEdgeTemplate("Straight", new
-		 * ImageIcon(GraphEditor.class.getResource("/images/straight.png")),
-		 * "straight", 120, 120, "");
-		 */
 
-		/*
-		 * shapesPalette.addEdgeTemplate( "Vertical Connector", new
-		 * ImageIcon(GraphEditor.class.getResource("/images/vertical.png")),
-		 * "vertical", 100, 100, ""); shapesPalette.addEdgeTemplate(
-		 * "Entity Relation", new
-		 * ImageIcon(GraphEditor.class.getResource("/images/entity.png")),
-		 * "entity", 100, 100, "");
-		 */
+		/*shapesPalette.addEdgeTemplate("Straight", new ImageIcon(GraphEditor.class.getResource("/images/straight.png")),
+				"edgeStyle=mxEdgeStyle.OrthConnector;strokeWidth=3;strokeColor=black;endArrow=block;endSize=5", 120,
+				120, "");
+
+		shapesPalette.addEdgeTemplate("Vertical Connector",
+				new ImageIcon(GraphEditor.class.getResource("/images/vertical.png")), "vertical", 100, 100, "");
+		shapesPalette.addEdgeTemplate("Entity Relation",
+				new ImageIcon(GraphEditor.class.getResource("/images/entity.png")), "entity", 100, 100, "");*/
+
 		/*
 		 * shapesPalette.addEdgeTemplate("AnnotationProperty", new
 		 * ImageIcon(GraphEditor.class.getResource("/images/arrow.png")),
@@ -286,16 +292,15 @@ public class GraphEditor extends BasicGraphEditor {
 		public CustomGraphComponent(mxGraph graph) {
 			super(graph);
 
-			
 			// Sets switches typically used in an editor
 			setCenterPage(true);
 			setPageVisible(true);
 			setGridVisible(true);
 			setToolTips(true);
-			
-			//creating annonying auto copying target
-			//getConnectionHandler().setCreateTarget(true);
-			//get rid from annonying auto copying
+
+			// creating annonying auto copying target
+			// getConnectionHandler().setCreateTarget(true);
+			// get rid from annonying auto copying
 			getConnectionHandler().setEnabled(false);
 
 			// Loads the defalt stylesheet from an external file
@@ -307,7 +312,7 @@ public class GraphEditor extends BasicGraphEditor {
 			// Sets the background to white
 			getViewport().setOpaque(true);
 			getViewport().setBackground(Color.WHITE);
-			
+
 		}
 
 		/**
@@ -352,7 +357,7 @@ public class GraphEditor extends BasicGraphEditor {
 		 * the middle control point of edges is double clicked (flipped).
 		 */
 		public CustomGraph() {
-			//setAlternateEdgeStyle("edgeStyle=mxEdgeStyle.ElbowConnector;elbow=vertical");
+			// setAlternateEdgeStyle("edgeStyle=mxEdgeStyle.ElbowConnector;elbow=vertical");
 		}
 
 		/**

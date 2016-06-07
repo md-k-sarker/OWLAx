@@ -15,6 +15,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
@@ -559,7 +560,7 @@ public class mxConnectionHandler extends mxMouseAdapter {
 	 */
 	public void mouseDragged(MouseEvent e) {
 		if (!e.isConsumed() && graphComponent.isEnabled() && isEnabled()) {
-			
+
 			// Activates the handler
 			if (!active && first != null) {
 				double dx = Math.abs(first.getX() - e.getX());
@@ -572,11 +573,11 @@ public class mxConnectionHandler extends mxMouseAdapter {
 			}
 
 			if (e.getButton() == 0 || (isActive() && connectPreview.isActive())) {
-				
+
 				mxCellState state = marker.process(e);
 
 				if (connectPreview.isActive()) {
-					
+
 					connectPreview.update(e, marker.getValidState(), e.getX(), e.getY());
 					setBounds(null);
 					e.consume();
@@ -588,10 +589,12 @@ public class mxConnectionHandler extends mxMouseAdapter {
 	}
 
 	/**
-	 * 
+	 * need to change here for not allowed edge types. this function is not getting called because isActive()= false
 	 */
 	public void mouseReleased(MouseEvent e) {
-		if (isActive()) {
+		
+		/*if (isActive()) {
+			System.out.println("source: and target: 0 ");
 			if (error != null) {
 				if (error.length() > 0) {
 					JOptionPane.showMessageDialog(graphComponent, error);
@@ -600,11 +603,11 @@ public class mxConnectionHandler extends mxMouseAdapter {
 				mxGraph graph = graphComponent.getGraph();
 				double dx = first.getX() - e.getX();
 				double dy = first.getY() - e.getY();
-
+				System.out.println("source: and target: ");
 				if (connectPreview.isActive()
 						&& (marker.hasValidState() || isCreateTarget() || graph.isAllowDanglingEdges())) {
 					graph.getModel().beginUpdate();
-
+					System.out.println("source: and target: 2");
 					try {
 						Object dropTarget = null;
 
@@ -612,7 +615,10 @@ public class mxConnectionHandler extends mxMouseAdapter {
 							Object vertex = createTargetVertex(e, source.getCell());
 							dropTarget = graph.getDropTarget(new Object[] { vertex }, e.getPoint(),
 									graphComponent.getCellAt(e.getX(), e.getY()));
+							mxCell smxcell = (mxCell) graphComponent.getCellAt(e.getX(), e.getY());
+							mxCell dmxcell = (mxCell) dropTarget;
 
+							System.out.println("source: " + smxcell.getValue() + " target: "+ dmxcell.getValue());
 							if (vertex != null) {
 								// Disables edges as drop targets if the target
 								// cell was created
@@ -660,7 +666,7 @@ public class mxConnectionHandler extends mxMouseAdapter {
 			}
 		}
 
-		reset();
+		reset();*/
 	}
 
 	/**

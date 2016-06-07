@@ -1362,7 +1362,7 @@ public class mxGraph extends mxEventSource
 		{
 			cells = getSelectionCells();
 		}
-
+		System.out.println("key: "+key+ "  value: "+value);
 		mxStyleUtils.setCellStyles(model, cells, key, value);
 
 		return cells;
