@@ -3,13 +3,17 @@
 package edu.wsu.dase;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.net.URL;
 import java.text.NumberFormat;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 
 import org.w3c.dom.Document;
 
@@ -279,11 +283,12 @@ public class GraphEditor extends BasicGraphEditor {
 		 */
 	}
 
+	
 	/**
 	 * 
 	 */
 	public static class CustomGraphComponent extends mxGraphComponent {
-
+		
 		/**
 		 * 
 		 */
@@ -333,16 +338,51 @@ public class GraphEditor extends BasicGraphEditor {
 					mxICell dropCell = (mxICell) cells[0];
 
 					if (targetCell.isVertex() == dropCell.isVertex() || targetCell.isEdge() == dropCell.isEdge()) {
-						mxIGraphModel model = graph.getModel();
-						model.setStyle(target, model.getStyle(cells[0]));
+						//mxIGraphModel model = graph.getModel();
+						//model.setStyle(target, model.getStyle(cells[0]));
 						graph.setSelectionCell(target);
-
 						return null;
 					}
 				}
 			}
-
+			//show dataTypes as list 
+			for(Object cell: cells){
+				mxCell currentCell = (mxCell) cell;
+				if(currentCell != null){
+					if(currentCell.getEntityType() == CustomEntityType.DATATYPE){
+						
+						addDataTypeAsList();
+						
+					}
+				}
+			}
 			return super.importCells(cells, dx, dy, target, location);
+		}
+		
+		private void addDataTypeAsList(){
+			
+			
+			
+			String[] petStrings = { "Bird", "Cat", "Dog", "Rabbit", "Pig" };
+
+			//Create the combo box, select item at index 4.
+			//Indices start at 0, so 4 specifies the pig.
+			JComboBox petList = new JComboBox(petStrings);
+			petList.setVisible(true);
+			petList.setSelectedIndex(4);
+			
+			JDialog dialogForCombo = new JDialog();
+			dialogForCombo.add(petList);
+			dialogForCombo.setModal(true);
+			dialogForCombo.setLocationRelativeTo(this);
+			dialogForCombo.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+			dialogForCombo.setUndecorated(true);
+			dialogForCombo.pack();
+			dialogForCombo.setVisible(true);
+			
+			
+			//System.out.println(getViewport().setComponentZOrder(petList, 0)); //.add(petList);
+			
 		}
 
 	}

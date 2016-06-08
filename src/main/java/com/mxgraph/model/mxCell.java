@@ -643,10 +643,10 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 	}
 
 	/**
-	 * Returns a clone of the cell.
+	 * Returns a clone of the cell. gets called everytime a cell is imported or moved
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		//System.out.println("sarker.3 cloning cell");
+		
 		mxCell clone = (mxCell) super.clone();
 
 		clone.setValue(cloneValue());
@@ -654,8 +654,6 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 		clone.setCollapsed(isCollapsed());
 		clone.setConnectable(isConnectable());
 		clone.setEdge(isEdge());
-		clone.setOWLClass(isOWLClass());
-		clone.setOWLNamedIndividual(isOWLNamedIndividual());
 		clone.setVertex(isVertex());
 		clone.setVisible(isVisible());
 		clone.setParent(null);

@@ -2663,6 +2663,7 @@ public class mxGraph extends mxEventSource
 		model.beginUpdate();
 		try
 		{
+			System.out.println("sarker.3 mxGraph.java addCells() 2666");
 			cellsAdded(cells, parent, index, source, target, false, true);
 			fireEvent(new mxEventObject(mxEvent.ADD_CELLS, "cells", cells,
 					"parent", parent, "index", index, "source", source,
