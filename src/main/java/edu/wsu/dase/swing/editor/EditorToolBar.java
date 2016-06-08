@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -14,6 +15,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.TransferHandler;
 
+import org.openrdf.model.vocabulary.RDFS;
+import org.protege.editor.owl.model.OWLModelManager;
+import org.protege.editor.owl.model.util.OWLDataTypeUtils;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+
+import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.util.mxGraphActions;
 import com.mxgraph.util.mxConstants;
@@ -32,6 +43,7 @@ import edu.wsu.dase.swing.editor.EditorActions.NewAction;
 import edu.wsu.dase.swing.editor.EditorActions.OpenAction;
 import edu.wsu.dase.swing.editor.EditorActions.PrintAction;
 import edu.wsu.dase.swing.editor.EditorActions.SaveAction;
+import edu.wsu.dase.util.CustomEntityType;
 
 public class EditorToolBar extends JToolBar {
 
@@ -46,12 +58,19 @@ public class EditorToolBar extends JToolBar {
 	 * @param orientation
 	 */
 	private boolean ignoreZoomChange = false;
+	private BasicGraphEditor editor;
+	private OWLDataFactory owlDataFactory;
+	private OWLModelManager owlModelManager;
+	private OWLOntologyManager owlOntologyManager;
+	private OWLOntology activeOntology;
 
 	/**
 	 * 
 	 */
 	public EditorToolBar(final BasicGraphEditor editor, int orientation) {
 		super(orientation);
+		this.editor = editor;
+
 		setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3), getBorder()));
 		setFloatable(false);
 
@@ -170,11 +189,12 @@ public class EditorToolBar extends JToolBar {
 				ignoreZoomChange = true;
 
 				try {
-					/*System.out.println("\n\n\nscale: " +view.getScale());
-					for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
-					    System.out.println(ste);
-					}
-					System.out.println("\n\n\n");*/
+					/*
+					 * System.out.println("\n\n\nscale: " +view.getScale()); for
+					 * (StackTraceElement ste :
+					 * Thread.currentThread().getStackTrace()) {
+					 * System.out.println(ste); } System.out.println("\n\n\n");
+					 */
 					zoomCombo.setSelectedItem((int) Math.round(100 * view.getScale()) + "%");
 				} finally {
 					ignoreZoomChange = false;
@@ -222,5 +242,65 @@ public class EditorToolBar extends JToolBar {
 				}
 			}
 		});
+
+		addSeparator();
+
+		final JComboBox dataTypeCombo = new JComboBox(getOWLDataTypes());
+		dataTypeCombo.setEditable(false);
+
+		dataTypeCombo.setMinimumSize(new Dimension(135, 0));
+		dataTypeCombo.setPreferredSize(new Dimension(135, 0));
+		dataTypeCombo.setSelectedIndex(0);
+		//adding this value in editor cellDataTypeValue also
+		editor.setCellDataTypeValue(dataTypeCombo.getSelectedItem().toString());
+		dataTypeCombo.setMaximumSize(new Dimension(135, 100));
+
+		add(dataTypeCombo);
+
+		dataTypeCombo.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				mxGraph graph = editor.getGraphComponent().getGraph();
+				mxCell selectedCell = (mxCell) graph.getSelectionCell();
+
+				if (selectedCell != null && selectedCell.getEntityType() == CustomEntityType.DATATYPE) {
+					if (dataTypeCombo.getSelectedItem() != null
+							&& dataTypeCombo.getSelectedItem().toString().length() > 0) {
+
+						editor.getGraphComponent().labelChanged(selectedCell, dataTypeCombo.getSelectedItem().toString(), e);
+						
+						//adding this value in editor cellDataTypeValue also
+						editor.setCellDataTypeValue(dataTypeCombo.getSelectedItem().toString());
+					}
+				}
+			}
+		});
+	}
+
+	private Object[] getOWLDataTypes() {
+
+		/*owlModelManager = editor.getProtegeOWLModelManager();
+		owlDataFactory = owlModelManager.getOWLDataFactory();
+		owlOntologyManager = owlModelManager.getOWLOntologyManager();
+		java.util.List<OWLDatatype> datatypeList = new ArrayList(
+				new OWLDataTypeUtils(owlOntologyManager).getKnownDatatypes(owlModelManager.getActiveOntologies()));
+		Collections.sort(datatypeList, owlModelManager.getOWLObjectComparator());*/
+
+		/*
+		 * if
+		 * (datatypeList.remove("http://www.w3.org/2000/01/rdf-schema#Literal"))
+		 * { datatypeList.add(owlDataFactory.getOWLDatatype((IRI)
+		 * RDFS.LITERAL)); }
+		 */
+
+		//OWLDatatype[] dtarray = datatypeList.toArray(new OWLDatatype[datatypeList.size()]);
+
+		/*for (Object dt : dtarray) {
+			System.out.println(dt.toString());
+		}*/
+
+		Object[] dtar = new Object[] { "erver", "ervqerv" };
+
+		return dtar;
 	}
 }

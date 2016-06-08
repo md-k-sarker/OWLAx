@@ -46,7 +46,6 @@ com\mxgraph\util\svg\AbstractParser.class
 com\mxgraph\view\mxMultiplicity.class
 com\mxgraph\view\mxLayoutManager$2.class
 com\mxgraph\analysis\mxUnionFind.class
-edu\wsu\dase\OdpMainUIComponent$ODPTabListener.class
 com\mxgraph\reader\mxSaxOutputHandler$18.class
 com\mxgraph\swing\view\mxCellEditor$NoLinefeedHtmlEditorKit.class
 com\mxgraph\shape\mxLineShape.class
@@ -240,7 +239,6 @@ com\mxgraph\costfunction\mxDoubleValCostFunction.class
 com\mxgraph\view\mxSwimlaneManager$1.class
 edu\wsu\dase\swing\editor\GraphConfigDialog$13.class
 edu\wsu\dase\swing\editor\EditorRuler$1.class
-edu\wsu\dase\OdpMainUIComponent.class
 com\mxgraph\shape\mxStencilRegistry.class
 edu\wsu\dase\swing\editor\SchemaEditorToolBar$2.class
 com\mxgraph\swing\mxGraphOutline$1.class
@@ -456,6 +454,7 @@ edu\wsu\dase\GraphEditor$CustomGraphComponent.class
 edu\wsu\dase\swing\editor\EditorActions$GridStyleAction.class
 edu\wsu\dase\swing\editor\BasicGraphEditor$15.class
 edu\wsu\dase\swing\editor\EditorRuler.class
+edu\wsu\dase\swing\editor\EditorToolBar$5.class
 com\mxgraph\util\svg\ExtendedPathIterator.class
 edu\wsu\dase\swing\editor\BasicGraphEditor$3.class
 com\mxgraph\shape\mxMarkerRegistry$4.class
@@ -543,7 +542,6 @@ com\mxgraph\view\mxPerimeter$1.class
 com\mxgraph\analysis\mxGraphStructure$2.class
 com\mxgraph\layout\hierarchical\model\mxGraphHierarchyRank.class
 com\mxgraph\reader\mxDomOutputParser$24.class
-edu\wsu\dase\OdpMainUIComponent$1.class
 edu\wsu\dase\swing\editor\EditorActions$BackgroundAction.class
 com\mxgraph\util\mxStyleUtils.class
 com\mxgraph\layout\hierarchical\stage\mxCoordinateAssignment$WeightedCellSorter.class

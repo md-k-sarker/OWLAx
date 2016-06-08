@@ -667,7 +667,9 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 		if (geometry != null) {
 			clone.setGeometry((mxGeometry) geometry.clone());
 		}
-
+		/*for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
+		    System.out.println(ste);
+		} */
 		return clone;
 	}
 

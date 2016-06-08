@@ -29,9 +29,12 @@ public class OdpMainUITab extends OWLWorkspaceViewsTab {
 
 		super.initialise();
 		if (getOWLModelManager() != null) {
-
+			
+			//first set protege informations
+			this.protegeOWLModelManager = getOWLModelManager();
+			
 			setLayout(new BorderLayout());
-			editor = new GraphEditor();
+			editor = new GraphEditor(this.protegeOWLModelManager);
 
 			add(new EditorMenuBar(editor), BorderLayout.NORTH);
 			add(editor, BorderLayout.CENTER);
@@ -60,10 +63,10 @@ public class OdpMainUITab extends OWLWorkspaceViewsTab {
 
 	private void update() {
 
-		protegeOWLModelManager = getOWLModelManager();
+		this.protegeOWLModelManager = getOWLModelManager();
 
-		if (protegeOWLModelManager != null) {
-			editor.setProtegeOWLModelManager(protegeOWLModelManager);
+		if (this.protegeOWLModelManager != null) {
+			editor.setProtegeOWLModelManager(this.protegeOWLModelManager);
 		}
 
 	}

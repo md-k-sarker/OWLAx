@@ -12,9 +12,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
+import org.protege.editor.owl.model.OWLModelManager;
 import org.w3c.dom.Document;
 
 import com.mxgraph.io.mxCodec;
@@ -67,15 +69,15 @@ public class GraphEditor extends BasicGraphEditor {
 
 	// GraphEditor.class.getResource("/images/connector.gif");
 
-	public GraphEditor() {
-		this("DaseGraph Editor", new CustomGraphComponent(new CustomGraph()));
+	public GraphEditor(OWLModelManager protegeOWLModelManager) {
+		this(protegeOWLModelManager,"DaseGraph Editor", new CustomGraphComponent(new CustomGraph()));
 	}
 
 	/**
 	 * 
 	 */
-	public GraphEditor(String appTitle, mxGraphComponent component) {
-		super(appTitle, component);
+	public GraphEditor(OWLModelManager protegeOWLModelManager,String appTitle, mxGraphComponent component) {
+		super(protegeOWLModelManager,appTitle, component);
 
 		final mxGraph graph = graphComponent.getGraph();
 
@@ -345,41 +347,40 @@ public class GraphEditor extends BasicGraphEditor {
 					}
 				}
 			}
-			//show dataTypes as list 
+			//show dataTypes as list.  will not do this.
+			//add dataType 
 			for(Object cell: cells){
 				mxCell currentCell = (mxCell) cell;
 				if(currentCell != null){
 					if(currentCell.getEntityType() == CustomEntityType.DATATYPE){
-						
-						addDataTypeAsList();
-						
+						this.labelChanged(currentCell,cellDataTypeValue, null);
 					}
 				}
 			}
 			return super.importCells(cells, dx, dy, target, location);
 		}
 		
-		private void addDataTypeAsList(){
+		private void addDataTypeAsList(Point location){
 			
-			
+			//final JOptionPane pane = new JOptionPane("Hello");
 			
 			String[] petStrings = { "Bird", "Cat", "Dog", "Rabbit", "Pig" };
 
 			//Create the combo box, select item at index 4.
 			//Indices start at 0, so 4 specifies the pig.
-			JComboBox petList = new JComboBox(petStrings);
+			JComboBox<String> petList = new JComboBox(petStrings);
 			petList.setVisible(true);
 			petList.setSelectedIndex(4);
 			
-			JDialog dialogForCombo = new JDialog();
+			JDialog dialogForCombo =  new JDialog();
 			dialogForCombo.add(petList);
 			dialogForCombo.setModal(true);
-			dialogForCombo.setLocationRelativeTo(this);
-			dialogForCombo.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-			dialogForCombo.setUndecorated(true);
+			dialogForCombo.setLocation(location.x,location.y);
+			//dialogForCombo.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 			dialogForCombo.pack();
-			dialogForCombo.setVisible(true);
 			
+			dialogForCombo.setVisible(true);
+			//pane.showInputDialog(dialogForCombo);
 			
 			//System.out.println(getViewport().setComponentZOrder(petList, 0)); //.add(petList);
 			
@@ -486,7 +487,7 @@ public class GraphEditor extends BasicGraphEditor {
 		mxSwingConstants.SHADOW_COLOR = Color.LIGHT_GRAY;
 		mxConstants.W3C_SHADOWCOLOR = "#D3D3D3";
 
-		GraphEditor editor = new GraphEditor();
+		GraphEditor editor = new GraphEditor(null);
 		// IntegrateOntologyWithProtege ontologyobj = new
 		// IntegrateOntologyWithProtege(editor);
 		// editor.createFrame(new EditorMenuBar(editor)).setVisible(true);

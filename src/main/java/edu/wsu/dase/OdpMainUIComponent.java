@@ -1,4 +1,4 @@
-package edu.wsu.dase;
+/*package edu.wsu.dase;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -29,25 +29,23 @@ public class OdpMainUIComponent extends AbstractOWLClassViewComponent {
 	@Override
 	public void initialiseClassView() throws Exception {
 		setLayout(new BorderLayout());
-		editor = new GraphEditor();
+		protegeOWLModelManager = getOWLModelManager();
 
-		add(new EditorMenuBar(editor), BorderLayout.NORTH);
-		add(editor, BorderLayout.CENTER);
+		if (protegeOWLModelManager != null) {
+			editor = new GraphEditor(protegeOWLModelManager);
+			add(new EditorMenuBar(editor), BorderLayout.NORTH);
+			add(editor, BorderLayout.CENTER);
 
-		JFrame mainWindow = (javax.swing.JFrame) SwingUtilities.windowForComponent(this);
-		editor.setProtegeMainWindow(mainWindow);
-		Dimension d = new Dimension(800, 600);
-		setPreferredSize(d);
-		setSize(d);
-		setLocation(100, 50);
-		setVisible(true);
-
-		if (getOWLModelManager() != null) {
+			JFrame mainWindow = (javax.swing.JFrame) SwingUtilities.windowForComponent(this);
+			editor.setProtegeMainWindow(mainWindow);
+			Dimension d = new Dimension(800, 600);
+			setPreferredSize(d);
+			setSize(d);
+			setLocation(100, 50);
+			setVisible(true);
 			getOWLModelManager().addListener(listener);
+			update();
 		}
-
-		update();
-
 	}
 
 	private void update() {
@@ -84,5 +82,5 @@ public class OdpMainUIComponent extends AbstractOWLClassViewComponent {
 		}
 	}
 
-
 }
+*/

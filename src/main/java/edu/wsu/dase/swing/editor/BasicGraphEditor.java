@@ -60,6 +60,7 @@ import com.mxgraph.view.mxGraph;
 
 public class BasicGraphEditor extends JPanel {
 
+
 	/**
 	 * 
 	 */
@@ -67,6 +68,9 @@ public class BasicGraphEditor extends JPanel {
 
 	private OWLModelManager protegeOWLModelManager;
 	private JFrame protegeMainWindow;
+	public static String cellDataTypeValue;
+	
+	
 	/**
 	 * Adds required resources for i18n
 	 */
@@ -148,7 +152,7 @@ public class BasicGraphEditor extends JPanel {
 	};
 
 	public OWLModelManager getProtegeOWLModelManager() {
-		return protegeOWLModelManager;
+		return this.protegeOWLModelManager;
 	}
 
 	public void setProtegeOWLModelManager(OWLModelManager protegeOWLModelManager) {
@@ -162,11 +166,22 @@ public class BasicGraphEditor extends JPanel {
 	public void setProtegeMainWindow(JFrame protegeMainFrame) {
 		this.protegeMainWindow = protegeMainFrame;
 	}
+	
+	public String getCellDataTypeValue() {
+		return cellDataTypeValue;
+	}
+
+	public void setCellDataTypeValue(String celldataTypeValue) {
+		cellDataTypeValue = celldataTypeValue;
+	}
 
 	/**
 	 * 
 	 */
-	public BasicGraphEditor(String appTitle, mxGraphComponent component) {
+	public BasicGraphEditor(OWLModelManager protegeOWLModelManager,String appTitle, mxGraphComponent component) {
+		//setProtegeInformations
+		this.protegeOWLModelManager = protegeOWLModelManager;
+		
 		// Stores and updates the frame title
 		this.appTitle = appTitle;
 
