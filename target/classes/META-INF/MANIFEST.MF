@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1465430182539
+Bnd-LastModified: 1465452150090
 Build-Jdk: 1.8.0_91
 Built-By: student
 Bundle-Activator: org.protege.editor.owl.ProtegeOWL
@@ -52,27 +52,28 @@ Export-Package: com.mxgraph.analysis;uses:="com.mxgraph.costfunction,com
  .swing.editor;uses:="com.mxgraph.analysis,com.mxgraph.layout,com.mxgrap
  h.model,com.mxgraph.swing,com.mxgraph.swing.handler,com.mxgraph.swing.u
  til,com.mxgraph.util,com.mxgraph.view,javax.swing,javax.swing.border,ja
- vax.swing.filechooser,javax.swing.table,org.protege.editor.owl.model";v
- ersion="1.0.0",edu.wsu.dase.util;uses:="javax.annotation,org.semanticwe
- b.owlapi.model,org.semanticweb.owlapi.vocab";version="1.0.0"
+ vax.swing.filechooser,javax.swing.table,org.protege.editor.owl.model,or
+ g.semanticweb.owlapi.model";version="1.0.0",edu.wsu.dase.util;uses:="ja
+ vax.annotation,org.semanticweb.owlapi.model,org.semanticweb.owlapi.voca
+ b";version="1.0.0"
 Import-Package: org.protege.editor.owl;version="5.0.0",org.protege.edito
  r.owl.model;version="5.0.0",org.protege.editor.owl.model.event;version=
- "5.0.0",org.protege.editor.owl.model.util;version="5.0.0",org.protege.e
- ditor.owl.ui;version="5.0.0",com.google.common.base;version="[18.0,19)"
- ,com.mxgraph.analysis,com.mxgraph.canvas,com.mxgraph.costfunction,com.m
- xgraph.generatorfunction,com.mxgraph.io,com.mxgraph.layout,com.mxgraph.
- layout.hierarchical,com.mxgraph.layout.hierarchical.model,com.mxgraph.l
- ayout.hierarchical.stage,com.mxgraph.layout.orthogonal.model,com.mxgrap
- h.model,com.mxgraph.shape,com.mxgraph.swing,com.mxgraph.swing.handler,c
- om.mxgraph.swing.util,com.mxgraph.swing.view,com.mxgraph.util,com.mxgra
- ph.util.png,com.mxgraph.util.svg,com.mxgraph.view,edu.wsu.dase,edu.wsu.
- dase.swing.editor,edu.wsu.dase.util,javax.annotation,javax.imageio,java
- x.swing,javax.swing.border,javax.swing.filechooser,javax.swing.plaf,jav
- ax.swing.table,javax.swing.text,javax.swing.text.html,javax.xml.parsers
- ,javax.xml.transform,javax.xml.transform.dom,javax.xml.transform.stream
- ,org.semanticweb.owlapi.model;version="[4.2,5)",org.semanticweb.owlapi.
- model.parameters;version="[4.2,5)",org.semanticweb.owlapi.util;version=
- "[4.2,5)",org.semanticweb.owlapi.vocab;version="[4.2,5)",org.slf4j;vers
- ion="[1.7,2)",org.w3c.dom,org.xml.sax,org.xml.sax.helpers
+ "5.0.0",org.protege.editor.owl.ui;version="5.0.0",com.google.common.bas
+ e;version="[18.0,19)",com.mxgraph.analysis,com.mxgraph.canvas,com.mxgra
+ ph.costfunction,com.mxgraph.generatorfunction,com.mxgraph.io,com.mxgrap
+ h.layout,com.mxgraph.layout.hierarchical,com.mxgraph.layout.hierarchica
+ l.model,com.mxgraph.layout.hierarchical.stage,com.mxgraph.layout.orthog
+ onal.model,com.mxgraph.model,com.mxgraph.shape,com.mxgraph.swing,com.mx
+ graph.swing.handler,com.mxgraph.swing.util,com.mxgraph.swing.view,com.m
+ xgraph.util,com.mxgraph.util.png,com.mxgraph.util.svg,com.mxgraph.view,
+ edu.wsu.dase,edu.wsu.dase.swing.editor,edu.wsu.dase.util,javax.annotati
+ on,javax.imageio,javax.swing,javax.swing.border,javax.swing.filechooser
+ ,javax.swing.plaf,javax.swing.table,javax.swing.text,javax.swing.text.h
+ tml,javax.xml.parsers,javax.xml.transform,javax.xml.transform.dom,javax
+ .xml.transform.stream,org.semanticweb.owlapi.model;version="[4.2,5)",or
+ g.semanticweb.owlapi.model.parameters;version="[4.2,5)",org.semanticweb
+ .owlapi.util;version="[4.2,5)",org.semanticweb.owlapi.vocab;version="[4
+ .2,5)",org.slf4j;version="[1.7,2)",org.w3c.dom,org.xml.sax,org.xml.sax.
+ helpers
 Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
 Tool: Bnd-3.0.0.201509101326

@@ -7,7 +7,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
@@ -23,6 +25,7 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.vocab.OWL2Datatype;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
@@ -250,8 +253,8 @@ public class EditorToolBar extends JToolBar {
 
 		dataTypeCombo.setMinimumSize(new Dimension(135, 0));
 		dataTypeCombo.setPreferredSize(new Dimension(135, 0));
-		//dataTypeCombo.setSelectedIndex(0);
-		//adding this value in editor cellDataTypeValue also
+		// dataTypeCombo.setSelectedIndex(0);
+		// adding this value in editor cellDataTypeValue also
 		editor.setCellDataTypeValue(dataTypeCombo.getSelectedItem().toString());
 		dataTypeCombo.setMaximumSize(new Dimension(135, 100));
 
@@ -263,40 +266,61 @@ public class EditorToolBar extends JToolBar {
 				mxGraph graph = editor.getGraphComponent().getGraph();
 				mxCell selectedCell = (mxCell) graph.getSelectionCell();
 
+				if (dataTypeCombo.getSelectedItem() != null
+						&& dataTypeCombo.getSelectedItem().toString().length() > 0) {
+					// adding this value in editor cellDataTypeValue also
+					editor.setCellDataTypeValue(dataTypeCombo.getSelectedItem().toString());
+				}
 				if (selectedCell != null && selectedCell.getEntityType() == CustomEntityType.DATATYPE) {
-					if (dataTypeCombo.getSelectedItem() != null
-							&& dataTypeCombo.getSelectedItem().toString().length() > 0) {
 
-						editor.getGraphComponent().labelChanged(selectedCell, dataTypeCombo.getSelectedItem().toString(), e);
-						
-						//adding this value in editor cellDataTypeValue also
-						editor.setCellDataTypeValue(dataTypeCombo.getSelectedItem().toString());
-					}
+					editor.getGraphComponent().labelChanged(selectedCell, dataTypeCombo.getSelectedItem().toString(),
+							e);
 				}
 			}
 		});
 	}
 
+	public Set<OWLDatatype> getBuiltinDatatypes(OWLModelManager owlModelManager) {
+		Set<OWLDatatype> datatypes = new HashSet<>();
+		final OWLDataFactory df = owlModelManager.getOWLDataFactory();
+
+		datatypes.add(df.getTopDatatype());
+		for (OWL2Datatype dt : OWL2Datatype.values()) {
+			datatypes.add(df.getOWLDatatype(dt.getIRI()));
+		}
+		return datatypes;
+	}
+
+	public Set<OWLDatatype> getKnownDatatypes(OWLModelManager owlModelManager, Set<OWLOntology> onts) {
+		Set<OWLDatatype> knownTypes = getBuiltinDatatypes(owlModelManager);
+		for (OWLOntology ont : onts) {
+			knownTypes.addAll(ont.getDatatypesInSignature());
+		}
+		return knownTypes;
+	}
+
 	private Object[] getOWLDataTypes() {
 
-		//for protege
-		/*owlModelManager = editor.getProtegeOWLModelManager();
+		// for protege
+		owlModelManager = editor.getProtegeOWLModelManager();
 		owlDataFactory = owlModelManager.getOWLDataFactory();
 		owlOntologyManager = owlModelManager.getOWLOntologyManager();
-		java.util.List<OWLDatatype> datatypeList = new ArrayList(
-				new OWLDataTypeUtils(owlOntologyManager).getKnownDatatypes(owlModelManager.getActiveOntologies()));
-		Collections.sort(datatypeList, owlModelManager.getOWLObjectComparator());*/
 
-		/*
-		 * if 
-		 * (datatypeList.remove("http://www.w3.org/2000/01/rdf-schema#Literal"))
-		 * { datatypeList.add(owlDataFactory.getOWLDatatype((IRI)
-		 * RDFS.LITERAL)); }
-		 */
-		//OWLDatatype[] dtarray = datatypeList.toArray(new OWLDatatype[datatypeList.size()]);
+		java.util.List<OWLDatatype> datatypeList = new ArrayList<>(
+				getKnownDatatypes(owlModelManager, owlModelManager.getActiveOntologies()));
 
-		//for single run
-		Object[] dtarray = new Object[] { "erver", "ervqerv" };
+		// convert 2nd time. it's necessary although it's bad
+		java.util.List<OWLDatatype> datatypeList1 = new ArrayList<>();
+		for (OWLDatatype dt : datatypeList) {
+			datatypeList1.add(owlDataFactory.getOWLDatatype(dt.getIRI()));
+		}
+
+		Collections.sort(datatypeList1, owlModelManager.getOWLObjectComparator());
+
+		OWLDatatype[] dtarray = datatypeList1.toArray(new OWLDatatype[datatypeList.size()]);
+
+		// for single run
+		// Object[] dtarray = new Object[] { "erver", "ervqerv" };
 
 		return dtarray;
 	}
