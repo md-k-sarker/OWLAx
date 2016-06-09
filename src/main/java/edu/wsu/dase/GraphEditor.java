@@ -70,14 +70,14 @@ public class GraphEditor extends BasicGraphEditor {
 	// GraphEditor.class.getResource("/images/connector.gif");
 
 	public GraphEditor(OWLModelManager protegeOWLModelManager) {
-		this(protegeOWLModelManager,"DaseGraph Editor", new CustomGraphComponent(new CustomGraph()));
+		this(protegeOWLModelManager, "DaseGraph Editor", new CustomGraphComponent(new CustomGraph()));
 	}
 
 	/**
 	 * 
 	 */
-	public GraphEditor(OWLModelManager protegeOWLModelManager,String appTitle, mxGraphComponent component) {
-		super(protegeOWLModelManager,appTitle, component);
+	public GraphEditor(OWLModelManager protegeOWLModelManager, String appTitle, mxGraphComponent component) {
+		super(protegeOWLModelManager, appTitle, component);
 
 		final mxGraph graph = graphComponent.getGraph();
 
@@ -285,12 +285,11 @@ public class GraphEditor extends BasicGraphEditor {
 		 */
 	}
 
-	
 	/**
 	 * 
 	 */
 	public static class CustomGraphComponent extends mxGraphComponent {
-		
+
 		/**
 		 * 
 		 */
@@ -340,50 +339,24 @@ public class GraphEditor extends BasicGraphEditor {
 					mxICell dropCell = (mxICell) cells[0];
 
 					if (targetCell.isVertex() == dropCell.isVertex() || targetCell.isEdge() == dropCell.isEdge()) {
-						//mxIGraphModel model = graph.getModel();
-						//model.setStyle(target, model.getStyle(cells[0]));
+						// mxIGraphModel model = graph.getModel();
+						// model.setStyle(target, model.getStyle(cells[0]));
 						graph.setSelectionCell(target);
 						return null;
 					}
 				}
 			}
-			//show dataTypes as list.  will not do this.
-			//add dataType 
-			for(Object cell: cells){
+			// show dataTypes as list. will not do this.
+			// add dataType
+			for (Object cell : cells) {
 				mxCell currentCell = (mxCell) cell;
-				if(currentCell != null){
-					if(currentCell.getEntityType() == CustomEntityType.DATATYPE){
-						this.labelChanged(currentCell,cellDataTypeValue, null);
+				if (currentCell != null) {
+					if (currentCell.getEntityType() == CustomEntityType.DATATYPE) {
+						this.labelChanged(currentCell, cellDataTypeValue, null);
 					}
 				}
 			}
 			return super.importCells(cells, dx, dy, target, location);
-		}
-		
-		private void addDataTypeAsList(Point location){
-			
-			//final JOptionPane pane = new JOptionPane("Hello");
-			
-			String[] petStrings = { "Bird", "Cat", "Dog", "Rabbit", "Pig" };
-
-			//Create the combo box, select item at index 4.
-			//Indices start at 0, so 4 specifies the pig.
-			JComboBox<String> petList = new JComboBox(petStrings);
-			petList.setVisible(true);
-			petList.setSelectedIndex(4);
-			
-			JDialog dialogForCombo =  new JDialog();
-			dialogForCombo.add(petList);
-			dialogForCombo.setModal(true);
-			dialogForCombo.setLocation(location.x,location.y);
-			//dialogForCombo.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-			dialogForCombo.pack();
-			
-			dialogForCombo.setVisible(true);
-			//pane.showInputDialog(dialogForCombo);
-			
-			//System.out.println(getViewport().setComponentZOrder(petList, 0)); //.add(petList);
-			
 		}
 
 	}

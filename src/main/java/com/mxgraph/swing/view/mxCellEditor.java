@@ -383,7 +383,8 @@ public class mxCellEditor implements mxICellEditor {
 			if (cell instanceof mxCell) {
 				mxCell thisCell = (mxCell) cell;
 				if (thisCell.getEntityType().equals(CustomEntityType.RDFTYPE)
-						|| thisCell.getEntityType().equals(CustomEntityType.RDFSSUBCLASS_OF)) {
+						|| thisCell.getEntityType().equals(CustomEntityType.RDFSSUBCLASS_OF)
+						|| thisCell.getEntityType().equals(CustomEntityType.DATATYPE)) {
 					return;
 				}
 			}

@@ -71,9 +71,9 @@ public class mxConstants
 	public static String DEFAULT_FONTFAMILY = "Dialog";
 
 	/**
-	 * Defines the default font size. Default is 24.
+	 * Defines the default font size. Default is 12.
 	 */
-	public static int DEFAULT_FONTSIZE = 24;
+	public static int DEFAULT_FONTSIZE = 12;
 
 	/**
 	 * Defines the default start size for swimlanes. Default is 40.

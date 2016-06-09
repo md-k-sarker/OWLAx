@@ -4,7 +4,7 @@
 		<add as="fillColor" value="#adc5ff"/>
 		<add as="gradientColor" value="#7d85df"/>
 		<add as="strokeColor" value="#5d65df"/>
-		<add as="fontSize" value="24"/>
+		<add as="fontSize" value="12"/>
 		<add as="fontColor" value="#1d258f"/>
 		<add as="fontFamily" value="Verdana"/>
 	</add>

@@ -131,7 +131,7 @@ public class EditorToolBar extends JToolBar {
 		final JComboBox sizeCombo = new JComboBox(new Object[] { "6pt", "8pt", "9pt", "10pt", "12pt", "14pt", "18pt",
 				"24pt", "30pt", "36pt", "48pt", "60pt" });
 		sizeCombo.setEditable(true);
-		sizeCombo.setSelectedIndex(7);
+		sizeCombo.setSelectedIndex(4);
 		sizeCombo.setMinimumSize(new Dimension(65, 0));
 		sizeCombo.setPreferredSize(new Dimension(65, 0));
 		sizeCombo.setMaximumSize(new Dimension(65, 100));
@@ -250,7 +250,7 @@ public class EditorToolBar extends JToolBar {
 
 		dataTypeCombo.setMinimumSize(new Dimension(135, 0));
 		dataTypeCombo.setPreferredSize(new Dimension(135, 0));
-		dataTypeCombo.setSelectedIndex(0);
+		//dataTypeCombo.setSelectedIndex(0);
 		//adding this value in editor cellDataTypeValue also
 		editor.setCellDataTypeValue(dataTypeCombo.getSelectedItem().toString());
 		dataTypeCombo.setMaximumSize(new Dimension(135, 100));
@@ -279,6 +279,7 @@ public class EditorToolBar extends JToolBar {
 
 	private Object[] getOWLDataTypes() {
 
+		//for protege
 		/*owlModelManager = editor.getProtegeOWLModelManager();
 		owlDataFactory = owlModelManager.getOWLDataFactory();
 		owlOntologyManager = owlModelManager.getOWLOntologyManager();
@@ -287,20 +288,16 @@ public class EditorToolBar extends JToolBar {
 		Collections.sort(datatypeList, owlModelManager.getOWLObjectComparator());*/
 
 		/*
-		 * if
+		 * if 
 		 * (datatypeList.remove("http://www.w3.org/2000/01/rdf-schema#Literal"))
 		 * { datatypeList.add(owlDataFactory.getOWLDatatype((IRI)
 		 * RDFS.LITERAL)); }
 		 */
-
 		//OWLDatatype[] dtarray = datatypeList.toArray(new OWLDatatype[datatypeList.size()]);
 
-		/*for (Object dt : dtarray) {
-			System.out.println(dt.toString());
-		}*/
+		//for single run
+		Object[] dtarray = new Object[] { "erver", "ervqerv" };
 
-		Object[] dtar = new Object[] { "erver", "ervqerv" };
-
-		return dtar;
+		return dtarray;
 	}
 }
