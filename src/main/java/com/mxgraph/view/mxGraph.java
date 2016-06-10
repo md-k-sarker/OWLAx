@@ -1362,7 +1362,7 @@ public class mxGraph extends mxEventSource
 		{
 			cells = getSelectionCells();
 		}
-		System.out.println("key: "+key+ "  value: "+value);
+		//System.out.println("key: "+key+ "  value: "+value);
 		mxStyleUtils.setCellStyles(model, cells, key, value);
 
 		return cells;
@@ -2663,7 +2663,7 @@ public class mxGraph extends mxEventSource
 		model.beginUpdate();
 		try
 		{
-			System.out.println("sarker.3 mxGraph.java addCells() 2666");
+			//System.out.println("sarker.3 mxGraph.java addCells() 2666");
 			cellsAdded(cells, parent, index, source, target, false, true);
 			fireEvent(new mxEventObject(mxEvent.ADD_CELLS, "cells", cells,
 					"parent", parent, "index", index, "source", source,
@@ -4252,12 +4252,16 @@ public class mxGraph extends mxEventSource
 	 * @param constraint Optional constraint to be used for this connection.
 	 * @return Returns the update edge.
 	 */
+	// need to change here for cell connection
 	public Object connectCell(Object edge, Object terminal, boolean source,
 			mxConnectionConstraint constraint)
 	{
 		model.beginUpdate();
 		try
 		{
+			for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
+			   // System.out.println(ste);
+			} 
 			Object previous = model.getTerminal(edge, source);
 			cellConnected(edge, terminal, source, constraint);
 			fireEvent(new mxEventObject(mxEvent.CONNECT_CELL, "edge", edge,
@@ -4340,6 +4344,8 @@ public class mxGraph extends mxEventSource
 	 */
 	public void disconnectGraph(Object[] cells)
 	{
+		System.out.println("being disconnected");
+		
 		if (cells != null)
 		{
 			model.beginUpdate();

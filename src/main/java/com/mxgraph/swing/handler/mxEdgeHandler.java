@@ -612,6 +612,7 @@ public class mxEdgeHandler extends mxCellHandler {
 	 * @param terminal
 	 * @param isSource
 	 */
+	//need to change here for disable connection
 	protected void connect(Object edge, Object terminal, boolean isSource, boolean isClone) {
 		mxGraph graph = graphComponent.getGraph();
 		mxIGraphModel model = graph.getModel();
@@ -637,13 +638,13 @@ public class mxEdgeHandler extends mxCellHandler {
 			mxCell dest = (mxCell) graph.getModel().getTerminal(edge, false);
 			mxCell trg = (mxCell) terminal;
 
-			if (src != null) {
+			if (src != null) {    //is outbound
 				System.out.println("source: " + src.getValue());
 			}
-			if (dest != null) {
+			if (dest != null) {   //is inbound
 				System.out.println("destination: " + dest.getValue());
 			}
-			if (trg != null) {
+			if (trg != null) {     // is the cell which will be now connected with this edge
 				System.out.println("target " + trg.getValue());
 			}
 			graph.connectCell(edge, terminal, isSource, new mxConnectionConstraint());

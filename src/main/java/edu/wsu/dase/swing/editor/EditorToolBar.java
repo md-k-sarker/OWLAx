@@ -249,7 +249,7 @@ public class EditorToolBar extends JToolBar {
 		addSeparator();
 
 		final JComboBox dataTypeCombo = new JComboBox(getOWLDataTypes());
-		dataTypeCombo.setEditable(false);
+		dataTypeCombo.setEditable(true);
 
 		dataTypeCombo.setMinimumSize(new Dimension(135, 0));
 		dataTypeCombo.setPreferredSize(new Dimension(135, 0));
@@ -303,25 +303,28 @@ public class EditorToolBar extends JToolBar {
 
 		// for protege
 		owlModelManager = editor.getProtegeOWLModelManager();
-		owlDataFactory = owlModelManager.getOWLDataFactory();
-		owlOntologyManager = owlModelManager.getOWLOntologyManager();
+		if (owlModelManager != null) {
+			owlDataFactory = owlModelManager.getOWLDataFactory();
+			owlOntologyManager = owlModelManager.getOWLOntologyManager();
 
-		java.util.List<OWLDatatype> datatypeList = new ArrayList<>(
-				getKnownDatatypes(owlModelManager, owlModelManager.getActiveOntologies()));
+			java.util.List<OWLDatatype> datatypeList = new ArrayList<>(
+					getKnownDatatypes(owlModelManager, owlModelManager.getActiveOntologies()));
 
-		// convert 2nd time. it's necessary although it's bad
-		java.util.List<OWLDatatype> datatypeList1 = new ArrayList<>();
-		for (OWLDatatype dt : datatypeList) {
-			datatypeList1.add(owlDataFactory.getOWLDatatype(dt.getIRI()));
+			// convert 2nd time. it's necessary although it's bad. Martin O
+			// Con'r said entity renderer is needed.
+			java.util.List<OWLDatatype> datatypeList1 = new ArrayList<>();
+			for (OWLDatatype dt : datatypeList) {
+				datatypeList1.add(owlDataFactory.getOWLDatatype(dt.getIRI()));
+			}
+
+			Collections.sort(datatypeList1, owlModelManager.getOWLObjectComparator());
+			OWLDatatype[] dtarray = datatypeList1.toArray(new OWLDatatype[datatypeList.size()]);
+			return dtarray;
+		} else {
+			// to run without protege
+			Object[] dtarray = new Object[] { "1", "2" };
+			return dtarray;
 		}
 
-		Collections.sort(datatypeList1, owlModelManager.getOWLObjectComparator());
-
-		OWLDatatype[] dtarray = datatypeList1.toArray(new OWLDatatype[datatypeList.size()]);
-
-		// for single run
-		// Object[] dtarray = new Object[] { "erver", "ervqerv" };
-
-		return dtarray;
 	}
 }

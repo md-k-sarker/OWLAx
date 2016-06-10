@@ -52,7 +52,7 @@ public final class CustomEntityType<E extends OWLEntity> implements Serializable
     /** named individual entity */  @Nonnull    public static final CustomEntityType<OWLNamedIndividual> NAMED_INDIVIDUAL = new CustomEntityType<OWLNamedIndividual>("Named Individual", "Named individual", "Named individuals", OWL_NAMED_INDIVIDUAL);
     /** datatype entity */          @Nonnull    public static final CustomEntityType<OWLDatatype> DATATYPE = new CustomEntityType<OWLDatatype>( "Datatype", "Datatype", "Datatypes", RDFS_DATATYPE);
     /** RDF_TYPE */         		@Nonnull    public static final CustomEntityType<OWLDatatype> LITERAL = new CustomEntityType<OWLDatatype>( "Literal", "Literal", "Literals", RDFS_LITERAL);
-    /** LITERAL */          		@Nonnull    public static final CustomEntityType<OWLDatatype> RDFTYPE = new CustomEntityType<OWLDatatype>( "rdf:Type", "rdf:Type", "rdf:Types", RDF_TYPE);
+    /** LITERAL */          		@Nonnull    public static final CustomEntityType<OWLDatatype> RDFTYPE = new CustomEntityType<OWLDatatype>( "rdf:type", "rdf:type", "rdf:types", RDF_TYPE);
     /** RDFS_SUBCLASS_OF */         @Nonnull    public static final CustomEntityType<OWLDatatype> RDFSSUBCLASS_OF = new CustomEntityType<OWLDatatype>( "rdfs:subClassOf", "rdfs:subClassOf", "rdfs:subClassesOf", RDFS_SUBCLASS_OF);
     private static final List<CustomEntityType<?>> VALUES = Collections.<CustomEntityType<?>> unmodifiableList(Arrays.asList(CLASS, OBJECT_PROPERTY, DATA_PROPERTY, ANNOTATION_PROPERTY, NAMED_INDIVIDUAL, DATATYPE));
   //@formatter:on

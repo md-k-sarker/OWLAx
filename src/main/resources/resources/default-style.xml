@@ -13,7 +13,7 @@
 		<add as="rounded" value="1"/>
 		<add as="edgeStyle" value="elbowEdgeStyle"/>
 		<add as="strokeColor" value="#5d65df"/>
-		<add as="fontSize" value="22"/>
+		<add as="fontSize" value="12"/>
 		<add as="fontColor" value="#1d258f"/>
 		<add as="fontFamily" value="Verdana"/>
 	</add>
