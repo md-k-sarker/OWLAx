@@ -44,6 +44,11 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 	 * Holds the Id. Default is null.
 	 */
 	protected String id;
+	
+	/**
+	 * Holds the datatype of literal as string. Default is null.
+	 */
+	protected String literalDataType;
 
 	/**
 	 * Holds the user object. Default is null.
@@ -66,7 +71,7 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 	 * connectable, visible and collapsed. Default values are false, false,
 	 * true, true and false respectively.
 	 */
-	protected boolean vertex = false, edge = false, owlClass = false, owlNamedIndividual = false, connectable = true,
+	protected boolean vertex = false, edge = false, owlLiteral = false, connectable = true,
 			visible = true, collapsed = false;
 	protected CustomEntityType entityType;
 
@@ -221,23 +226,6 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 		this.edge = edge;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.mxgraph.model.mxICell#isVertex()
-	 */
-	public boolean isOWLClass() {
-		return owlClass;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.mxgraph.model.mxICell#setVertex(boolean)
-	 */
-	public void setOWLClass(boolean owlClass) {
-		this.owlClass = owlClass;
-	}
 	
 	@Override
 	public CustomEntityType getEntityType() {
@@ -250,25 +238,6 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 		// TODO Auto-generated method stub
 		this.entityType = entityType;
 		//System.out.println("After setting: "+entityType +"\t"+this.entityType);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.mxgraph.model.mxICell#isEdge()
-	 */
-	public boolean isOWLNamedIndividual() {
-		return owlNamedIndividual;
-	}
-
-	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.mxgraph.model.mxICell#setEdge(boolean)
-	 */
-	public void setOWLNamedIndividual(boolean owlNamedIndividual) {
-		this.owlNamedIndividual = owlNamedIndividual;
 	}
 
 	/*
@@ -685,6 +654,26 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 		}
 
 		return value;
+	}
+
+	@Override
+	public boolean isOWLLiteral() {
+		return this.owlLiteral;
+	}
+
+	@Override
+	public void setOWLLiteral(boolean owlLiteral) {
+		this.owlLiteral = owlLiteral;
+	}
+
+	@Override
+	public String getLiteralDataType() {
+		return this.literalDataType;
+	}
+
+	@Override
+	public void setLiteralDataType(String value) {
+		this.literalDataType = value;
 	}
 
 }

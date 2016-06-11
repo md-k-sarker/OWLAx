@@ -256,6 +256,7 @@ public class EditorPalette extends JPanel {
 			cell.setEntityType(CustomEntityType.DATATYPE);
 		} else if (name.toLowerCase().equals(CustomEntityType.LITERAL.getName().toLowerCase())) {
 			cell.setEntityType(CustomEntityType.LITERAL);
+			//cell.setOWLLiteral(true);
 		}
 		// System.out.println("After Setting: name== " + cell.getEntityType() +
 		// "\n\n");

@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.EventObject;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -31,6 +33,7 @@ import javax.swing.text.html.MinimalHTMLWriter;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
+import com.mxgraph.model.mxICell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxConstants;
@@ -379,7 +382,7 @@ public class mxCellEditor implements mxICellEditor {
 		mxCellState state = graphComponent.getGraph().getView().getState(cell);
 
 		if (state != null) {
-			// logic for not editing rdf:Type and rdfs:subClassOf cell
+			// logic for not editing rdf:Type, rdfs:subClassOf, dataType cell
 			if (cell instanceof mxCell) {
 				mxCell thisCell = (mxCell) cell;
 				if (thisCell.getEntityType().equals(CustomEntityType.RDFTYPE)
@@ -397,6 +400,19 @@ public class mxCellEditor implements mxICellEditor {
 			scrollPane.setVisible(true);
 
 			String value = getInitialValue(state, evt);
+			// logic for editing literal type cell
+			if (((mxCell) cell).getEntityType() == CustomEntityType.LITERAL) {
+				String oldLabelValue = ((mxCell) cell).getValue().toString();
+				String oldLabelValueOnly = "";
+				Pattern pattern = Pattern.compile("\"(.*?)\"");
+				Matcher matcher = pattern.matcher(oldLabelValue);
+				while (matcher.find()) {
+					oldLabelValueOnly = matcher.group(1);
+				}
+
+				 value = oldLabelValueOnly;
+			}
+			
 			JTextComponent currentEditor = null;
 
 			// Configures the style of the in-place editor
@@ -461,7 +477,15 @@ public class mxCellEditor implements mxICellEditor {
 			if (!cancel) {
 				EventObject trig = trigger;
 				trigger = null;
-				graphComponent.labelChanged(cell, getCurrentValue(), trig);
+				if (cell instanceof mxICell) {
+					mxCell thisCell = (mxCell) cell;
+					if (thisCell.getEntityType() == CustomEntityType.LITERAL) {
+						String labelValue = "\"" + getCurrentValue() + "\"" + "^^" + thisCell.getLiteralDataType();
+						graphComponent.labelChanged(cell, labelValue, trig);
+					} else {
+						graphComponent.labelChanged(cell, getCurrentValue(), trig);
+					}
+				}
 			} else {
 				mxCellState state = graphComponent.getGraph().getView().getState(cell);
 				graphComponent.redraw(state);

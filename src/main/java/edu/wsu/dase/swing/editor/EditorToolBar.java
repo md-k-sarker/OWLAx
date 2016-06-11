@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
@@ -17,10 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.TransferHandler;
 
-import org.openrdf.model.vocabulary.RDFS;
 import org.protege.editor.owl.model.OWLModelManager;
-import org.protege.editor.owl.model.util.OWLDataTypeUtils;
-import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -275,6 +274,21 @@ public class EditorToolBar extends JToolBar {
 
 					editor.getGraphComponent().labelChanged(selectedCell, dataTypeCombo.getSelectedItem().toString(),
 							e);
+				}
+				if (selectedCell != null && selectedCell.getEntityType() == CustomEntityType.LITERAL) {
+					selectedCell.setLiteralDataType(dataTypeCombo.getSelectedItem().toString());
+
+					String oldLabelValue = selectedCell.getValue().toString();
+					String oldLabelValueOnly = "";
+					Pattern pattern = Pattern.compile("\"(.*?)\"");
+					Matcher matcher = pattern.matcher(oldLabelValue);
+					while (matcher.find()) {
+						oldLabelValueOnly = matcher.group(1);
+					}
+
+					String value = "\"" + oldLabelValueOnly + "\"" + "^^" + selectedCell.getLiteralDataType();
+
+					editor.getGraphComponent().labelChanged(selectedCell, value, e);
 				}
 			}
 		});

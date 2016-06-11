@@ -78,18 +78,30 @@ public interface mxICell
 	boolean isEdge();
 	
 	/**
-	 * Returns true if the cell is a vertex.
+	 * Returns true if the cell is a Literal.
 	 * 
-	 * @return Returns true if the cell is a vertex.
+	 * @return Returns true if the cell is a Literal.
 	 */
-	boolean isOWLClass();
+	boolean isOWLLiteral();
+	
+	/**
+	 * Set the cell as a Literal.
+	 * 
+	 * 
+	 */
+	void setOWLLiteral(boolean owlLiteral);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	String getLiteralDataType();
 
 	/**
-	 * Returns true if the cell is an edge.
-	 * 
-	 * @return Returns true if the cell is an edge.
+	 * setLiteralDataType as string
+	 * @param value
 	 */
-	boolean isOWLNamedIndividual();
+	void setLiteralDataType(String value);
 	
 	/**
 	 * Returns OWLentityType 

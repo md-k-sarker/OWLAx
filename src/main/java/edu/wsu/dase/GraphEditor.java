@@ -3,27 +3,28 @@
 package edu.wsu.dase;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Point;
 import java.net.URL;
 import java.text.NumberFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import javax.swing.WindowConstants;
 
 import org.protege.editor.owl.model.OWLModelManager;
+import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.w3c.dom.Document;
 
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxICell;
-import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.util.mxGraphTransferable;
 import com.mxgraph.swing.util.mxSwingConstants;
@@ -353,6 +354,10 @@ public class GraphEditor extends BasicGraphEditor {
 				if (currentCell != null) {
 					if (currentCell.getEntityType() == CustomEntityType.DATATYPE) {
 						this.labelChanged(currentCell, cellDataTypeValue, null);
+					}else if(currentCell.getEntityType() == CustomEntityType.LITERAL){ 
+						String cellValue = "\"" + "\"" + "^^" + cellDataTypeValue;
+						currentCell.setLiteralDataType(cellDataTypeValue);
+						this.labelChanged(currentCell, cellValue, null);
 					}
 				}
 			}
@@ -376,6 +381,18 @@ public class GraphEditor extends BasicGraphEditor {
 		 */
 		public CustomGraph() {
 			// setAlternateEdgeStyle("edgeStyle=mxEdgeStyle.ElbowConnector;elbow=vertical");
+			
+			String abc = "\"kamal\"\"karim^^xsd:String";
+			Pattern pattern  = Pattern.compile("\\^\\^(.*?)$");
+			Matcher matcher = pattern.matcher(abc);
+			while(matcher.find()){
+				System.out.println(matcher.group(1));
+				OWLDataFactory factory = OWLManager.createOWLOntologyManager().getOWLDataFactory();
+				
+				OWLDatatype odt = factory.getOWLDatatype(matcher.group(1), new DefaultPrefixManager());
+				OWLLiteral literal = factory.getOWLLiteral("karim",odt);
+				System.out.println(literal.toString() + "\t "+ literal.getLiteral());
+			}
 		}
 
 		/**

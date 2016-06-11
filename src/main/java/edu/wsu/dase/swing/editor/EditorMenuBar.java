@@ -49,7 +49,6 @@ import edu.wsu.dase.swing.editor.EditorActions.SaveAction;
 import edu.wsu.dase.swing.editor.EditorActions.SaveOntologyAction;
 import edu.wsu.dase.swing.editor.EditorActions.ScaleAction;
 import edu.wsu.dase.swing.editor.EditorActions.SetLabelPositionAction;
-import edu.wsu.dase.swing.editor.EditorActions.SetStyleAction;
 import edu.wsu.dase.swing.editor.EditorActions.StylesheetAction;
 import edu.wsu.dase.swing.editor.EditorActions.ToggleAction;
 import edu.wsu.dase.swing.editor.EditorActions.ToggleGridItem;

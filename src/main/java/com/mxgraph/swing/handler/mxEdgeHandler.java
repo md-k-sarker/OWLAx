@@ -20,6 +20,8 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.slf4j.Logger;
+
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxIGraphModel;
@@ -31,6 +33,8 @@ import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxConnectionConstraint;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphView;
+
+import edu.wsu.dase.util.CustomEntityType;
 
 /**
  *
@@ -219,7 +223,7 @@ public class mxEdgeHandler extends mxCellHandler {
 	 * 
 	 * @param x
 	 * @param y
-	 * @return Returns the inde of the handle at the given location.
+	 * @return Returns the index of the handle at the given location.
 	 */
 	public int getIndexAt(int x, int y) {
 		int index = super.getIndexAt(x, y);
@@ -606,13 +610,55 @@ public class mxEdgeHandler extends mxCellHandler {
 	}
 
 	/**
+	 * 
+	 * @return
+	 */
+	private boolean isConnectionSupportedByODP(mxCell edgeCell, boolean isSource, mxCell trgCell) {
+		if (trgCell != null) {
+			if (edgeCell.getEntityType() == CustomEntityType.OBJECT_PROPERTY) {
+
+				if (isSource) {
+					if (trgCell.getEntityType() == CustomEntityType.CLASS)
+						return true;
+				} else if (trgCell.getEntityType() == CustomEntityType.CLASS
+						|| trgCell.getEntityType() == CustomEntityType.NAMED_INDIVIDUAL)
+					return true;
+
+			} else if (edgeCell.getEntityType() == CustomEntityType.DATA_PROPERTY) {
+
+				if (isSource) {
+					if (trgCell.getEntityType() == CustomEntityType.CLASS)
+						return true;
+				} else if (trgCell.getEntityType() == CustomEntityType.LITERAL
+						|| trgCell.getEntityType() == CustomEntityType.DATATYPE)
+					return true;
+
+			} else if (edgeCell.getEntityType() == CustomEntityType.RDFSSUBCLASS_OF) {
+
+				if (trgCell.getEntityType() == CustomEntityType.CLASS)
+					return true;
+
+			} else if (edgeCell.getEntityType() == CustomEntityType.RDFTYPE) {
+
+				if (isSource) {
+					if (trgCell.getEntityType() == CustomEntityType.NAMED_INDIVIDUAL)
+						return true;
+				} else if (trgCell.getEntityType() == CustomEntityType.CLASS)
+					return true;
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * Connects the given edge to the given source or target terminal.
 	 * 
 	 * @param edge
 	 * @param terminal
 	 * @param isSource
 	 */
-	//need to change here for disable connection
+	// need to change here for disable connection
 	protected void connect(Object edge, Object terminal, boolean isSource, boolean isClone) {
 		mxGraph graph = graphComponent.getGraph();
 		mxIGraphModel model = graph.getModel();
@@ -634,20 +680,23 @@ public class mxEdgeHandler extends mxCellHandler {
 			}
 			// Passes an empty constraint to reset constraint information
 
-			mxCell src = (mxCell) graph.getModel().getTerminal(edge, true);
-			mxCell dest = (mxCell) graph.getModel().getTerminal(edge, false);
 			mxCell trg = (mxCell) terminal;
+			mxCell edgeCell = (mxCell) edge;
 
-			if (src != null) {    //is outbound
-				System.out.println("source: " + src.getValue());
-			}
-			if (dest != null) {   //is inbound
-				System.out.println("destination: " + dest.getValue());
-			}
-			if (trg != null) {     // is the cell which will be now connected with this edge
-				System.out.println("target " + trg.getValue());
-			}
-			graph.connectCell(edge, terminal, isSource, new mxConnectionConstraint());
+			mxPoint point;
+			if (isSource) {
+				point = state.getAbsolutePoint(0);
+			} else
+				point = state.getAbsolutePoint(1);
+
+			// FIXME need to use point for mxConnectionConstraint
+			// mxConnectionConstraint constraint = new mxConnectionConstraint(point); not working
+			mxConnectionConstraint constraint = new mxConnectionConstraint();
+
+			if (isConnectionSupportedByODP(edgeCell, isSource, trg))
+				graph.connectCell(edge, terminal, isSource, constraint);
+			else
+				System.out.println("Connection not Possible");
 		} finally {
 			model.endUpdate();
 		}
