@@ -11,6 +11,8 @@ target/
 .classpath
 .project
 
+#Java Memory error log file
+hs_err_pid10644.log
 
 # local configuration file (for Android sdk path, etc)
 local.properties
