@@ -8,7 +8,7 @@
         </CNode>
         <CNode>
             <Component label="DaseViewComponent">
-                <Property id="pluginId" value="odp.daseViewComponent"/>
+                <Property id="pluginId" value="OWLAx.daseViewComponent"/>
             </Component>
         </CNode>
     </VSNode>

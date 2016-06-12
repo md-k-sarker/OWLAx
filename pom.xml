@@ -11,9 +11,9 @@
 	</parent>
 
 	<groupId>edu.wsu.dase</groupId>
-	<artifactId>odp</artifactId>
+	<artifactId>OWLAx</artifactId>
 	<version>1.0.0-beta-0</version>
-	<name>ODP Plugin Protege 5.0+</name>
+	<name>OWLAx Plugin Protege 5.0+</name>
 	<description>Ontology Design Pattern Plugin for Desktop Protege 5.0+</description>
 	<!-- <url>https://github.com/...../wiki</url> -->
 	<packaging>bundle</packaging>
@@ -21,7 +21,7 @@
 	<developers>
 		<developer>
 			<name>Md Kamruzzaman Sarker</name>
-			<email>mdkamruzzamansarker@@gmail.com</email>
+			<email>mdkamruzzamansarker@gmail.com</email>
 		</developer>
 	</developers>
 	<dependencies>
