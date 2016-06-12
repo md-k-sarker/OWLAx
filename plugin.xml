@@ -3,36 +3,6 @@
 
 <plugin>
 
-	<!-- only for showing in menu -->
-<!-- 	<extension id="daseView"
-		point="org.protege.editor.core.application.WorkspaceTab">
-		<label value="DaseODPView" />
-		<class value="edu.wsu.dase.View" />
-		<index value="X" />
-		<editorKitId value="OWLEditorKit" />
-	</extension> -->
-
-<!-- not using 
-	<extension id="daseViewComponent"
-		point="org.protege.editor.core.application.ViewComponent">
-		<label value="Ontology Design Pattern" />
-		<class value="edu.wsu.dase.OdpMainUIComponent" />
-		<category value="@org.protege.ontologycategory">
-		</category>
-	</extension>  -->
-
-
-	<!-- class value must be org.protege.editor.owl.ui.OWLWorkspaceViewsTab 
-		to store multiple view -->
-<!-- not using 	<extension id="daseViewComplicated"
-		point="org.protege.editor.core.application.WorkspaceTab">
-		<label value="Ontology Design Pattern" />
-		<class value="org.protege.editor.owl.ui.OWLWorkspaceViewsTab" />
-		<index value="X" />
-		<editorKitId value="OWLEditorKit" />
-		<defaultViewConfigFileName value="custom.layout.xml" />
-	</extension>  -->
-
 	<extension id="SWRLTab" point="org.protege.editor.core.application.WorkspaceTab">
 		<label value="OWLAx"/>
 		<class value="edu.wsu.dase.OdpMainUITab"/>

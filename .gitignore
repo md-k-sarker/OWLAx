@@ -6,11 +6,14 @@
 .settings/
 New folder/
 target/
+bin/
 
 # Eclipse project files
 .classpath
 .project
 
+#Java Memory error log file
+*.log
 
 # local configuration file (for Android sdk path, etc)
 local.properties
