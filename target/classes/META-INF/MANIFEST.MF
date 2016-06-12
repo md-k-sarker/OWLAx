@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1465516130089
+Bnd-LastModified: 1465604680210
 Build-Jdk: 1.8.0_91
 Built-By: student
 Bundle-Activator: org.protege.editor.owl.ProtegeOWL
@@ -70,10 +70,10 @@ Import-Package: org.protege.editor.owl;version="5.0.0",org.protege.edito
  on,javax.imageio,javax.swing,javax.swing.border,javax.swing.filechooser
  ,javax.swing.plaf,javax.swing.table,javax.swing.text,javax.swing.text.h
  tml,javax.xml.parsers,javax.xml.transform,javax.xml.transform.dom,javax
- .xml.transform.stream,org.semanticweb.owlapi.model;version="[4.2,5)",or
- g.semanticweb.owlapi.model.parameters;version="[4.2,5)",org.semanticweb
- .owlapi.util;version="[4.2,5)",org.semanticweb.owlapi.vocab;version="[4
- .2,5)",org.slf4j;version="[1.7,2)",org.w3c.dom,org.xml.sax,org.xml.sax.
- helpers
+ .xml.transform.stream,org.semanticweb.owlapi.apibinding;version="[4.2,5
+ )",org.semanticweb.owlapi.model;version="[4.2,5)",org.semanticweb.owlap
+ i.model.parameters;version="[4.2,5)",org.semanticweb.owlapi.util;versio
+ n="[4.2,5)",org.semanticweb.owlapi.vocab;version="[4.2,5)",org.slf4j;ve
+ rsion="[1.7,2)",org.w3c.dom,org.xml.sax,org.xml.sax.helpers
 Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
 Tool: Bnd-3.0.0.201509101326

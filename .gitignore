@@ -6,7 +6,11 @@
 .settings/
 New folder/
 target/
-build/
+
+# Eclipse project files
+.classpath
+.project
+
 
 # local configuration file (for Android sdk path, etc)
 local.properties
@@ -14,9 +18,6 @@ local.properties
 # OSX files
 .DS_Store
 
-# Eclipse project files
-.classpath
-.project
 
 # Android Studio
 *.iml
