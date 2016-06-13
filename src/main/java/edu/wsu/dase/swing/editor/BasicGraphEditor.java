@@ -294,10 +294,10 @@ public class BasicGraphEditor extends JPanel {
 				mxRectangle dirty = (mxRectangle) evt.getProperty("region");
 
 				if (dirty == null) {
-					status("Repaint all" + buffer);
+					//status("Repaint all" + buffer);
 				} else {
-					status("Repaint: x=" + (int) (dirty.getX()) + " y=" + (int) (dirty.getY()) + " w="
-							+ (int) (dirty.getWidth()) + " h=" + (int) (dirty.getHeight()) + buffer);
+					//status("Repaint: x=" + (int) (dirty.getX()) + " y=" + (int) (dirty.getY()) + " w="
+					//		+ (int) (dirty.getWidth()) + " h=" + (int) (dirty.getHeight()) + buffer);
 				}
 			}
 		});
@@ -338,7 +338,7 @@ public class BasicGraphEditor extends JPanel {
 			graphComponent.zoomOut();
 		}
 
-		status(mxResources.get("scale") + ": " + (int) (100 * graphComponent.getGraph().getView().getScale()) + "%");
+		//status(mxResources.get("scale") + ": " + (int) (100 * graphComponent.getGraph().getView().getScale()) + "%");
 	}
 
 	/**
@@ -409,7 +409,7 @@ public class BasicGraphEditor extends JPanel {
 	 * 
 	 */
 	protected void mouseLocationChanged(MouseEvent e) {
-		status(e.getX() + ", " + e.getY());
+		//status(e.getX() + ", " + e.getY());
 	}
 
 	/**

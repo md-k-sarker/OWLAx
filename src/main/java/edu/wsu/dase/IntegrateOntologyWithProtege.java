@@ -82,7 +82,7 @@ public class IntegrateOntologyWithProtege {
 
 	public void generateOntology() {
 
-		cleanActiveOntology();
+		//cleanActiveOntology();
 
 		changes = new ArrayList<OWLOntologyChange>();
 		changes.clear();
@@ -100,6 +100,7 @@ public class IntegrateOntologyWithProtege {
 						changes.clear();
 						if (createOWLAxioms(e)) {
 							if (saveOWLAxioms()) {
+								editor.status(SAVING_COMPLETE_MESSAGE);
 								JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), SAVING_COMPLETE_MESSAGE,
 										SAVING_COMPLETE_TITLE, JOptionPane.PLAIN_MESSAGE);
 								return;
@@ -107,14 +108,17 @@ public class IntegrateOntologyWithProtege {
 
 							}
 						}
+						editor.status(SAVING_COMPLETE_MESSAGE);
 						JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), SAVING_COMPLETE_MESSAGE,
 								SAVING_COMPLETE_TITLE, JOptionPane.PLAIN_MESSAGE);
 						return;
 					}
+					editor.status(SAVING_COMPLETE_MESSAGE);
 					JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), SAVING_COMPLETE_MESSAGE,
 							SAVING_COMPLETE_TITLE, JOptionPane.PLAIN_MESSAGE);
 					return;
 				}
+				editor.status(SAVING_COMPLETE_MESSAGE);
 				JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), SAVING_COMPLETE_MESSAGE,
 						SAVING_COMPLETE_TITLE, JOptionPane.PLAIN_MESSAGE);
 				return;
@@ -324,7 +328,7 @@ public class IntegrateOntologyWithProtege {
 	private OWLDatatype getCustomOWLDataType(String value) {
 		// if custom datatype what will happen ?
 		OWLDatatype dt = owlDataFactory.getOWLDatatype(value, pm);
-		System.out.println(dt);
+		//System.out.println(dt);
 		return dt;
 	}
 
@@ -672,7 +676,7 @@ public class IntegrateOntologyWithProtege {
 
 		// dataproperty doesn't have inverse property
 
-		System.out.println(axiom.toString());
+		//System.out.println(axiom.toString());
 		tmpaxioms.add(axiom);
 
 		return tmpaxioms;

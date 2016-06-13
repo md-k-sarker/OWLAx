@@ -61,6 +61,7 @@ public class mxEdgeStyle
 		public void apply(mxCellState state, mxCellState source,
 				mxCellState target, List<mxPoint> points, List<mxPoint> result)
 		{
+			
 			mxGraphView view = state.getView();
 			mxIGraphModel model = view.getGraph().getModel();
 			double segment = mxUtils.getDouble(state.getStyle(),

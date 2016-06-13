@@ -665,7 +665,7 @@ public class mxEdgeHandler extends mxCellHandler {
 
 		model.beginUpdate();
 		try {
-			// System.out.println("source: and target: 1 " + isClone);
+			
 			if (isClone) {
 				Object clone = graph.cloneCells(new Object[] { edge })[0];
 
@@ -690,13 +690,16 @@ public class mxEdgeHandler extends mxCellHandler {
 				point = state.getAbsolutePoint(1);
 
 			// FIXME need to use point for mxConnectionConstraint
-			// mxConnectionConstraint constraint = new mxConnectionConstraint(point); not working
+			// mxConnectionConstraint constraint = new
+			// mxConnectionConstraint(point); not working
 			mxConnectionConstraint constraint = new mxConnectionConstraint();
 
 			if (isConnectionSupportedByODP(edgeCell, isSource, trg))
 				graph.connectCell(edge, terminal, isSource, constraint);
-			else
-				System.out.println("Connection not Possible");
+			else {
+				graph.setStatus("Connection not Possible");
+				//System.out.println("Connection not Possible");
+			}
 		} finally {
 			model.endUpdate();
 		}

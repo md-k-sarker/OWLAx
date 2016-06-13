@@ -22,6 +22,7 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.w3c.dom.Document;
 
 import com.mxgraph.io.mxCodec;
+import com.mxgraph.layout.mxParallelEdgeLayout;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxICell;
@@ -71,7 +72,7 @@ public class GraphEditor extends BasicGraphEditor {
 	// GraphEditor.class.getResource("/images/connector.gif");
 
 	public GraphEditor(OWLModelManager protegeOWLModelManager) {
-		this(protegeOWLModelManager, "DaseGraph Editor", new CustomGraphComponent(new CustomGraph()));
+		this(protegeOWLModelManager, "OWLAx", new CustomGraphComponent(new CustomGraph()));
 	}
 
 	/**
@@ -81,15 +82,9 @@ public class GraphEditor extends BasicGraphEditor {
 		super(protegeOWLModelManager, appTitle, component);
 
 		final mxGraph graph = graphComponent.getGraph();
-		
 
 		// Creates the shapes palette
 		EditorPalette shapesPalette = insertPalette(mxResources.get("shapes"));
-		/*
-		 * EditorPalette imagesPalette =
-		 * insertPalette(mxResources.get("images")); EditorPalette
-		 * symbolsPalette = insertPalette(mxResources.get("symbols"));
-		 */
 
 		// Sets the edge template to be used for creating new edges if an edge
 		// is clicked in the shape palette
@@ -167,6 +162,7 @@ public class GraphEditor extends BasicGraphEditor {
 			setPageVisible(true);
 			setGridVisible(true);
 			setToolTips(true);
+			
 
 			// creating annonying auto copying target
 			// getConnectionHandler().setCreateTarget(true);
@@ -224,6 +220,7 @@ public class GraphEditor extends BasicGraphEditor {
 		}
 
 	}
+	
 
 	/**
 	 * A graph that creates new edges from a given template edge.
@@ -233,13 +230,13 @@ public class GraphEditor extends BasicGraphEditor {
 		 * Holds the edge to be used as a template for inserting new edges.
 		 */
 		protected Object edgeTemplate;
+		GraphEditor graphEditor;
 
 		/**
 		 * Custom graph that defines the alternate edge style to be used when
 		 * the middle control point of edges is double clicked (flipped).
 		 */
 		public CustomGraph() {
-			
 		}
 
 		/**
@@ -247,6 +244,15 @@ public class GraphEditor extends BasicGraphEditor {
 		 */
 		public void setEdgeTemplate(Object template) {
 			edgeTemplate = template;
+		}
+		
+		/**
+		 * Sets the status in the status bar.
+		 */
+		@Override
+		public void setStatus(String msg) {
+			//need to implement this
+			
 		}
 
 		/**

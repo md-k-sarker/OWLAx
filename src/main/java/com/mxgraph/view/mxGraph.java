@@ -4344,7 +4344,7 @@ public class mxGraph extends mxEventSource
 	 */
 	public void disconnectGraph(Object[] cells)
 	{
-		System.out.println("being disconnected");
+		//System.out.println("being disconnected");
 		
 		if (cells != null)
 		{
@@ -5305,6 +5305,14 @@ public class mxGraph extends mxEventSource
 	public String getToolTipForCell(Object cell)
 	{
 		return convertValueToString(cell);
+	}
+	
+	/**
+	 * Set the status in the status bar
+	 * @param msg
+	 */
+	public void setStatus(String msg){
+		
 	}
 
 	/**
