@@ -14,6 +14,7 @@ import com.mxgraph.model.mxGraphModel.mxGeometryChange;
 import com.mxgraph.model.mxGraphModel.mxStyleChange;
 import com.mxgraph.model.mxGraphModel.mxValueChange;
 import com.mxgraph.model.mxGraphModel.mxVisibleChange;
+import com.mxgraph.model.mxGraphModel.protegeEntityChange;
 
 /**
  * Singleton class that acts as a global registry for codecs. See
@@ -56,6 +57,7 @@ public class mxCodecRegistry
 		register(new mxRootChangeCodec());
 		register(new mxChildChangeCodec());
 		register(new mxTerminalChangeCodec());
+		register(new mxGenericChangeCodec(new protegeEntityChange(), "entity"));
 		register(new mxGenericChangeCodec(new mxValueChange(), "value"));
 		register(new mxGenericChangeCodec(new mxStyleChange(), "style"));
 		register(new mxGenericChangeCodec(new mxGeometryChange(), "geometry"));

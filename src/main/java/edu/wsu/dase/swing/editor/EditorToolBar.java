@@ -14,6 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
@@ -37,6 +38,7 @@ import com.mxgraph.util.mxResources;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphView;
 
+import edu.wsu.dase.IntegrateOntologyWithProtege;
 import edu.wsu.dase.swing.editor.EditorActions.ColorAction;
 import edu.wsu.dase.swing.editor.EditorActions.FontStyleAction;
 import edu.wsu.dase.swing.editor.EditorActions.HistoryAction;
@@ -77,8 +79,8 @@ public class EditorToolBar extends JToolBar {
 		setFloatable(false);
 
 		add(editor.bind("New", new NewAction(), "/images/new.gif"));
-		add(editor.bind("Open", new OpenAction(), "/images/open.gif"));
-		add(editor.bind("Save", new SaveAction(false), "/images/save.gif"));
+		// add(editor.bind("Open", new OpenAction(), "/images/open.gif"));
+		add(editor.bind("Export", new SaveAction(false), "/images/save.gif"));
 
 		addSeparator();
 
@@ -247,7 +249,7 @@ public class EditorToolBar extends JToolBar {
 
 		addSeparator();
 
-	   JComboBox dataTypeCombo = new JComboBox(getOWLDataTypes());
+		JComboBox dataTypeCombo = new JComboBox(getOWLDataTypes());
 		dataTypeCombo.setEditable(true);
 
 		dataTypeCombo.setMinimumSize(new Dimension(135, 0));
@@ -292,6 +294,22 @@ public class EditorToolBar extends JToolBar {
 				}
 			}
 		});
+
+		JButton generateOntologyBtn = new JButton("Generate Ontology");
+
+		generateOntologyBtn.setMinimumSize(new Dimension(135, 0));
+		generateOntologyBtn.setPreferredSize(new Dimension(135, 0));
+		generateOntologyBtn.setMaximumSize(new Dimension(135, 100));
+
+		generateOntologyBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				IntegrateOntologyWithProtege ge = new IntegrateOntologyWithProtege(editor);
+				ge.generateOntology();
+			}
+		});
+		add(generateOntologyBtn);
 	}
 
 	public Set<OWLDatatype> getBuiltinDatatypes(OWLModelManager owlModelManager) {

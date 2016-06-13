@@ -22,6 +22,8 @@ import com.mxgraph.util.mxEventSource;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxUndoableEdit;
 
+import edu.wsu.dase.util.CustomEntityType;
+
 /**
  * Extends mxEventSource to implement a graph model. The graph model acts as
  * a wrapper around the cells which are in charge of storing the actual graph
@@ -923,6 +925,19 @@ public class mxGraphModel extends mxEventSource implements mxIGraphModel,
 	{
 		Object oldValue = ((mxICell) cell).getValue();
 		((mxICell) cell).setValue(value);
+
+		return oldValue;
+	}
+	
+	/**
+	 * Inner callback to update the entityType of the given mxCell
+	 * using mxCell.getEntityType and return the previous value,
+	 * that is, the return value of mxCell.getEntityType.
+	 */
+	protected CustomEntityType entityTypeForCellChanged(Object cell, Object value)
+	{
+		CustomEntityType oldValue = ((mxICell) cell).getEntityType();
+		((mxICell) cell).setEntityType((CustomEntityType)value);
 
 		return oldValue;
 	}
@@ -2140,7 +2155,8 @@ public class mxGraphModel extends mxEventSource implements mxIGraphModel,
 		 *
 		 */
 		protected Object cell, value, previous;
-
+		
+		
 		/**
 		 * 
 		 */
@@ -2405,6 +2421,101 @@ public class mxGraphModel extends mxEventSource implements mxIGraphModel,
 
 	}
 
+	
+	public static class protegeEntityChange extends mxAtomicGraphModelChange
+	{
+
+		/**
+		 *
+		 */
+		protected Object cell;
+
+		/**
+		 * 
+		 */
+		protected CustomEntityType customEntityType, previous;
+
+		/**
+		 * 
+		 */
+		public protegeEntityChange()
+		{
+			this(null, null, null);
+		}
+
+		/**
+		 * 
+		 */
+		public protegeEntityChange(mxGraphModel model, Object cell,
+				CustomEntityType customEntityType)
+		{
+			super(model);
+			this.cell = cell;
+			this.customEntityType = customEntityType;
+			this.previous = this.customEntityType;
+		}
+
+		/**
+		 * 
+		 */
+		public void setCell(Object value)
+		{
+			cell = value;
+		}
+
+		/**
+		 * @return the cell
+		 */
+		public Object getCell()
+		{
+			return cell;
+		}
+
+		/**
+		 *
+		 */
+		public void setGeometry(CustomEntityType value)
+		{
+			customEntityType = value;
+		}
+
+		/**
+		 * @return the geometry
+		 */
+		public CustomEntityType getGeometry()
+		{
+			return customEntityType;
+		}
+
+		/**
+		 *
+		 */
+		public void setPrevious(CustomEntityType value)
+		{
+			previous = value;
+		}
+
+		/**
+		 * @return the previous
+		 */
+		public CustomEntityType getPrevious()
+		{
+			return previous;
+		}
+
+		/**
+		 * Changes the root of the model.
+		 */
+		public void execute()
+		{
+			customEntityType = previous;
+			previous = ((mxGraphModel) model).entityTypeForCellChanged(cell,
+					previous);
+		}
+
+	}
+
+	
 	public static class mxCollapseChange extends mxAtomicGraphModelChange
 	{
 
