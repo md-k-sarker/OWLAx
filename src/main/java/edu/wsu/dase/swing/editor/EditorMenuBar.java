@@ -311,14 +311,14 @@ public class EditorMenuBar extends JMenuBar
 		submenu.add(editor.bind(mxResources.get("selectTree"), new SelectSpanningTreeAction(false)));
 		submenu.add(editor.bind(mxResources.get("selectDirectedTree"), new SelectSpanningTreeAction(true)));
 */
-		menu.addSeparator();
+		/*menu.addSeparator();
 
 		submenu = (JMenu) menu.add(new JMenu(mxResources.get("stylesheet")));
 
 		submenu.add(editor.bind(mxResources.get("basicStyle"),
 				new StylesheetAction("/resources/basic-style.xml")));
 		submenu.add(editor.bind(mxResources.get("defaultStyle"), new StylesheetAction(
-				"/resources/default-style.xml")));
+				"/resources/default-style.xml")));*/
 
 		// Creates the options menu
 		//menu = add(new JMenu(mxResources.get("options")));

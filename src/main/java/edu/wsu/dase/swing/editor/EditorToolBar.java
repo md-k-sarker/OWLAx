@@ -247,7 +247,7 @@ public class EditorToolBar extends JToolBar {
 
 		addSeparator();
 
-		final JComboBox dataTypeCombo = new JComboBox(getOWLDataTypes());
+	   JComboBox dataTypeCombo = new JComboBox(getOWLDataTypes());
 		dataTypeCombo.setEditable(true);
 
 		dataTypeCombo.setMinimumSize(new Dimension(135, 0));

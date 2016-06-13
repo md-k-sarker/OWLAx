@@ -52,8 +52,8 @@ public class IntegrateOntologyWithProtege {
 
 	private String SAVING_COMPLETE_TITLE = "Ontology Generated";
 	private String SAVING_COMPLETE_MESSAGE = "Changes Integrated with Protege successfully.";
-	private String SAVING_ERROR_TITLE = "Ontology Generated";
-	private String SAVING_ERROR_MESSAGE = "Changes Integrated with Protege successfully.";
+	private String SAVING_ERROR_TITLE = "Ontology not generated";
+	private String SAVING_ERROR_MESSAGE = "Changes can't be Integrated with Protege.";
 	private String ENTITY_WITH_NO_NAME_TITLE = "Entity Without Name";
 	private String ENTITY_WITH_NO_NAME_MESSAGE = "Can not save enityty wihtout name. Entity must have a name.";
 
@@ -82,47 +82,43 @@ public class IntegrateOntologyWithProtege {
 
 	public void generateOntology() {
 
-		//cleanActiveOntology();
+		// cleanActiveOntology();
 
 		changes = new ArrayList<OWLOntologyChange>();
 		changes.clear();
 
 		Object[] v = graph.getChildVertices(graph.getDefaultParent());
 		Object[] e = graph.getChildEdges(graph.getDefaultParent());
+		if (e.length > 0) {
+			if (makeDeclarations(v) && makeDeclarations(e)) {
 
-		if (makeDeclarations(v)) {
-			if (!changes.isEmpty()) {
-				owlOntologyManager.applyChanges(changes);
-				changes.clear();
-				if (makeDeclarations(e)) {
-					if (!changes.isEmpty()) {
-						owlOntologyManager.applyChanges(changes);
-						changes.clear();
-						if (createOWLAxioms(e)) {
-							if (saveOWLAxioms()) {
-								editor.status(SAVING_COMPLETE_MESSAGE);
-								JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), SAVING_COMPLETE_MESSAGE,
-										SAVING_COMPLETE_TITLE, JOptionPane.PLAIN_MESSAGE);
-								return;
-							} else {
-
-							}
+				if (!changes.isEmpty()) {
+					owlOntologyManager.applyChanges(changes);
+					changes.clear();
+					if (createOWLAxioms(e)) {
+						if (saveOWLAxioms()) {
+							editor.status(SAVING_COMPLETE_MESSAGE);
+							JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), SAVING_COMPLETE_MESSAGE,
+									SAVING_COMPLETE_TITLE, JOptionPane.PLAIN_MESSAGE);
+							return;
+						} else {
+							editor.status("Integrating Axioms with Protege failed.");
+							return;
 						}
-						editor.status(SAVING_COMPLETE_MESSAGE);
-						JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), SAVING_COMPLETE_MESSAGE,
-								SAVING_COMPLETE_TITLE, JOptionPane.PLAIN_MESSAGE);
+					} else {
+						editor.status("Creating Logical Axioms failed.");
 						return;
 					}
-					editor.status(SAVING_COMPLETE_MESSAGE);
-					JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), SAVING_COMPLETE_MESSAGE,
-							SAVING_COMPLETE_TITLE, JOptionPane.PLAIN_MESSAGE);
+				} else {
+					editor.status("Nothing to integrate with Protege.");
 					return;
 				}
-				editor.status(SAVING_COMPLETE_MESSAGE);
-				JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), SAVING_COMPLETE_MESSAGE,
-						SAVING_COMPLETE_TITLE, JOptionPane.PLAIN_MESSAGE);
+			} else {
+				editor.status("Creating Declaration Axioms failed.");
 				return;
 			}
+		}else{
+			editor.status("Nothing to integrate with Protege.");
 		}
 	}
 
@@ -270,9 +266,8 @@ public class IntegrateOntologyWithProtege {
 		 */
 	}
 
-	@SuppressWarnings("unused")
 	private boolean makeDeclarations(Object[] VerticesOrEdges) {
-
+		editor.status("Creating Axioms");
 		for (Object vertexOrEdge : VerticesOrEdges) {
 			if (vertexOrEdge instanceof mxCell) {
 				mxCell cell = (mxCell) vertexOrEdge;
@@ -328,7 +323,7 @@ public class IntegrateOntologyWithProtege {
 	private OWLDatatype getCustomOWLDataType(String value) {
 		// if custom datatype what will happen ?
 		OWLDatatype dt = owlDataFactory.getOWLDatatype(value, pm);
-		//System.out.println(dt);
+		// System.out.println(dt);
 		return dt;
 	}
 
@@ -676,7 +671,7 @@ public class IntegrateOntologyWithProtege {
 
 		// dataproperty doesn't have inverse property
 
-		//System.out.println(axiom.toString());
+		// System.out.println(axiom.toString());
 		tmpaxioms.add(axiom);
 
 		return tmpaxioms;
