@@ -40,6 +40,7 @@ import edu.wsu.dase.swing.editor.EditorActions.GridStyleAction;
 import edu.wsu.dase.swing.editor.EditorActions.HistoryAction;
 import edu.wsu.dase.swing.editor.EditorActions.KeyValueAction;
 import edu.wsu.dase.swing.editor.EditorActions.NewAction;
+import edu.wsu.dase.swing.editor.EditorActions.OpenAction;
 import edu.wsu.dase.swing.editor.EditorActions.PageBackgroundAction;
 import edu.wsu.dase.swing.editor.EditorActions.PageSetupAction;
 import edu.wsu.dase.swing.editor.EditorActions.PrintAction;
@@ -89,7 +90,7 @@ public class EditorMenuBar extends JMenuBar
 		menu.add(editor.bind(GENERATE_ONTOLOGY, new SaveOntologyAction(), "/images/ontology.gif"));
 
 		menu.add(editor.bind(mxResources.get("new"), new NewAction(), "/images/new.gif"));
-		//menu.add(editor.bind(mxResources.get("openFile"), new OpenAction(), "/images/open.gif"));
+		menu.add(editor.bind(mxResources.get("openFile"), new OpenAction(), "/images/open.gif"));
 		//menu.add(editor.bind(mxResources.get("importStencil"), new ImportAction(), "/images/open.gif"));
 
 		menu.addSeparator();
