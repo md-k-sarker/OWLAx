@@ -21,6 +21,7 @@ public class OdpMainUITab extends OWLWorkspaceViewsTab {
 	private static final long serialVersionUID = 1L;
 	private OWLModelManager protegeOWLModelManager;
 	private static final Logger log = LoggerFactory.getLogger(OdpMainUITab.class);
+	
 	GraphEditor editor;
 	private final ODPTabListener listener = new ODPTabListener();
 
@@ -28,29 +29,29 @@ public class OdpMainUITab extends OWLWorkspaceViewsTab {
 	public void initialise() {
 
 		super.initialise();
+		
+		setToolTipText("OWLAx");
+		
 		if (getOWLModelManager() != null) {
 			
 			//first set protege informations
 			this.protegeOWLModelManager = getOWLModelManager();
+			this.protegeOWLModelManager.addListener(listener);
 			
 			setLayout(new BorderLayout());
+			
 			editor = new GraphEditor(this.protegeOWLModelManager);
 
 			add(new EditorMenuBar(editor), BorderLayout.NORTH);
+			
 			add(editor, BorderLayout.CENTER);
 
 			JFrame mainWindow = (javax.swing.JFrame) SwingUtilities.windowForComponent(this);
 			editor.setProtegeMainWindow(mainWindow);
-			Dimension d = new Dimension(800, 600);
-			setPreferredSize(d);
-			setSize(d);
-			setLocation(100, 50);
-			setVisible(true);
-
-			getOWLModelManager().addListener(listener);
+			
 			update();
 		} else
-			log.warn("ODP initialization failed - no model manager");
+			log.warn("OWLAx initialization failed - no model manager");
 
 	}
 

@@ -294,8 +294,10 @@ public class BasicGraphEditor extends JPanel {
 				mxRectangle dirty = (mxRectangle) evt.getProperty("region");
 
 				if (dirty == null) {
+					//status("");
 					//status("Repaint all" + buffer);
 				} else {
+					status(" ");
 					//status("Repaint: x=" + (int) (dirty.getX()) + " y=" + (int) (dirty.getY()) + " w="
 					//		+ (int) (dirty.getWidth()) + " h=" + (int) (dirty.getHeight()) + buffer);
 				}
@@ -337,7 +339,7 @@ public class BasicGraphEditor extends JPanel {
 		} else {
 			graphComponent.zoomOut();
 		}
-
+		status("");
 		//status(mxResources.get("scale") + ": " + (int) (100 * graphComponent.getGraph().getView().getScale()) + "%");
 	}
 
