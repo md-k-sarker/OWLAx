@@ -556,6 +556,7 @@ public class EditorActions
 			mxCodec codec = new mxCodec();
 			String xml = URLEncoder.encode(
 					mxXmlUtils.getXml(codec.encode(graph.getModel())), "UTF-8");
+			
 			mxPngEncodeParam param = mxPngEncodeParam
 					.getDefaultEncodeParam(image);
 			param.setCompressedText(new String[] { "mxGraphModel", xml });

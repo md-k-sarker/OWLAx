@@ -44,7 +44,7 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 	 * Holds the Id. Default is null.
 	 */
 	protected String id;
-	
+
 	/**
 	 * Holds the datatype of literal as string. Default is null.
 	 */
@@ -71,8 +71,8 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 	 * connectable, visible and collapsed. Default values are false, false,
 	 * true, true and false respectively.
 	 */
-	protected boolean vertex = false, edge = false, owlLiteral = false, connectable = true,
-			visible = true, collapsed = false;
+	protected boolean vertex = false, edge = false, owlLiteral = false, connectable = true, visible = true,
+			collapsed = false;
 	protected CustomEntityType entityType;
 
 	/**
@@ -99,7 +99,7 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 	 *            Object that represents the value of the cell.
 	 */
 	public mxCell(Object value) {
-		this(value, null, null);
+		this(value, null, null, null);
 	}
 
 	/**
@@ -112,10 +112,11 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 	 * @param style
 	 *            Specifies the style as a formatted string.
 	 */
-	public mxCell(Object value, mxGeometry geometry, String style) {
+	public mxCell(Object value, mxGeometry geometry, String style, CustomEntityType entityType) {
 		setValue(value);
 		setGeometry(geometry);
 		setStyle(style);
+		setEntityType(entityType);
 	}
 
 	/*
@@ -152,6 +153,20 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 	 */
 	public void setValue(Object value) {
 		this.value = value;
+	}
+
+	@Override
+	public CustomEntityType getEntityType() {
+		// TODO Auto-generated method stub
+		return this.entityType;
+	}
+
+	@Override
+	public void setEntityType(CustomEntityType entityType) {
+		// TODO Auto-generated method stub
+		this.entityType = entityType;
+		// System.out.println("After setting: "+entityType
+		// +"\t"+this.entityType);
 	}
 
 	/*
@@ -224,20 +239,6 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 	 */
 	public void setEdge(boolean edge) {
 		this.edge = edge;
-	}
-
-	
-	@Override
-	public CustomEntityType getEntityType() {
-		// TODO Auto-generated method stub
-		return this.entityType;
-	}
-
-	@Override
-	public void setEntityType(CustomEntityType entityType) {
-		// TODO Auto-generated method stub
-		this.entityType = entityType;
-		//System.out.println("After setting: "+entityType +"\t"+this.entityType);
 	}
 
 	/*
@@ -612,10 +613,11 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 	}
 
 	/**
-	 * Returns a clone of the cell. gets called everytime a cell is imported or moved
+	 * Returns a clone of the cell. gets called everytime a cell is imported or
+	 * moved
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		
+
 		mxCell clone = (mxCell) super.clone();
 
 		clone.setValue(cloneValue());
@@ -636,9 +638,10 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 		if (geometry != null) {
 			clone.setGeometry((mxGeometry) geometry.clone());
 		}
-		/*for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
-		    System.out.println(ste);
-		} */
+		/*
+		 * for (StackTraceElement ste : Thread.currentThread().getStackTrace())
+		 * { System.out.println(ste); }
+		 */
 		return clone;
 	}
 

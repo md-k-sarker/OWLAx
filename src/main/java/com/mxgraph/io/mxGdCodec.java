@@ -42,7 +42,7 @@ public class mxGdCodec
 		Object parent = graph.getDefaultParent();
 
 		graph.getModel().beginUpdate();
-		
+		System.out.println("sarker.4 "+ input);
 		try
 		{
 			String line = br.readLine().trim();
@@ -71,7 +71,7 @@ public class mxGdCodec
 							{
 								String label = String.valueOf(i);
 								Object vertex = graph.insertVertex(parent, label, label,
-										0, 0, 10, 10);
+										0, 0, 10, 10,null);
 								
 								cellsMap.put(label, vertex);
 							}
@@ -110,7 +110,7 @@ public class mxGdCodec
 								//Insert a new vertex in the graph
 								Object vertex = graph.insertVertex(parent, label, label,
 										x - width / 2.0, y - height / 2.0, width,
-										height);
+										height,null);
 								
 								cellsMap.put(label, vertex);
 							}
@@ -131,7 +131,7 @@ public class mxGdCodec
 								Object source = cellsMap.get(items[0]);
 								Object target = cellsMap.get(items[1]);
 
-								graph.insertEdge(parent, null, "", source, target);
+								graph.insertEdge(parent, null, "", source, target,null);
 							}
 						}
 						break;

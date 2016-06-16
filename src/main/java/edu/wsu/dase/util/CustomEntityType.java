@@ -45,38 +45,35 @@ public final class CustomEntityType<E extends OWLEntity> implements Serializable
 
     private static final long serialVersionUID = 40000L;
     //@formatter:off
-    /** class entity */             @Nonnull    public static final CustomEntityType<OWLClass> CLASS = new CustomEntityType<OWLClass>( "Class", "Class", "Classes", OWL_CLASS);
-    /** object property entity */   @Nonnull    public static final CustomEntityType<OWLObjectProperty> OBJECT_PROPERTY = new CustomEntityType<OWLObjectProperty>( "Object Property", "Object property", "Object properties", OWL_OBJECT_PROPERTY);
-    /** data property entity */     @Nonnull    public static final CustomEntityType<OWLDataProperty> DATA_PROPERTY = new CustomEntityType<OWLDataProperty>( "Data Property", "Data property", "Data properties", OWL_DATA_PROPERTY);
-    /** annotation property entity*/@Nonnull    public static final CustomEntityType<OWLAnnotationProperty> ANNOTATION_PROPERTY = new CustomEntityType<OWLAnnotationProperty>( "Annotation Property", "Annotation property", "Annotation properties", OWL_ANNOTATION_PROPERTY);
-    /** named individual entity */  @Nonnull    public static final CustomEntityType<OWLNamedIndividual> NAMED_INDIVIDUAL = new CustomEntityType<OWLNamedIndividual>("Named Individual", "Named individual", "Named individuals", OWL_NAMED_INDIVIDUAL);
-    /** datatype entity */          @Nonnull    public static final CustomEntityType<OWLDatatype> DATATYPE = new CustomEntityType<OWLDatatype>( "Datatype", "Datatype", "Datatypes", RDFS_DATATYPE);
-    /** RDF_TYPE */         		@Nonnull    public static final CustomEntityType<OWLDatatype> LITERAL = new CustomEntityType<OWLDatatype>( "Literal", "Literal", "Literals", RDFS_LITERAL);
-    /** LITERAL */          		@Nonnull    public static final CustomEntityType<OWLDatatype> RDFTYPE = new CustomEntityType<OWLDatatype>( "rdf:type", "rdf:type", "rdf:types", RDF_TYPE);
-    /** RDFS_SUBCLASS_OF */         @Nonnull    public static final CustomEntityType<OWLDatatype> RDFSSUBCLASS_OF = new CustomEntityType<OWLDatatype>( "rdfs:subClassOf", "rdfs:subClassOf", "rdfs:subClassesOf", RDFS_SUBCLASS_OF);
-    private static final List<CustomEntityType<?>> VALUES = Collections.<CustomEntityType<?>> unmodifiableList(Arrays.asList(CLASS, OBJECT_PROPERTY, DATA_PROPERTY, ANNOTATION_PROPERTY, NAMED_INDIVIDUAL, DATATYPE));
+    /** class entity */                 public static final CustomEntityType<OWLClass> CLASS = new CustomEntityType<OWLClass>( "Class");
+    /** object property entity */       public static final CustomEntityType<OWLObjectProperty> OBJECT_PROPERTY = new CustomEntityType<OWLObjectProperty>( "Object Property");
+    /** data property entity */         public static final CustomEntityType<OWLDataProperty> DATA_PROPERTY = new CustomEntityType<OWLDataProperty>( "Data Property");
+    /** annotation property entity*/    public static final CustomEntityType<OWLAnnotationProperty> ANNOTATION_PROPERTY = new CustomEntityType<OWLAnnotationProperty>( "Annotation Property");
+    /** named individual entity */      public static final CustomEntityType<OWLNamedIndividual> NAMED_INDIVIDUAL = new CustomEntityType<OWLNamedIndividual>("Named Individual");
+    /** datatype entity */              public static final CustomEntityType<OWLDatatype> DATATYPE = new CustomEntityType<OWLDatatype>( "Datatype");
+    /** RDF_TYPE */         		    public static final CustomEntityType<OWLDatatype> LITERAL = new CustomEntityType<OWLDatatype>( "Literal");
+    /** LITERAL */          		    public static final CustomEntityType<OWLDatatype> RDFTYPE = new CustomEntityType<OWLDatatype>( "rdf:type");
+    /** RDFS_SUBCLASS_OF */             public static final CustomEntityType<OWLDatatype> RDFSSUBCLASS_OF = new CustomEntityType<OWLDatatype>( "rdfs:subClassOf");
+  //  private static final List<CustomEntityType<?>> VALUES = Collections.<CustomEntityType<?>> unmodifiableList(Arrays.asList(CLASS, OBJECT_PROPERTY, DATA_PROPERTY, ANNOTATION_PROPERTY, NAMED_INDIVIDUAL, DATATYPE));
   //@formatter:on
-    @Nonnull
-    private final String name;
-    @Nonnull
-    private final OWLRDFVocabulary vocabulary;
-    @Nonnull
-    private final String printName;
-    @Nonnull
-    private final String pluralPrintName;
+    
+    private  String name;
+    
+    public CustomEntityType(){
+    	this(null);
+    }
 
-    private CustomEntityType(@Nonnull String name, @Nonnull String print,
-            @Nonnull String pluralPrint, @Nonnull OWLRDFVocabulary vocabulary) {
-        this.name = name;
-        this.vocabulary = vocabulary;
-        printName = print;
-        pluralPrintName = pluralPrint;
+    public CustomEntityType(String name) {
+    	if(name == null){
+    		this.name = "";
+    	}else
+    		this.name = name;
     }
 
     /** @return toe vocabulary enum corresponding to this entity */
-    public OWLRDFVocabulary getVocabulary() {
+    /*public OWLRDFVocabulary getVocabulary() {
         return vocabulary;
-    }
+    }*/
 
     /** @return this entity tipe name */
     public String getName() {
@@ -88,36 +85,26 @@ public final class CustomEntityType<E extends OWLEntity> implements Serializable
         return name;
     }
 
-    /** @return the list of known entity types */
-    public static List<CustomEntityType<?>> values() {
-        return VALUES;
-    }
 
-    /** @return printable name */
-    @Nonnull
-    public String getPrintName() {
-        return printName;
-    }
-
-    /** @return plural printable name */
-    @Nonnull
-    public String getPluralPrintName() {
-        return pluralPrintName;
-    }
+   
 
     @Override
     public String getShortForm() {
         return name;
     }
 
-    @Override
-    public String getPrefixedName() {
-        return vocabulary.getPrefixedName();
-    }
+	@Override
+	public IRI getIRI() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    @Override
-    public IRI getIRI() {
-        return vocabulary.getIRI();
-    }
+	@Override
+	public String getPrefixedName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+   
 }
 

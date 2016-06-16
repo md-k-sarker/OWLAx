@@ -428,7 +428,7 @@ public class JTableRenderer extends JComponent
 
 				Object edge = graph.insertEdge(null, null, null,
 						dragSource.cell, JTableRenderer.this.cell, "sourceRow="
-								+ sourceRow + ";targetRow=" + targetRow);
+								+ sourceRow + ";targetRow=" + targetRow, null);
 				graph.setSelectionCell(edge);
 
 				// System.out.println("clearing drag source");

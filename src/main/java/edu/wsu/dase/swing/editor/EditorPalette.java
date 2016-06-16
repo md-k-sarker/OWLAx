@@ -214,23 +214,36 @@ public class EditorPalette extends JPanel {
 		geometry.setTerminalPoint(new mxPoint(width, 0), false);
 		geometry.setRelative(true);
 
-		mxCell cell = new mxCell(value, geometry, style);
-		cell.setEdge(true);
+		mxCell cell;
+
 		// System.out.println("Before setting: name== " + name);
 		if (name.toLowerCase().equals(CustomEntityType.OBJECT_PROPERTY.getName().toLowerCase())) {
-			cell.setEntityType(CustomEntityType.OBJECT_PROPERTY);
+			cell = new mxCell(value, geometry, style, CustomEntityType.OBJECT_PROPERTY);
+			cell.setEdge(true);
+			addTemplate(name, icon, cell);
+			// cell.setEntityType(CustomEntityType.OBJECT_PROPERTY);
 		} else if (name.toLowerCase().equals(CustomEntityType.DATA_PROPERTY.getName().toLowerCase())) {
-			cell.setEntityType(CustomEntityType.DATA_PROPERTY);
+			cell = new mxCell(value, geometry, style, CustomEntityType.DATA_PROPERTY);
+			cell.setEdge(true);
+			addTemplate(name, icon, cell);
+			// cell.setEntityType(CustomEntityType.DATA_PROPERTY);
 		} else if (name.toLowerCase().equals(CustomEntityType.ANNOTATION_PROPERTY.getName().toLowerCase())) {
-			cell.setEntityType(CustomEntityType.ANNOTATION_PROPERTY);
+			cell = new mxCell(value, geometry, style, CustomEntityType.ANNOTATION_PROPERTY);
+			cell.setEdge(true);
+			addTemplate(name, icon, cell);
+			// cell.setEntityType(CustomEntityType.ANNOTATION_PROPERTY);
 		} else if (name.toLowerCase().equals(CustomEntityType.RDFTYPE.getName().toLowerCase())) {
-			cell.setEntityType(CustomEntityType.RDFTYPE);
+			cell = new mxCell(value, geometry, style, CustomEntityType.RDFTYPE);
+			cell.setEdge(true);
+			addTemplate(name, icon, cell);
+			// cell.setEntityType(CustomEntityType.RDFTYPE);
 		} else if (name.toLowerCase().equals(CustomEntityType.RDFSSUBCLASS_OF.getName().toLowerCase())) {
-			cell.setEntityType(CustomEntityType.RDFSSUBCLASS_OF);
+			cell = new mxCell(value, geometry, style, CustomEntityType.RDFSSUBCLASS_OF);
+			cell.setEdge(true);
+			addTemplate(name, icon, cell);
+			// cell.setEntityType(CustomEntityType.RDFSSUBCLASS_OF);
 		}
-		// System.out.println("After Setting: name== " + cell.getEntityType() +
-		// "\n\n");
-		addTemplate(name, icon, cell);
+
 	}
 
 	/**
@@ -243,26 +256,31 @@ public class EditorPalette extends JPanel {
 	 * @param value
 	 */
 	public void addTemplate(final String name, ImageIcon icon, String style, int width, int height, Object value) {
-		mxCell cell = new mxCell(value, new mxGeometry(0, 0, width, height), style);
-		cell.setVertex(true);
-		// cell.setOWLClass(isOWLClass);
-		// cell.setOWLNamedIndividual(!isOWLClass);
-		// System.out.println("Before setting: name== " + name);
+		mxCell cell;
+
 		if (name.toLowerCase().equals(CustomEntityType.CLASS.getName().toLowerCase())) {
-			cell.setEntityType(CustomEntityType.CLASS);
+			// cell.setEntityType(CustomEntityType.CLASS);
+			cell = new mxCell(value, new mxGeometry(0, 0, width, height), style, CustomEntityType.CLASS);
+			cell.setVertex(true);
+			addTemplate(name, icon, cell);
 		} else if (name.toLowerCase().equals(CustomEntityType.NAMED_INDIVIDUAL.getName().toLowerCase())) {
-			cell.setEntityType(CustomEntityType.NAMED_INDIVIDUAL);
+			// cell.setEntityType(CustomEntityType.NAMED_INDIVIDUAL);
+			cell = new mxCell(value, new mxGeometry(0, 0, width, height), style, CustomEntityType.NAMED_INDIVIDUAL);
+			cell.setVertex(true);
+			addTemplate(name, icon, cell);
 		} else if (name.toLowerCase().equals(CustomEntityType.DATATYPE.getName().toLowerCase())) {
-			cell.setEntityType(CustomEntityType.DATATYPE);
+			// cell.setEntityType(CustomEntityType.DATATYPE);
+			cell = new mxCell(value, new mxGeometry(0, 0, width, height), style, CustomEntityType.DATATYPE);
+			cell.setVertex(true);
+			addTemplate(name, icon, cell);
 		} else if (name.toLowerCase().equals(CustomEntityType.LITERAL.getName().toLowerCase())) {
-			cell.setEntityType(CustomEntityType.LITERAL);
-			//cell.setOWLLiteral(true);
+			// cell.setEntityType(CustomEntityType.LITERAL);
+			cell = new mxCell(value, new mxGeometry(0, 0, width, height), style, CustomEntityType.LITERAL);
+			cell.setVertex(true);
+			addTemplate(name, icon, cell);
+			// cell.setOWLLiteral(true);
 		}
-		// System.out.println("After Setting: name== " + cell.getEntityType() +
-		// "\n\n");
-		// System.out.println("cell is isOWLNamedIndividual: " +
-		// cell.isOWLNamedIndividual());
-		addTemplate(name, icon, cell);
+
 	}
 
 	/**

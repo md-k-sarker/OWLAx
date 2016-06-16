@@ -42,6 +42,7 @@ public class mxCodecRegistry
 	// Registers the known codecs and package names
 	static
 	{
+		addPackage("edu.wsu.dase.util");
 		addPackage("com.mxgraph");
 		addPackage("com.mxgraph.util");
 		addPackage("com.mxgraph.model");
@@ -52,6 +53,7 @@ public class mxCodecRegistry
 		register(new mxObjectCodec(new ArrayList<Object>()));
 		register(new mxModelCodec());
 		register(new mxCellCodec());
+		register(new protegeEntityCodec());
 		register(new mxStylesheetCodec());
 
 		register(new mxRootChangeCodec());

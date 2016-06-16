@@ -203,11 +203,11 @@ public class mxInsertHandler extends mxMouseAdapter
 	 */
 	public Object insertCell(mxRectangle bounds)
 	{
-		//System.out.println("sarker.3 mxInsertHandler");
+		//System.out.println("sarker.3 problem  may occur for entitytype");
 		// FIXME: Clone prototype cell for insert
 		return graphComponent.getGraph().insertVertex(null, null, "",
 				bounds.getX(), bounds.getY(), bounds.getWidth(),
-				bounds.getHeight(), style);
+				bounds.getHeight(), style,null);
 	}
 
 	/**

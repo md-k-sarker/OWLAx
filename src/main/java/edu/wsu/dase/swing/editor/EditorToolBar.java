@@ -79,7 +79,7 @@ public class EditorToolBar extends JToolBar {
 		setFloatable(false);
 
 		add(editor.bind("New", new NewAction(), "/images/new.gif"));
-		// add(editor.bind("Open", new OpenAction(), "/images/open.gif"));
+		//add(editor.bind("Open", new OpenAction(), "/images/open.gif"));
 		add(editor.bind("Export", new SaveAction(false), "/images/save.gif"));
 
 		addSeparator();

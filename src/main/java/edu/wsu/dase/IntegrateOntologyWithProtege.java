@@ -593,11 +593,16 @@ public class IntegrateOntologyWithProtege {
 		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlObjectSomeValuesFrom, src);
 		tmpaxioms.add(axiom);
 
-		// set functionality restriction
+		// set existential restriction
 		owlObjectSomeValuesFrom = owlDataFactory.getOWLObjectSomeValuesFrom(objprop.getInverseProperty(), src);
 		owlObjectOneOf = owlDataFactory.getOWLObjectOneOf(dest);
 		owlDataFactory.getOWLSubClassOfAxiom(owlObjectOneOf, owlObjectSomeValuesFrom);
 		tmpaxioms.add(axiom);
+		
+		owlLObjectHasValue = owlDataFactory.getOWLObjectHasValue(objprop, dest);
+		owlDataFactory.getOWLSubClassOfAxiom(src, owlLObjectHasValue);
+		tmpaxioms.add(axiom);
+
 
 		// set cardinality restriction
 		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, owlDataFactory.getOWLThing());
@@ -606,6 +611,16 @@ public class IntegrateOntologyWithProtege {
 
 		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, owlDataFactory.getOWLThing());
 		axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);
+		tmpaxioms.add(axiom);
+		
+		owlObjectOneOf = owlDataFactory.getOWLObjectOneOf(dest);
+		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, owlObjectOneOf);
+		axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);
+		tmpaxioms.add(axiom);
+
+		owlObjectOneOf = owlDataFactory.getOWLObjectOneOf(dest);
+		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, owlObjectOneOf);
+		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlObjectMaxCardinality);
 		tmpaxioms.add(axiom);
 
 		return tmpaxioms;

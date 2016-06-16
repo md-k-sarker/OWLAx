@@ -303,7 +303,7 @@ public class GraphEditor extends BasicGraphEditor {
 		 * @param style
 		 * @return
 		 */
-		public Object createEdge(Object parent, String id, Object value, Object source, Object target, String style) {
+		public Object createEdge(Object parent, String id, Object value, Object source, Object target, String style,CustomEntityType entityType) {
 			if (edgeTemplate != null) {
 				mxCell edge = (mxCell) cloneCells(new Object[] { edgeTemplate })[0];
 				edge.setId(id);
@@ -311,7 +311,7 @@ public class GraphEditor extends BasicGraphEditor {
 				return edge;
 			}
 
-			return super.createEdge(parent, id, value, source, target, style);
+			return super.createEdge(parent, id, value, source, target, style,entityType);
 		}
 
 	}

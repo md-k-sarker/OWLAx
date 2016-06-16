@@ -6,6 +6,8 @@ package com.mxgraph.model;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.util.mxUndoableEdit.mxUndoableChange;
 
+import edu.wsu.dase.util.CustomEntityType;
+
 /**
  * Defines the requirements for a graph model to be used with mxGraph.
  */
@@ -249,6 +251,23 @@ public interface mxIGraphModel
 	 * @return Returns the new geometry.
 	 */
 	mxGeometry setGeometry(Object cell, mxGeometry geometry);
+	
+	/**
+	 * Returns the geometry of the given cell.
+	 * 
+	 * @param cell Cell whose geometry should be returned.
+	 * @return Returns the geometry of the given cell.
+	 */
+	CustomEntityType getEntityType(Object cell);
+
+	/**
+	 * Sets the geometry of the given cell.
+	 * 
+	 * @param cell Cell whose geometry should be changed.
+	 * @param geometry Object that defines the new geometry.
+	 * @return Returns the new geometry.
+	 */
+	CustomEntityType setEntityType(Object cell, CustomEntityType entityType);
 
 	/**
 	 * Returns the style of the given cell.

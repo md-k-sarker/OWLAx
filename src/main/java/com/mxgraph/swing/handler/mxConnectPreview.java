@@ -77,7 +77,7 @@ public class mxConnectPreview extends mxEventSource
 		mxICell cell = ((mxICell) graph
 				.createEdge(null, null, "",
 						(startState != null) ? startState.getCell() : null,
-						null, style));
+						null, style,null));
 		((mxICell) startState.getCell()).insertEdge(cell, true);
 
 		return cell;
