@@ -100,20 +100,6 @@ public class CustomEntityType  {
          return false;
     }
 
-   public static void main(String[] args){
-	   CustomEntityType clas1 = new CustomEntityType("a ");
-	   CustomEntityType clas2 = new CustomEntityType("a");
-	   CustomEntityType clas3 = new CustomEntityType("a");
-	   String s1 = new String( "s");
-	   String s2 = new String("s");
-	   
-	   
-	   if(clas1.equals(clas2)){
-		   System.out.println("equal---------");
-	   }
-	   else{
-		   System.out.println(clas1.toString() +"\n"+ clas2.toString()+ " not equal");
-	   }
-   }
+
 }
 

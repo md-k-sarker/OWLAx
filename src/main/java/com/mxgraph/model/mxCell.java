@@ -165,8 +165,6 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 	public void setEntityType(CustomEntityType entityType) {
 		// TODO Auto-generated method stub
 		this.entityType = entityType;
-		// System.out.println("After setting: "+entityType
-		// +"\t"+this.entityType);
 	}
 
 	/*
@@ -638,10 +636,7 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 		if (geometry != null) {
 			clone.setGeometry((mxGeometry) geometry.clone());
 		}
-		/*
-		 * for (StackTraceElement ste : Thread.currentThread().getStackTrace())
-		 * { System.out.println(ste); }
-		 */
+
 		return clone;
 	}
 

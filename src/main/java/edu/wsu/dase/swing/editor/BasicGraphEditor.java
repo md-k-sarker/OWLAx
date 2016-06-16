@@ -834,7 +834,6 @@ public class BasicGraphEditor extends JPanel {
 
 	public boolean validateGraphAfterOpeningImage() {
 
-		boolean graphCorrect = true;
 		Object[] v = graphComponent.getGraph().getChildVertices(graphComponent.getGraph().getDefaultParent());
 		Object[] e = graphComponent.getGraph().getChildEdges(graphComponent.getGraph().getDefaultParent());
 		try{
@@ -842,7 +841,6 @@ public class BasicGraphEditor extends JPanel {
 				
 				if (vertex instanceof mxCell){
 					mxCell cell = (mxCell) vertex;
-					System.out.println("sarker.3 "+ "checking" +cell.getValue());
 					if(cell.getEntityType() == null || cell.getEntityType().getName().length() == 0)
 						return false;
 				}else

@@ -37,7 +37,6 @@ public class mxCellCodec extends mxObjectCodec {
 	 */
 	public mxCellCodec(Object template, String[] exclude, String[] idrefs, Map<String, String> mapping) {
 		super(template, exclude, idrefs, mapping);
-		System.out.println("sarker.3 called mxCellCodec");
 	}
 
 	/**
@@ -84,14 +83,12 @@ public class mxCellCodec extends mxObjectCodec {
 	 * the cell (inversion).
 	 */
 	public Node beforeDecode(mxCodec dec, Node node, Object obj) {
-		System.out.println("mxCellCodec beforeDecode sarker.5 " + dec.toString() + node.toString());
 
 		NodeList nodeList = node.getOwnerDocument().getElementsByTagName("*");
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node _node = nodeList.item(i);
 			if (_node.getNodeType() == Node.ELEMENT_NODE) {
 				// do something with the current element
-				System.out.println(_node.getNodeName());
 			}
 		}
 

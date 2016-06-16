@@ -12,13 +12,5 @@ public class Constants {
 	}
 	String a;
 	
-	public static void main(String[] args){
-		Constants obj1 = new Constants("a");
-		Constants obj2 = new Constants("a");
-		if(obj1.equals(obj2)){
-			System.out.println("equal");
-		}else{
-			System.out.println("not");
-		}
-	}
+	
 }

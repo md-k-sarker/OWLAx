@@ -411,15 +411,21 @@ public class EditorActions {
 				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
 				PrinterJob pj = PrinterJob.getPrinterJob();
 				pj.setJobName(graphComponent.getOWLFileTitle());
+
 				if (pj.printDialog()) {
 					PageFormat pf = graphComponent.getPageFormat();
-					Paper paper = new Paper();
-					double margin = 36;
-					paper.setImageableArea(margin, margin, paper.getWidth() - margin * 2,
-							paper.getHeight() - margin * 2);
-					pf.setPaper(paper);
-					pj.setPrintable(graphComponent, pf);
+					if (pf != null) {
+						Paper paper = new Paper();
+						double margin = 36;
+						paper.setImageableArea(margin, margin, paper.getWidth() - margin * 2,
+								paper.getHeight() - margin * 2);
+						pf.setPaper(paper);
 
+						pj.setPrintable(graphComponent, pf);
+					}else{
+						System.out.println("null");
+						pj.setPrintable(graphComponent);
+					}
 					try {
 						pj.print();
 					} catch (PrinterException e2) {
@@ -1266,8 +1272,9 @@ public class EditorActions {
 					editor.setCurrentFile(file);
 					resetEditor(editor);
 
-					if (!editor.validateGraphAfterOpeningImage()){
-						JOptionPane.showMessageDialog(editor.getGraphComponent(), "Can not map image content to OWLEntity", mxResources.get("error"),
+					if (!editor.validateGraphAfterOpeningImage()) {
+						JOptionPane.showMessageDialog(editor.getGraphComponent(),
+								"Can not map image content to OWLEntity", mxResources.get("error"),
 								JOptionPane.ERROR_MESSAGE);
 
 					}

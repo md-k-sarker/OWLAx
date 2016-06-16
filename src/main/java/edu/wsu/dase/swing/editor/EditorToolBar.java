@@ -135,7 +135,7 @@ public class EditorToolBar extends JToolBar {
 		final JComboBox sizeCombo = new JComboBox(new Object[] { "6pt", "8pt", "9pt", "10pt", "12pt", "14pt", "18pt",
 				"24pt", "30pt", "36pt", "48pt", "60pt" });
 		sizeCombo.setEditable(true);
-		sizeCombo.setSelectedIndex(4);
+		sizeCombo.setSelectedIndex(3);
 		sizeCombo.setMinimumSize(new Dimension(65, 0));
 		sizeCombo.setPreferredSize(new Dimension(65, 0));
 		sizeCombo.setMaximumSize(new Dimension(65, 100));
@@ -193,12 +193,7 @@ public class EditorToolBar extends JToolBar {
 				ignoreZoomChange = true;
 
 				try {
-					/*
-					 * System.out.println("\n\n\nscale: " +view.getScale()); for
-					 * (StackTraceElement ste :
-					 * Thread.currentThread().getStackTrace()) {
-					 * System.out.println(ste); } System.out.println("\n\n\n");
-					 */
+
 					zoomCombo.setSelectedItem((int) Math.round(100 * view.getScale()) + "%");
 				} finally {
 					ignoreZoomChange = false;

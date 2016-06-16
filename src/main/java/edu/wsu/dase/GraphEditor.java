@@ -159,8 +159,8 @@ public class GraphEditor extends BasicGraphEditor {
 
 			// Sets switches typically used in an editor
 			setCenterPage(true);
-			setPageVisible(true);
-			setGridVisible(true);
+			//setPageVisible(true);
+			//setGridVisible(true);
 			setToolTips(true);
 			
 
@@ -317,22 +317,10 @@ public class GraphEditor extends BasicGraphEditor {
 	}
 
 	/**
-	 * 
+	 * Only for Debug Purpose
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
-		CustomEntityType clas1 = new CustomEntityType("Class");
-		   CustomEntityType clas2 = new CustomEntityType("Class");
-		   CustomEntityType clas3 = new CustomEntityType("Class");
-		   
-		   
-		   if(clas2.equals(clas1)){
-			   System.out.println("equal---------");
-		   }
-		   else{
-			   System.out.println(clas1.toString() +"\n"+ clas2.toString()+ " not equal");
-		   }
 		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

@@ -93,8 +93,20 @@ public class IntegrateOntologyWithProtege {
 			if (makeDeclarations(v) && makeDeclarations(e)) {
 
 				if (!changes.isEmpty()) {
-					owlOntologyManager.applyChanges(changes);
-					changes.clear();
+					ChangeApplied ca = owlOntologyManager.applyChanges(changes);
+					if (ChangeApplied.NO_OPERATION == ca) {
+						editor.status("Generated axioms is empty");
+						changes.clear();
+						return;
+					}else if (ChangeApplied.UNSUCCESSFULLY == ca) {
+						editor.status("Generated declaration axioms successfully. But axioms integration with protege not successfull");
+						changes.clear();
+						return;
+					}else if (ChangeApplied.SUCCESSFULLY == ca) {
+						editor.status("Generated declaration axioms and integrated with protege successfully.");
+						changes.clear();
+					}
+
 					if (createOWLAxioms(e)) {
 						if (saveOWLAxioms()) {
 							editor.status(SAVING_COMPLETE_MESSAGE);
@@ -170,6 +182,7 @@ public class IntegrateOntologyWithProtege {
 	private boolean saveOWLAxioms() {
 		if (changes != null) {
 			if (ChangeApplied.SUCCESSFULLY == owlOntologyManager.applyChanges(changes)) {
+				editor.status("All axioms (Domain, Range, Existential and Cardinality) integrated with protege successfully.");
 				return true;
 			} else
 				return false;
@@ -361,6 +374,7 @@ public class IntegrateOntologyWithProtege {
 
 			}
 		}
+		editor.status("Generated Domain, Range, Existential and Cardinality axioms successfully");
 		return true;
 	}
 

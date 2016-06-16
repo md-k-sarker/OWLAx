@@ -250,10 +250,7 @@ public class mxCodec {
 	 */
 	public Node encode(Object obj) {
 		Node node = null;
-		System.out.println("encoding---- " + mxCodecRegistry.getName(obj));
-		for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
-			//System.out.println(ste);
-		}
+	
 
 		if (obj != null) {
 			String name = mxCodecRegistry.getName(obj);

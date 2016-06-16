@@ -235,7 +235,7 @@ public class mxGraph extends mxEventSource {
 	/**
 	 * Specifies the grid size. Default is 0.
 	 */
-	protected int gridSize = 0;
+	protected int gridSize = 10;
 
 	/**
 	 * Specifies if the grid is enabled. Default is true.
@@ -2526,7 +2526,7 @@ public class mxGraph extends mxEventSource {
 	 * @return Returns the cells that have been removed.
 	 */
 	public Object[] removeCells(Object[] cells) {
-		return removeCells(cells, true);
+		return removeCells(cells, false);
 	}
 
 	/**

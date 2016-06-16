@@ -326,7 +326,6 @@ public class mxObjectCodec {
 		Node node = enc.document.createElement(getName());
 		obj = beforeEncode(enc, obj, node);
 		encodeObject(enc, obj, node);
-		System.out.println("nodexml: " + _toString(node) +"\t"+ obj.toString());
 		return afterEncode(enc, obj, node);
 	}
 
@@ -362,13 +361,9 @@ public class mxObjectCodec {
 		// LATER: Use PropertyDescriptors in Introspector.getBeanInfo(clazz)
 		// see http://forum.jgraph.com/questions/1424
 		Class<?> type = obj.getClass();
-		System.out.println("sarker.3   " + type);
 		while (type != null) {
 			Field[] fields = type.getDeclaredFields();
-			for (Field f : fields) {
-				// System.out.println("sarker.3 "+f.getName() );
-			}
-			System.out.println("\n\n");
+
 			for (int i = 0; i < fields.length; i++) {
 				Field f = fields[i];
 
@@ -861,7 +856,6 @@ public class mxObjectCodec {
 	 * @return Returns the resulting object that represents the given XML node.
 	 */
 	public Object decode(mxCodec dec, Node node) {
-		System.out.println("starting decoding");
 		return decode(dec, node, null);
 	}
 
@@ -1012,7 +1006,7 @@ public class mxObjectCodec {
 				}
 			} else {
 				value = dec.decode(child, template);
-				 System.out.println("Decoded " + child.getNodeName() + "." + fieldname + "=" + value);
+				// System.out.println("Decoded " + child.getNodeName() + "." + fieldname + "=" + value);
 			}
 
 			addObjectValue(obj, fieldname, value, template);

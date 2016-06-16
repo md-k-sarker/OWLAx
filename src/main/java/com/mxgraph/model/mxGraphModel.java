@@ -2089,7 +2089,6 @@ public class mxGraphModel extends mxEventSource implements mxIGraphModel, Serial
 		 */
 		public protegeEntityChange(mxGraphModel model, Object cell, CustomEntityType customEntityType) {
 			super(model);
-			System.out.println("sarker.3 protegeEntityChange got called");
 			this.cell = cell;
 			this.customEntityType = customEntityType;
 			this.previous = this.customEntityType;
@@ -2113,7 +2112,6 @@ public class mxGraphModel extends mxEventSource implements mxIGraphModel, Serial
 		 *
 		 */
 		public void setEntityType(CustomEntityType value) {
-			System.out.println("setEntityType");
 			customEntityType = value;
 		}
 
@@ -2257,7 +2255,6 @@ public class mxGraphModel extends mxEventSource implements mxIGraphModel, Serial
 			this.cell = cell;
 			this.geometry = geometry;
 			this.previous = this.geometry;
-			System.out.println("sarker.3 geometry cahned called");
 		}
 
 		/**
@@ -2278,7 +2275,6 @@ public class mxGraphModel extends mxEventSource implements mxIGraphModel, Serial
 		 *
 		 */
 		public void setGeometry(mxGeometry value) {
-			System.out.println("setGeometry");
 			geometry = value;
 		}
 
