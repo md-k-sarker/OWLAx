@@ -233,14 +233,14 @@ public class mxGraph extends mxEventSource {
 	protected mxGraphSelectionModel selectionModel;
 
 	/**
-	 * Specifies the grid size. Default is 10.
+	 * Specifies the grid size. Default is 0.
 	 */
-	protected int gridSize = 10;
+	protected int gridSize = 0;
 
 	/**
 	 * Specifies if the grid is enabled. Default is true.
 	 */
-	protected boolean gridEnabled = true;
+	protected boolean gridEnabled = false;
 
 	/**
 	 * Specifies if ports are enabled. This is used in <cellConnected> to update

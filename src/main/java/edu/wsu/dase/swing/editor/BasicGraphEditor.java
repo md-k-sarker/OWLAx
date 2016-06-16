@@ -43,6 +43,7 @@ import com.mxgraph.layout.mxParallelEdgeLayout;
 import com.mxgraph.layout.mxPartitionLayout;
 import com.mxgraph.layout.mxStackLayout;
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
+import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;
 import com.mxgraph.swing.handler.mxKeyboardHandler;
@@ -60,7 +61,6 @@ import com.mxgraph.view.mxGraph;
 
 public class BasicGraphEditor extends JPanel {
 
-
 	/**
 	 * 
 	 */
@@ -69,8 +69,7 @@ public class BasicGraphEditor extends JPanel {
 	private OWLModelManager protegeOWLModelManager;
 	private JFrame protegeMainWindow;
 	public static String cellDataTypeValue;
-	
-	
+
 	/**
 	 * Adds required resources for i18n
 	 */
@@ -166,7 +165,7 @@ public class BasicGraphEditor extends JPanel {
 	public void setProtegeMainWindow(JFrame protegeMainFrame) {
 		this.protegeMainWindow = protegeMainFrame;
 	}
-	
+
 	public String getCellDataTypeValue() {
 		return cellDataTypeValue;
 	}
@@ -178,10 +177,10 @@ public class BasicGraphEditor extends JPanel {
 	/**
 	 * 
 	 */
-	public BasicGraphEditor(OWLModelManager protegeOWLModelManager,String appTitle, mxGraphComponent component) {
-		//setProtegeInformations
+	public BasicGraphEditor(OWLModelManager protegeOWLModelManager, String appTitle, mxGraphComponent component) {
+		// setProtegeInformations
 		this.protegeOWLModelManager = protegeOWLModelManager;
-		
+
 		// Stores and updates the frame title
 		this.appTitle = appTitle;
 
@@ -294,12 +293,14 @@ public class BasicGraphEditor extends JPanel {
 				mxRectangle dirty = (mxRectangle) evt.getProperty("region");
 
 				if (dirty == null) {
-					//status("");
-					//status("Repaint all" + buffer);
+					// status("");
+					// status("Repaint all" + buffer);
 				} else {
 					status(" ");
-					//status("Repaint: x=" + (int) (dirty.getX()) + " y=" + (int) (dirty.getY()) + " w="
-					//		+ (int) (dirty.getWidth()) + " h=" + (int) (dirty.getHeight()) + buffer);
+					// status("Repaint: x=" + (int) (dirty.getX()) + " y=" +
+					// (int) (dirty.getY()) + " w="
+					// + (int) (dirty.getWidth()) + " h=" + (int)
+					// (dirty.getHeight()) + buffer);
 				}
 			}
 		});
@@ -340,7 +341,8 @@ public class BasicGraphEditor extends JPanel {
 			graphComponent.zoomOut();
 		}
 		status("");
-		//status(mxResources.get("scale") + ": " + (int) (100 * graphComponent.getGraph().getView().getScale()) + "%");
+		// status(mxResources.get("scale") + ": " + (int) (100 *
+		// graphComponent.getGraph().getView().getScale()) + "%");
 	}
 
 	/**
@@ -411,7 +413,7 @@ public class BasicGraphEditor extends JPanel {
 	 * 
 	 */
 	protected void mouseLocationChanged(MouseEvent e) {
-		//status(e.getX() + ", " + e.getY());
+		// status(e.getX() + ", " + e.getY());
 	}
 
 	/**
@@ -828,6 +830,38 @@ public class BasicGraphEditor extends JPanel {
 		}
 
 		return layout;
+	}
+
+	public boolean validateGraphAfterOpeningImage() {
+
+		boolean graphCorrect = true;
+		Object[] v = graphComponent.getGraph().getChildVertices(graphComponent.getGraph().getDefaultParent());
+		Object[] e = graphComponent.getGraph().getChildEdges(graphComponent.getGraph().getDefaultParent());
+		try{
+			for(Object vertex: v){
+				
+				if (vertex instanceof mxCell){
+					mxCell cell = (mxCell) vertex;
+					System.out.println("sarker.3 "+ "checking" +cell.getValue());
+					if(cell.getEntityType() == null || cell.getEntityType().getName().length() == 0)
+						return false;
+				}else
+					return false;
+			}
+			for(Object edge: e){
+				if (edge instanceof mxCell){
+					mxCell cell = (mxCell) edge;
+					if(cell.getEntityType() == null || cell.getEntityType().getName().length() == 0)
+						return false;
+				}else
+					return false;
+			}
+		}catch(Exception ex){
+			return false;
+		}
+		
+
+		return true;
 	}
 
 }

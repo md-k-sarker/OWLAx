@@ -82,7 +82,7 @@ public class IntegrateOntologyWithProtege {
 
 	public void generateOntology() {
 
-		// cleanActiveOntology();
+		cleanActiveOntology();
 
 		changes = new ArrayList<OWLOntologyChange>();
 		changes.clear();
@@ -117,7 +117,7 @@ public class IntegrateOntologyWithProtege {
 				editor.status("Creating Declaration Axioms failed.");
 				return;
 			}
-		}else{
+		} else {
 			editor.status("Nothing to integrate with Protege.");
 		}
 	}
@@ -146,7 +146,7 @@ public class IntegrateOntologyWithProtege {
 
 			// String base = "http://example.com/owl/families/#";
 			pm.setDefaultPrefix(ontologyBaseURI);
-
+			editor.getGraphComponent().setOWLFileTitle(ontologyBaseURI);
 			// System.out.println("base uri: " + ontologyBaseURI);
 		}
 
@@ -275,25 +275,25 @@ public class IntegrateOntologyWithProtege {
 					CustomEntityType CustomEntityType = cell.getEntityType();
 					String cellLabel = cell.getValue().toString().trim().replace(" ", "_");
 
-					if (CustomEntityType.getName().equals( CustomEntityType.CLASS.getName())) {
+					if (CustomEntityType.getName().equals(CustomEntityType.CLASS.getName())) {
 						changes.add(createOWLClass(cellLabel));
-					} else if (CustomEntityType.getName().equals( CustomEntityType.NAMED_INDIVIDUAL.getName())) {
+					} else if (CustomEntityType.getName().equals(CustomEntityType.NAMED_INDIVIDUAL.getName())) {
 						changes.add(createOWLNamedIndividual(cellLabel));
-					} else if (CustomEntityType.getName().equals(  CustomEntityType.DATATYPE.getName())) {
+					} else if (CustomEntityType.getName().equals(CustomEntityType.DATATYPE.getName())) {
 						// if not existing datatype then create
-					} else if (CustomEntityType.getName().equals(  CustomEntityType.LITERAL.getName())) {
+					} else if (CustomEntityType.getName().equals(CustomEntityType.LITERAL.getName())) {
 						// changes.add(createOWLLiteral(cell.getValue().toString()));
-					} else if (CustomEntityType.getName().equals(  CustomEntityType.OBJECT_PROPERTY.getName())) {
+					} else if (CustomEntityType.getName().equals(CustomEntityType.OBJECT_PROPERTY.getName())) {
 						String[] multValues = getCellValues(cellLabel);
 						for (String val : multValues) {
 							changes.add(createOWLObjectProperty(val));
 						}
-					} else if (CustomEntityType.getName().equals(  CustomEntityType.DATA_PROPERTY.getName())) {
+					} else if (CustomEntityType.getName().equals(CustomEntityType.DATA_PROPERTY.getName())) {
 						String[] multValues = getCellValues(cellLabel);
 						for (String val : multValues) {
 							changes.add(createOWLDataProperty(val));
 						}
-					} else if (CustomEntityType.getName().equals(  CustomEntityType.ANNOTATION_PROPERTY.getName())) {
+					} else if (CustomEntityType.getName().equals(CustomEntityType.ANNOTATION_PROPERTY.getName())) {
 						// although it is not required but implemented
 						changes.add(createOWLAnnotationProperty(cellLabel));
 					}
@@ -598,11 +598,10 @@ public class IntegrateOntologyWithProtege {
 		owlObjectOneOf = owlDataFactory.getOWLObjectOneOf(dest);
 		owlDataFactory.getOWLSubClassOfAxiom(owlObjectOneOf, owlObjectSomeValuesFrom);
 		tmpaxioms.add(axiom);
-		
+
 		owlLObjectHasValue = owlDataFactory.getOWLObjectHasValue(objprop, dest);
 		owlDataFactory.getOWLSubClassOfAxiom(src, owlLObjectHasValue);
 		tmpaxioms.add(axiom);
-
 
 		// set cardinality restriction
 		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, owlDataFactory.getOWLThing());
@@ -612,7 +611,7 @@ public class IntegrateOntologyWithProtege {
 		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, owlDataFactory.getOWLThing());
 		axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);
 		tmpaxioms.add(axiom);
-		
+
 		owlObjectOneOf = owlDataFactory.getOWLObjectOneOf(dest);
 		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, owlObjectOneOf);
 		axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);

@@ -91,7 +91,7 @@ public class EditorMenuBar extends JMenuBar
 
 		menu.addSeparator();
 		
-		menu.add(editor.bind(mxResources.get("export"), new SaveAction(false), "/images/save.gif"));
+		menu.add(editor.bind(mxResources.get("save"), new SaveAction(false), "/images/save.gif"));
 		//menu.add(editor.bind(mxResources.get("saveAs"), new SaveAction(true), "/images/saveas.gif"));
 
 		menu.addSeparator();
@@ -191,7 +191,7 @@ public class EditorMenuBar extends JMenuBar
 			}
 		});
 
-		menu.add(new TogglePropertyItem(graphComponent, mxResources.get("antialias"), "AntiAlias", true));
+		//menu.add(new TogglePropertyItem(graphComponent, mxResources.get("antialias"), "AntiAlias", true));
 
 		menu.addSeparator();
 
