@@ -272,12 +272,12 @@ public class EditorToolBar extends JToolBar {
 					// adding this value in editor cellDataTypeValue also
 					editor.setCellDataTypeValue(dataTypeCombo.getSelectedItem().toString());
 				}
-				if (selectedCell != null && selectedCell.getEntityType() == CustomEntityType.DATATYPE) {
+				if (selectedCell != null && selectedCell.getEntityType().getName().equals( CustomEntityType.DATATYPE.getName())) {
 
 					editor.getGraphComponent().labelChanged(selectedCell, dataTypeCombo.getSelectedItem().toString(),
 							e);
 				}
-				if (selectedCell != null && selectedCell.getEntityType() == CustomEntityType.LITERAL) {
+				if (selectedCell != null && selectedCell.getEntityType().getName().equals(  CustomEntityType.LITERAL.getName())) {
 					selectedCell.setLiteralDataType(dataTypeCombo.getSelectedItem().toString());
 
 					String oldLabelValue = selectedCell.getValue().toString();

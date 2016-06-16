@@ -615,35 +615,35 @@ public class mxEdgeHandler extends mxCellHandler {
 	 */
 	private boolean isConnectionSupportedByODP(mxCell edgeCell, boolean isSource, mxCell trgCell) {
 		if (trgCell != null) {
-			if (edgeCell.getEntityType() == CustomEntityType.OBJECT_PROPERTY) {
+			if (edgeCell.getEntityType().getName().equals( CustomEntityType.OBJECT_PROPERTY.getName())) {
 
 				if (isSource) {
-					if (trgCell.getEntityType() == CustomEntityType.CLASS)
+					if (trgCell.getEntityType().getName().equals(CustomEntityType.CLASS.getName()))
 						return true;
-				} else if (trgCell.getEntityType() == CustomEntityType.CLASS
-						|| trgCell.getEntityType() == CustomEntityType.NAMED_INDIVIDUAL)
+				} else if (trgCell.getEntityType().getName().equals( CustomEntityType.CLASS.getName())
+						|| trgCell.getEntityType().getName().equals( CustomEntityType.NAMED_INDIVIDUAL.getName()))
 					return true;
 
-			} else if (edgeCell.getEntityType() == CustomEntityType.DATA_PROPERTY) {
+			} else if (edgeCell.getEntityType().getName().equals( CustomEntityType.DATA_PROPERTY.getName())) {
 
 				if (isSource) {
-					if (trgCell.getEntityType() == CustomEntityType.CLASS)
+					if (trgCell.getEntityType().getName().equals(  CustomEntityType.CLASS.getName()))
 						return true;
-				} else if (trgCell.getEntityType() == CustomEntityType.LITERAL
-						|| trgCell.getEntityType() == CustomEntityType.DATATYPE)
+				} else if (trgCell.getEntityType().getName().equals( CustomEntityType.LITERAL.getName())
+						|| trgCell.getEntityType().getName().equals(  CustomEntityType.DATATYPE.getName()))
 					return true;
 
-			} else if (edgeCell.getEntityType() == CustomEntityType.RDFSSUBCLASS_OF) {
+			} else if (edgeCell.getEntityType().getName().equals(  CustomEntityType.RDFSSUBCLASS_OF.getName())) {
 
-				if (trgCell.getEntityType() == CustomEntityType.CLASS)
+				if (trgCell.getEntityType().getName().equals(  CustomEntityType.CLASS.getName()))
 					return true;
 
-			} else if (edgeCell.getEntityType() == CustomEntityType.RDFTYPE) {
+			} else if (edgeCell.getEntityType().getName().equals( CustomEntityType.RDFTYPE.getName())) {
 
 				if (isSource) {
-					if (trgCell.getEntityType() == CustomEntityType.NAMED_INDIVIDUAL)
+					if (trgCell.getEntityType().getName().equals( CustomEntityType.NAMED_INDIVIDUAL.getName()))
 						return true;
-				} else if (trgCell.getEntityType() == CustomEntityType.CLASS)
+				} else if (trgCell.getEntityType().getName().equals( CustomEntityType.CLASS.getName()))
 					return true;
 			}
 			return false;

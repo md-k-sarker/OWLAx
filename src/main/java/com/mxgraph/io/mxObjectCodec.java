@@ -324,10 +324,9 @@ public class mxObjectCodec {
 	
 	public Node encode(mxCodec enc, Object obj) {
 		Node node = enc.document.createElement(getName());
-
 		obj = beforeEncode(enc, obj, node);
 		encodeObject(enc, obj, node);
-		System.out.println("nodexml: " + _toString(node));
+		System.out.println("nodexml: " + _toString(node) +"\t"+ obj.toString());
 		return afterEncode(enc, obj, node);
 	}
 
@@ -862,6 +861,7 @@ public class mxObjectCodec {
 	 * @return Returns the resulting object that represents the given XML node.
 	 */
 	public Object decode(mxCodec dec, Node node) {
+		System.out.println("starting decoding");
 		return decode(dec, node, null);
 	}
 
@@ -1012,8 +1012,7 @@ public class mxObjectCodec {
 				}
 			} else {
 				value = dec.decode(child, template);
-				// System.out.println("Decoded " + child.getNodeName() + "."
-				// + fieldname + "=" + value);
+				 System.out.println("Decoded " + child.getNodeName() + "." + fieldname + "=" + value);
 			}
 
 			addObjectValue(obj, fieldname, value, template);

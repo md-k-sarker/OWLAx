@@ -207,9 +207,9 @@ public class GraphEditor extends BasicGraphEditor {
 			for (Object cell : cells) {
 				mxCell currentCell = (mxCell) cell;
 				if (currentCell != null) {
-					if (currentCell.getEntityType() == CustomEntityType.DATATYPE) {
+					if (currentCell.getEntityType().getName().equals( CustomEntityType.DATATYPE.getName())) {
 						this.labelChanged(currentCell, cellDataTypeValue, null);
-					}else if(currentCell.getEntityType() == CustomEntityType.LITERAL){ 
+					}else if(currentCell.getEntityType().getName().equals( CustomEntityType.LITERAL.getName())){ 
 						String cellValue = "\"" + "\"" + "^^" + cellDataTypeValue;
 						currentCell.setLiteralDataType(cellDataTypeValue);
 						this.labelChanged(currentCell, cellValue, null);
@@ -321,6 +321,19 @@ public class GraphEditor extends BasicGraphEditor {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
+		CustomEntityType clas1 = new CustomEntityType("Class");
+		   CustomEntityType clas2 = new CustomEntityType("Class");
+		   CustomEntityType clas3 = new CustomEntityType("Class");
+		   
+		   
+		   if(clas2.equals(clas1)){
+			   System.out.println("equal---------");
+		   }
+		   else{
+			   System.out.println(clas1.toString() +"\n"+ clas2.toString()+ " not equal");
+		   }
+		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e1) {

@@ -55,7 +55,7 @@ public class IntegrateOntologyWithProtege {
 	private String SAVING_ERROR_TITLE = "Ontology not generated";
 	private String SAVING_ERROR_MESSAGE = "Changes can't be Integrated with Protege.";
 	private String ENTITY_WITH_NO_NAME_TITLE = "Entity Without Name";
-	private String ENTITY_WITH_NO_NAME_MESSAGE = "Can not save enityty wihtout name. Entity must have a name.";
+	private String ENTITY_WITH_NO_NAME_MESSAGE = "Can not save entity wihtout name. Entity must have a name.";
 
 	mxGraph graph;
 	Object root;
@@ -275,25 +275,25 @@ public class IntegrateOntologyWithProtege {
 					CustomEntityType CustomEntityType = cell.getEntityType();
 					String cellLabel = cell.getValue().toString().trim().replace(" ", "_");
 
-					if (CustomEntityType == CustomEntityType.CLASS) {
+					if (CustomEntityType.getName().equals( CustomEntityType.CLASS.getName())) {
 						changes.add(createOWLClass(cellLabel));
-					} else if (CustomEntityType == CustomEntityType.NAMED_INDIVIDUAL) {
+					} else if (CustomEntityType.getName().equals( CustomEntityType.NAMED_INDIVIDUAL.getName())) {
 						changes.add(createOWLNamedIndividual(cellLabel));
-					} else if (CustomEntityType == CustomEntityType.DATATYPE) {
+					} else if (CustomEntityType.getName().equals(  CustomEntityType.DATATYPE.getName())) {
 						// if not existing datatype then create
-					} else if (CustomEntityType == CustomEntityType.LITERAL) {
+					} else if (CustomEntityType.getName().equals(  CustomEntityType.LITERAL.getName())) {
 						// changes.add(createOWLLiteral(cell.getValue().toString()));
-					} else if (CustomEntityType == CustomEntityType.OBJECT_PROPERTY) {
+					} else if (CustomEntityType.getName().equals(  CustomEntityType.OBJECT_PROPERTY.getName())) {
 						String[] multValues = getCellValues(cellLabel);
 						for (String val : multValues) {
 							changes.add(createOWLObjectProperty(val));
 						}
-					} else if (CustomEntityType == CustomEntityType.DATA_PROPERTY) {
+					} else if (CustomEntityType.getName().equals(  CustomEntityType.DATA_PROPERTY.getName())) {
 						String[] multValues = getCellValues(cellLabel);
 						for (String val : multValues) {
 							changes.add(createOWLDataProperty(val));
 						}
-					} else if (CustomEntityType == CustomEntityType.ANNOTATION_PROPERTY) {
+					} else if (CustomEntityType.getName().equals(  CustomEntityType.ANNOTATION_PROPERTY.getName())) {
 						// although it is not required but implemented
 						changes.add(createOWLAnnotationProperty(cellLabel));
 					}
@@ -377,21 +377,21 @@ public class IntegrateOntologyWithProtege {
 
 		OWLAxiom axiom = null;
 
-		if (edge.getEntityType().equals(CustomEntityType.OBJECT_PROPERTY)) {
+		if (edge.getEntityType().getName().equals(CustomEntityType.OBJECT_PROPERTY.getName())) {
 
 			String[] multValues = getCellValues(edge.getValue().toString());
 			for (String val : multValues) {
 
 				OWLObjectProperty objprop = owlDataFactory.getOWLObjectProperty(val, pm);
-				if (src.getEntityType().equals(CustomEntityType.CLASS)
-						&& dest.getEntityType().equals(CustomEntityType.CLASS)) {
+				if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
+						&& dest.getEntityType().getName().equals(CustomEntityType.CLASS.getName())) {
 
 					axioms.addAll(getClass2ObjectProperty2ClassAxioms(
 							owlDataFactory.getOWLClass(src.getValue().toString(), pm), objprop,
 							owlDataFactory.getOWLClass(dest.getValue().toString(), pm)));
 
-				} else if (src.getEntityType().equals(CustomEntityType.CLASS)
-						&& dest.getEntityType().equals(CustomEntityType.NAMED_INDIVIDUAL)) {
+				} else if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
+						&& dest.getEntityType().getName().equals(CustomEntityType.NAMED_INDIVIDUAL.getName())) {
 
 					axioms.addAll(getClass2ObjectProperty2IndividualAxioms(
 							owlDataFactory.getOWLClass(src.getValue().toString(), pm), objprop,
@@ -401,16 +401,16 @@ public class IntegrateOntologyWithProtege {
 					// error. it can't occur. validation should be done
 				}
 			}
-		} else if (edge.getEntityType().equals(CustomEntityType.DATA_PROPERTY)) {
+		} else if (edge.getEntityType().getName().equals(CustomEntityType.DATA_PROPERTY.getName())) {
 			OWLDataProperty dataprop = owlDataFactory.getOWLDataProperty(edge.getValue().toString(), pm);
 
-			if (src.getEntityType().equals(CustomEntityType.CLASS)
-					&& dest.getEntityType().equals(CustomEntityType.LITERAL)) {
+			if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
+					&& dest.getEntityType().getName().equals(CustomEntityType.LITERAL.getName())) {
 
 				axioms.addAll(getClass2DataProperty2LiteralAxioms(
 						owlDataFactory.getOWLClass(src.getValue().toString(), pm), dataprop, getOWLLiteral(dest)));
-			} else if (src.getEntityType().equals(CustomEntityType.CLASS)
-					&& dest.getEntityType().equals(CustomEntityType.DATATYPE)) {
+			} else if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
+					&& dest.getEntityType().getName().equals(CustomEntityType.DATATYPE.getName())) {
 
 				// get OWLDataType.. from getCustomOWLDataType
 				OWLDatatype owlDatatype = getCustomOWLDataType(dest.getValue().toString());
@@ -418,9 +418,9 @@ public class IntegrateOntologyWithProtege {
 						owlDataFactory.getOWLClass(src.getValue().toString(), pm), dataprop, owlDatatype));
 			}
 
-		} else if (edge.getEntityType().equals(CustomEntityType.RDFTYPE)) {
-			if (src.getEntityType().equals(CustomEntityType.NAMED_INDIVIDUAL)
-					&& dest.getEntityType().equals(CustomEntityType.CLASS)) {
+		} else if (edge.getEntityType().getName().equals(CustomEntityType.RDFTYPE.getName())) {
+			if (src.getEntityType().getName().equals(CustomEntityType.NAMED_INDIVIDUAL.getName())
+					&& dest.getEntityType().getName().equals(CustomEntityType.CLASS.getName())) {
 				axioms.addAll(getInvdividual2RDFType2ClassAxioms(
 						owlDataFactory.getOWLNamedIndividual(src.getValue().toString(), pm),
 						owlDataFactory.getOWLClass(dest.getValue().toString(), pm)));
@@ -428,9 +428,9 @@ public class IntegrateOntologyWithProtege {
 				// error. it can't occur. validation should be done
 			}
 
-		} else if (edge.getEntityType().equals(CustomEntityType.RDFSSUBCLASS_OF)) {
-			if (src.getEntityType().equals(CustomEntityType.CLASS)
-					&& dest.getEntityType().equals(CustomEntityType.CLASS)) {
+		} else if (edge.getEntityType().getName().equals(CustomEntityType.RDFSSUBCLASS_OF.getName())) {
+			if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
+					&& dest.getEntityType().getName().equals(CustomEntityType.CLASS.getName())) {
 				axioms.addAll(
 						getClass2RDFSSubClassOf2ClassAxioms(owlDataFactory.getOWLClass(src.getValue().toString(), pm),
 								owlDataFactory.getOWLClass(dest.getValue().toString(), pm)));

@@ -42,7 +42,6 @@ public class mxGdCodec
 		Object parent = graph.getDefaultParent();
 
 		graph.getModel().beginUpdate();
-		System.out.println("sarker.4 "+ input);
 		try
 		{
 			String line = br.readLine().trim();

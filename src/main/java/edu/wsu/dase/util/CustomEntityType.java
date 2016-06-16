@@ -40,34 +40,31 @@ import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
  *        entity type
  */
 @SuppressWarnings("unused")
-public final class CustomEntityType<E extends OWLEntity> implements Serializable,
-        HasShortForm, HasPrefixedName, HasIRI {
+public class CustomEntityType  {
 
     private static final long serialVersionUID = 40000L;
     //@formatter:off
-    /** class entity */                 public static final CustomEntityType<OWLClass> CLASS = new CustomEntityType<OWLClass>( "Class");
-    /** object property entity */       public static final CustomEntityType<OWLObjectProperty> OBJECT_PROPERTY = new CustomEntityType<OWLObjectProperty>( "Object Property");
-    /** data property entity */         public static final CustomEntityType<OWLDataProperty> DATA_PROPERTY = new CustomEntityType<OWLDataProperty>( "Data Property");
-    /** annotation property entity*/    public static final CustomEntityType<OWLAnnotationProperty> ANNOTATION_PROPERTY = new CustomEntityType<OWLAnnotationProperty>( "Annotation Property");
-    /** named individual entity */      public static final CustomEntityType<OWLNamedIndividual> NAMED_INDIVIDUAL = new CustomEntityType<OWLNamedIndividual>("Named Individual");
-    /** datatype entity */              public static final CustomEntityType<OWLDatatype> DATATYPE = new CustomEntityType<OWLDatatype>( "Datatype");
-    /** RDF_TYPE */         		    public static final CustomEntityType<OWLDatatype> LITERAL = new CustomEntityType<OWLDatatype>( "Literal");
-    /** LITERAL */          		    public static final CustomEntityType<OWLDatatype> RDFTYPE = new CustomEntityType<OWLDatatype>( "rdf:type");
-    /** RDFS_SUBCLASS_OF */             public static final CustomEntityType<OWLDatatype> RDFSSUBCLASS_OF = new CustomEntityType<OWLDatatype>( "rdfs:subClassOf");
+    /** class entity */                 public static final CustomEntityType CLASS = new CustomEntityType( "Class");
+    /** object property entity */       public static final CustomEntityType OBJECT_PROPERTY = new CustomEntityType( "Object Property");
+    /** data property entity */         public static final CustomEntityType DATA_PROPERTY = new CustomEntityType( "Data Property");
+    /** annotation property entity*/    public static final CustomEntityType ANNOTATION_PROPERTY = new CustomEntityType( "Annotation Property");
+    /** named individual entity */      public static final CustomEntityType NAMED_INDIVIDUAL = new CustomEntityType("Named Individual");
+    /** datatype entity */              public static final CustomEntityType DATATYPE = new CustomEntityType( "Datatype");
+    /** RDF_TYPE */         		    public static final CustomEntityType LITERAL = new CustomEntityType( "Literal");
+    /** LITERAL */          		    public static final CustomEntityType RDFTYPE = new CustomEntityType( "rdf:type");
+    /** RDFS_SUBCLASS_OF */             public static final CustomEntityType RDFSSUBCLASS_OF = new CustomEntityType( "rdfs:subClassOf");
   //  private static final List<CustomEntityType<?>> VALUES = Collections.<CustomEntityType<?>> unmodifiableList(Arrays.asList(CLASS, OBJECT_PROPERTY, DATA_PROPERTY, ANNOTATION_PROPERTY, NAMED_INDIVIDUAL, DATATYPE));
   //@formatter:on
     
-    private  String name;
+    private  String Name;
     
     public CustomEntityType(){
-    	this(null);
+    	//this(null);
     }
 
     public CustomEntityType(String name) {
-    	if(name == null){
-    		this.name = "";
-    	}else
-    		this.name = name;
+    	
+    		this.Name = name;
     }
 
     /** @return toe vocabulary enum corresponding to this entity */
@@ -77,34 +74,46 @@ public final class CustomEntityType<E extends OWLEntity> implements Serializable
 
     /** @return this entity tipe name */
     public String getName() {
-        return name;
+        return Name;
     }
-
+    
+    /** @return this entity tipe name */
+    public void setName(String Name) {
+        this.Name = Name;
+    }
+    
     @Override
-    public String toString() {
-        return name;
+    public String toString(){
+    	return Name;
     }
-
-
-   
-
+    
     @Override
-    public String getShortForm() {
-        return name;
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+    	 if (this == obj)
+             return true;
+         if (getClass() != obj.getClass())
+             return false;
+         if(this.toString() == obj.toString())
+        	 return true;
+         return false;
     }
 
-	@Override
-	public IRI getIRI() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getPrefixedName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-   
+   public static void main(String[] args){
+	   CustomEntityType clas1 = new CustomEntityType("a ");
+	   CustomEntityType clas2 = new CustomEntityType("a");
+	   CustomEntityType clas3 = new CustomEntityType("a");
+	   String s1 = new String( "s");
+	   String s2 = new String("s");
+	   
+	   
+	   if(clas1.equals(clas2)){
+		   System.out.println("equal---------");
+	   }
+	   else{
+		   System.out.println(clas1.toString() +"\n"+ clas2.toString()+ " not equal");
+	   }
+   }
 }
 

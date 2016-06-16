@@ -385,9 +385,9 @@ public class mxCellEditor implements mxICellEditor {
 			// logic for not editing rdf:Type, rdfs:subClassOf, dataType cell
 			if (cell instanceof mxCell) {
 				mxCell thisCell = (mxCell) cell;
-				if (thisCell.getEntityType().equals(CustomEntityType.RDFTYPE)
-						|| thisCell.getEntityType().equals(CustomEntityType.RDFSSUBCLASS_OF)
-						|| thisCell.getEntityType().equals(CustomEntityType.DATATYPE)) {
+				if (thisCell.getEntityType().getName().equals(CustomEntityType.RDFTYPE.getName())
+						|| thisCell.getEntityType().getName().equals(CustomEntityType.RDFSSUBCLASS_OF.getName())
+						|| thisCell.getEntityType().getName().equals(CustomEntityType.DATATYPE.getName())) {
 					return;
 				}
 			}
@@ -401,7 +401,7 @@ public class mxCellEditor implements mxICellEditor {
 
 			String value = getInitialValue(state, evt);
 			// logic for editing literal type cell
-			if (((mxCell) cell).getEntityType() == CustomEntityType.LITERAL) {
+			if (((mxCell) cell).getEntityType().getName().equals( CustomEntityType.LITERAL.getName())) {
 				String oldLabelValue = ((mxCell) cell).getValue().toString();
 				String oldLabelValueOnly = "";
 				Pattern pattern = Pattern.compile("\"(.*?)\"");
@@ -479,7 +479,7 @@ public class mxCellEditor implements mxICellEditor {
 				trigger = null;
 				if (cell instanceof mxICell) {
 					mxCell thisCell = (mxCell) cell;
-					if (thisCell.getEntityType() == CustomEntityType.LITERAL) {
+					if (thisCell.getEntityType().getName().equals( CustomEntityType.LITERAL.getName())) {
 						String labelValue = "\"" + getCurrentValue() + "\"" + "^^" + thisCell.getLiteralDataType();
 						graphComponent.labelChanged(cell, labelValue, trig);
 					} else {
