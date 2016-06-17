@@ -61,6 +61,8 @@ import com.mxgraph.view.mxGraph;
 
 public class BasicGraphEditor extends JPanel {
 
+
+
 	/**
 	 * 
 	 */
@@ -82,6 +84,55 @@ public class BasicGraphEditor extends JPanel {
 		}
 	}
 
+	protected boolean generateDomainAxiom = true;
+	
+	protected boolean generateRangeAxiom = true;
+	
+	protected boolean generateCardinalityAxiom = true;
+	
+	protected boolean generateExistentialAxiom = true;
+	
+	protected boolean keepExistingAxiom = false;
+	
+	public boolean isKeepExistingAxiom() {
+		return keepExistingAxiom;
+	}
+
+	public void setKeepExistingAxiom(boolean keepExistingAxiom) {
+		this.keepExistingAxiom = keepExistingAxiom;
+	}
+	
+	public boolean isGenerateDomainAxiom() {
+		return generateDomainAxiom;
+	}
+
+	public void setGenerateDomainAxiom(boolean generateDomainAxiom) {
+		this.generateDomainAxiom = generateDomainAxiom;
+	}
+
+	public boolean isGenerateRangeAxiom() {
+		return generateRangeAxiom;
+	}
+
+	public void setGenerateRangeAxiom(boolean generateRangeAxiom) {
+		this.generateRangeAxiom = generateRangeAxiom;
+	}
+
+	public boolean isGenerateCardinalityAxiom() {
+		return generateCardinalityAxiom;
+	}
+
+	public void setGenerateCardinalityAxiom(boolean generateCardinalityAxiom) {
+		this.generateCardinalityAxiom = generateCardinalityAxiom;
+	}
+
+	public boolean isGenerateExistentialAxiom() {
+		return generateExistentialAxiom;
+	}
+
+	public void setGenerateExistentialAxiom(boolean generateExistentialAxiom) {
+		this.generateExistentialAxiom = generateExistentialAxiom;
+	}
 	/**
 	 * 
 	 */

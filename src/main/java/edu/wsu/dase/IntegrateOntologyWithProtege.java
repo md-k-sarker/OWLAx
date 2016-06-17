@@ -82,7 +82,8 @@ public class IntegrateOntologyWithProtege {
 
 	public void generateOntology() {
 
-		cleanActiveOntology();
+		if (!editor.isKeepExistingAxiom())
+			cleanActiveOntology();
 
 		changes = new ArrayList<OWLOntologyChange>();
 		changes.clear();
@@ -98,11 +99,12 @@ public class IntegrateOntologyWithProtege {
 						editor.status("Generated axioms is empty");
 						changes.clear();
 						return;
-					}else if (ChangeApplied.UNSUCCESSFULLY == ca) {
-						editor.status("Generated declaration axioms successfully. But axioms integration with protege not successfull");
+					} else if (ChangeApplied.UNSUCCESSFULLY == ca) {
+						editor.status(
+								"Generated declaration axioms successfully. But axioms integration with protege not successfull");
 						changes.clear();
 						return;
-					}else if (ChangeApplied.SUCCESSFULLY == ca) {
+					} else if (ChangeApplied.SUCCESSFULLY == ca) {
 						editor.status("Generated declaration axioms and integrated with protege successfully.");
 						changes.clear();
 					}
@@ -182,7 +184,8 @@ public class IntegrateOntologyWithProtege {
 	private boolean saveOWLAxioms() {
 		if (changes != null) {
 			if (ChangeApplied.SUCCESSFULLY == owlOntologyManager.applyChanges(changes)) {
-				editor.status("All axioms (Domain, Range, Existential and Cardinality) integrated with protege successfully.");
+				editor.status(
+						"All axioms (Domain, Range, Existential and Cardinality) integrated with protege successfully.");
 				return true;
 			} else
 				return false;
@@ -512,69 +515,78 @@ public class IntegrateOntologyWithProtege {
 
 		// set domain and range
 		// scoped domain
-		owlObjectSomeValuesFrom = owlDataFactory.getOWLObjectSomeValuesFrom(objprop, dest);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlObjectSomeValuesFrom, src);
-		tmpaxioms.add(axiom);
+		if (editor.isGenerateDomainAxiom()) {
+			owlObjectSomeValuesFrom = owlDataFactory.getOWLObjectSomeValuesFrom(objprop, dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlObjectSomeValuesFrom, src);
+			tmpaxioms.add(axiom);
 
-		owlObjectSomeValuesFrom = owlDataFactory.getOWLObjectSomeValuesFrom(objprop, owlDataFactory.getOWLThing());
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlObjectSomeValuesFrom, src);
-		tmpaxioms.add(axiom);
+			owlObjectSomeValuesFrom = owlDataFactory.getOWLObjectSomeValuesFrom(objprop, owlDataFactory.getOWLThing());
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlObjectSomeValuesFrom, src);
+			tmpaxioms.add(axiom);
+		}
 		// scoped range
-		owlObjectAllValuesFrom = owlDataFactory.getOWLObjectAllValuesFrom(objprop, dest);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectAllValuesFrom);
-		tmpaxioms.add(axiom);
+		if (editor.isGenerateRangeAxiom()) {
+			owlObjectAllValuesFrom = owlDataFactory.getOWLObjectAllValuesFrom(objprop, dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectAllValuesFrom);
+			tmpaxioms.add(axiom);
 
-		owlObjectAllValuesFrom = owlDataFactory.getOWLObjectAllValuesFrom(objprop, dest);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlObjectAllValuesFrom);
-		tmpaxioms.add(axiom);
+			owlObjectAllValuesFrom = owlDataFactory.getOWLObjectAllValuesFrom(objprop, dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlObjectAllValuesFrom);
+			tmpaxioms.add(axiom);
+		}
 
 		// set existential functionality
 		// source existential functionality
-		owlObjectSomeValuesFrom = owlDataFactory.getOWLObjectSomeValuesFrom(objprop, dest);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectSomeValuesFrom);
-		tmpaxioms.add(axiom);
-		// destination existential functionality
-		owlObjectSomeValuesFrom = owlDataFactory.getOWLObjectSomeValuesFrom(objprop.getInverseProperty(), src);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(dest, owlObjectSomeValuesFrom);
-		tmpaxioms.add(axiom);
+		if (editor.isGenerateExistentialAxiom()) {
+			owlObjectSomeValuesFrom = owlDataFactory.getOWLObjectSomeValuesFrom(objprop, dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectSomeValuesFrom);
+			tmpaxioms.add(axiom);
+			// destination existential functionality
+			owlObjectSomeValuesFrom = owlDataFactory.getOWLObjectSomeValuesFrom(objprop.getInverseProperty(), src);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(dest, owlObjectSomeValuesFrom);
+			tmpaxioms.add(axiom);
+		}
 
 		// set cardinality restriction
 		// for objectProperty
-		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, dest);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);
-		tmpaxioms.add(axiom);
+		if (editor.isGenerateCardinalityAxiom()) {
+			owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);
+			tmpaxioms.add(axiom);
 
-		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, dest);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlObjectMaxCardinality);
-		tmpaxioms.add(axiom);
+			owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlObjectMaxCardinality);
+			tmpaxioms.add(axiom);
 
-		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, owlDataFactory.getOWLThing());
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlObjectMaxCardinality);
-		tmpaxioms.add(axiom);
+			owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop,
+					owlDataFactory.getOWLThing());
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlObjectMaxCardinality);
+			tmpaxioms.add(axiom);
 
-		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, owlDataFactory.getOWLThing());
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);
-		tmpaxioms.add(axiom);
+			owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop,
+					owlDataFactory.getOWLThing());
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);
+			tmpaxioms.add(axiom);
 
-		// for inverse objectProperty
-		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop.getInverseProperty(), dest);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);
-		tmpaxioms.add(axiom);
+			// for inverse objectProperty
+			owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop.getInverseProperty(), dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);
+			tmpaxioms.add(axiom);
 
-		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop.getInverseProperty(), dest);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlObjectMaxCardinality);
-		tmpaxioms.add(axiom);
+			owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop.getInverseProperty(), dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlObjectMaxCardinality);
+			tmpaxioms.add(axiom);
 
-		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop.getInverseProperty(),
-				owlDataFactory.getOWLThing());
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlObjectMaxCardinality);
-		tmpaxioms.add(axiom);
+			owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop.getInverseProperty(),
+					owlDataFactory.getOWLThing());
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlObjectMaxCardinality);
+			tmpaxioms.add(axiom);
 
-		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop.getInverseProperty(),
-				owlDataFactory.getOWLThing());
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);
-		tmpaxioms.add(axiom);
-
+			owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop.getInverseProperty(),
+					owlDataFactory.getOWLThing());
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);
+			tmpaxioms.add(axiom);
+		}
 		// need to implement custom cardinality axiom
 
 		return tmpaxioms;
@@ -599,43 +611,50 @@ public class IntegrateOntologyWithProtege {
 
 		// set domain and range
 		// scoped domain
-		owlLObjectHasValue = owlDataFactory.getOWLObjectHasValue(objprop, dest);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlLObjectHasValue, src);
-		tmpaxioms.add(axiom);
+		if (editor.isGenerateDomainAxiom()) {
+			owlLObjectHasValue = owlDataFactory.getOWLObjectHasValue(objprop, dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlLObjectHasValue, src);
+			tmpaxioms.add(axiom);
 
-		owlObjectSomeValuesFrom = owlDataFactory.getOWLObjectSomeValuesFrom(objprop, owlDataFactory.getOWLThing());
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlObjectSomeValuesFrom, src);
-		tmpaxioms.add(axiom);
+			owlObjectSomeValuesFrom = owlDataFactory.getOWLObjectSomeValuesFrom(objprop, owlDataFactory.getOWLThing());
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlObjectSomeValuesFrom, src);
+			tmpaxioms.add(axiom);
+		}
 
 		// set existential restriction
-		owlObjectSomeValuesFrom = owlDataFactory.getOWLObjectSomeValuesFrom(objprop.getInverseProperty(), src);
-		owlObjectOneOf = owlDataFactory.getOWLObjectOneOf(dest);
-		owlDataFactory.getOWLSubClassOfAxiom(owlObjectOneOf, owlObjectSomeValuesFrom);
-		tmpaxioms.add(axiom);
+		if (editor.isGenerateExistentialAxiom()) {
+			owlObjectSomeValuesFrom = owlDataFactory.getOWLObjectSomeValuesFrom(objprop.getInverseProperty(), src);
+			owlObjectOneOf = owlDataFactory.getOWLObjectOneOf(dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlObjectOneOf, owlObjectSomeValuesFrom);
+			tmpaxioms.add(axiom);
 
-		owlLObjectHasValue = owlDataFactory.getOWLObjectHasValue(objprop, dest);
-		owlDataFactory.getOWLSubClassOfAxiom(src, owlLObjectHasValue);
-		tmpaxioms.add(axiom);
+			owlLObjectHasValue = owlDataFactory.getOWLObjectHasValue(objprop, dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlLObjectHasValue);
+			tmpaxioms.add(axiom);
+		}
 
 		// set cardinality restriction
-		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, owlDataFactory.getOWLThing());
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlObjectMaxCardinality);
-		tmpaxioms.add(axiom);
+		if (editor.isGenerateCardinalityAxiom()) {
+			owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop,
+					owlDataFactory.getOWLThing());
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlObjectMaxCardinality);
+			tmpaxioms.add(axiom);
 
-		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, owlDataFactory.getOWLThing());
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);
-		tmpaxioms.add(axiom);
+			owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop,
+					owlDataFactory.getOWLThing());
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);
+			tmpaxioms.add(axiom);
 
-		owlObjectOneOf = owlDataFactory.getOWLObjectOneOf(dest);
-		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, owlObjectOneOf);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);
-		tmpaxioms.add(axiom);
+			owlObjectOneOf = owlDataFactory.getOWLObjectOneOf(dest);
+			owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, owlObjectOneOf);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);
+			tmpaxioms.add(axiom);
 
-		owlObjectOneOf = owlDataFactory.getOWLObjectOneOf(dest);
-		owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, owlObjectOneOf);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlObjectMaxCardinality);
-		tmpaxioms.add(axiom);
-
+			owlObjectOneOf = owlDataFactory.getOWLObjectOneOf(dest);
+			owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop, owlObjectOneOf);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlObjectMaxCardinality);
+			tmpaxioms.add(axiom);
+		}
 		return tmpaxioms;
 	}
 
@@ -654,53 +673,61 @@ public class IntegrateOntologyWithProtege {
 
 		// set domain and range
 		// scoped domain
-		owlDataSomeValuesFrom = owlDataFactory.getOWLDataSomeValuesFrom(dataprop, dest);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataSomeValuesFrom, src);
-		tmpaxioms.add(axiom);
+		if (editor.isGenerateDomainAxiom()) {
+			owlDataSomeValuesFrom = owlDataFactory.getOWLDataSomeValuesFrom(dataprop, dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataSomeValuesFrom, src);
+			tmpaxioms.add(axiom);
 
-		owlDataSomeValuesFrom = owlDataFactory.getOWLDataSomeValuesFrom(dataprop, owlDataFactory.getTopDatatype());
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataSomeValuesFrom, src);
-		tmpaxioms.add(axiom);
+			owlDataSomeValuesFrom = owlDataFactory.getOWLDataSomeValuesFrom(dataprop, owlDataFactory.getTopDatatype());
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataSomeValuesFrom, src);
+			tmpaxioms.add(axiom);
+		}
 
 		// scoped range
-		owlDataAllValuesFrom = owlDataFactory.getOWLDataAllValuesFrom(dataprop, dest);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlDataAllValuesFrom);
-		tmpaxioms.add(axiom);
+		if (editor.isGenerateRangeAxiom()) {
+			owlDataAllValuesFrom = owlDataFactory.getOWLDataAllValuesFrom(dataprop, dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlDataAllValuesFrom);
+			tmpaxioms.add(axiom);
 
-		owlDataAllValuesFrom = owlDataFactory.getOWLDataAllValuesFrom(dataprop, dest);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlDataAllValuesFrom);
-		tmpaxioms.add(axiom);
+			owlDataAllValuesFrom = owlDataFactory.getOWLDataAllValuesFrom(dataprop, dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlDataAllValuesFrom);
+			tmpaxioms.add(axiom);
+		}
 
 		// set existential restriction
 		// source existential functionality
-		owlDataSomeValuesFrom = owlDataFactory.getOWLDataSomeValuesFrom(dataprop, dest);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlDataSomeValuesFrom);
-		tmpaxioms.add(axiom);
+		if (editor.isGenerateExistentialAxiom()) {
+			owlDataSomeValuesFrom = owlDataFactory.getOWLDataSomeValuesFrom(dataprop, dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlDataSomeValuesFrom);
+			tmpaxioms.add(axiom);
+		}
 
 		// destination existential functionality. dataproperty doesn't have
 		// inverse property
 
 		// set cardinality restriction
-		owlDataMinCardinality = owlDataFactory.getOWLDataMinCardinality(1, dataprop, dest);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlDataMinCardinality);
-		tmpaxioms.add(axiom);
+		if (editor.isGenerateCardinalityAxiom()) {
+			owlDataMinCardinality = owlDataFactory.getOWLDataMinCardinality(1, dataprop, dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlDataMinCardinality);
+			tmpaxioms.add(axiom);
 
-		owlDataMinCardinality = owlDataFactory.getOWLDataMinCardinality(1, dataprop, dest);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlDataMinCardinality);
-		tmpaxioms.add(axiom);
+			owlDataMinCardinality = owlDataFactory.getOWLDataMinCardinality(1, dataprop, dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlDataMinCardinality);
+			tmpaxioms.add(axiom);
 
-		owlDataMinCardinality = owlDataFactory.getOWLDataMinCardinality(1, dataprop, owlDataFactory.getTopDatatype());
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlDataMinCardinality);
-		tmpaxioms.add(axiom);
+			owlDataMinCardinality = owlDataFactory.getOWLDataMinCardinality(1, dataprop,
+					owlDataFactory.getTopDatatype());
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlDataMinCardinality);
+			tmpaxioms.add(axiom);
 
-		owlDataMinCardinality = owlDataFactory.getOWLDataMinCardinality(1, dataprop, owlDataFactory.getTopDatatype());
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlDataMinCardinality);
-		tmpaxioms.add(axiom);
-
+			owlDataMinCardinality = owlDataFactory.getOWLDataMinCardinality(1, dataprop,
+					owlDataFactory.getTopDatatype());
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlDataMinCardinality);
+			tmpaxioms.add(axiom);
+		}
 		// dataproperty doesn't have inverse property
 
 		// System.out.println(axiom.toString());
-		tmpaxioms.add(axiom);
 
 		return tmpaxioms;
 	}
@@ -724,24 +751,28 @@ public class IntegrateOntologyWithProtege {
 
 		// set domain and range
 		// scoped domain
-		owlLDataHasValue = owlDataFactory.getOWLDataHasValue(dataprop, dest);
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlLDataHasValue, src);
-		tmpaxioms.add(axiom);
+		if (editor.isGenerateDomainAxiom()) {
+			owlLDataHasValue = owlDataFactory.getOWLDataHasValue(dataprop, dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlLDataHasValue, src);
+			tmpaxioms.add(axiom);
 
-		owlDataSomeValuesFrom = owlDataFactory.getOWLDataSomeValuesFrom(dataprop, owlDataFactory.getTopDatatype());
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataSomeValuesFrom, src);
-		tmpaxioms.add(axiom);
+			owlDataSomeValuesFrom = owlDataFactory.getOWLDataSomeValuesFrom(dataprop, owlDataFactory.getTopDatatype());
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataSomeValuesFrom, src);
+			tmpaxioms.add(axiom);
+		}
 
-		owlDataMaxCardinality = owlDataFactory.getOWLDataMaxCardinality(1, dataprop, owlDataFactory.getTopDatatype());
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlDataMaxCardinality);
-		tmpaxioms.add(axiom);
+		if (editor.isGenerateCardinalityAxiom()) {
+			owlDataMaxCardinality = owlDataFactory.getOWLDataMaxCardinality(1, dataprop,
+					owlDataFactory.getTopDatatype());
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlDataMaxCardinality);
+			tmpaxioms.add(axiom);
 
-		// @formatter:on
-
-		owlDataMinCardinality = owlDataFactory.getOWLDataMinCardinality(1, dataprop, owlDataFactory.getTopDatatype());
-		axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlDataMinCardinality);
-		tmpaxioms.add(axiom);
-
+			// need to verify with Adila
+			owlDataMinCardinality = owlDataFactory.getOWLDataMinCardinality(1, dataprop,
+					owlDataFactory.getTopDatatype());
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlDataMinCardinality);
+			tmpaxioms.add(axiom);
+		}
 		return tmpaxioms;
 	}
 

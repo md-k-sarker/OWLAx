@@ -53,6 +53,13 @@ import edu.wsu.dase.swing.editor.EditorActions.ToggleOutlineItem;
 import edu.wsu.dase.swing.editor.EditorActions.TogglePropertyItem;
 import edu.wsu.dase.swing.editor.EditorActions.ToggleRulersItem;
 import edu.wsu.dase.swing.editor.EditorActions.ZoomPolicyAction;
+import edu.wsu.dase.swing.editor.EditorActions.ToggleCardinalityAxiom;
+import edu.wsu.dase.swing.editor.EditorActions.ToggleDomainAxiom;
+import edu.wsu.dase.swing.editor.EditorActions.ToggleRangeAxiom;
+import edu.wsu.dase.swing.editor.EditorActions.ToggleExistentialAxiom;
+import edu.wsu.dase.swing.editor.EditorActions.ToggleKeepExistingAxiomItem;
+import edu.wsu.dase.swing.editor.EditorActions.PromptPropertyActionForCardinality;
+
 
 public class EditorMenuBar extends JMenuBar
 {
@@ -102,7 +109,25 @@ public class EditorMenuBar extends JMenuBar
 		menu.addSeparator();
 
 		menu.add(editor.bind(mxResources.get("exit"), new ExitAction()));
+		
+		//Creates ontology menu
+		menu = add(new JMenu(mxResources.get("ontology")));
+		
+		submenu = (JMenu) menu.add(new JMenu(mxResources.get("generate")));
 
+		submenu.add(new ToggleExistentialAxiom(editor,mxResources.get("existential")));
+		submenu.add(new ToggleCardinalityAxiom(editor, mxResources.get("cardinality")));
+		submenu.add(new ToggleDomainAxiom(editor, mxResources.get("domain")));
+		submenu.add(new ToggleRangeAxiom(editor, mxResources.get("range")));
+
+		menu.add(editor.bind(mxResources.get("cardinalitySize"), new PromptPropertyActionForCardinality(graph, "Cardinality")));
+		menu.addSeparator();
+		
+		//merge with existing
+		menu.add(new ToggleKeepExistingAxiomItem(editor, mxResources.get("merge")));
+		//set cardinality for edge
+
+		
 		// Creates the edit menu
 		menu = add(new JMenu(mxResources.get("edit")));
 

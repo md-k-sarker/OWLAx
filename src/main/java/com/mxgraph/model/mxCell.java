@@ -65,6 +65,17 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 	 * null.
 	 */
 	protected String style;
+	
+	//cardinality for edge default value 1
+	protected int cardinality = 1;
+
+	public int getCardinality() {
+		return cardinality;
+	}
+
+	public void setCardinality(int cardinality) {
+		this.cardinality = cardinality;
+	}
 
 	/**
 	 * Specifies whether the cell is a vertex or edge and whether it is

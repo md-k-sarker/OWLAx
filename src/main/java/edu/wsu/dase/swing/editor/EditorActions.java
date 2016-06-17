@@ -164,6 +164,125 @@ public class EditorActions {
 	 *
 	 */
 	@SuppressWarnings("serial")
+	public static class ToggleKeepExistingAxiomItem extends JCheckBoxMenuItem {
+		/**
+		 * 
+		 */
+		public ToggleKeepExistingAxiomItem(final BasicGraphEditor editor, String name) {
+			super(name);
+			setSelected(false);
+
+			addActionListener(new ActionListener() {
+				/**
+				 * 
+				 */
+				public void actionPerformed(ActionEvent e) {
+					boolean newValue = !editor.isKeepExistingAxiom();
+					editor.setKeepExistingAxiom(newValue);
+					setSelected(newValue);
+				}
+			});
+		}
+	}
+
+	/**
+	 *
+	 */
+	@SuppressWarnings("serial")
+	public static class ToggleDomainAxiom extends JCheckBoxMenuItem {
+		/**
+		 * 
+		 */
+		public ToggleDomainAxiom(final BasicGraphEditor editor, String name) {
+			super(name);
+			setSelected(true);
+
+			addActionListener(new ActionListener() {
+				/**
+				 * 
+				 */
+				public void actionPerformed(ActionEvent e) {
+					boolean newValue = !editor.isGenerateDomainAxiom();
+					editor.setGenerateDomainAxiom(newValue);
+					setSelected(newValue);
+				}
+			});
+		}
+	}
+
+	/**
+	 *
+	 */
+	@SuppressWarnings("serial")
+	public static class ToggleRangeAxiom extends JCheckBoxMenuItem {
+		/**
+		 * 
+		 */
+		public ToggleRangeAxiom(final BasicGraphEditor editor, String name) {
+			super(name);
+			setSelected(true);
+
+			addActionListener(new ActionListener() {
+				/**
+				 * 
+				 */
+				public void actionPerformed(ActionEvent e) {
+					boolean newValue = !editor.isGenerateRangeAxiom();
+					editor.setGenerateRangeAxiom(newValue);
+					setSelected(newValue);
+				}
+			});
+		}
+	}
+
+	@SuppressWarnings("serial")
+	public static class ToggleCardinalityAxiom extends JCheckBoxMenuItem {
+		/**
+		 * 
+		 */
+		public ToggleCardinalityAxiom(final BasicGraphEditor editor, String name) {
+			super(name);
+			setSelected(true);
+
+			addActionListener(new ActionListener() {
+				/**
+				 * 
+				 */
+				public void actionPerformed(ActionEvent e) {
+					boolean newValue = !editor.isGenerateCardinalityAxiom();
+					editor.setGenerateCardinalityAxiom(newValue);
+					setSelected(newValue);
+				}
+			});
+		}
+	}
+
+	@SuppressWarnings("serial")
+	public static class ToggleExistentialAxiom extends JCheckBoxMenuItem {
+		/**
+		 * 
+		 */
+		public ToggleExistentialAxiom(final BasicGraphEditor editor, String name) {
+			super(name);
+			setSelected(true);
+
+			addActionListener(new ActionListener() {
+				/**
+				 * 
+				 */
+				public void actionPerformed(ActionEvent e) {
+					boolean newValue = !editor.isGenerateExistentialAxiom();
+					editor.setGenerateExistentialAxiom(newValue);
+					setSelected(newValue);
+				}
+			});
+		}
+	}
+
+	/**
+	 *
+	 */
+	@SuppressWarnings("serial")
 	public static class ToggleOutlineItem extends JCheckBoxMenuItem {
 		/**
 		 * 
@@ -422,7 +541,7 @@ public class EditorActions {
 						pf.setPaper(paper);
 
 						pj.setPrintable(graphComponent, pf);
-					}else{
+					} else {
 						System.out.println("null");
 						pj.setPrintable(graphComponent);
 					}
@@ -829,6 +948,53 @@ public class EditorActions {
 			if (e.getSource() instanceof mxGraphComponent) {
 				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
 				graphComponent.repaint();
+			}
+		}
+	}
+
+	@SuppressWarnings("serial")
+	public static class PromptPropertyActionForCardinality extends AbstractAction {
+		/**
+		 * 
+		 */
+		protected Object target;
+
+		/**
+		 * 
+		 */
+		protected String  message;
+
+
+		/**
+		 * 
+		 */
+		public PromptPropertyActionForCardinality(Object target, String message) {
+			this.target = target;
+			this.message = message;
+		}
+
+		/**
+		 * 
+		 */
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() instanceof Component) {
+				if (e.getSource() instanceof mxGraphComponent) {
+					mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
+					mxGraph graph = graphComponent.getGraph();
+
+					if (!graph.isSelectionEmpty()) {
+						mxCell selectedCell = (mxCell) graph.getSelectionCell();
+						if (selectedCell.isEdge()) {
+							String value = (String) JOptionPane.showInputDialog((Component) e.getSource(), "Value",
+									message, JOptionPane.PLAIN_MESSAGE, null, null, selectedCell.getCardinality());
+							try {
+								selectedCell.setCardinality(Integer.parseInt(value));
+							} catch (Exception exception) {
+
+							}
+						}
+					}
+				}
 			}
 		}
 	}
