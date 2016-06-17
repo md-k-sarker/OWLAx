@@ -19,7 +19,6 @@ import org.semanticweb.owlapi.model.OWLDataAllValuesFrom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataHasValue;
 import org.semanticweb.owlapi.model.OWLDataMaxCardinality;
-import org.semanticweb.owlapi.model.OWLDataMinCardinality;
 import org.semanticweb.owlapi.model.OWLDataOneOf;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom;
@@ -396,7 +395,7 @@ public class IntegrateOntologyWithProtege {
 
 		if (edge.getEntityType().getName().equals(CustomEntityType.OBJECT_PROPERTY.getName())) {
 
-			String[] multValues = getCellValues(edge.getValue().toString());
+			String[] multValues = getCellValues(edge.getValue().toString().trim().replace(" ", "_"));
 			for (String val : multValues) {
 
 				OWLObjectProperty objprop = owlDataFactory.getOWLObjectProperty(val, pm);
@@ -404,43 +403,43 @@ public class IntegrateOntologyWithProtege {
 						&& dest.getEntityType().getName().equals(CustomEntityType.CLASS.getName())) {
 
 					axioms.addAll(getClass2ObjectProperty2ClassAxioms(
-							owlDataFactory.getOWLClass(src.getValue().toString(), pm), objprop,
-							owlDataFactory.getOWLClass(dest.getValue().toString(), pm)));
+							owlDataFactory.getOWLClass(src.getValue().toString().trim().replace(" ", "_"), pm), objprop,
+							owlDataFactory.getOWLClass(dest.getValue().toString().trim().replace(" ", "_"), pm)));
 
 				} else if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
 						&& dest.getEntityType().getName().equals(CustomEntityType.NAMED_INDIVIDUAL.getName())) {
 
 					axioms.addAll(getClass2ObjectProperty2IndividualAxioms(
-							owlDataFactory.getOWLClass(src.getValue().toString(), pm), objprop,
-							owlDataFactory.getOWLNamedIndividual(dest.getValue().toString(), pm)));
+							owlDataFactory.getOWLClass(src.getValue().toString().trim().replace(" ", "_"), pm), objprop,
+							owlDataFactory.getOWLNamedIndividual(dest.getValue().toString().trim().replace(" ", "_"), pm)));
 
 				} else {
 					// error. it can't occur. validation should be done
 				}
 			}
 		} else if (edge.getEntityType().getName().equals(CustomEntityType.DATA_PROPERTY.getName())) {
-			OWLDataProperty dataprop = owlDataFactory.getOWLDataProperty(edge.getValue().toString(), pm);
+			OWLDataProperty dataprop = owlDataFactory.getOWLDataProperty(edge.getValue().toString().trim().replace(" ", "_"), pm);
 
 			if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
 					&& dest.getEntityType().getName().equals(CustomEntityType.LITERAL.getName())) {
 
 				axioms.addAll(getClass2DataProperty2LiteralAxioms(
-						owlDataFactory.getOWLClass(src.getValue().toString(), pm), dataprop, getOWLLiteral(dest)));
+						owlDataFactory.getOWLClass(src.getValue().toString().trim().replace(" ", "_"), pm), dataprop, getOWLLiteral(dest)));
 			} else if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
 					&& dest.getEntityType().getName().equals(CustomEntityType.DATATYPE.getName())) {
 
 				// get OWLDataType.. from getCustomOWLDataType
-				OWLDatatype owlDatatype = getCustomOWLDataType(dest.getValue().toString());
+				OWLDatatype owlDatatype = getCustomOWLDataType(dest.getValue().toString().trim().replace(" ", "_"));
 				axioms.addAll(getClass2DataProperty2DataTypeAxioms(
-						owlDataFactory.getOWLClass(src.getValue().toString(), pm), dataprop, owlDatatype));
+						owlDataFactory.getOWLClass(src.getValue().toString().trim().replace(" ", "_"), pm), dataprop, owlDatatype));
 			}
 
 		} else if (edge.getEntityType().getName().equals(CustomEntityType.RDFTYPE.getName())) {
 			if (src.getEntityType().getName().equals(CustomEntityType.NAMED_INDIVIDUAL.getName())
 					&& dest.getEntityType().getName().equals(CustomEntityType.CLASS.getName())) {
 				axioms.addAll(getInvdividual2RDFType2ClassAxioms(
-						owlDataFactory.getOWLNamedIndividual(src.getValue().toString(), pm),
-						owlDataFactory.getOWLClass(dest.getValue().toString(), pm)));
+						owlDataFactory.getOWLNamedIndividual(src.getValue().toString().trim().replace(" ", "_"), pm),
+						owlDataFactory.getOWLClass(dest.getValue().toString().trim().replace(" ", "_"), pm)));
 			} else {
 				// error. it can't occur. validation should be done
 			}
@@ -449,8 +448,8 @@ public class IntegrateOntologyWithProtege {
 			if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
 					&& dest.getEntityType().getName().equals(CustomEntityType.CLASS.getName())) {
 				axioms.addAll(
-						getClass2RDFSSubClassOf2ClassAxioms(owlDataFactory.getOWLClass(src.getValue().toString(), pm),
-								owlDataFactory.getOWLClass(dest.getValue().toString(), pm)));
+						getClass2RDFSSubClassOf2ClassAxioms(owlDataFactory.getOWLClass(src.getValue().toString().trim().replace(" ", "_"), pm),
+								owlDataFactory.getOWLClass(dest.getValue().toString().trim().replace(" ", "_"), pm)));
 			} else {
 				// error. it can't occur. validation should be done
 			}
@@ -464,6 +463,7 @@ public class IntegrateOntologyWithProtege {
 	private String[] getCellValues(String cellVal) {
 		if (cellVal.length() > 0) {
 			cellVal = cellVal.trim();
+			cellVal = cellVal.replace(" ","_");
 			return cellVal.split(",");
 		}
 		return null;
@@ -473,7 +473,8 @@ public class IntegrateOntologyWithProtege {
 
 		String labelValueOnly = "";
 		Pattern pattern = Pattern.compile("\"(.*?)\"");
-		Matcher matcher = pattern.matcher(literal.getValue().toString());
+		String cellVal = literal.getValue().toString().trim().replace(" ","_");
+		Matcher matcher = pattern.matcher(cellVal);
 		while (matcher.find()) {
 			labelValueOnly = matcher.group(1);
 		}
@@ -484,7 +485,8 @@ public class IntegrateOntologyWithProtege {
 	private String getLiteralTypeValue(mxCell literal) {
 		String labelTypeOnly = "";
 		Pattern pattern = Pattern.compile("\\^\\^(.*?)$");
-		Matcher matcher = pattern.matcher(literal.getValue().toString());
+		String cellVal = literal.getValue().toString().trim().replace(" ", "_");
+		Matcher matcher = pattern.matcher(cellVal);
 		while (matcher.find()) {
 			labelTypeOnly = matcher.group(1);
 		}
@@ -669,7 +671,7 @@ public class IntegrateOntologyWithProtege {
 		OWLAxiom axiom;
 		OWLDataSomeValuesFrom owlDataSomeValuesFrom;
 		OWLDataAllValuesFrom owlDataAllValuesFrom;
-		OWLDataMinCardinality owlDataMinCardinality;
+		OWLDataMaxCardinality owlDataMaxCardinality;
 
 		// set domain and range
 		// scoped domain
@@ -707,22 +709,22 @@ public class IntegrateOntologyWithProtege {
 
 		// set cardinality restriction
 		if (editor.isGenerateCardinalityAxiom()) {
-			owlDataMinCardinality = owlDataFactory.getOWLDataMinCardinality(1, dataprop, dest);
-			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlDataMinCardinality);
+			owlDataMaxCardinality = owlDataFactory.getOWLDataMaxCardinality(1, dataprop, dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlDataMaxCardinality);
 			tmpaxioms.add(axiom);
 
-			owlDataMinCardinality = owlDataFactory.getOWLDataMinCardinality(1, dataprop, dest);
-			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlDataMinCardinality);
+			owlDataMaxCardinality = owlDataFactory.getOWLDataMaxCardinality(1, dataprop, dest);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlDataMaxCardinality);
 			tmpaxioms.add(axiom);
 
-			owlDataMinCardinality = owlDataFactory.getOWLDataMinCardinality(1, dataprop,
+			owlDataMaxCardinality = owlDataFactory.getOWLDataMaxCardinality(1, dataprop,
 					owlDataFactory.getTopDatatype());
-			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlDataMinCardinality);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlDataMaxCardinality);
 			tmpaxioms.add(axiom);
 
-			owlDataMinCardinality = owlDataFactory.getOWLDataMinCardinality(1, dataprop,
+			owlDataMaxCardinality = owlDataFactory.getOWLDataMaxCardinality(1, dataprop,
 					owlDataFactory.getTopDatatype());
-			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlDataMinCardinality);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlDataMaxCardinality);
 			tmpaxioms.add(axiom);
 		}
 		// dataproperty doesn't have inverse property
@@ -745,7 +747,6 @@ public class IntegrateOntologyWithProtege {
 		OWLAxiom axiom;
 		OWLDataSomeValuesFrom owlDataSomeValuesFrom;
 		OWLDataHasValue owlLDataHasValue;
-		OWLDataMinCardinality owlDataMinCardinality = null;
 		OWLDataMaxCardinality owlDataMaxCardinality;
 		OWLDataOneOf owldataOneOf;
 
@@ -768,9 +769,9 @@ public class IntegrateOntologyWithProtege {
 			tmpaxioms.add(axiom);
 
 			// need to verify with Adila
-			owlDataMinCardinality = owlDataFactory.getOWLDataMinCardinality(1, dataprop,
+			owlDataMaxCardinality = owlDataFactory.getOWLDataMaxCardinality(1, dataprop,
 					owlDataFactory.getTopDatatype());
-			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlDataMinCardinality);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlDataMaxCardinality);
 			tmpaxioms.add(axiom);
 		}
 		return tmpaxioms;

@@ -68,8 +68,7 @@ public class EditorMenuBar extends JMenuBar
 	 * 
 	 */
 	private static final long serialVersionUID = 4060203894740766714L;
-	
-	private final String GENERATE_ONTOLOGY = "Generate Ontology";
+
 
 	public enum AnalyzeType
 	{
@@ -90,7 +89,7 @@ public class EditorMenuBar extends JMenuBar
 		
 		menu = add(new JMenu(mxResources.get("file")));
 		
-		menu.add(editor.bind(GENERATE_ONTOLOGY, new SaveOntologyAction(), "/images/ontology.gif"));
+		menu.add(editor.bind(mxResources.get("generateAxiom"), new SaveOntologyAction(), "/images/ontology.gif"));
 
 		menu.add(editor.bind(mxResources.get("new"), new NewAction(), "/images/new.gif"));
 		menu.add(editor.bind(mxResources.get("openFile"), new OpenAction(), "/images/open.gif"));

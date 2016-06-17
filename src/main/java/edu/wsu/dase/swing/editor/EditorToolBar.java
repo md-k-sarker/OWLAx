@@ -290,7 +290,7 @@ public class EditorToolBar extends JToolBar {
 			}
 		});
 
-		JButton generateOntologyBtn = new JButton("Generate Ontology");
+		JButton generateOntologyBtn = new JButton(mxResources.get("generateAxiom"));
 
 		generateOntologyBtn.setMinimumSize(new Dimension(135, 0));
 		generateOntologyBtn.setPreferredSize(new Dimension(135, 0));
