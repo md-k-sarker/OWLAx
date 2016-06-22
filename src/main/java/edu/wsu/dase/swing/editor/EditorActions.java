@@ -1289,12 +1289,12 @@ public class EditorActions {
 			if (editor != null) {
 				{
 					//editor.graphLayout("circleLayout", true);
-					editor.createLayout("verticalHierarchical", true).execute(editor.getGraphComponent().getGraph().getDefaultParent());
+					//editor.createLayout("verticalHierarchical", true).execute(editor.getGraphComponent().getGraph().getDefaultParent());
 					// mxGraph graph = editor.getGraphComponent().getGraph();
 
 					// Check modified flag and display save dialog
-					//IntegrateOntologyWithProtege ge = new IntegrateOntologyWithProtege(editor);
-					//ge.generateOntology();
+					IntegrateOntologyWithProtege ge = new IntegrateOntologyWithProtege(editor);
+					ge.generateOntology();
 				}
 			}
 		}

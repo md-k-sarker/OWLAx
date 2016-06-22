@@ -22,6 +22,8 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
+import org.semanticweb.owlapi.model.OWLAxiom;
+
 /**
  * The implementation details:
  * 
@@ -33,9 +35,8 @@ import javax.swing.tree.TreePath;
  * 
  * Totally terminated the selection mechanism. Replaced the 'Selection Model' by
  * a 'DefaultTreeSelectionModel' overridden inline, that has empty
- * implementation 
- * 		Created new event type for checking of the checkboxes 
- * 		Created special data structures that help to indicate fast the state of each node
+ * implementation Created new event type for checking of the checkboxes Created
+ * special data structures that help to indicate fast the state of each node
  * 
  * @author sarker
  *
@@ -62,10 +63,6 @@ public class JCheckBoxTree extends JTree {
 		}
 	}
 
-	
-	
-	
-	
 	HashMap<TreePath, CheckedNode> nodesCheckingState;
 	HashSet<TreePath> checkedPaths = new HashSet<TreePath>();
 
@@ -124,6 +121,7 @@ public class JCheckBoxTree extends JTree {
 	private void resetCheckingState() {
 		nodesCheckingState = new HashMap<TreePath, CheckedNode>();
 		checkedPaths = new HashSet<TreePath>();
+		// checkedOWLAxioms = new HashSet<OWLAxiom>();
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) getModel().getRoot();
 		if (node == null) {
 			return;
@@ -177,12 +175,11 @@ public class JCheckBoxTree extends JTree {
 
 	public JCheckBoxTree(DefaultMutableTreeNode root) {
 		super(root);
-		
-		
-		//super.setModel(model);
+
+		// super.setModel(model);
 		// Disabling toggling by double-click
 		this.setToggleClickCount(0);
-		
+
 		// Overriding cell renderer by new one defined above
 		CheckBoxCellRenderer cellRenderer = new CheckBoxCellRenderer();
 		this.setCellRenderer(cellRenderer);
@@ -206,7 +203,7 @@ public class JCheckBoxTree extends JTree {
 		};
 		// Calling checking mechanism on mouse click
 		this.addMouseListener(new MouseListener() {
-			
+
 			public void mouseClicked(MouseEvent arg0) {
 				TreePath tp = selfPointer.getPathForLocation(arg0.getX(), arg0.getY());
 				if (tp == null) {
@@ -239,15 +236,20 @@ public class JCheckBoxTree extends JTree {
 	// When a node is checked/unchecked, updating the states of the predecessors
 	protected void updatePredecessorsWithCheckMode(TreePath tp, boolean check) {
 		TreePath parentPath = tp.getParentPath();
+
 		// If it is the root, stop the recursive calls and return
 		if (parentPath == null) {
 			return;
 		}
 		CheckedNode parentCheckedNode = nodesCheckingState.get(parentPath);
 		DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) parentPath.getLastPathComponent();
+
 		parentCheckedNode.allChildrenSelected = true;
 		parentCheckedNode.isSelected = false;
+		OWLAxiom axiom = null;
+
 		for (int i = 0; i < parentNode.getChildCount(); i++) {
+
 			TreePath childPath = parentPath.pathByAddingChild(parentNode.getChildAt(i));
 			CheckedNode childCheckedNode = nodesCheckingState.get(childPath);
 			// It is enough that even one subtree is not fully selected
@@ -262,8 +264,13 @@ public class JCheckBoxTree extends JTree {
 		}
 		if (parentCheckedNode.isSelected) {
 			checkedPaths.add(parentPath);
+			// if(axiom != null)
+			// checkedOWLAxioms.add(axiom);
 		} else {
 			checkedPaths.remove(parentPath);
+			if (axiom != null) {
+				// checkedOWLAxioms.remove(axiom);
+			}
 		}
 		// Go to upper predecessor
 		updatePredecessorsWithCheckMode(parentPath, check);
