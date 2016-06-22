@@ -34,6 +34,8 @@ public class OdpMainUITab extends OWLWorkspaceViewsTab {
 		
 		if (getOWLModelManager() != null) {
 			
+			
+			
 			//first set protege informations
 			this.protegeOWLModelManager = getOWLModelManager();
 			this.protegeOWLModelManager.addListener(listener);
