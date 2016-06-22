@@ -182,6 +182,10 @@ public class IntegrateOntologyWithProtege {
 
 	private boolean saveOWLAxioms() {
 		if (changes != null) {
+			/**
+			 * see the axioms
+			 */
+			
 			if (ChangeApplied.SUCCESSFULLY == owlOntologyManager.applyChanges(changes)) {
 				editor.status(
 						"All axioms (Domain, Range, Existential and Cardinality) integrated with protege successfully.");
