@@ -164,24 +164,33 @@ public class EditorActions {
 	 *
 	 */
 	@SuppressWarnings("serial")
-	public static class ToggleKeepExistingAxiomItem extends JCheckBoxMenuItem {
+	public static class RemoveExistingAxiomsAction extends AbstractAction {
 		/**
 		 * 
 		 */
-		public ToggleKeepExistingAxiomItem(final BasicGraphEditor editor, String name) {
-			super(name);
-			setSelected(false);
+		BasicGraphEditor editor;
+		String name;
 
-			addActionListener(new ActionListener() {
-				/**
-				 * 
-				 */
-				public void actionPerformed(ActionEvent e) {
-					boolean newValue = !editor.isKeepExistingAxiom();
-					editor.setKeepExistingAxiom(newValue);
-					setSelected(newValue);
-				}
-			});
+		public RemoveExistingAxiomsAction(final BasicGraphEditor editor, String name) {
+			super(name);
+			// setSelected(false);
+			this.editor = editor;
+			this.name = name;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			boolean newValue = !editor.isKeepExistingAxiom();
+			editor.setKeepExistingAxiom(newValue);
+			// setSelected(newValue);
+
+			if (JOptionPane.showConfirmDialog(editor,
+					mxResources.get("removeExistingAxioms")) == JOptionPane.YES_OPTION) {
+				IntegrateOntologyWithProtege intg = new IntegrateOntologyWithProtege(editor);
+				intg.cleanActiveOntology();
+
+			}
+
 		}
 	}
 
@@ -962,8 +971,7 @@ public class EditorActions {
 		/**
 		 * 
 		 */
-		protected String  message;
-
+		protected String message;
 
 		/**
 		 * 
@@ -1288,8 +1296,9 @@ public class EditorActions {
 
 			if (editor != null) {
 				{
-					//editor.graphLayout("circleLayout", true);
-					//editor.createLayout("verticalHierarchical", true).execute(editor.getGraphComponent().getGraph().getDefaultParent());
+					// editor.graphLayout("circleLayout", true);
+					// editor.createLayout("verticalHierarchical",
+					// true).execute(editor.getGraphComponent().getGraph().getDefaultParent());
 					// mxGraph graph = editor.getGraphComponent().getGraph();
 
 					// Check modified flag and display save dialog

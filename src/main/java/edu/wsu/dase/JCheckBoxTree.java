@@ -1,6 +1,7 @@
 package edu.wsu.dase;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -160,13 +161,20 @@ public class JCheckBoxTree extends JTree {
 		public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded,
 				boolean leaf, int row, boolean hasFocus) {
 			DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
-			Object obj = node.getUserObject();
 			TreePath tp = new TreePath(node.getPath());
 			CheckedNode cn = nodesCheckingState.get(tp);
 			if (cn == null) {
 				return this;
 			}
 			checkBox.setSelected(cn.isSelected);
+			Object obj = node.getUserObject();
+
+			if (obj instanceof UserObjectforTreeView) {
+				UserObjectforTreeView _obj = (UserObjectforTreeView) obj;
+				if (!_obj.isAxiom()) {
+					setForeground(new Color(98, 79, 219));
+				}
+			}
 			checkBox.setText(obj.toString());
 			checkBox.setOpaque(cn.isSelected && cn.hasChildren && !cn.allChildrenSelected);
 			return this;
@@ -264,13 +272,8 @@ public class JCheckBoxTree extends JTree {
 		}
 		if (parentCheckedNode.isSelected) {
 			checkedPaths.add(parentPath);
-			// if(axiom != null)
-			// checkedOWLAxioms.add(axiom);
 		} else {
 			checkedPaths.remove(parentPath);
-			if (axiom != null) {
-				// checkedOWLAxioms.remove(axiom);
-			}
 		}
 		// Go to upper predecessor
 		updatePredecessorsWithCheckMode(parentPath, check);

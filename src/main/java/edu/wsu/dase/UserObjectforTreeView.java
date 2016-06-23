@@ -36,10 +36,16 @@ public class UserObjectforTreeView {
 	@Override
 	public String toString() {
 
+		String value = "";
+
 		if (this.isAxiom) {
-			return rendering.render(this.axiom);
+			value = rendering.render(this.axiom);
+		} else {
+			value = lblVal.toString();
+			value = "<html><b style=\"color:#624FDB;\">"+value+"</b></html>";
 		}
-		return lblVal.toString();
+
+		return value;
 	}
 
 	public boolean isAxiom() {

@@ -57,7 +57,7 @@ import edu.wsu.dase.swing.editor.EditorActions.ToggleCardinalityAxiom;
 import edu.wsu.dase.swing.editor.EditorActions.ToggleDomainAxiom;
 import edu.wsu.dase.swing.editor.EditorActions.ToggleRangeAxiom;
 import edu.wsu.dase.swing.editor.EditorActions.ToggleExistentialAxiom;
-import edu.wsu.dase.swing.editor.EditorActions.ToggleKeepExistingAxiomItem;
+import edu.wsu.dase.swing.editor.EditorActions.RemoveExistingAxiomsAction;
 import edu.wsu.dase.swing.editor.EditorActions.PromptPropertyActionForCardinality;
 
 
@@ -123,7 +123,7 @@ public class EditorMenuBar extends JMenuBar
 		menu.addSeparator();
 		
 		//merge with existing
-		menu.add(new ToggleKeepExistingAxiomItem(editor, mxResources.get("merge")));
+		menu.add(new RemoveExistingAxiomsAction(editor, mxResources.get("merge")));
 		//set cardinality for edge
 
 		
@@ -785,7 +785,7 @@ public class EditorMenuBar extends JMenuBar
 
 		submenu.add(editor.bind(mxResources.get("rotation"), new PromptValueAction(mxConstants.STYLE_ROTATION, "Rotation (0-360)")));
 
-		menu.addSeparator();
+		//menu.addSeparator();
 
 		//menu.add(editor.bind(mxResources.get("rounded"), new ToggleAction(mxConstants.STYLE_ROUNDED)));
 
