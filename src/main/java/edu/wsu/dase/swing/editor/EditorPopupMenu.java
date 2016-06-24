@@ -61,9 +61,11 @@ public class EditorPopupMenu extends JPopupMenu {
 
 		addSeparator();
 
-		add(editor.bind(mxResources.get("cardinalitySize"),
-				new PromptPropertyActionForCardinality(editor.getGraphComponent().getGraph(), "Cardinality")))
-						.setEnabled(showCardinality);
+		// add(editor.bind(mxResources.get("cardinalitySize"),
+		// new
+		// PromptPropertyActionForCardinality(editor.getGraphComponent().getGraph(),
+		// "Cardinality")))
+		// .setEnabled(showCardinality);
 
 		/*
 		 * add(editor.bind(mxResources.get("selectVertices"),
