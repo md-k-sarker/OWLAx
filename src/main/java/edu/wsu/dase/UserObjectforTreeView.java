@@ -1,13 +1,22 @@
 package edu.wsu.dase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxOWLObjectRendererImpl;
+import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxPrefixNameShortFormProvider;
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.util.QNameShortFormProvider;
 
 public class UserObjectforTreeView {
 
 	private boolean isAxiom;
 	private OWLAxiom axiom;
 	private String lblVal;
+	static OWLOntology activeOntology;
+	
+
 
 	public String getLblVal() {
 		return lblVal;
@@ -18,8 +27,18 @@ public class UserObjectforTreeView {
 	}
 
 	static ManchesterOWLSyntaxOWLObjectRendererImpl rendering = new ManchesterOWLSyntaxOWLObjectRendererImpl();
+	
+	public UserObjectforTreeView(OWLOntology activeO){
+		activeOntology = activeO;
+	}
 
 	public UserObjectforTreeView(boolean isAxiom, String lblVal) {
+		Map<String,String> prefix2Namespace = new HashMap<String,String>();
+		prefix2Namespace.put("pref1", "http://www.semanticweb.org/onto#");
+		prefix2Namespace.put("pref2", "http://www.semanticweb.org/onto2#");
+		ManchesterOWLSyntaxPrefixNameShortFormProvider provider = new ManchesterOWLSyntaxPrefixNameShortFormProvider(activeOntology);
+		//QNameShortFormProvider shortFormProvider = new QNameShortFormProvider(activeOntology);
+		rendering.setShortFormProvider(provider);
 		if (!isAxiom) {
 			this.isAxiom = false;
 			this.lblVal = lblVal;

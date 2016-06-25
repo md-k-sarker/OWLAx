@@ -92,6 +92,8 @@ public class AxiomsDialog extends JDialog {
 		this.intgOntWProtege = integrateOntologyWithProtege;
 		this.isClickedOK = false;
 		
+		new UserObjectforTreeView(integrateOntologyWithProtege.getActiveOntology());
+		
 		initUI();
 		showUI();
 	}
