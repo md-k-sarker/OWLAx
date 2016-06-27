@@ -1,7 +1,10 @@
 package edu.wsu.dase;
 
+import java.awt.Component;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.JOptionPane;
 
 import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxOWLObjectRendererImpl;
 import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxPrefixNameShortFormProvider;
@@ -15,8 +18,7 @@ public class UserObjectforTreeView {
 	private OWLAxiom axiom;
 	private String lblVal;
 	static OWLOntology activeOntology;
-	
-
+	Component parent;
 
 	public String getLblVal() {
 		return lblVal;
@@ -27,18 +29,24 @@ public class UserObjectforTreeView {
 	}
 
 	static ManchesterOWLSyntaxOWLObjectRendererImpl rendering = new ManchesterOWLSyntaxOWLObjectRendererImpl();
-	
-	public UserObjectforTreeView(OWLOntology activeO){
+
+	public UserObjectforTreeView(Component parent, OWLOntology activeO) {
 		activeOntology = activeO;
+		this.parent = parent;
 	}
 
 	public UserObjectforTreeView(boolean isAxiom, String lblVal) {
-		Map<String,String> prefix2Namespace = new HashMap<String,String>();
-		prefix2Namespace.put("pref1", "http://www.semanticweb.org/onto#");
-		prefix2Namespace.put("pref2", "http://www.semanticweb.org/onto2#");
-		ManchesterOWLSyntaxPrefixNameShortFormProvider provider = new ManchesterOWLSyntaxPrefixNameShortFormProvider(activeOntology);
-		//QNameShortFormProvider shortFormProvider = new QNameShortFormProvider(activeOntology);
-		rendering.setShortFormProvider(provider);
+
+		ManchesterOWLSyntaxPrefixNameShortFormProvider shortFormProvider = new ManchesterOWLSyntaxPrefixNameShortFormProvider(
+				activeOntology);
+		// QNameShortFormProvider shortFormProvider = new
+		// QNameShortFormProvider(activeOntology);
+		rendering.setShortFormProvider(shortFormProvider);
+//		for (Map.Entry<String, String> forms : shortFormProvider.getPrefixName2PrefixMap().entrySet()) {
+//			//JOptionPane.showMessageDialog(parent, "sarker.3 key: " + forms.getKey() + " value: " + forms.getValue());
+//			System.err.println("sarker.3 key: " + forms.getKey() + " value: " + forms.getValue());
+//		}
+
 		if (!isAxiom) {
 			this.isAxiom = false;
 			this.lblVal = lblVal;
@@ -61,7 +69,7 @@ public class UserObjectforTreeView {
 			value = rendering.render(this.axiom);
 		} else {
 			value = lblVal.toString();
-			value = "<html><b style=\"color:#624FDB;\">"+value+"</b></html>";
+			value = "<html><b style=\"color:#624FDB;\">" + value + "</b></html>";
 		}
 
 		return value;

@@ -32,6 +32,7 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import org.protege.editor.owl.OWLEditorKit;
 import org.protege.editor.owl.model.OWLModelManager;
 
 import com.mxgraph.layout.mxCircleLayout;
@@ -69,6 +70,15 @@ public class BasicGraphEditor extends JPanel {
 	private static final long serialVersionUID = -6561623072112577140L;
 
 	private OWLModelManager protegeOWLModelManager;
+	private OWLEditorKit protegeOWLEditorKit;
+	
+	public OWLEditorKit getProtegeOWLEditorKit() {
+		return protegeOWLEditorKit;
+	}
+
+	public void setProtegeOWLEditorKit(OWLEditorKit protegeOWLEditorKit) {
+		this.protegeOWLEditorKit = protegeOWLEditorKit;
+	}
 	private JFrame protegeMainWindow;
 	public static String cellDataTypeValue;
 

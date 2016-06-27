@@ -92,7 +92,7 @@ public class AxiomsDialog extends JDialog {
 		this.intgOntWProtege = integrateOntologyWithProtege;
 		this.isClickedOK = false;
 		
-		new UserObjectforTreeView(integrateOntologyWithProtege.getActiveOntology());
+		new UserObjectforTreeView(parent, integrateOntologyWithProtege.getActiveOntology());
 		
 		initUI();
 		showUI();
@@ -194,9 +194,9 @@ public class AxiomsDialog extends JDialog {
 		for (TreePath tp : paths) {
 			DefaultMutableTreeNode eachNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
 			if (eachNode.getUserObject() instanceof UserObjectforTreeView) {
-				System.out.println("outside: can be done");
-				System.out.println(
-						eachNode.getUserObject() + "\t" + ((UserObjectforTreeView) eachNode.getUserObject()).isAxiom());
+				//System.out.println("outside: can be done");
+				//System.out.println(
+				//		eachNode.getUserObject() + "\t" + ((UserObjectforTreeView) eachNode.getUserObject()).isAxiom());
 				UserObjectforTreeView objTV = (UserObjectforTreeView) eachNode.getUserObject();
 				if (objTV.isAxiom()) {
 					selectedNewAxioms.add(objTV.getAxiom());

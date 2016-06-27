@@ -6,11 +6,14 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import org.protege.editor.owl.OWLEditorKit;
 import org.protege.editor.owl.model.OWLModelManager;
 import org.protege.editor.owl.model.event.EventType;
 import org.protege.editor.owl.model.event.OWLModelManagerChangeEvent;
 import org.protege.editor.owl.model.event.OWLModelManagerListener;
 import org.protege.editor.owl.ui.OWLWorkspaceViewsTab;
+import org.protege.editor.owl.ui.prefix.PrefixUtilities;
+import org.semanticweb.owlapi.model.PrefixManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +24,7 @@ public class OdpMainUITab extends OWLWorkspaceViewsTab {
 	private static final long serialVersionUID = 1L;
 	private OWLModelManager protegeOWLModelManager;
 	private static final Logger log = LoggerFactory.getLogger(OdpMainUITab.class);
-	
+	OWLEditorKit owlEditorKit;
 	GraphEditor editor;
 	private final ODPTabListener listener = new ODPTabListener();
 
@@ -39,6 +42,8 @@ public class OdpMainUITab extends OWLWorkspaceViewsTab {
 			//first set protege informations
 			this.protegeOWLModelManager = getOWLModelManager();
 			this.protegeOWLModelManager.addListener(listener);
+			
+			this.owlEditorKit = getOWLEditorKit();
 			
 			setLayout(new BorderLayout());
 			
@@ -67,9 +72,14 @@ public class OdpMainUITab extends OWLWorkspaceViewsTab {
 	private void update() {
 
 		this.protegeOWLModelManager = getOWLModelManager();
+		this.owlEditorKit = getOWLEditorKit();
 
 		if (this.protegeOWLModelManager != null) {
 			editor.setProtegeOWLModelManager(this.protegeOWLModelManager);
+		}
+		if(this.owlEditorKit != null){
+			editor.setProtegeOWLEditorKit(this.owlEditorKit);
+			
 		}
 
 	}

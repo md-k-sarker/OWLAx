@@ -3,6 +3,7 @@ package edu.wsu.dase;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,6 +14,10 @@ import javax.swing.SwingUtilities;
 
 //import org.checkerframework.checker.nullness.qual.NonNull;
 import org.protege.editor.owl.model.OWLModelManager;
+import org.protege.editor.owl.model.find.OWLEntityFinder;
+import org.protege.editor.owl.ui.action.ShowUsageAction;
+import org.protege.editor.owl.ui.prefix.PrefixMapperTables;
+import org.protege.editor.owl.ui.prefix.PrefixUtilities;
 import org.semanticweb.owlapi.model.AddAxiom;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAxiom;
@@ -66,6 +71,12 @@ public class IntegrateOntologyWithProtege {
 	private ArrayList<OWLAxiom> subClassOfAxioms;
 	private ArrayList<OWLAxiom> classAssertionAxiom;
 	private ArrayList<OWLAxiom> selectedAxioms;
+
+	// means no error occurred till now.
+	private boolean shouldContinue;
+
+	// default prefix
+	private String defaultPrefix;
 	mxGraph graph;
 	Object root;
 	mxGraphModel model;
@@ -221,7 +232,7 @@ public class IntegrateOntologyWithProtege {
 		Object[] v = graph.getChildVertices(graph.getDefaultParent());
 		Object[] e = graph.getChildEdges(graph.getDefaultParent());
 
-		boolean shouldContinue = true;
+		shouldContinue = true;
 		if (shouldContinue)
 			shouldContinue = makeDeclarations(v);
 
@@ -256,22 +267,77 @@ public class IntegrateOntologyWithProtege {
 
 	}
 
+	public void addPrefix() {
+		String uriString = activeOntology.getOntologyID().getDefaultDocumentIRI().get().toString();
+		String prefix;
+		if (uriString.endsWith("/")) {
+			String sub = uriString.substring(0, uriString.length() - 1);
+			prefix = sub.substring(sub.lastIndexOf("/") + 1, sub.length());
+		} else {
+			prefix = uriString.substring(uriString.lastIndexOf('/') + 1, uriString.length());
+		}
+		if (prefix.endsWith(".owl")) {
+			prefix = prefix.substring(0, prefix.length() - 4);
+		}
+		prefix = prefix.toLowerCase();
+		if (!uriString.endsWith("#") && !uriString.endsWith("/")) {
+			uriString = uriString + "#";
+		}
+
+		pm.setPrefix(prefix, uriString);
+		defaultPrefix = prefix + ":";
+	}
+
+	private String getCellValueAsOWLCompatibleName(mxCell cell) {
+
+		String name = cell.getValue().toString().trim().replace(" ", "_");
+
+		return getCellValueAsOWLCompatibleName(cell, name);
+
+	}
+
+	private String getCellValueAsOWLCompatibleName(mxCell cell, String cellValue) {
+
+		String name = cellValue.toString().trim().replace(" ", "_");
+
+		if (name.contains(":")) {
+			String[] subParts = name.split(":");
+			if (subParts.length == 2) {
+				return name;
+				// prefixValue = pm.getPrefix((subParts[0].replace(":", "")));
+			} else {
+				shouldContinue = false;
+				editor.status(cell.getEntityType() + " " + cell.getValue() + " has Colon(:) " + subParts.length
+						+ " time. Operation aborted.");
+				return null;
+			}
+		} else {
+			// JOptionPane.showMessageDialog(editor, defaultPrefix);
+			return defaultPrefix + name;
+		}
+
+	}
+
 	public void initilizeProtegeDataFactory() {
 		owlModelManager = editor.getProtegeOWLModelManager();
 		owlDataFactory = owlModelManager.getOWLDataFactory();
 		owlOntologyManager = owlModelManager.getOWLOntologyManager();
+		// OWLEntityFinder finder = owlModelManager.getOWLEntityFinder();
+		// finder.getOWLClass("cls");
 		changes = null;
 
 		activeOntology = owlModelManager.getActiveOntology();
 
-		pm = new DefaultPrefixManager();
+		// pm = new DefaultPrefixManager();
 
 		if (activeOntology != null) {
+
+			pm = PrefixUtilities.getPrefixOWLOntologyFormat(activeOntology);
+			addPrefix();
+
 			owlOntologyID = activeOntology.getOntologyID();
 			ontologyBaseURI = owlOntologyID.getOntologyIRI().get().toQuotedString();
 			ontologyBaseURI = ontologyBaseURI.substring(1, ontologyBaseURI.length() - 1) + "#";
-
-			pm.setDefaultPrefix(ontologyBaseURI);
 			editor.getGraphComponent().setOWLFileTitle(ontologyBaseURI);
 
 		}
@@ -367,8 +433,10 @@ public class IntegrateOntologyWithProtege {
 				mxCell cell = (mxCell) vertexOrEdge;
 				if (cell.getValue().toString().length() > 0) {
 					CustomEntityType CustomEntityType = cell.getEntityType();
-					String cellLabel = cell.getValue().toString().trim().replace(" ", "_");
 
+					String cellLabel = getCellValueAsOWLCompatibleName(cell);
+					if (cellLabel == null)
+						return false;
 					editor.status("Creating Declaration Axioms with: " + cellLabel);
 
 					if (CustomEntityType.getName().equals(CustomEntityType.CLASS.getName())) {
@@ -479,52 +547,50 @@ public class IntegrateOntologyWithProtege {
 			String[] multValues = getCellValues(edge.getValue().toString().trim().replace(" ", "_"));
 			for (String val : multValues) {
 
-				OWLObjectProperty objprop = owlDataFactory.getOWLObjectProperty(val, pm);
+				OWLObjectProperty objprop = owlDataFactory
+						.getOWLObjectProperty(getCellValueAsOWLCompatibleName(edge, val), pm);
 				if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
 						&& dest.getEntityType().getName().equals(CustomEntityType.CLASS.getName())) {
 
 					getClass2ObjectProperty2ClassAxioms(
-							owlDataFactory.getOWLClass(src.getValue().toString().trim().replace(" ", "_"), pm), objprop,
-							owlDataFactory.getOWLClass(dest.getValue().toString().trim().replace(" ", "_"), pm));
+							owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(src), pm), objprop,
+							owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(dest), pm));
 
 				} else if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
 						&& dest.getEntityType().getName().equals(CustomEntityType.NAMED_INDIVIDUAL.getName())) {
 
 					getClass2ObjectProperty2IndividualAxioms(
-							owlDataFactory.getOWLClass(src.getValue().toString().trim().replace(" ", "_"), pm), objprop,
-							owlDataFactory.getOWLNamedIndividual(dest.getValue().toString().trim().replace(" ", "_"),
-									pm));
+							owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(src), pm), objprop,
+							owlDataFactory.getOWLNamedIndividual(getCellValueAsOWLCompatibleName(dest), pm));
 
 				} else {
 					// error. it can't occur. validation should be done
 				}
 			}
 		} else if (edge.getEntityType().getName().equals(CustomEntityType.DATA_PROPERTY.getName())) {
-			OWLDataProperty dataprop = owlDataFactory
-					.getOWLDataProperty(edge.getValue().toString().trim().replace(" ", "_"), pm);
+			OWLDataProperty dataprop = owlDataFactory.getOWLDataProperty(getCellValueAsOWLCompatibleName(edge), pm);
 
 			if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
 					&& dest.getEntityType().getName().equals(CustomEntityType.LITERAL.getName())) {
 
 				getClass2DataProperty2LiteralAxioms(
-						owlDataFactory.getOWLClass(src.getValue().toString().trim().replace(" ", "_"), pm), dataprop,
+						owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(src), pm), dataprop,
 						getOWLLiteral(dest));
 			} else if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
 					&& dest.getEntityType().getName().equals(CustomEntityType.DATATYPE.getName())) {
 
 				// get OWLDataType.. from getCustomOWLDataType
-				OWLDatatype owlDatatype = getCustomOWLDataType(dest.getValue().toString().trim().replace(" ", "_"));
+				OWLDatatype owlDatatype = getCustomOWLDataType(getCellValueAsOWLCompatibleName(dest));
 				getClass2DataProperty2DataTypeAxioms(
-						owlDataFactory.getOWLClass(src.getValue().toString().trim().replace(" ", "_"), pm), dataprop,
-						owlDatatype);
+						owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(src), pm), dataprop, owlDatatype);
 			}
 
 		} else if (edge.getEntityType().getName().equals(CustomEntityType.RDFTYPE.getName())) {
 			if (src.getEntityType().getName().equals(CustomEntityType.NAMED_INDIVIDUAL.getName())
 					&& dest.getEntityType().getName().equals(CustomEntityType.CLASS.getName())) {
 				getInvdividual2RDFType2ClassAxioms(
-						owlDataFactory.getOWLNamedIndividual(src.getValue().toString().trim().replace(" ", "_"), pm),
-						owlDataFactory.getOWLClass(dest.getValue().toString().trim().replace(" ", "_"), pm));
+						owlDataFactory.getOWLNamedIndividual(getCellValueAsOWLCompatibleName(src), pm),
+						owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(dest), pm));
 			} else {
 				// error. it can't occur. validation should be done
 			}
@@ -533,8 +599,8 @@ public class IntegrateOntologyWithProtege {
 			if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
 					&& dest.getEntityType().getName().equals(CustomEntityType.CLASS.getName())) {
 				getClass2RDFSSubClassOf2ClassAxioms(
-						owlDataFactory.getOWLClass(src.getValue().toString().trim().replace(" ", "_"), pm),
-						owlDataFactory.getOWLClass(dest.getValue().toString().trim().replace(" ", "_"), pm));
+						owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(src), pm),
+						owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(dest), pm));
 			} else {
 				// error. it can't occur. validation should be done
 			}
@@ -582,6 +648,10 @@ public class IntegrateOntologyWithProtege {
 
 		// don't need to create OWLLiteral
 		// but need to save the datatype of literal
+
+		// N.B: Custom literal has also URI as---
+		// owl:Custom
+
 		OWLDatatype odt = owlDataFactory.getOWLDatatype(getLiteralTypeValue(cell), pm);
 		OWLLiteral literal = owlDataFactory.getOWLLiteral(getLiteralCellValue(cell), odt);
 
