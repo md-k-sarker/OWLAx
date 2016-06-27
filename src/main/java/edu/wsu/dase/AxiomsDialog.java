@@ -56,22 +56,23 @@ public class AxiomsDialog extends JDialog {
 	final String domainandRangeAxiomTypeText = "Domain-Range Axioms";
 	final String subClassOfAxiomTypeText = "SubClassOf Axiom";
 	final String classAssertionAxiomTypeText = "Class(Type) Assertion Axiom";
+	final String otherAxiomTypeText = "Other Axioms";
 
 	private JPanel mainPnl;
-	private JSplitPane splitPane;
+	// private JSplitPane splitPane;
 	private JPanel bottomPnl;
 	private JPanel existingAxiomsPnl;
 	private JPanel newAxiomsPnl;
 	private JScrollPane existingAxiomsScroll;
 	private JScrollPane newAxiomsScroll;
-	private static final double SPLIT_PANE_RESIZE_WEIGHT = 0.5;
+	// private static final double SPLIT_PANE_RESIZE_WEIGHT = 0.5;
 	OWLOntology activeOntology;
 	private DefaultMutableTreeNode existingAxiomsRoot;
 	private DefaultMutableTreeNode newAxiomsRoot;
 	private final ArrayList<OWLAxiom> selectedExistingAxioms;
 	private final ArrayList<OWLAxiom> selectedNewAxioms;
 	private JCheckBoxTree newAxiomsTree;
-	private JCheckBoxTree existingAxiomsTree;
+	// private JCheckBoxTree existingAxiomsTree;
 	private IntegrateOntologyWithProtege intgOntWProtege;
 	private JFrame parent;
 	private boolean isClickedOK;
@@ -91,13 +92,13 @@ public class AxiomsDialog extends JDialog {
 		this.selectedExistingAxioms = new ArrayList<OWLAxiom>();
 		this.intgOntWProtege = integrateOntologyWithProtege;
 		this.isClickedOK = false;
-		
+
 		new UserObjectforTreeView(parent, integrateOntologyWithProtege.getActiveOntology());
-		
+
 		initUI();
 		showUI();
 	}
-	
+
 	public void initUI() {
 
 		setSize(500, 500);
@@ -151,19 +152,22 @@ public class AxiomsDialog extends JDialog {
 		bottomPnl.add(pnl2, BorderLayout.EAST);
 
 		// splitPane
-		splitPane = new JSplitPane();
-		splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-		splitPane.setResizeWeight(SPLIT_PANE_RESIZE_WEIGHT);
+		// splitPane = new JSplitPane();
+		// splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
+		// splitPane.setResizeWeight(SPLIT_PANE_RESIZE_WEIGHT);
 
-		JScrollPane scrollPaneNew = new JScrollPane();
-		JScrollPane scrollPaneExisting = new JScrollPane();
+		// JScrollPane scrollPaneNew = new JScrollPane();
+		// JScrollPane scrollPaneExisting = new JScrollPane();
 
-		splitPane.setTopComponent(getNewAxiomsPnl());
-		splitPane.setBottomComponent(getExistingAxiomsPnl());
-		mainPnl.add(splitPane);
+		// splitPane.setTopComponent(getNewAxiomsPnl());
+		// splitPane.setBottomComponent(getExistingAxiomsPnl());
+		mainPnl.add(getNewAxiomsPnl());
 
 		this.add(mainPnl, BorderLayout.CENTER);
 		this.add(bottomPnl, BorderLayout.SOUTH);
+		
+		// set All other axioms as Selected
+		newAxiomsTree.setSelectedOtherAxioms(new TreePath(existingAxiomsRoot.getPath()));
 
 	}
 
@@ -176,27 +180,29 @@ public class AxiomsDialog extends JDialog {
 		TreePath[] paths;
 
 		// existing axioms
-		paths = existingAxiomsTree.getCheckedPaths();
-		for (TreePath tp : paths) {
-			DefaultMutableTreeNode eachNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
-			if (eachNode.getUserObject() instanceof UserObjectforTreeView) {
-
-				UserObjectforTreeView objTV = (UserObjectforTreeView) eachNode.getUserObject();
-				if (objTV.isAxiom()) {
-					selectedExistingAxioms.add(objTV.getAxiom());
-				}
-			}
-
-		}
+		// paths = existingAxiomsTree.getCheckedPaths();
+		// for (TreePath tp : paths) {
+		// DefaultMutableTreeNode eachNode = (DefaultMutableTreeNode)
+		// tp.getLastPathComponent();
+		// if (eachNode.getUserObject() instanceof UserObjectforTreeView) {
+		//
+		// UserObjectforTreeView objTV = (UserObjectforTreeView)
+		// eachNode.getUserObject();
+		// if (objTV.isAxiom()) {
+		// selectedExistingAxioms.add(objTV.getAxiom());
+		// }
+		// }
+		// }
 
 		// new axioms
 		paths = newAxiomsTree.getCheckedPaths();
 		for (TreePath tp : paths) {
 			DefaultMutableTreeNode eachNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
 			if (eachNode.getUserObject() instanceof UserObjectforTreeView) {
-				//System.out.println("outside: can be done");
-				//System.out.println(
-				//		eachNode.getUserObject() + "\t" + ((UserObjectforTreeView) eachNode.getUserObject()).isAxiom());
+				// System.out.println("outside: can be done");
+				// System.out.println(
+				// eachNode.getUserObject() + "\t" + ((UserObjectforTreeView)
+				// eachNode.getUserObject()).isAxiom());
 				UserObjectforTreeView objTV = (UserObjectforTreeView) eachNode.getUserObject();
 				if (objTV.isAxiom()) {
 					selectedNewAxioms.add(objTV.getAxiom());
@@ -206,23 +212,24 @@ public class AxiomsDialog extends JDialog {
 
 	}
 
-	private JPanel getExistingAxiomsPnl() {
-		existingAxiomsPnl = new JPanel();
-		existingAxiomsPnl.setLayout(new BorderLayout());
-
-		JLabel lblExistingAxioms = new JLabel(existingAxiomsLblText);
-		lblExistingAxioms.setBorder(BorderFactory.createLineBorder(Color.orange, 2));
-		// lblExistingAxioms.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblExistingAxioms.setHorizontalAlignment(SwingConstants.CENTER);
-		existingAxiomsPnl.add(lblExistingAxioms, BorderLayout.NORTH);
-
-		existingAxiomsTree = new JCheckBoxTree(getExistingAxiomsRoot());
-		existingAxiomsScroll = new JScrollPane(existingAxiomsTree);
-
-		existingAxiomsPnl.add(existingAxiomsScroll, BorderLayout.CENTER);
-
-		return existingAxiomsPnl;
-	}
+	// private JPanel getExistingAxiomsPnl() {
+	// existingAxiomsPnl = new JPanel();
+	// existingAxiomsPnl.setLayout(new BorderLayout());
+	//
+	// JLabel lblExistingAxioms = new JLabel(existingAxiomsLblText);
+	// lblExistingAxioms.setBorder(BorderFactory.createLineBorder(Color.orange,
+	// 2));
+	// // lblExistingAxioms.setAlignmentX(Component.CENTER_ALIGNMENT);
+	// lblExistingAxioms.setHorizontalAlignment(SwingConstants.CENTER);
+	// existingAxiomsPnl.add(lblExistingAxioms, BorderLayout.NORTH);
+	//
+	// existingAxiomsTree = new JCheckBoxTree(getExistingAxiomsRoot());
+	// existingAxiomsScroll = new JScrollPane(existingAxiomsTree);
+	//
+	// existingAxiomsPnl.add(existingAxiomsScroll, BorderLayout.CENTER);
+	//
+	// return existingAxiomsPnl;
+	// }
 
 	private JPanel getNewAxiomsPnl() {
 		newAxiomsPnl = new JPanel();
@@ -241,21 +248,21 @@ public class AxiomsDialog extends JDialog {
 		return newAxiomsPnl;
 	}
 
-	public DefaultMutableTreeNode getExistingAxiomsRoot() {
-
-		existingAxiomsRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, "Select All"));
-		DefaultMutableTreeNode childNode;
-
-		if (intgOntWProtege.getActiveOntology() != null) {
-
-			for (OWLAxiom axiom : intgOntWProtege.getActiveOntology().getAxioms()) {
-				childNode = new DefaultMutableTreeNode(new UserObjectforTreeView(true, axiom));
-				existingAxiomsRoot.add(childNode);
-			}
-		}
-
-		return existingAxiomsRoot;
-	}
+//	public DefaultMutableTreeNode getExistingAxiomsRoot() {
+//
+//		existingAxiomsRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, "Select All"));
+//		DefaultMutableTreeNode childNode;
+//
+//		if (intgOntWProtege.getActiveOntology() != null) {
+//
+//			for (OWLAxiom axiom : intgOntWProtege.getActiveOntology().getAxioms()) {
+//				childNode = new DefaultMutableTreeNode(new UserObjectforTreeView(true, axiom));
+//				existingAxiomsRoot.add(childNode);
+//			}
+//		}
+//
+//		return existingAxiomsRoot;
+//	}
 
 	public DefaultMutableTreeNode getNewAxiomsRoot() {
 		newAxiomsRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, "Select All"));
@@ -263,65 +270,79 @@ public class AxiomsDialog extends JDialog {
 		DefaultMutableTreeNode childNode;
 
 		// Declaration Axiom
-		subRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, declarationAxiomTypeText));
-		if (intgOntWProtege.getDeclarationAxioms() != null) {
-			for (OWLAxiom axiom : intgOntWProtege.getDeclarationAxioms()) {
-				childNode = new DefaultMutableTreeNode(new UserObjectforTreeView(true, axiom));
-				subRoot.add(childNode);
-			}
-		}
-		newAxiomsRoot.add(subRoot);
+		// subRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false,
+		// declarationAxiomTypeText));
+		// if (intgOntWProtege.getDeclarationAxioms() != null) {
+		// for (OWLAxiom axiom : intgOntWProtege.getDeclarationAxioms()) {
+		// childNode = new DefaultMutableTreeNode(new
+		// UserObjectforTreeView(true, axiom));
+		// subRoot.add(childNode);
+		// }
+		// }
+		// newAxiomsRoot.add(subRoot);
 
 		// SubClassOf Axiom
-		subRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, subClassOfAxiomTypeText));
-		if (intgOntWProtege.getSubClassOfAxioms() != null) {
+		if (intgOntWProtege.getSubClassOfAxioms() != null && !intgOntWProtege.getSubClassOfAxioms().isEmpty()) {
+			subRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, subClassOfAxiomTypeText));
 			for (OWLAxiom axiom : intgOntWProtege.getSubClassOfAxioms()) {
 				childNode = new DefaultMutableTreeNode(new UserObjectforTreeView(true, axiom));
 				subRoot.add(childNode);
 			}
+			newAxiomsRoot.add(subRoot);
 		}
-		newAxiomsRoot.add(subRoot);
 
 		// Domain and RangeAxiom
-		subRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, domainandRangeAxiomTypeText));
-		if (intgOntWProtege.getDomainAndRangeAxioms() != null) {
+		if (intgOntWProtege.getDomainAndRangeAxioms() != null && !intgOntWProtege.getDomainAndRangeAxioms().isEmpty()) {
+			subRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, domainandRangeAxiomTypeText));
 			for (OWLAxiom axiom : intgOntWProtege.getDomainAndRangeAxioms()) {
 				childNode = new DefaultMutableTreeNode(new UserObjectforTreeView(true, axiom));
 				subRoot.add(childNode);
 			}
+			newAxiomsRoot.add(subRoot);
 		}
-		newAxiomsRoot.add(subRoot);
 
 		// Existential Axiom
-		subRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, existentialAxiomTypeText));
-		if (intgOntWProtege.getExistentialAxioms() != null) {
+		if (intgOntWProtege.getExistentialAxioms() != null && (!intgOntWProtege.getExistentialAxioms().isEmpty())) {
+			subRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, existentialAxiomTypeText));
 			for (OWLAxiom axiom : intgOntWProtege.getExistentialAxioms()) {
 				childNode = new DefaultMutableTreeNode(new UserObjectforTreeView(true, axiom));
 				subRoot.add(childNode);
 			}
+			newAxiomsRoot.add(subRoot);
 		}
-		newAxiomsRoot.add(subRoot);
 
 		// Cardinality Axiom
-		subRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, cardinalityAxiomTypeText));
-		if (intgOntWProtege.getCardinalityAxioms() != null) {
+		if (intgOntWProtege.getCardinalityAxioms() != null && !intgOntWProtege.getCardinalityAxioms().isEmpty()) {
+			subRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, cardinalityAxiomTypeText));
 			for (OWLAxiom axiom : intgOntWProtege.getCardinalityAxioms()) {
 				childNode = new DefaultMutableTreeNode(new UserObjectforTreeView(true, axiom));
 				subRoot.add(childNode);
 			}
+			newAxiomsRoot.add(subRoot);
 		}
-		newAxiomsRoot.add(subRoot);
 
 		// Class Assertion Axiom
-		subRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, classAssertionAxiomTypeText));
-		if (intgOntWProtege.getClassAssertionAxiom() != null) {
+		if (intgOntWProtege.getClassAssertionAxiom() != null && !intgOntWProtege.getClassAssertionAxiom().isEmpty()) {
+			subRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, classAssertionAxiomTypeText));
 			for (OWLAxiom axiom : intgOntWProtege.getClassAssertionAxiom()) {
 				childNode = new DefaultMutableTreeNode(new UserObjectforTreeView(true, axiom));
 				subRoot.add(childNode);
 			}
+			newAxiomsRoot.add(subRoot);
 		}
-		newAxiomsRoot.add(subRoot);
 
+		// Existing Axioms as other Axioms
+		if (intgOntWProtege.getActiveOntology() != null) {
+			if (intgOntWProtege.getActiveOntology().getAxioms().size() > 0) {
+				existingAxiomsRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, otherAxiomTypeText));
+
+				for (OWLAxiom axiom : intgOntWProtege.getActiveOntology().getAxioms()) {
+					childNode = new DefaultMutableTreeNode(new UserObjectforTreeView(true, axiom));
+					existingAxiomsRoot.add(childNode);
+				}
+				newAxiomsRoot.add(existingAxiomsRoot);
+			}
+		}
 		return newAxiomsRoot;
 	}
 

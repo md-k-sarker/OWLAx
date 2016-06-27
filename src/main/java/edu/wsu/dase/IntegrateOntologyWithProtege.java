@@ -201,6 +201,44 @@ public class IntegrateOntologyWithProtege {
 		return true;
 	}
 
+	private boolean checkSourceAndTarget() {
+		Object[] e = graph.getChildEdges(graph.getDefaultParent());
+
+		for (Object edge : e) {
+			if (edge instanceof mxCell) {
+
+				mxCell src = (mxCell) graph.getModel().getTerminal(edge, true);
+				mxCell trg = (mxCell) graph.getModel().getTerminal(edge, false);
+				if (src == null) {
+					JOptionPane.showMessageDialog(editor.getProtegeMainWindow(),
+							((mxCell) edge).getValue() + " has no source. Operation aborted.", "No Source",
+							JOptionPane.ERROR_MESSAGE);
+					initializeDataStructure();
+					editor.status("Failed. " + ((mxCell) edge).getValue() + " has no source. Operation aborted.");
+					return false;
+				}
+				if (trg == null) {
+					JOptionPane.showMessageDialog(editor.getProtegeMainWindow(),
+							((mxCell) edge).getValue() + " has no destination. Operation aborted.", "No Destination",
+							JOptionPane.ERROR_MESSAGE);
+					initializeDataStructure();
+					editor.status("Failed. " + ((mxCell) edge).getValue() + " has no destination. Operation aborted.");
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	private boolean validateGraph() {
+		boolean ok = checkEntityNameLength();
+		if (ok && checkSourceAndTarget())
+			return true;
+
+		return false;
+	}
+
 	private boolean showAxiomsDialog() {
 
 		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this.editor);
@@ -224,13 +262,22 @@ public class IntegrateOntologyWithProtege {
 
 	public void generateOntology() {
 
-		if (!checkEntityNameLength())
+		if (!validateGraph())
 			return;
 
 		initializeDataStructure();
 
 		Object[] v = graph.getChildVertices(graph.getDefaultParent());
 		Object[] e = graph.getChildEdges(graph.getDefaultParent());
+
+		if (v.length == 0) {
+			editor.status("Axioms can not be generated with empty vertex.");
+			return;
+		}
+		if (e.length == 0) {
+			editor.status("Axioms can not be generated with empty edge.");
+			return;
+		}
 
 		shouldContinue = true;
 		if (shouldContinue)
@@ -243,12 +290,14 @@ public class IntegrateOntologyWithProtege {
 		if (!shouldContinue)
 			return;
 
+		// to solve renaming problem commit Declarations is executed
+		// first it is executed to show in axioms dialog
 		shouldContinue = commitDeclarations();
 		declarationAxioms.clear();
 		if (!shouldContinue) {
-			//editor.status("Entity creation failed. ");
-			//not returned so that axioms can atleast be viewed
-			//return;
+			// editor.status("Entity creation failed. ");
+			// not returned so that axioms can atleast be viewed
+			// return;
 		}
 
 		shouldContinue = createOWLAxioms(e);
@@ -263,6 +312,17 @@ public class IntegrateOntologyWithProtege {
 		}
 
 		cleanActiveOntology();
+
+		// to solve renaming problem commit Declarations is executed
+		// 2nd it is executed because ontology is cleaned
+		shouldContinue = commitDeclarations();
+		declarationAxioms.clear();
+		if (!shouldContinue) {
+			// editor.status("Entity creation failed. ");
+			// not returned so that axioms can atleast be viewed
+			// return;
+		}
+
 		shouldContinue = saveOWLAxioms();
 		if (!shouldContinue) {
 			return;

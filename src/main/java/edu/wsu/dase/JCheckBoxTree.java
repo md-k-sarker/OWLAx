@@ -294,5 +294,10 @@ public class JCheckBoxTree extends JTree {
 			checkedPaths.remove(tp);
 		}
 	}
+	
+	public void setSelectedOtherAxioms(TreePath tp){
+		checkSubTree(tp, true);
+		updatePredecessorsWithCheckMode(tp, true);
+	}
 
 }
