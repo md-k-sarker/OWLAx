@@ -95,19 +95,19 @@ public class EditorMenuBar extends JMenuBar
 		menu.add(editor.bind(mxResources.get("openFile"), new OpenAction(), "/images/open.gif"));
 		//menu.add(editor.bind(mxResources.get("importStencil"), new ImportAction(), "/images/open.gif"));
 
-		menu.addSeparator();
+		//menu.addSeparator();
 		
 		menu.add(editor.bind(mxResources.get("save"), new SaveAction(false), "/images/save.gif"));
 		//menu.add(editor.bind(mxResources.get("saveAs"), new SaveAction(true), "/images/saveas.gif"));
 
-		menu.addSeparator();
+		//menu.addSeparator();
 
 		//menu.add(editor.bind(mxResources.get("pageSetup"), new PageSetupAction(), "/images/pagesetup.gif"));
 		//menu.add(editor.bind(mxResources.get("print"), new PrintAction(), "/images/print.gif"));
 
-		menu.addSeparator();
+		//menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("exit"), new ExitAction()));
+		//menu.add(editor.bind(mxResources.get("exit"), new ExitAction()));
 		
 		//Creates ontology menu
 		menu = add(new JMenu(mxResources.get("ontology")));

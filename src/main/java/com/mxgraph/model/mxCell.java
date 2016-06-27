@@ -65,8 +65,8 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 	 * null.
 	 */
 	protected String style;
-	
-	//cardinality for edge default value 1
+
+	// cardinality for edge default value 1
 	protected int cardinality = 1;
 
 	public int getCardinality() {
@@ -684,5 +684,28 @@ public class mxCell implements mxICell, Cloneable, Serializable {
 	public void setLiteralDataType(String value) {
 		this.literalDataType = value;
 	}
+
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see java.lang.Object#equals(java.lang.Object)
+//	 */
+//	@Override
+//	public boolean equals(Object obj) {
+//		// TODO Auto-generated method stub
+//		if (obj == null)
+//			return false;
+//		if (!(obj instanceof mxCell)) {
+//			return false;
+//		}
+//		mxCell objCell = (mxCell) obj;
+//
+//		if (this.getEntityType().equals(objCell.getEntityType())) {
+//			if (this.getValue().equals(objCell.getValue())) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
 }

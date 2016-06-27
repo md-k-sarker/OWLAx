@@ -1,6 +1,7 @@
 package edu.wsu.dase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,9 +49,6 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.PrefixManager;
 import org.semanticweb.owlapi.model.parameters.ChangeApplied;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
-
-import com.mxgraph.analysis.mxAnalysisGraph;
-//import com.mxgraph.analysis.mxAnalysisGraph;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGraphModel;
 import com.mxgraph.view.mxGraph;
@@ -78,7 +76,9 @@ public class IntegrateOntologyWithProtege {
 	private ArrayList<OWLAxiom> existentialAxioms;
 	private ArrayList<OWLAxiom> cardinalityAxioms;
 	private ArrayList<OWLAxiom> subClassOfAxioms;
-	private ArrayList<OWLAxiom> classAssertionAxiom;
+	private ArrayList<OWLAxiom> classAssertionAxioms;
+	private ArrayList<OWLAxiom> disJointOfAxioms;
+
 	private ArrayList<OWLAxiom> selectedAxioms;
 
 	// means no error occurred till now.
@@ -90,7 +90,6 @@ public class IntegrateOntologyWithProtege {
 	Object root;
 	mxGraphModel model;
 	private BasicGraphEditor editor;
-	
 
 	public BasicGraphEditor getEditor() {
 		return this.editor;
@@ -111,6 +110,21 @@ public class IntegrateOntologyWithProtege {
 
 	// ProtegeIRIResolver iriResolver;
 	PrefixManager pm;
+
+	/**
+	 * @return the disJointOfAxioms
+	 */
+	public ArrayList<OWLAxiom> getDisJointOfAxioms() {
+		return disJointOfAxioms;
+	}
+
+	/**
+	 * @param disJointOfAxioms
+	 *            the disJointOfAxioms to set
+	 */
+	public void setDisJointOfAxioms(ArrayList<OWLAxiom> disJointOfAxioms) {
+		this.disJointOfAxioms = disJointOfAxioms;
+	}
 
 	public ArrayList<OWLAxiom> getDeclarationAxioms() {
 		return declarationAxioms;
@@ -152,12 +166,81 @@ public class IntegrateOntologyWithProtege {
 		this.subClassOfAxioms = subClassOfAxioms;
 	}
 
-	public ArrayList<OWLAxiom> getClassAssertionAxiom() {
-		return classAssertionAxiom;
+	public ArrayList<OWLAxiom> getClassAssertionAxioms() {
+		return classAssertionAxioms;
 	}
 
-	public void setClassAssertionAxiom(ArrayList<OWLAxiom> classAssertionAxiom) {
-		this.classAssertionAxiom = classAssertionAxiom;
+	public void setClassAssertionAxioms(ArrayList<OWLAxiom> classAssertionAxiom) {
+		this.classAssertionAxioms = classAssertionAxiom;
+	}
+
+	private boolean isEqualCell(mxCell cell1, mxCell cell2) {
+		if (cell1.getEntityType().equals(cell2.getEntityType())) {
+			if (cell1.getValue().equals(cell2.getValue())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private Map<mxCell, ArrayList<mxCell>> getDisJointtedCells() {
+
+		Object[] e = graph.getChildEdges(graph.getDefaultParent());
+		ArrayList<mxCell> parentList = new ArrayList<mxCell>();
+		ArrayList<mxCell> edgeList = new ArrayList<mxCell>();
+		Map<mxCell, ArrayList<mxCell>> parentToChildMap = new HashMap<mxCell, ArrayList<mxCell>>();
+
+		for (Object edge : e) {
+			if (edge instanceof mxCell) {
+				mxCell edgeCell = (mxCell) edge;
+				if (edgeCell.getEntityType().equals(CustomEntityType.RDFSSUBCLASS_OF)) {
+					edgeList.add(edgeCell);
+				}
+			}
+		}
+
+		// set the parents
+		for (mxCell edgeCell : edgeList) {
+			// mxCell child = (mxCell) graph.getModel().getTerminal(edgeCell,
+			// true);
+			mxCell parent = (mxCell) graph.getModel().getTerminal(edgeCell, false);
+
+			parentList.add(parent);
+
+		}
+
+		// add child to specific parent
+		for (mxCell parentCell : parentList) {
+
+			ArrayList<mxCell> childList = new ArrayList<mxCell>();
+
+			for (mxCell edgeCell : edgeList) {
+				mxCell child = (mxCell) graph.getModel().getTerminal(edgeCell, true);
+				mxCell parent = (mxCell) graph.getModel().getTerminal(edgeCell, false);
+
+				if (isEqualCell(parentCell, parent)) {
+					childList.add(child);
+				}
+			}
+			if (childList.size() >= 2) {
+				parentToChildMap.put(parentCell, childList);
+			}
+		}
+
+//		for (Map.Entry<mxCell, ArrayList<mxCell>> pair : parentToChildMap.entrySet()) {
+//			System.out.println("key: " + pair.getKey());
+//			ArrayList<mxCell> childList = pair.getValue();
+//			for (mxCell eachCell : childList) {
+//				System.out.println(eachCell.getValue());
+//			}
+//			System.out.println("\n\n\n\n");
+//		}
+
+		if (parentToChildMap.size() > 0) {
+			return parentToChildMap;
+		} else {
+			return null;
+		}
 	}
 
 	public IntegrateOntologyWithProtege(BasicGraphEditor editor) {
@@ -176,7 +259,8 @@ public class IntegrateOntologyWithProtege {
 		existentialAxioms = new ArrayList<OWLAxiom>();
 		cardinalityAxioms = new ArrayList<OWLAxiom>();
 		subClassOfAxioms = new ArrayList<OWLAxiom>();
-		classAssertionAxiom = new ArrayList<OWLAxiom>();
+		classAssertionAxioms = new ArrayList<OWLAxiom>();
+		disJointOfAxioms = new ArrayList<OWLAxiom>();
 		selectedAxioms = new ArrayList<OWLAxiom>();
 
 		changes = new ArrayList<OWLOntologyChange>();
@@ -304,7 +388,7 @@ public class IntegrateOntologyWithProtege {
 
 		// to solve renaming problem commit Declarations is executed
 		// first it is executed to show in axioms dialog
-		shouldContinue = commitDeclarations();
+		//shouldContinue = commitDeclarations();
 		declarationAxioms.clear();
 		if (!shouldContinue) {
 			// editor.status("Entity creation failed. ");
@@ -317,6 +401,7 @@ public class IntegrateOntologyWithProtege {
 			editor.status("Entity creation failed. ");
 			return;
 		}
+
 		// now show dialog to select
 		shouldContinue = showAxiomsDialog();
 		if (!shouldContinue) {
@@ -635,6 +720,13 @@ public class IntegrateOntologyWithProtege {
 				}
 
 			}
+		}
+
+		// Generate DisJointOf Axioms
+		
+		Map<mxCell, ArrayList<mxCell>> parentToChildMap = getDisJointtedCells();
+		if (parentToChildMap != null) {
+			getDisJointOfAxioms(parentToChildMap);
 		}
 		editor.status("Generated Domain, Range, Existential and Cardinality axioms successfully");
 		return true;
@@ -1057,79 +1149,25 @@ public class IntegrateOntologyWithProtege {
 		// Set<OWLAxiom> tmpaxioms = new HashSet<OWLAxiom>();
 		OWLAxiom axiom;
 		axiom = owlDataFactory.getOWLClassAssertionAxiom(dest, src);
-		classAssertionAxiom.add(axiom);
+		classAssertionAxioms.add(axiom);
 
 	}
-	
-	
-	/**
-	 * Implements a recursive breadth first search starting from the specified
-	 * cell. Process on the cell is performing by the visitor class passed in.
-	 * The visitor has access to the current cell and the edge traversed to
-	 * find this cell. Every cell is processed once only.
-	 * <pre>
-	 * mxTraversal.bfs(analysisGraph, startVertex, new mxICellVisitor()
-	 * {
-	 * 	public boolean visit(Object vertex, Object edge)
-	 * 	{
-	 * 		// perform your processing on each cell here
-	 *		return false;
-	 *	}
-	 * });
-	 * </pre>
-	 * @param aGraph the graph 
-	 * @param startVertex
-	 * @param visitor
-	 */
-	public void bfs(mxAnalysisGraph aGraph, Object startVertex, mxICellVisitor visitor)
-	{
-		if (aGraph != null && startVertex != null && visitor != null)
-		{
-			Set<Object> queued = new HashSet<Object>();
-			LinkedList<Object[]> queue = new LinkedList<Object[]>();
-			Object[] q = { startVertex, null };
-			queue.addLast(q);
-			queued.add(startVertex);
 
-			bfsRec(aGraph, queued, queue, visitor);
-		}
-	};
-
-	/**
-	 * Core recursive BFS - for internal use
-	 * @param aGraph
-	 * @param queued
-	 * @param queue
-	 * @param visitor
-	 */
-	private static void bfsRec(mxAnalysisGraph aGraph, Set<Object> queued, LinkedList<Object[]> queue, mxICellVisitor visitor)
-	{
-		if (queue.size() > 0)
-		{
-			Object[] q = queue.removeFirst();
-			Object cell = q[0];
-			Object incomingEdge = q[1];
-
-			visitor.visit(cell, incomingEdge);
-
-			final Object[] edges = aGraph.getEdges(cell, null, false, false);
-
-			for (int i = 0; i < edges.length; i++)
-			{
-				Object[] currEdge = { edges[i] };
-				Object opposite = aGraph.getOpposites(currEdge, cell)[0];
-
-				if (!queued.contains(opposite))
-				{
-					Object[] current = { opposite, edges[i] };
-					queue.addLast(current);
-					queued.add(opposite);
-				}
+	private void getDisJointOfAxioms(Map<mxCell, ArrayList<mxCell>> parentToChildMap) {
+		// Set<OWLAxiom> tmpaxioms = new HashSet<OWLAxiom>();
+		editor.status("Creating Disjointof axioms");
+		for (Map.Entry<mxCell, ArrayList<mxCell>> eachPair : parentToChildMap.entrySet()) {
+			Set<OWLClass> owlClasses = new HashSet<OWLClass>();
+			for (mxCell eachChild : eachPair.getValue()) {
+				OWLClass class1 = owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(eachChild), pm);
+				owlClasses.add(class1);
 			}
-
-			bfsRec(aGraph, queued, queue, visitor);
+			OWLAxiom axiom;
+			axiom = owlDataFactory.getOWLDisjointClassesAxiom(owlClasses);
+			disJointOfAxioms.add(axiom);
 		}
-	};
+
+	}
 
 	// @formatter:off
 	/*
