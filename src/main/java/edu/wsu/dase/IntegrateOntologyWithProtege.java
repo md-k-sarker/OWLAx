@@ -243,6 +243,14 @@ public class IntegrateOntologyWithProtege {
 		if (!shouldContinue)
 			return;
 
+		shouldContinue = commitDeclarations();
+		declarationAxioms.clear();
+		if (!shouldContinue) {
+			//editor.status("Entity creation failed. ");
+			//not returned so that axioms can atleast be viewed
+			//return;
+		}
+
 		shouldContinue = createOWLAxioms(e);
 		if (!shouldContinue) {
 			editor.status("Entity creation failed. ");
@@ -355,6 +363,34 @@ public class IntegrateOntologyWithProtege {
 			owlOntologyManager.removeAxioms(o, axiomsToRemove);
 			// System.out.println("After: " + o.getAxiomCount());
 		}
+	}
+
+	private boolean commitDeclarations() {
+		editor.status("Integrating Declaration axioms with Protege");
+		if (declarationAxioms != null && !declarationAxioms.isEmpty()) {
+			// declarationAxioms
+			List<OWLOntologyChange> declarations = new ArrayList<OWLOntologyChange>();
+			for (OWLAxiom declarationAxiom : declarationAxioms) {
+
+				declarations.add(new AddAxiom(activeOntology, declarationAxiom));
+
+			}
+			ChangeApplied changeResult = owlOntologyManager.applyChanges(declarations);
+			if (changeResult == ChangeApplied.SUCCESSFULLY) {
+				editor.status("Declaration axioms integrated with protege successfully.");
+				return true;
+			} else if (changeResult == ChangeApplied.UNSUCCESSFULLY) {
+				editor.status("Declaration integration with Protege unsuccessfull.");
+				return false;
+			} else if (changeResult == ChangeApplied.NO_OPERATION) {
+				editor.status(
+						"Declaration axioms are duplicate. Possible reason: trying to create new OWL Entity which IRI match with existing OWLEntity IRI.");
+				return false;
+			}
+		} else
+			return false;
+
+		return false;
 	}
 
 	private boolean saveOWLAxioms() {
