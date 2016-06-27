@@ -2073,6 +2073,15 @@ public class mxGraph extends mxEventSource {
 	 * Creates and adds a new vertex with an empty style.
 	 */
 	public Object insertVertex(Object parent, String id, Object value, double x, double y, double width,
+			double height) {
+		// System.out.println("sarker.3 mxGraph");
+		return insertVertex(parent, id, value, x, y, width, height, null,null);
+	}
+	
+	/**
+	 * Creates and adds a new vertex with an empty style.
+	 */
+	public Object insertVertex(Object parent, String id, Object value, double x, double y, double width,
 			double height, CustomEntityType entityType) {
 		// System.out.println("sarker.3 mxGraph");
 		return insertVertex(parent, id, value, x, y, width, height, null,entityType);
@@ -2204,6 +2213,13 @@ public class mxGraph extends mxEventSource {
 		return vertex;
 	}
 
+	/**
+	 * Creates and adds a new edge with an empty style.
+	 */
+	public Object insertEdge(Object parent, String id, Object value, Object source, Object target) {
+		return insertEdge(parent, id, value, source, target, null,null);
+	}
+	
 	/**
 	 * Creates and adds a new edge with an empty style.
 	 */

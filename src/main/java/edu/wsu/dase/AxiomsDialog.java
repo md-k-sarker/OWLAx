@@ -240,7 +240,7 @@ public class AxiomsDialog extends JDialog {
 		lblNewAxioms.setHorizontalAlignment(SwingConstants.CENTER);
 		newAxiomsPnl.add(lblNewAxioms, BorderLayout.NORTH);
 
-		newAxiomsTree = new JCheckBoxTree(getNewAxiomsRoot());
+		newAxiomsTree = new JCheckBoxTree(getNewAxiomsRoot(),intgOntWProtege.owlEditorKit);
 		newAxiomsScroll = new JScrollPane(newAxiomsTree);
 
 		newAxiomsPnl.add(newAxiomsScroll, BorderLayout.CENTER);
@@ -386,7 +386,7 @@ public class AxiomsDialog extends JDialog {
 
 		DefaultMutableTreeNode root = getRoot();
 
-		final JCheckBoxTree cbt = new JCheckBoxTree(root);
+		final JCheckBoxTree cbt = new JCheckBoxTree(root,intgOntWProtege.owlEditorKit);
 
 		DefaultMutableTreeNode inferredroot = (DefaultMutableTreeNode) cbt.getModel().getRoot();
 		Enumeration e = inferredroot.breadthFirstEnumeration();

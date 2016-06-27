@@ -23,6 +23,7 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
+import org.protege.editor.owl.OWLEditorKit;
 import org.semanticweb.owlapi.model.OWLAxiom;
 
 /**
@@ -149,7 +150,7 @@ public class JCheckBoxTree extends JTree {
 		private static final long serialVersionUID = -7341833835878991719L;
 		JCheckBox checkBox;
 
-		public CheckBoxCellRenderer() {
+		public CheckBoxCellRenderer(OWLEditorKit owlEditorKit) {
 			super();
 			this.setLayout(new BorderLayout());
 			checkBox = new JCheckBox();
@@ -181,7 +182,7 @@ public class JCheckBoxTree extends JTree {
 		}
 	}
 
-	public JCheckBoxTree(DefaultMutableTreeNode root) {
+	public JCheckBoxTree(DefaultMutableTreeNode root,OWLEditorKit editorKit) {
 		super(root);
 
 		// super.setModel(model);
@@ -189,7 +190,7 @@ public class JCheckBoxTree extends JTree {
 		this.setToggleClickCount(0);
 
 		// Overriding cell renderer by new one defined above
-		CheckBoxCellRenderer cellRenderer = new CheckBoxCellRenderer();
+		CheckBoxCellRenderer cellRenderer = new CheckBoxCellRenderer(editorKit);
 		this.setCellRenderer(cellRenderer);
 
 		// Overriding selection model by an empty one

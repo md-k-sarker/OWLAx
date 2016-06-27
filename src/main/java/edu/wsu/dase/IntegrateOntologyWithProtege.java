@@ -2,6 +2,7 @@ package edu.wsu.dase;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import org.protege.editor.owl.OWLEditorKit;
 //import org.checkerframework.checker.nullness.qual.NonNull;
 import org.protege.editor.owl.model.OWLModelManager;
 import org.protege.editor.owl.model.find.OWLEntityFinder;
@@ -47,13 +49,20 @@ import org.semanticweb.owlapi.model.PrefixManager;
 import org.semanticweb.owlapi.model.parameters.ChangeApplied;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 
+import com.mxgraph.analysis.mxAnalysisGraph;
+//import com.mxgraph.analysis.mxAnalysisGraph;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGraphModel;
 import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.mxGraph.mxICellVisitor;
 
 import edu.wsu.dase.swing.editor.BasicGraphEditor;
 import edu.wsu.dase.util.CustomEntityType;
 
+/**
+ * @author sarker
+ *
+ */
 public class IntegrateOntologyWithProtege {
 
 	private String SAVING_COMPLETE_TITLE = "Ontology Generated";
@@ -81,6 +90,7 @@ public class IntegrateOntologyWithProtege {
 	Object root;
 	mxGraphModel model;
 	private BasicGraphEditor editor;
+	
 
 	public BasicGraphEditor getEditor() {
 		return this.editor;
@@ -93,6 +103,7 @@ public class IntegrateOntologyWithProtege {
 	OWLModelManager owlModelManager;
 	OWLOntologyManager owlOntologyManager;
 	OWLOntology activeOntology;
+	OWLEditorKit owlEditorKit;
 
 	public OWLOntology getActiveOntology() {
 		return this.activeOntology;
@@ -154,6 +165,7 @@ public class IntegrateOntologyWithProtege {
 		this.graph = editor.getGraphComponent().getGraph();
 		this.model = (mxGraphModel) graph.getModel();
 		this.root = graph.getDefaultParent();
+		this.owlEditorKit = editor.getProtegeOWLEditorKit();
 
 		initilizeProtegeDataFactory();
 	}
@@ -1048,6 +1060,76 @@ public class IntegrateOntologyWithProtege {
 		classAssertionAxiom.add(axiom);
 
 	}
+	
+	
+	/**
+	 * Implements a recursive breadth first search starting from the specified
+	 * cell. Process on the cell is performing by the visitor class passed in.
+	 * The visitor has access to the current cell and the edge traversed to
+	 * find this cell. Every cell is processed once only.
+	 * <pre>
+	 * mxTraversal.bfs(analysisGraph, startVertex, new mxICellVisitor()
+	 * {
+	 * 	public boolean visit(Object vertex, Object edge)
+	 * 	{
+	 * 		// perform your processing on each cell here
+	 *		return false;
+	 *	}
+	 * });
+	 * </pre>
+	 * @param aGraph the graph 
+	 * @param startVertex
+	 * @param visitor
+	 */
+	public void bfs(mxAnalysisGraph aGraph, Object startVertex, mxICellVisitor visitor)
+	{
+		if (aGraph != null && startVertex != null && visitor != null)
+		{
+			Set<Object> queued = new HashSet<Object>();
+			LinkedList<Object[]> queue = new LinkedList<Object[]>();
+			Object[] q = { startVertex, null };
+			queue.addLast(q);
+			queued.add(startVertex);
+
+			bfsRec(aGraph, queued, queue, visitor);
+		}
+	};
+
+	/**
+	 * Core recursive BFS - for internal use
+	 * @param aGraph
+	 * @param queued
+	 * @param queue
+	 * @param visitor
+	 */
+	private static void bfsRec(mxAnalysisGraph aGraph, Set<Object> queued, LinkedList<Object[]> queue, mxICellVisitor visitor)
+	{
+		if (queue.size() > 0)
+		{
+			Object[] q = queue.removeFirst();
+			Object cell = q[0];
+			Object incomingEdge = q[1];
+
+			visitor.visit(cell, incomingEdge);
+
+			final Object[] edges = aGraph.getEdges(cell, null, false, false);
+
+			for (int i = 0; i < edges.length; i++)
+			{
+				Object[] currEdge = { edges[i] };
+				Object opposite = aGraph.getOpposites(currEdge, cell)[0];
+
+				if (!queued.contains(opposite))
+				{
+					Object[] current = { opposite, edges[i] };
+					queue.addLast(current);
+					queued.add(opposite);
+				}
+			}
+
+			bfsRec(aGraph, queued, queue, visitor);
+		}
+	};
 
 	// @formatter:off
 	/*
