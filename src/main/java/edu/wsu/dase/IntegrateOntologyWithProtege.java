@@ -227,14 +227,15 @@ public class IntegrateOntologyWithProtege {
 			}
 		}
 
-//		for (Map.Entry<mxCell, ArrayList<mxCell>> pair : parentToChildMap.entrySet()) {
-//			System.out.println("key: " + pair.getKey());
-//			ArrayList<mxCell> childList = pair.getValue();
-//			for (mxCell eachCell : childList) {
-//				System.out.println(eachCell.getValue());
-//			}
-//			System.out.println("\n\n\n\n");
-//		}
+		// for (Map.Entry<mxCell, ArrayList<mxCell>> pair :
+		// parentToChildMap.entrySet()) {
+		// System.out.println("key: " + pair.getKey());
+		// ArrayList<mxCell> childList = pair.getValue();
+		// for (mxCell eachCell : childList) {
+		// System.out.println(eachCell.getValue());
+		// }
+		// System.out.println("\n\n\n\n");
+		// }
 
 		if (parentToChildMap.size() > 0) {
 			return parentToChildMap;
@@ -244,13 +245,17 @@ public class IntegrateOntologyWithProtege {
 	}
 
 	public IntegrateOntologyWithProtege(BasicGraphEditor editor) {
+		shouldContinue = true;
 		this.editor = editor;
 		this.graph = editor.getGraphComponent().getGraph();
 		this.model = (mxGraphModel) graph.getModel();
 		this.root = graph.getDefaultParent();
 		this.owlEditorKit = editor.getProtegeOWLEditorKit();
+		try {
+			initilizeProtegeDataFactory();
+		} catch (Exception e) {
 
-		initilizeProtegeDataFactory();
+		}
 	}
 
 	private void initializeDataStructure() {
@@ -357,100 +362,120 @@ public class IntegrateOntologyWithProtege {
 	}
 
 	public void generateOntology() {
+		try {
+			if (!validateGraph())
+				return;
 
-		if (!validateGraph())
+			initializeDataStructure();
+
+			Object[] v = graph.getChildVertices(graph.getDefaultParent());
+			Object[] e = graph.getChildEdges(graph.getDefaultParent());
+
+			if (v.length == 0) {
+				editor.status("Axioms can not be generated with empty vertex.");
+				return;
+			}
+			if (e.length == 0) {
+				editor.status("Axioms can not be generated with empty edge.");
+				return;
+			}
+
+			if (shouldContinue)
+				shouldContinue = makeDeclarations(v);
+
+			if (!shouldContinue)
+				return;
+
+			shouldContinue = makeDeclarations(e);
+			if (!shouldContinue)
+				return;
+
+			// to solve renaming problem commit Declarations is executed
+			// first it is executed to show in axioms dialog
+			// shouldContinue = commitDeclarations();
+			declarationAxioms.clear();
+			if (!shouldContinue) {
+				// editor.status("Entity creation failed. ");
+				// not returned so that axioms can atleast be viewed
+				// return;
+			}
+
+			shouldContinue = createOWLAxioms(e);
+			if (!shouldContinue) {
+				editor.status("Entity creation failed. ");
+				return;
+			}
+
+			// now show dialog to select
+			shouldContinue = showAxiomsDialog();
+			if (!shouldContinue) {
+				return;
+			}
+
+			cleanActiveOntology();
+
+			// to solve renaming problem commit Declarations is executed
+			// 2nd it is executed because ontology is cleaned
+			shouldContinue = commitDeclarations();
+			declarationAxioms.clear();
+			if (!shouldContinue) {
+				// editor.status("Entity creation failed. ");
+				// not returned so that axioms can atleast be viewed
+				// return;
+			}
+
+			shouldContinue = saveOWLAxioms();
+			if (!shouldContinue) {
+				return;
+			}
+			editor.status(SAVING_COMPLETE_MESSAGE);
+			editor.setModified(false);
+			JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), SAVING_COMPLETE_MESSAGE, SAVING_COMPLETE_TITLE,
+					JOptionPane.PLAIN_MESSAGE);
 			return;
 
-		initializeDataStructure();
+		} catch (Exception E) {
 
-		Object[] v = graph.getChildVertices(graph.getDefaultParent());
-		Object[] e = graph.getChildEdges(graph.getDefaultParent());
-
-		if (v.length == 0) {
-			editor.status("Axioms can not be generated with empty vertex.");
-			return;
 		}
-		if (e.length == 0) {
-			editor.status("Axioms can not be generated with empty edge.");
-			return;
-		}
-
-		shouldContinue = true;
-		if (shouldContinue)
-			shouldContinue = makeDeclarations(v);
-
-		if (!shouldContinue)
-			return;
-
-		shouldContinue = makeDeclarations(e);
-		if (!shouldContinue)
-			return;
-
-		// to solve renaming problem commit Declarations is executed
-		// first it is executed to show in axioms dialog
-		//shouldContinue = commitDeclarations();
-		declarationAxioms.clear();
-		if (!shouldContinue) {
-			// editor.status("Entity creation failed. ");
-			// not returned so that axioms can atleast be viewed
-			// return;
-		}
-
-		shouldContinue = createOWLAxioms(e);
-		if (!shouldContinue) {
-			editor.status("Entity creation failed. ");
-			return;
-		}
-
-		// now show dialog to select
-		shouldContinue = showAxiomsDialog();
-		if (!shouldContinue) {
-			return;
-		}
-
-		cleanActiveOntology();
-
-		// to solve renaming problem commit Declarations is executed
-		// 2nd it is executed because ontology is cleaned
-		shouldContinue = commitDeclarations();
-		declarationAxioms.clear();
-		if (!shouldContinue) {
-			// editor.status("Entity creation failed. ");
-			// not returned so that axioms can atleast be viewed
-			// return;
-		}
-
-		shouldContinue = saveOWLAxioms();
-		if (!shouldContinue) {
-			return;
-		}
-		editor.status(SAVING_COMPLETE_MESSAGE);
-		editor.setModified(false);
-		JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), SAVING_COMPLETE_MESSAGE, SAVING_COMPLETE_TITLE,
-				JOptionPane.PLAIN_MESSAGE);
-		return;
 
 	}
 
 	public void addPrefix() {
-		String uriString = activeOntology.getOntologyID().getDefaultDocumentIRI().get().toString();
-		String prefix;
-		if (uriString.endsWith("/")) {
-			String sub = uriString.substring(0, uriString.length() - 1);
-			prefix = sub.substring(sub.lastIndexOf("/") + 1, sub.length());
-		} else {
-			prefix = uriString.substring(uriString.lastIndexOf('/') + 1, uriString.length());
-		}
-		if (prefix.endsWith(".owl")) {
-			prefix = prefix.substring(0, prefix.length() - 4);
-		}
-		prefix = prefix.toLowerCase();
-		if (!uriString.endsWith("#") && !uriString.endsWith("/")) {
-			uriString = uriString + "#";
+		try {
+			String uriString = activeOntology.getOntologyID().getDefaultDocumentIRI().get().toString();
+			if (uriString == null) {
+				shouldContinue = false;
+				JOptionPane.showMessageDialog(editor, "Please Specify Ontology ID(Ontology IRI) first.");
+				return;
+			}
+			String prefix;
+			if (uriString.endsWith("/")) {
+				String sub = uriString.substring(0, uriString.length() - 1);
+				prefix = sub.substring(sub.lastIndexOf("/") + 1, sub.length());
+			} else {
+				prefix = uriString.substring(uriString.lastIndexOf('/') + 1, uriString.length());
+			}
+			if (prefix.endsWith(".owl")) {
+				prefix = prefix.substring(0, prefix.length() - 4);
+			}
+			prefix = prefix.toLowerCase();
+			if (!uriString.endsWith("#") && !uriString.endsWith("/")) {
+				uriString = uriString + "#";
+			}
+
+			if (prefix.length() < 1) {
+				shouldContinue = false;
+				editor.status("Error with Ontology ID. Operation aborted.");
+				return;
+			}
+			pm.setPrefix(prefix, uriString);
+			defaultPrefix = prefix + ":";
+		} catch (IllegalStateException e) {
+			shouldContinue = false;
+			JOptionPane.showMessageDialog(editor, "Please Specify Ontology ID(Ontology IRI) first.");
+			return;
 		}
 
-		pm.setPrefix(prefix, uriString);
-		defaultPrefix = prefix + ":";
 	}
 
 	private String getCellValueAsOWLCompatibleName(mxCell cell) {
@@ -723,7 +748,7 @@ public class IntegrateOntologyWithProtege {
 		}
 
 		// Generate DisJointOf Axioms
-		
+
 		Map<mxCell, ArrayList<mxCell>> parentToChildMap = getDisJointtedCells();
 		if (parentToChildMap != null) {
 			getDisJointOfAxioms(parentToChildMap);
