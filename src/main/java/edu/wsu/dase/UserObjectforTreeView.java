@@ -1,6 +1,9 @@
 package edu.wsu.dase;
 
 import java.awt.Component;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,16 +45,22 @@ public class UserObjectforTreeView {
 		// QNameShortFormProvider shortFormProvider = new
 		// QNameShortFormProvider(activeOntology);
 		rendering.setShortFormProvider(shortFormProvider);
-//		for (Map.Entry<String, String> forms : shortFormProvider.getPrefixName2PrefixMap().entrySet()) {
-//			//JOptionPane.showMessageDialog(parent, "sarker.3 key: " + forms.getKey() + " value: " + forms.getValue());
-//			System.err.println("sarker.3 key: " + forms.getKey() + " value: " + forms.getValue());
-//		}
+		// for (Map.Entry<String, String> forms :
+		// shortFormProvider.getPrefixName2PrefixMap().entrySet()) {
+		// //JOptionPane.showMessageDialog(parent, "sarker.3 key: " +
+		// forms.getKey() + " value: " + forms.getValue());
+		// System.err.println("sarker.3 key: " + forms.getKey() + " value: " +
+		// forms.getValue());
+		// }
 
 		if (!isAxiom) {
 			this.isAxiom = false;
 			this.lblVal = lblVal;
 		}
 	}
+
+	static ArrayList<String> boldFaceText = new ArrayList<String>(Arrays.asList("disjointwith", "min", "max", "some",
+			"only", "subclassof", "inverse", "or", "and", "equivalentto", "self", "value", "not"));
 
 	public UserObjectforTreeView(boolean isAxiom, OWLAxiom axiom) {
 		if (isAxiom) {
@@ -60,13 +69,30 @@ public class UserObjectforTreeView {
 		}
 	}
 
+	private String getCosmetics(String value) {
+
+		String[] values = value.split(" ");
+
+		for (String v : values) {
+			if (boldFaceText.contains(v.toLowerCase())) {
+
+				value = value.replace(v, "<b style=\"color:#F09128;\">" + v + "</b>");
+			}
+
+		}
+
+		return "<html>" + value + "</html>";
+	}
+
 	@Override
 	public String toString() {
 
 		String value = "";
 
 		if (this.isAxiom) {
-			value = rendering.render(this.axiom);
+			String tmpValue = rendering.render(this.axiom);
+			tmpValue = tmpValue.replace("<", "&lt;");
+			value = getCosmetics(tmpValue);
 		} else {
 			value = lblVal.toString();
 			value = "<html><b style=\"color:#624FDB;\">" + value + "</b></html>";

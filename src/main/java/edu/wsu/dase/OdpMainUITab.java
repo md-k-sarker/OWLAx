@@ -11,6 +11,7 @@ import org.protege.editor.owl.model.OWLModelManager;
 import org.protege.editor.owl.model.event.EventType;
 import org.protege.editor.owl.model.event.OWLModelManagerChangeEvent;
 import org.protege.editor.owl.model.event.OWLModelManagerListener;
+import org.protege.editor.owl.model.find.OWLEntityFinder;
 import org.protege.editor.owl.ui.OWLWorkspaceViewsTab;
 import org.protege.editor.owl.ui.prefix.PrefixUtilities;
 import org.semanticweb.owlapi.model.PrefixManager;
@@ -26,6 +27,7 @@ public class OdpMainUITab extends OWLWorkspaceViewsTab {
 	private static final Logger log = LoggerFactory.getLogger(OdpMainUITab.class);
 	OWLEditorKit owlEditorKit;
 	GraphEditor editor;
+	OWLEntityFinder owlEntityFinder;
 	private final ODPTabListener listener = new ODPTabListener();
 
 	@Override
@@ -73,12 +75,16 @@ public class OdpMainUITab extends OWLWorkspaceViewsTab {
 
 		this.protegeOWLModelManager = getOWLModelManager();
 		this.owlEditorKit = getOWLEditorKit();
+		this.owlEntityFinder = this.protegeOWLModelManager.getOWLEntityFinder();
 
 		if (this.protegeOWLModelManager != null) {
 			editor.setProtegeOWLModelManager(this.protegeOWLModelManager);
 		}
 		if(this.owlEditorKit != null){
 			editor.setProtegeOWLEditorKit(this.owlEditorKit);
+		}
+		if(this.owlEntityFinder != null){
+			editor.setProtegeEntityFinder(this.owlEntityFinder);
 			
 		}
 

@@ -57,7 +57,7 @@ public class AxiomsDialog extends JDialog {
 	final String domainandRangeAxiomTypeText = "Domain-Range Axioms";
 	final String subClassOfAxiomTypeText = "SubClassOf Axiom";
 	final String disJointAxiomTypeText = "Disjoint Classes Axiom";
-	final String classAssertionAxiomTypeText = "Class(Type) Assertion Axiom";
+	final String classAssertionAxiomTypeText = "Class (Type) Assertion Axiom";
 	final String otherAxiomTypeText = "Other Axioms";
 	final String infoText = "  Select axioms which you want to integrate.";
 

@@ -34,6 +34,8 @@ import javax.swing.UIManager;
 
 import org.protege.editor.owl.OWLEditorKit;
 import org.protege.editor.owl.model.OWLModelManager;
+import org.protege.editor.owl.model.find.OWLEntityFinder;
+import org.semanticweb.owlapi.model.PrefixManager;
 
 import com.mxgraph.layout.mxCircleLayout;
 import com.mxgraph.layout.mxCompactTreeLayout;
@@ -71,7 +73,37 @@ public class BasicGraphEditor extends JPanel {
 
 	private OWLModelManager protegeOWLModelManager;
 	private OWLEditorKit protegeOWLEditorKit;
+	private OWLEntityFinder protegeEntityFinder;
+	private PrefixManager protegePrefixmanager;
 	
+	/**
+	 * @return the protegePrefixmanager
+	 */
+	public PrefixManager getProtegePrefixmanager() {
+		return protegePrefixmanager;
+	}
+
+	/**
+	 * @param protegePrefixmanager the protegePrefixmanager to set
+	 */
+	public void setProtegePrefixmanager(PrefixManager protegePrefixmanager) {
+		this.protegePrefixmanager = protegePrefixmanager;
+	}
+
+	/**
+	 * @return the protegeEntityFinder
+	 */
+	public OWLEntityFinder getProtegeEntityFinder() {
+		return protegeEntityFinder;
+	}
+
+	/**
+	 * @param protegeEntityFinder the protegeEntityFinder to set
+	 */
+	public void setProtegeEntityFinder(OWLEntityFinder protegeEntityFinder) {
+		this.protegeEntityFinder = protegeEntityFinder;
+	}
+
 	public OWLEditorKit getProtegeOWLEditorKit() {
 		return protegeOWLEditorKit;
 	}

@@ -31,6 +31,13 @@ import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.HTMLWriter;
 import javax.swing.text.html.MinimalHTMLWriter;
 
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
+
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxICell;
@@ -368,6 +375,11 @@ public class mxCellEditor implements mxICellEditor {
 		return bounds;
 	}
 
+	/**
+	 * 
+	 */
+	private String oldCellValue;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -400,8 +412,10 @@ public class mxCellEditor implements mxICellEditor {
 			scrollPane.setVisible(true);
 
 			String value = getInitialValue(state, evt);
+			// saving oldCellValue
+			oldCellValue = value;
 			// logic for editing literal type cell
-			if (((mxCell) cell).getEntityType().getName().equals( CustomEntityType.LITERAL.getName())) {
+			if (((mxCell) cell).getEntityType().getName().equals(CustomEntityType.LITERAL.getName())) {
 				String oldLabelValue = ((mxCell) cell).getValue().toString();
 				String oldLabelValueOnly = "";
 				Pattern pattern = Pattern.compile("\"(.*?)\"");
@@ -410,9 +424,9 @@ public class mxCellEditor implements mxICellEditor {
 					oldLabelValueOnly = matcher.group(1);
 				}
 
-				 value = oldLabelValueOnly;
+				value = oldLabelValueOnly;
 			}
-			
+
 			JTextComponent currentEditor = null;
 
 			// Configures the style of the in-place editor
@@ -463,6 +477,53 @@ public class mxCellEditor implements mxICellEditor {
 		return true;
 	}
 
+	// private OWLAxiom createOWLDataProperty(String name) {
+	//
+	// OWLDataProperty dataprop = owlDataFactory.getOWLDataProperty(name, prefixManager);
+	//
+	// OWLAxiom declareaxiom = owlDataFactory.getOWLDeclarationAxiom(dataprop);
+	//
+	// return declareaxiom;
+	//
+	// }
+	//
+	// private OWLAxiom createOWLObjectProperty(String name) {
+	//
+	// OWLObjectProperty objprop = owlDataFactory.getOWLObjectProperty(name,
+	// prefixManager);
+	// OWLAxiom declareaxiom = owlDataFactory.getOWLDeclarationAxiom(objprop);
+	//
+	// return declareaxiom;
+	//
+	// }
+	//
+	// private OWLAxiom createOWLClass(String name) {
+	//
+	// OWLClass newClass = owlDataFactory.getOWLClass(name, prefixManager);
+	//
+	// OWLAxiom declareaxiom = owlDataFactory.getOWLDeclarationAxiom(newClass);
+	//
+	// return declareaxiom;
+	//
+	// }
+	//
+	// private OWLAxiom createOWLNamedIndividual(String name) {
+	//
+	// OWLNamedIndividual newIndividual =
+	// owlDataFactory.getOWLNamedIndividual(name, prefixManager);
+	//
+	// OWLAxiom declareaxiom =
+	// owlDataFactory.getOWLDeclarationAxiom(newIndividual);
+	//
+	// return declareaxiom;
+	//
+	// }
+
+	private void createOWLEntity(mxCell thisCell, String labelValue) {
+		//not implemented now
+		//OWLDataFactory owlDataFactory= 	graphComponent.getGraphEditor().getProtegeOWLModelManager().getOWLDataFactory();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -479,11 +540,18 @@ public class mxCellEditor implements mxICellEditor {
 				trigger = null;
 				if (cell instanceof mxICell) {
 					mxCell thisCell = (mxCell) cell;
-					if (thisCell.getEntityType().getName().equals( CustomEntityType.LITERAL.getName())) {
+
+					if (thisCell.getEntityType().getName().equals(CustomEntityType.LITERAL.getName())) {
 						String labelValue = "\"" + getCurrentValue() + "\"" + "^^" + thisCell.getLiteralDataType();
 						graphComponent.labelChanged(cell, labelValue, trig);
 					} else {
 						graphComponent.labelChanged(cell, getCurrentValue(), trig);
+					}
+					if (!oldCellValue.equals(getCurrentValue())) {
+
+						// need to implement OWLEntityCreation and
+						// OWLEntityFinder
+						//createOWLEntity(thisCell, getCurrentValue());
 					}
 				}
 			} else {

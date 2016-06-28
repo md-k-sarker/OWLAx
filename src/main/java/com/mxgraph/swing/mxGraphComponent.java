@@ -83,6 +83,8 @@ import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphView;
 import com.mxgraph.view.mxTemporaryCellStates;
 
+import edu.wsu.dase.swing.editor.BasicGraphEditor;
+
 /**
  * For setting the preferred size of the viewport for scrolling, use
  * mxGraph.setMinimumGraphSize. This component is a combined scrollpane with an
@@ -123,6 +125,26 @@ public class mxGraphComponent extends JScrollPane implements Printable {
 	 * 
 	 */
 	private static final long serialVersionUID = -30203858391633447L;
+	
+	
+	/**
+	 * 
+	 */
+	private  BasicGraphEditor graphEditor;
+
+	/**
+	 * @return the graphEditor
+	 */
+	public BasicGraphEditor getGraphEditor() {
+		return graphEditor;
+	}
+
+	/**
+	 * @param graphEditor the graphEditor to set
+	 */
+	public void setGraphEditor(BasicGraphEditor graphEditor) {
+		this.graphEditor = graphEditor;
+	}
 
 	/**
 	 * 

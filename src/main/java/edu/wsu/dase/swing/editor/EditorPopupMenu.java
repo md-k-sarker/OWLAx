@@ -59,7 +59,7 @@ public class EditorPopupMenu extends JPopupMenu {
 
 		add(editor.bind(mxResources.get("edit"), mxGraphActions.getEditAction())).setEnabled(selected);
 
-		addSeparator();
+		//addSeparator();
 
 		// add(editor.bind(mxResources.get("cardinalitySize"),
 		// new

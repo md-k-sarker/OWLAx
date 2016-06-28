@@ -105,7 +105,7 @@ public class GraphEditor extends BasicGraphEditor {
 		});
 
 		shapesPalette.addTemplate(CustomEntityType.CLASS.getName(),
-				new ImageIcon(GraphEditor.class.getResource("/images/rectangle.png")), "rectangle", vertexWidth,
+				new ImageIcon(GraphEditor.class.getResource("/images/rectangle.png")), "rectangle;fillColor=#33CCFF;gradientColor=#33CCFF", vertexWidth,
 				vertexHeight, "");
 
 		shapesPalette.addTemplate(CustomEntityType.NAMED_INDIVIDUAL.getName(),
@@ -157,6 +157,15 @@ public class GraphEditor extends BasicGraphEditor {
 		public CustomGraphComponent(mxGraph graph) {
 			super(graph);
 
+			//set editor to get reference not sure it will work or not
+			this.setGraphEditor(getGraphEditor());
+			
+			/**
+			 * 
+			 */
+			
+			
+			
 			// Sets switches typically used in an editor
 			setCenterPage(true);
 			//setPageVisible(true);
@@ -348,15 +357,15 @@ public class GraphEditor extends BasicGraphEditor {
 		 * 
 		 * OWLOntologyManager m = OWLManager.createOWLOntologyManager();
 		 * 
-		 * PrefixManager pm = new DefaultPrefixManager();
-		 * pm.setDefaultPrefix(base);
+		 * PrefixManager prefixManager = new DefaultPrefixManager();
+		 * prefixManager.setDefaultPrefix(base);
 		 * 
-		 * pm.getDefaultPrefix(); // Get reference to the :Person class (the
+		 * prefixManager.getDefaultPrefix(); // Get reference to the :Person class (the
 		 * full IRI: http://example.com/owl/families/Person) OWLClass person =
-		 * df.getOWLClass("Person", pm); System.out.println("iri "+
+		 * df.getOWLClass("Person", prefixManager); System.out.println("iri "+
 		 * person.getIRI()); // Get reference to the :Mary class (the full IRI:
 		 * <http://example.com/owl/families/Mary>) OWLNamedIndividual mary =
-		 * df.getOWLNamedIndividual(":Mary", pm);
+		 * df.getOWLNamedIndividual(":Mary", prefixManager);
 		 */
 	}
 }

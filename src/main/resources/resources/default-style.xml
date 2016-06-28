@@ -5,7 +5,7 @@
 		<add as="gradientColor" value="#7d85df"/>
 		<add as="strokeColor" value="#5d65df"/>
 		<add as="fontSize" value="10"/>
-		<add as="fontColor" value="#1d258f"/>
+		<add as="fontColor" value="#000000"/>
 		<add as="fontFamily" value="Verdana"/>
 	</add>
 	<add as="defaultEdge" extend="defaultEdge">
@@ -14,7 +14,7 @@
 		<add as="edgeStyle" value="elbowEdgeStyle"/>
 		<add as="strokeColor" value="#5d65df"/>
 		<add as="fontSize" value="10"/>
-		<add as="fontColor" value="#1d258f"/>
+		<add as="fontColor" value="#000000"/>
 		<add as="fontFamily" value="Verdana"/>
 	</add>
 	<add as="label">

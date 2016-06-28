@@ -109,7 +109,7 @@ public class IntegrateOntologyWithProtege {
 	}
 
 	// ProtegeIRIResolver iriResolver;
-	PrefixManager pm;
+	PrefixManager prefixManager;
 
 	/**
 	 * @return the disJointOfAxioms
@@ -190,6 +190,7 @@ public class IntegrateOntologyWithProtege {
 		ArrayList<mxCell> edgeList = new ArrayList<mxCell>();
 		Map<mxCell, ArrayList<mxCell>> parentToChildMap = new HashMap<mxCell, ArrayList<mxCell>>();
 
+		// set subClassOf edges
 		for (Object edge : e) {
 			if (edge instanceof mxCell) {
 				mxCell edgeCell = (mxCell) edge;
@@ -254,7 +255,7 @@ public class IntegrateOntologyWithProtege {
 		try {
 			initilizeProtegeDataFactory();
 		} catch (Exception e) {
-
+			shouldContinue = false;
 		}
 	}
 
@@ -337,6 +338,7 @@ public class IntegrateOntologyWithProtege {
 		if (ok && checkSourceAndTarget())
 			return true;
 
+		shouldContinue = false;
 		return false;
 	}
 
@@ -363,6 +365,9 @@ public class IntegrateOntologyWithProtege {
 
 	public void generateOntology() {
 		try {
+			if (!shouldContinue)
+				return;
+
 			if (!validateGraph())
 				return;
 
@@ -468,7 +473,7 @@ public class IntegrateOntologyWithProtege {
 				editor.status("Error with Ontology ID. Operation aborted.");
 				return;
 			}
-			pm.setPrefix(prefix, uriString);
+			prefixManager.setPrefix(prefix, uriString);
 			defaultPrefix = prefix + ":";
 		} catch (IllegalStateException e) {
 			shouldContinue = false;
@@ -494,7 +499,8 @@ public class IntegrateOntologyWithProtege {
 			String[] subParts = name.split(":");
 			if (subParts.length == 2) {
 				return name;
-				// prefixValue = pm.getPrefix((subParts[0].replace(":", "")));
+				// prefixValue =
+				// prefixManager.getPrefix((subParts[0].replace(":", "")));
 			} else {
 				shouldContinue = false;
 				editor.status(cell.getEntityType() + " " + cell.getValue() + " has Colon(:) " + subParts.length
@@ -518,12 +524,15 @@ public class IntegrateOntologyWithProtege {
 
 		activeOntology = owlModelManager.getActiveOntology();
 
-		// pm = new DefaultPrefixManager();
+		// prefixManager = new DefaultPrefixManager();
 
 		if (activeOntology != null) {
 
-			pm = PrefixUtilities.getPrefixOWLOntologyFormat(activeOntology);
+			prefixManager = PrefixUtilities.getPrefixOWLOntologyFormat(activeOntology);
 			addPrefix();
+
+			// set prefixManager in editor to get reference
+			editor.setProtegePrefixmanager(prefixManager);
 
 			owlOntologyID = activeOntology.getOntologyID();
 			ontologyBaseURI = owlOntologyID.getOntologyIRI().get().toQuotedString();
@@ -597,7 +606,7 @@ public class IntegrateOntologyWithProtege {
 
 	private OWLAxiom createOWLAnnotationProperty(String name) {
 
-		OWLAnnotationProperty annoprop = owlDataFactory.getOWLAnnotationProperty(name, pm);
+		OWLAnnotationProperty annoprop = owlDataFactory.getOWLAnnotationProperty(name, prefixManager);
 
 		OWLAxiom declareaxiom = owlDataFactory.getOWLDeclarationAxiom(annoprop);
 
@@ -607,7 +616,7 @@ public class IntegrateOntologyWithProtege {
 
 	private OWLAxiom createOWLDataProperty(String name) {
 
-		OWLDataProperty dataprop = owlDataFactory.getOWLDataProperty(name, pm);
+		OWLDataProperty dataprop = owlDataFactory.getOWLDataProperty(name, prefixManager);
 
 		OWLAxiom declareaxiom = owlDataFactory.getOWLDeclarationAxiom(dataprop);
 
@@ -617,7 +626,7 @@ public class IntegrateOntologyWithProtege {
 
 	private OWLAxiom createOWLObjectProperty(String name) {
 
-		OWLObjectProperty objprop = owlDataFactory.getOWLObjectProperty(name, pm);
+		OWLObjectProperty objprop = owlDataFactory.getOWLObjectProperty(name, prefixManager);
 		OWLAxiom declareaxiom = owlDataFactory.getOWLDeclarationAxiom(objprop);
 
 		return declareaxiom;
@@ -626,7 +635,7 @@ public class IntegrateOntologyWithProtege {
 
 	private OWLAxiom createOWLClass(String name) {
 
-		OWLClass newClass = owlDataFactory.getOWLClass(name, pm);
+		OWLClass newClass = owlDataFactory.getOWLClass(name, prefixManager);
 
 		OWLAxiom declareaxiom = owlDataFactory.getOWLDeclarationAxiom(newClass);
 
@@ -636,7 +645,7 @@ public class IntegrateOntologyWithProtege {
 
 	private OWLAxiom createOWLNamedIndividual(String name) {
 
-		OWLNamedIndividual newIndividual = owlDataFactory.getOWLNamedIndividual(name, pm);
+		OWLNamedIndividual newIndividual = owlDataFactory.getOWLNamedIndividual(name, prefixManager);
 
 		OWLAxiom declareaxiom = owlDataFactory.getOWLDeclarationAxiom(newIndividual);
 
@@ -705,7 +714,7 @@ public class IntegrateOntologyWithProtege {
 	 */
 	private OWLDatatype getCustomOWLDataType(String value) {
 		// if custom datatype what will happen ?
-		OWLDatatype dt = owlDataFactory.getOWLDatatype(value, pm);
+		OWLDatatype dt = owlDataFactory.getOWLDatatype(value, prefixManager);
 		// System.out.println(dt);
 		return dt;
 	}
@@ -750,9 +759,9 @@ public class IntegrateOntologyWithProtege {
 		// Generate DisJointOf Axioms
 
 		Map<mxCell, ArrayList<mxCell>> parentToChildMap = getDisJointtedCells();
-		if (parentToChildMap != null) {
-			getDisJointOfAxioms(parentToChildMap);
-		}
+		// if (parentToChildMap != null) {
+		createDisJointOfAxioms(parentToChildMap);
+		// }
 		editor.status("Generated Domain, Range, Existential and Cardinality axioms successfully");
 		return true;
 	}
@@ -773,33 +782,34 @@ public class IntegrateOntologyWithProtege {
 			for (String val : multValues) {
 
 				OWLObjectProperty objprop = owlDataFactory
-						.getOWLObjectProperty(getCellValueAsOWLCompatibleName(edge, val), pm);
+						.getOWLObjectProperty(getCellValueAsOWLCompatibleName(edge, val), prefixManager);
 				if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
 						&& dest.getEntityType().getName().equals(CustomEntityType.CLASS.getName())) {
 
 					getClass2ObjectProperty2ClassAxioms(
-							owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(src), pm), objprop,
-							owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(dest), pm));
+							owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(src), prefixManager), objprop,
+							owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(dest), prefixManager));
 
 				} else if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
 						&& dest.getEntityType().getName().equals(CustomEntityType.NAMED_INDIVIDUAL.getName())) {
 
 					getClass2ObjectProperty2IndividualAxioms(
-							owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(src), pm), objprop,
-							owlDataFactory.getOWLNamedIndividual(getCellValueAsOWLCompatibleName(dest), pm));
+							owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(src), prefixManager), objprop,
+							owlDataFactory.getOWLNamedIndividual(getCellValueAsOWLCompatibleName(dest), prefixManager));
 
 				} else {
 					// error. it can't occur. validation should be done
 				}
 			}
 		} else if (edge.getEntityType().getName().equals(CustomEntityType.DATA_PROPERTY.getName())) {
-			OWLDataProperty dataprop = owlDataFactory.getOWLDataProperty(getCellValueAsOWLCompatibleName(edge), pm);
+			OWLDataProperty dataprop = owlDataFactory.getOWLDataProperty(getCellValueAsOWLCompatibleName(edge),
+					prefixManager);
 
 			if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
 					&& dest.getEntityType().getName().equals(CustomEntityType.LITERAL.getName())) {
 
 				getClass2DataProperty2LiteralAxioms(
-						owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(src), pm), dataprop,
+						owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(src), prefixManager), dataprop,
 						getOWLLiteral(dest));
 			} else if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
 					&& dest.getEntityType().getName().equals(CustomEntityType.DATATYPE.getName())) {
@@ -807,15 +817,16 @@ public class IntegrateOntologyWithProtege {
 				// get OWLDataType.. from getCustomOWLDataType
 				OWLDatatype owlDatatype = getCustomOWLDataType(getCellValueAsOWLCompatibleName(dest));
 				getClass2DataProperty2DataTypeAxioms(
-						owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(src), pm), dataprop, owlDatatype);
+						owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(src), prefixManager), dataprop,
+						owlDatatype);
 			}
 
 		} else if (edge.getEntityType().getName().equals(CustomEntityType.RDFTYPE.getName())) {
 			if (src.getEntityType().getName().equals(CustomEntityType.NAMED_INDIVIDUAL.getName())
 					&& dest.getEntityType().getName().equals(CustomEntityType.CLASS.getName())) {
 				getInvdividual2RDFType2ClassAxioms(
-						owlDataFactory.getOWLNamedIndividual(getCellValueAsOWLCompatibleName(src), pm),
-						owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(dest), pm));
+						owlDataFactory.getOWLNamedIndividual(getCellValueAsOWLCompatibleName(src), prefixManager),
+						owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(dest), prefixManager));
 			} else {
 				// error. it can't occur. validation should be done
 			}
@@ -824,8 +835,8 @@ public class IntegrateOntologyWithProtege {
 			if (src.getEntityType().getName().equals(CustomEntityType.CLASS.getName())
 					&& dest.getEntityType().getName().equals(CustomEntityType.CLASS.getName())) {
 				getClass2RDFSSubClassOf2ClassAxioms(
-						owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(src), pm),
-						owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(dest), pm));
+						owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(src), prefixManager),
+						owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(dest), prefixManager));
 			} else {
 				// error. it can't occur. validation should be done
 			}
@@ -877,7 +888,7 @@ public class IntegrateOntologyWithProtege {
 		// N.B: Custom literal has also URI as---
 		// owl:Custom
 
-		OWLDatatype odt = owlDataFactory.getOWLDatatype(getLiteralTypeValue(cell), pm);
+		OWLDatatype odt = owlDataFactory.getOWLDatatype(getLiteralTypeValue(cell), prefixManager);
 		OWLLiteral literal = owlDataFactory.getOWLLiteral(getLiteralCellValue(cell), odt);
 
 		return literal;
@@ -1178,13 +1189,29 @@ public class IntegrateOntologyWithProtege {
 
 	}
 
-	private void getDisJointOfAxioms(Map<mxCell, ArrayList<mxCell>> parentToChildMap) {
-		// Set<OWLAxiom> tmpaxioms = new HashSet<OWLAxiom>();
+	private void createDisJointOfAxioms(Map<mxCell, ArrayList<mxCell>> parentToChildMap) {
+
+		// set disjointof with respect to subclassof edges in graph
 		editor.status("Creating Disjointof axioms");
-		for (Map.Entry<mxCell, ArrayList<mxCell>> eachPair : parentToChildMap.entrySet()) {
+		if (parentToChildMap != null) {
+			for (Map.Entry<mxCell, ArrayList<mxCell>> eachPair : parentToChildMap.entrySet()) {
+				Set<OWLClass> owlClasses = new HashSet<OWLClass>();
+				for (mxCell eachChild : eachPair.getValue()) {
+					OWLClass class1 = owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(eachChild),
+							prefixManager);
+					owlClasses.add(class1);
+				}
+				OWLAxiom axiom;
+				axiom = owlDataFactory.getOWLDisjointClassesAxiom(owlClasses);
+				disJointOfAxioms.add(axiom);
+			}
+		}
+		// set disjointof with respect to owl:Thing
+		ArrayList<mxCell> defaultDisjointedClasses = getOWLClassesFromGraph();
+		if (defaultDisjointedClasses.size() > 1) {
 			Set<OWLClass> owlClasses = new HashSet<OWLClass>();
-			for (mxCell eachChild : eachPair.getValue()) {
-				OWLClass class1 = owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(eachChild), pm);
+			for (mxCell eachChild : defaultDisjointedClasses) {
+				OWLClass class1 = owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(eachChild), prefixManager);
 				owlClasses.add(class1);
 			}
 			OWLAxiom axiom;
@@ -1192,6 +1219,46 @@ public class IntegrateOntologyWithProtege {
 			disJointOfAxioms.add(axiom);
 		}
 
+	}
+
+	/*
+	 * Logic 1. Get All Class 2. List those Classes which Don't have subClassOf
+	 * outgoing edge
+	 */
+	private ArrayList<mxCell> getOWLClassesFromGraph() {
+		Object[] v = graph.getChildVertices(graph.getDefaultParent());
+
+		ArrayList<mxCell> classList = new ArrayList<mxCell>();
+
+		for (Object vertex : v) {
+			if (vertex instanceof mxCell) {
+				mxCell cell = (mxCell) vertex;
+				if (cell.getEntityType().equals(CustomEntityType.CLASS)) {
+
+					boolean shouldInclude = true;
+
+					Object[] outGoingEdges = graph.getEdges(cell, null, false, true, true, false);
+
+					for (Object edge : outGoingEdges) {
+						if (edge instanceof mxCell) {
+							mxCell edgeCell = (mxCell) edge;
+							if (edgeCell.getEntityType().equals(CustomEntityType.RDFSSUBCLASS_OF)) {
+								shouldInclude = false;
+								break;
+							}
+						}
+					}
+					if (shouldInclude)
+						classList.add(cell);
+				}
+			}
+		}
+		return classList;
+	}
+
+	private boolean isNotChildBySubClassOf(mxCell cell) {
+
+		return true;
 	}
 
 	// @formatter:off
