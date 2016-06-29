@@ -1265,8 +1265,10 @@ public class IntegrateOntologyWithProtege {
 					}
 				}
 				OWLAxiom axiom;
-				axiom = owlDataFactory.getOWLDisjointClassesAxiom(owlClasses);
-				disJointOfAxioms.add(axiom);
+				if (owlClasses.size() > 1) {
+					axiom = owlDataFactory.getOWLDisjointClassesAxiom(owlClasses);
+					disJointOfAxioms.add(axiom);
+				}
 			}
 		}
 		// set disjointof with respect to owl:Thing
