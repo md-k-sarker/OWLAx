@@ -1,6 +1,8 @@
 package edu.wsu.dase;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -21,6 +23,8 @@ import org.protege.editor.owl.model.find.OWLEntityFinder;
 import org.protege.editor.owl.ui.action.ShowUsageAction;
 import org.protege.editor.owl.ui.prefix.PrefixMapperTables;
 import org.protege.editor.owl.ui.prefix.PrefixUtilities;
+import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxOWLObjectRendererImpl;
+import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxPrefixNameShortFormProvider;
 import org.semanticweb.owlapi.model.AddAxiom;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAxiom;
@@ -115,7 +119,7 @@ public class IntegrateOntologyWithProtege {
 	 * @return the disJointOfAxioms
 	 */
 	public ArrayList<OWLAxiom> getDisJointOfAxioms() {
-		return disJointOfAxioms;
+		return removeDuplicateAndSort(disJointOfAxioms);
 	}
 
 	/**
@@ -126,8 +130,41 @@ public class IntegrateOntologyWithProtege {
 		this.disJointOfAxioms = disJointOfAxioms;
 	}
 
+	static ManchesterOWLSyntaxOWLObjectRendererImpl rendering = new ManchesterOWLSyntaxOWLObjectRendererImpl();
+
+	/**
+	 * First removing duplicates and then sorting
+	 * 
+	 * @param axiomArray
+	 * @return
+	 */
+	private ArrayList<OWLAxiom> removeDuplicateAndSort(ArrayList<OWLAxiom> axiomArray) {
+		ArrayList<OWLAxiom> sortedAxiomArray = new ArrayList<>();
+		Set<OWLAxiom> axiomSet = new HashSet<>();
+		axiomSet.addAll(axiomArray);
+		sortedAxiomArray.addAll(axiomSet);
+
+		// before sorting it uses manchester encoding  
+		Collections.sort(sortedAxiomArray, new Comparator<OWLAxiom>() {
+
+			@Override
+			public int compare(OWLAxiom o1, OWLAxiom o2) {
+				// TODO Auto-generated method stub
+
+				String a1 = rendering.render(o1);
+				String a2 = rendering.render(o2);
+
+				return a1.compareTo(a2);
+			}
+
+		});
+
+		return sortedAxiomArray;
+	}
+
 	public ArrayList<OWLAxiom> getDeclarationAxioms() {
-		return declarationAxioms;
+
+		return removeDuplicateAndSort(declarationAxioms);
 	}
 
 	public void setDeclarationAxioms(ArrayList<OWLAxiom> declarationAxioms) {
@@ -135,7 +172,7 @@ public class IntegrateOntologyWithProtege {
 	}
 
 	public ArrayList<OWLAxiom> getDomainAndRangeAxioms() {
-		return domainAndRangeAxioms;
+		return removeDuplicateAndSort(domainAndRangeAxioms);
 	}
 
 	public void setDomainAndRangeAxioms(ArrayList<OWLAxiom> rangeAndDomainAxioms) {
@@ -143,7 +180,7 @@ public class IntegrateOntologyWithProtege {
 	}
 
 	public ArrayList<OWLAxiom> getExistentialAxioms() {
-		return existentialAxioms;
+		return removeDuplicateAndSort(existentialAxioms);
 	}
 
 	public void setExistentialAxioms(ArrayList<OWLAxiom> existentialAxioms) {
@@ -151,7 +188,7 @@ public class IntegrateOntologyWithProtege {
 	}
 
 	public ArrayList<OWLAxiom> getCardinalityAxioms() {
-		return cardinalityAxioms;
+		return removeDuplicateAndSort(cardinalityAxioms);
 	}
 
 	public void setCardinalityAxioms(ArrayList<OWLAxiom> cardinalityAxioms) {
@@ -159,7 +196,7 @@ public class IntegrateOntologyWithProtege {
 	}
 
 	public ArrayList<OWLAxiom> getSubClassOfAxioms() {
-		return subClassOfAxioms;
+		return removeDuplicateAndSort(subClassOfAxioms);
 	}
 
 	public void setSubClassOfAxioms(ArrayList<OWLAxiom> subClassOfAxioms) {
@@ -167,7 +204,7 @@ public class IntegrateOntologyWithProtege {
 	}
 
 	public ArrayList<OWLAxiom> getClassAssertionAxioms() {
-		return classAssertionAxioms;
+		return removeDuplicateAndSort(classAssertionAxioms);
 	}
 
 	public void setClassAssertionAxioms(ArrayList<OWLAxiom> classAssertionAxiom) {
@@ -538,6 +575,11 @@ public class IntegrateOntologyWithProtege {
 			ontologyBaseURI = owlOntologyID.getOntologyIRI().get().toQuotedString();
 			ontologyBaseURI = ontologyBaseURI.substring(1, ontologyBaseURI.length() - 1) + "#";
 			editor.getGraphComponent().setOWLFileTitle(ontologyBaseURI);
+
+			// set renderings for sorting
+			ManchesterOWLSyntaxPrefixNameShortFormProvider shortFormProvider = new ManchesterOWLSyntaxPrefixNameShortFormProvider(
+					activeOntology);
+			rendering.setShortFormProvider(shortFormProvider);
 
 		}
 
@@ -1237,7 +1279,6 @@ public class IntegrateOntologyWithProtege {
 
 					boolean shouldInclude = true;
 
-					
 					Object[] outGoingEdges = graph.getEdges(cell, null, false, true, true, false);
 
 					for (Object edge : outGoingEdges) {

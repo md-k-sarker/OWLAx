@@ -10,7 +10,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
@@ -30,6 +33,7 @@ import javax.swing.tree.TreePath;
 import org.coode.owlapi.manchesterowlsyntax.ManchesterOWLSyntaxOntologyFormat;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxOWLObjectRendererImpl;
+import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxPrefixNameShortFormProvider;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -91,7 +95,7 @@ public class AxiomsDialog extends JDialog {
 
 	public AxiomsDialog(IntegrateOntologyWithProtege integrateOntologyWithProtege, JFrame parent) {
 		super(parent);
-		//JOptionPane.showMessageDialog(parent, "starting");
+		// JOptionPane.showMessageDialog(parent, "starting");
 		this.parent = parent;
 		this.selectedNewAxioms = new ArrayList<OWLAxiom>();
 		this.selectedExistingAxioms = new ArrayList<OWLAxiom>();
@@ -99,6 +103,11 @@ public class AxiomsDialog extends JDialog {
 		this.isClickedOK = false;
 
 		new UserObjectforTreeView(parent, integrateOntologyWithProtege.getActiveOntology());
+		
+		//for sorting rendering is accomplished
+		ManchesterOWLSyntaxPrefixNameShortFormProvider shortFormProvider = new ManchesterOWLSyntaxPrefixNameShortFormProvider(
+				this.intgOntWProtege.getActiveOntology());
+		rendering.setShortFormProvider(shortFormProvider);
 
 		initUI();
 		showUI();
@@ -279,6 +288,8 @@ public class AxiomsDialog extends JDialog {
 	// return existingAxiomsRoot;
 	// }
 
+	static ManchesterOWLSyntaxOWLObjectRendererImpl rendering = new ManchesterOWLSyntaxOWLObjectRendererImpl();
+	
 	public DefaultMutableTreeNode getNewAxiomsRoot() {
 		newAxiomsRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, "Select All"));
 		DefaultMutableTreeNode subRoot;
@@ -299,6 +310,7 @@ public class AxiomsDialog extends JDialog {
 		// SubClassOf Axiom
 		if (intgOntWProtege.getSubClassOfAxioms() != null && !intgOntWProtege.getSubClassOfAxioms().isEmpty()) {
 			subRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, subClassOfAxiomTypeText));
+
 			for (OWLAxiom axiom : intgOntWProtege.getSubClassOfAxioms()) {
 				childNode = new DefaultMutableTreeNode(new UserObjectforTreeView(true, axiom));
 				subRoot.add(childNode);
@@ -361,7 +373,21 @@ public class AxiomsDialog extends JDialog {
 			if (intgOntWProtege.getActiveOntology().getAxioms().size() > 0) {
 				existingAxiomsRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, otherAxiomTypeText));
 
-				for (OWLAxiom axiom : intgOntWProtege.getActiveOntology().getAxioms()) {
+				// sort existing axioms before showing
+				ArrayList<OWLAxiom> existingAxioms = new ArrayList<>();
+				existingAxioms.addAll(intgOntWProtege.getActiveOntology().getAxioms());
+				Collections.sort(existingAxioms, new Comparator<OWLAxiom>() {
+
+					@Override
+					public int compare(OWLAxiom o1, OWLAxiom o2) {
+						String a1 = rendering.render(o1);
+						String a2 = rendering.render(o2);
+
+						return a1.compareTo(a2);
+					}
+				});
+
+				for (OWLAxiom axiom : existingAxioms) {
 
 					// if not contain in existing list only then add here---
 
