@@ -383,7 +383,7 @@ public class AxiomsDialog extends JDialog {
 						String a1 = rendering.render(o1);
 						String a2 = rendering.render(o2);
 
-						return a1.compareTo(a2);
+						return a1.compareToIgnoreCase(a2);
 					}
 				});
 
