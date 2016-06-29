@@ -24,6 +24,15 @@
 			<email>mdkamruzzamansarker@gmail.com</email>
 		</developer>
 	</developers>
+	
+	<scm>
+		<connection>scm:git:git@github.com:md-k-sarker/OWLAx.git</connection>
+		<developerConnection>scm:git:git@github.com:md-k-sarker/OWLAx.git</developerConnection>
+		<url>https://github.com/md-k-sarker/OWLAx</url>
+	  <tag>HEAD</tag>
+	</scm>
+	
+	
 	<dependencies>
 
 		<dependency>

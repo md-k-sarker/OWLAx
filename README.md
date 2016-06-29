@@ -4,3 +4,58 @@ OWL Axiomatizer
 For details please visit: http://dase.cs.wright.edu/content/ontology-axiomatization-support
 
 Ontology Design Pattern Plugin for Desktop Protege 5.0+
+
+
+##Installation
+1. Download OWLAx-1.x.x.jar from plugin folder
+2. Put the jar file inside plugins folder of Protege.
+
+##Usage
+1. Start Protege
+2. Select OWLAx Tab from
+	 Window -> Tabs -> OWLAx
+3. Start Using OWLAx Plugin
+
+
+##Capabilities of OWLAx
+<ol>
+<li> Gives user a graphical approach(rather than using whiteboard or flipcharts) to first design a conceptual overview of ontology modules in the form of class diagram. 
+<br>
+<li> While creating class diagrams user can save and open the diagram as png file.
+<li> It give options to specify below mentioned triples as graphical user interface--
+<ul>	<li>class(A)-----------objectProperty(P)----------class(B)
+	<li>class(A)-----------objectProperty(P)----------individual(B)
+	<li>class(A)-----------dataProperty(P)------------literal(B)
+	<li>class(A)-----------dataProperty(P)------------datatype(B)
+	<li>class(A)-----------rdfs:subclassof------------class(B)
+	<li>individual(A)------rdf:type-------------------class(B)
+	</ul>
+<li> It generates following type of axioms from the graph(diagram).
+<ul>
+	<li>  Scoped Domain and Range
+	<li>  Existential 
+	<li>  Cardinality
+	<li>  Disjointof
+	<li>  subClassof
+	<li>  Class Assertion
+	</ul>
+<li> After Creating Axioms it shows the candidate axioms and existing axioms(if any) of the active ontology to the user.
+<li> User can choose which axioms he want to generate. 
+<li> After selecting the axioms only selected axioms will be generated and be integrated with protege. 
+</ol>
+
+Other features:
+* It supports custom data type
+* It supports specifying prefix.  
+ 	Steps : 
+<ol><li>First define a prefix in protege
+ <li>Then write entity name as prefixName : entityName 
+ </ol>
+
+     
+##Current Limitations:
+1. It can't create complex axioms.
+2. It can't create axioms from reflexivity, transitional relation etc.
+3. It doesn't support custom cardinality. Currently it creates maxCardinality 1.
+
+

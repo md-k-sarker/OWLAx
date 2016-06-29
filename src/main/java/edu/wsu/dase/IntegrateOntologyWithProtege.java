@@ -1237,6 +1237,7 @@ public class IntegrateOntologyWithProtege {
 
 					boolean shouldInclude = true;
 
+					
 					Object[] outGoingEdges = graph.getEdges(cell, null, false, true, true, false);
 
 					for (Object edge : outGoingEdges) {
