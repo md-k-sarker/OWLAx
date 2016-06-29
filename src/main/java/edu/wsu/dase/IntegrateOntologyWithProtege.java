@@ -223,7 +223,7 @@ public class IntegrateOntologyWithProtege {
 
 	private Map<mxCell, ArrayList<mxCell>> getDisJointtedCells() {
 
-		Object[] e = graph.getChildEdges(graph.getDefaultParent());
+		Object[] e = editor.getGraphComponent().getGraph().getChildEdges(graph.getDefaultParent());
 		ArrayList<mxCell> parentList = new ArrayList<mxCell>();
 		ArrayList<mxCell> edgeList = new ArrayList<mxCell>();
 		Map<mxCell, ArrayList<mxCell>> parentToChildMap = new HashMap<mxCell, ArrayList<mxCell>>();
@@ -1273,10 +1273,15 @@ public class IntegrateOntologyWithProtege {
 		if (parentToChildMap != null) {
 			for (Map.Entry<mxCell, ArrayList<mxCell>> eachPair : parentToChildMap.entrySet()) {
 				Set<OWLClass> owlClasses = new HashSet<OWLClass>();
+
 				for (mxCell eachChild : eachPair.getValue()) {
-					OWLClass class1 = owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(eachChild),
-							prefixManager);
-					owlClasses.add(class1);
+
+					if (!(getCellValueAsOWLCompatibleName(eachChild).equals(owlThingasStringName))) {
+
+						OWLClass class1 = owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(eachChild),
+								prefixManager);
+						owlClasses.add(class1);
+					}
 				}
 				OWLAxiom axiom;
 				axiom = owlDataFactory.getOWLDisjointClassesAxiom(owlClasses);
@@ -1284,16 +1289,24 @@ public class IntegrateOntologyWithProtege {
 			}
 		}
 		// set disjointof with respect to owl:Thing
-		ArrayList<mxCell> defaultDisjointedClasses = getOWLClassesFromGraph();
+		ArrayList<mxCell> defaultDisjointedClasses = new ArrayList<>();
+		defaultDisjointedClasses = getOWLClassesFromGraph();
 		if (defaultDisjointedClasses.size() > 1) {
 			Set<OWLClass> owlClasses = new HashSet<OWLClass>();
 			for (mxCell eachChild : defaultDisjointedClasses) {
-				OWLClass class1 = owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(eachChild), prefixManager);
-				owlClasses.add(class1);
+
+				if (!(getCellValueAsOWLCompatibleName(eachChild).equals(owlThingasStringName))) {
+
+					OWLClass class1 = owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(eachChild),
+							prefixManager);
+					owlClasses.add(class1);
+				}
 			}
 			OWLAxiom axiom;
-			axiom = owlDataFactory.getOWLDisjointClassesAxiom(owlClasses);
-			disJointOfAxioms.add(axiom);
+			if (owlClasses.size() > 1) {
+				axiom = owlDataFactory.getOWLDisjointClassesAxiom(owlClasses);
+				disJointOfAxioms.add(axiom);
+			}
 		}
 
 	}
@@ -1314,7 +1327,10 @@ public class IntegrateOntologyWithProtege {
 
 					boolean shouldInclude = true;
 
-					Object[] outGoingEdges = graph.getEdges(cell, null, false, true, true, false);
+					// outgoing edges not always giving correct result need to
+					// FIX
+					Object[] outGoingEdges = editor.getGraphComponent().getGraph().getEdges(cell, null, false, true,
+							true, false);
 
 					for (Object edge : outGoingEdges) {
 						if (edge instanceof mxCell) {
