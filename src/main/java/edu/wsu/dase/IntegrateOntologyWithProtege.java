@@ -264,16 +264,6 @@ public class IntegrateOntologyWithProtege {
 			}
 		}
 
-		// for (Map.Entry<mxCell, ArrayList<mxCell>> pair :
-		// parentToChildMap.entrySet()) {
-		// System.out.println("key: " + pair.getKey());
-		// ArrayList<mxCell> childList = pair.getValue();
-		// for (mxCell eachCell : childList) {
-		// System.out.println(eachCell.getValue());
-		// }
-		// System.out.println("\n\n\n\n");
-		// }
-
 		if (parentToChildMap.size() > 0) {
 			return parentToChildMap;
 		} else {
@@ -1318,8 +1308,6 @@ public class IntegrateOntologyWithProtege {
 
 					boolean shouldInclude = true;
 
-					// outgoing edges not always giving correct result need to
-					// FIX
 					Object[] outGoingEdges = editor.getGraphComponent().getGraph().getEdges(cell, null, false, true,
 							true, false);
 
