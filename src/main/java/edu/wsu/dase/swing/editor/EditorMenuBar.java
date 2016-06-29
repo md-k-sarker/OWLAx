@@ -1,37 +1,26 @@
 package edu.wsu.dase.swing.editor;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
-import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
 
-import com.mxgraph.analysis.StructuralException;
-import com.mxgraph.analysis.mxGraphProperties;
-import com.mxgraph.analysis.mxGraphProperties.GraphType;
-import com.mxgraph.costfunction.mxCostFunction;
-import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.util.mxGraphActions;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxResources;
 import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
 
 import edu.wsu.dase.swing.editor.EditorActions.AlignCellsAction;
 import edu.wsu.dase.swing.editor.EditorActions.AutosizeAction;
 import edu.wsu.dase.swing.editor.EditorActions.BackgroundAction;
 import edu.wsu.dase.swing.editor.EditorActions.BackgroundImageAction;
 import edu.wsu.dase.swing.editor.EditorActions.ColorAction;
-import edu.wsu.dase.swing.editor.EditorActions.ExitAction;
 import edu.wsu.dase.swing.editor.EditorActions.GridColorAction;
 import edu.wsu.dase.swing.editor.EditorActions.GridStyleAction;
 import edu.wsu.dase.swing.editor.EditorActions.HistoryAction;
@@ -39,26 +28,24 @@ import edu.wsu.dase.swing.editor.EditorActions.KeyValueAction;
 import edu.wsu.dase.swing.editor.EditorActions.NewAction;
 import edu.wsu.dase.swing.editor.EditorActions.OpenAction;
 import edu.wsu.dase.swing.editor.EditorActions.PageBackgroundAction;
-import edu.wsu.dase.swing.editor.EditorActions.PageSetupAction;
 import edu.wsu.dase.swing.editor.EditorActions.PrintAction;
 import edu.wsu.dase.swing.editor.EditorActions.PromptPropertyAction;
 import edu.wsu.dase.swing.editor.EditorActions.PromptValueAction;
+import edu.wsu.dase.swing.editor.EditorActions.RemoveExistingAxiomsAction;
 import edu.wsu.dase.swing.editor.EditorActions.SaveAction;
 import edu.wsu.dase.swing.editor.EditorActions.SaveOntologyAction;
 import edu.wsu.dase.swing.editor.EditorActions.ScaleAction;
 import edu.wsu.dase.swing.editor.EditorActions.SetLabelPositionAction;
 import edu.wsu.dase.swing.editor.EditorActions.ToggleAction;
+import edu.wsu.dase.swing.editor.EditorActions.ToggleCardinalityAxiom;
+import edu.wsu.dase.swing.editor.EditorActions.ToggleDomainAxiom;
+import edu.wsu.dase.swing.editor.EditorActions.ToggleExistentialAxiom;
 import edu.wsu.dase.swing.editor.EditorActions.ToggleGridItem;
 import edu.wsu.dase.swing.editor.EditorActions.ToggleOutlineItem;
 import edu.wsu.dase.swing.editor.EditorActions.TogglePropertyItem;
+import edu.wsu.dase.swing.editor.EditorActions.ToggleRangeAxiom;
 import edu.wsu.dase.swing.editor.EditorActions.ToggleRulersItem;
 import edu.wsu.dase.swing.editor.EditorActions.ZoomPolicyAction;
-import edu.wsu.dase.swing.editor.EditorActions.ToggleCardinalityAxiom;
-import edu.wsu.dase.swing.editor.EditorActions.ToggleDomainAxiom;
-import edu.wsu.dase.swing.editor.EditorActions.ToggleRangeAxiom;
-import edu.wsu.dase.swing.editor.EditorActions.ToggleExistentialAxiom;
-import edu.wsu.dase.swing.editor.EditorActions.RemoveExistingAxiomsAction;
-import edu.wsu.dase.swing.editor.EditorActions.PromptPropertyActionForCardinality;
 
 
 public class EditorMenuBar extends JMenuBar

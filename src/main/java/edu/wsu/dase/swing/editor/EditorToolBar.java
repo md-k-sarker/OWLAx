@@ -44,7 +44,6 @@ import edu.wsu.dase.swing.editor.EditorActions.FontStyleAction;
 import edu.wsu.dase.swing.editor.EditorActions.HistoryAction;
 import edu.wsu.dase.swing.editor.EditorActions.KeyValueAction;
 import edu.wsu.dase.swing.editor.EditorActions.NewAction;
-import edu.wsu.dase.swing.editor.EditorActions.OpenAction;
 import edu.wsu.dase.swing.editor.EditorActions.PrintAction;
 import edu.wsu.dase.swing.editor.EditorActions.SaveAction;
 import edu.wsu.dase.util.CustomEntityType;

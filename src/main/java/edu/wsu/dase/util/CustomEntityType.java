@@ -1,35 +1,5 @@
 package edu.wsu.dase.util;
 
-import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.OWL_ANNOTATION_PROPERTY;
-import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.OWL_CLASS;
-import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.OWL_DATA_PROPERTY;
-import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.OWL_NAMED_INDIVIDUAL;
-import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.OWL_OBJECT_PROPERTY;
-import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.RDFS_DATATYPE;
-import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.RDFS_LITERAL;
-import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.RDFS_SUBCLASS_OF;
-import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.RDF_TYPE;
-
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import org.semanticweb.owlapi.model.HasIRI;
-import org.semanticweb.owlapi.model.HasPrefixedName;
-import org.semanticweb.owlapi.model.HasShortForm;
-import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLAnnotationProperty;
-import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLDataProperty;
-import org.semanticweb.owlapi.model.OWLDatatype;
-import org.semanticweb.owlapi.model.OWLEntity;
-import org.semanticweb.owlapi.model.OWLNamedIndividual;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
-import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
-
 /**
  * Represents the different types of OWL 2 Entities.
  * 

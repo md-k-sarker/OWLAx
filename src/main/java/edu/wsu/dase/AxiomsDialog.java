@@ -3,48 +3,28 @@ package edu.wsu.dase;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
-import org.coode.owlapi.manchesterowlsyntax.ManchesterOWLSyntaxOntologyFormat;
-import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxOWLObjectRendererImpl;
 import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxPrefixNameShortFormProvider;
-import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLClassExpression;
-import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.model.OWLOntologyFormat;
-import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
 public class AxiomsDialog extends JDialog {
 
@@ -95,7 +75,6 @@ public class AxiomsDialog extends JDialog {
 
 	public AxiomsDialog(IntegrateOntologyWithProtege integrateOntologyWithProtege, JFrame parent) {
 		super(parent);
-		// JOptionPane.showMessageDialog(parent, "starting");
 		this.parent = parent;
 		this.selectedNewAxioms = new ArrayList<OWLAxiom>();
 		this.selectedExistingAxioms = new ArrayList<OWLAxiom>();
@@ -170,16 +149,6 @@ public class AxiomsDialog extends JDialog {
 		pnl2.add(cancelBtn, BorderLayout.EAST);
 		bottomPnl.add(pnl2, BorderLayout.EAST);
 
-		// splitPane
-		// splitPane = new JSplitPane();
-		// splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-		// splitPane.setResizeWeight(SPLIT_PANE_RESIZE_WEIGHT);
-
-		// JScrollPane scrollPaneNew = new JScrollPane();
-		// JScrollPane scrollPaneExisting = new JScrollPane();
-
-		// splitPane.setTopComponent(getNewAxiomsPnl());
-		// splitPane.setBottomComponent(getExistingAxiomsPnl());
 		mainPnl.add(getNewAxiomsPnl());
 
 		this.add(mainPnl, BorderLayout.CENTER);
@@ -201,30 +170,12 @@ public class AxiomsDialog extends JDialog {
 	private void extractSelectedAxioms() {
 		TreePath[] paths;
 
-		// existing axioms
-		// paths = existingAxiomsTree.getCheckedPaths();
-		// for (TreePath tp : paths) {
-		// DefaultMutableTreeNode eachNode = (DefaultMutableTreeNode)
-		// tp.getLastPathComponent();
-		// if (eachNode.getUserObject() instanceof UserObjectforTreeView) {
-		//
-		// UserObjectforTreeView objTV = (UserObjectforTreeView)
-		// eachNode.getUserObject();
-		// if (objTV.isAxiom()) {
-		// selectedExistingAxioms.add(objTV.getAxiom());
-		// }
-		// }
-		// }
-
 		// new axioms
 		paths = newAxiomsTree.getCheckedPaths();
 		for (TreePath tp : paths) {
 			DefaultMutableTreeNode eachNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
 			if (eachNode.getUserObject() instanceof UserObjectforTreeView) {
-				// System.out.println("outside: can be done");
-				// System.out.println(
-				// eachNode.getUserObject() + "\t" + ((UserObjectforTreeView)
-				// eachNode.getUserObject()).isAxiom());
+
 				UserObjectforTreeView objTV = (UserObjectforTreeView) eachNode.getUserObject();
 				if (objTV.isAxiom()) {
 					selectedNewAxioms.add(objTV.getAxiom());
@@ -233,25 +184,6 @@ public class AxiomsDialog extends JDialog {
 		}
 
 	}
-
-	// private JPanel getExistingAxiomsPnl() {
-	// existingAxiomsPnl = new JPanel();
-	// existingAxiomsPnl.setLayout(new BorderLayout());
-	//
-	// JLabel lblExistingAxioms = new JLabel(existingAxiomsLblText);
-	// lblExistingAxioms.setBorder(BorderFactory.createLineBorder(Color.orange,
-	// 2));
-	// // lblExistingAxioms.setAlignmentX(Component.CENTER_ALIGNMENT);
-	// lblExistingAxioms.setHorizontalAlignment(SwingConstants.CENTER);
-	// existingAxiomsPnl.add(lblExistingAxioms, BorderLayout.NORTH);
-	//
-	// existingAxiomsTree = new JCheckBoxTree(getExistingAxiomsRoot());
-	// existingAxiomsScroll = new JScrollPane(existingAxiomsTree);
-	//
-	// existingAxiomsPnl.add(existingAxiomsScroll, BorderLayout.CENTER);
-	//
-	// return existingAxiomsPnl;
-	// }
 
 	private JPanel getNewAxiomsPnl() {
 		newAxiomsPnl = new JPanel();
@@ -270,42 +202,12 @@ public class AxiomsDialog extends JDialog {
 		return newAxiomsPnl;
 	}
 
-	// public DefaultMutableTreeNode getExistingAxiomsRoot() {
-	//
-	// existingAxiomsRoot = new DefaultMutableTreeNode(new
-	// UserObjectforTreeView(false, "Select All"));
-	// DefaultMutableTreeNode childNode;
-	//
-	// if (intgOntWProtege.getActiveOntology() != null) {
-	//
-	// for (OWLAxiom axiom : intgOntWProtege.getActiveOntology().getAxioms()) {
-	// childNode = new DefaultMutableTreeNode(new UserObjectforTreeView(true,
-	// axiom));
-	// existingAxiomsRoot.add(childNode);
-	// }
-	// }
-	//
-	// return existingAxiomsRoot;
-	// }
-
 	static ManchesterOWLSyntaxOWLObjectRendererImpl rendering = new ManchesterOWLSyntaxOWLObjectRendererImpl();
 	
 	public DefaultMutableTreeNode getNewAxiomsRoot() {
 		newAxiomsRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, "Select All"));
 		DefaultMutableTreeNode subRoot;
 		DefaultMutableTreeNode childNode;
-
-		// Declaration Axiom
-		// subRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false,
-		// declarationAxiomTypeText));
-		// if (intgOntWProtege.getDeclarationAxioms() != null) {
-		// for (OWLAxiom axiom : intgOntWProtege.getDeclarationAxioms()) {
-		// childNode = new DefaultMutableTreeNode(new
-		// UserObjectforTreeView(true, axiom));
-		// subRoot.add(childNode);
-		// }
-		// }
-		// newAxiomsRoot.add(subRoot);
 
 		// SubClassOf Axiom
 		if (intgOntWProtege.getSubClassOfAxioms() != null && !intgOntWProtege.getSubClassOfAxioms().isEmpty()) {
@@ -390,7 +292,6 @@ public class AxiomsDialog extends JDialog {
 				for (OWLAxiom axiom : existingAxioms) {
 
 					// if not contain in existing list only then add here---
-
 					if (!isAlreadyListed(axiom)) {
 						childNode = new DefaultMutableTreeNode(new UserObjectforTreeView(true, axiom));
 						existingAxiomsRoot.add(childNode);
@@ -468,10 +369,9 @@ public class AxiomsDialog extends JDialog {
 		DefaultMutableTreeNode inferredroot = (DefaultMutableTreeNode) cbt.getModel().getRoot();
 		Enumeration e = inferredroot.breadthFirstEnumeration();
 
-		// this.getContentPane().add(cbt,BorderLayout.NORTH);
+	
 		initUI();
-		// getNewAxiomsPnl().add(cbt, BorderLayout.CENTER);
-		// getNewAxiomsPnl().repaint();
+		
 
 		cbt.addCheckChangeEventListener(new JCheckBoxTree.CheckChangeEventListener() {
 
@@ -480,13 +380,12 @@ public class AxiomsDialog extends JDialog {
 				TreePath[] paths = cbt.getCheckedPaths();
 				for (TreePath tp : paths) {
 					for (Object pathPart : tp.getPath()) {
-						System.out.print(pathPart + ",\t" + tp.getLastPathComponent());
 						DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
 						if (parentNode.getUserObject() instanceof UserObjectforTreeView) {
-							System.out.println("outside: can be done");
-							System.out.println(((UserObjectforTreeView) parentNode.getUserObject()).isAxiom());
-						} else
-							System.out.println("outside: not posible");
+							//System.out.println("outside: can be done");
+							//System.out.println(((UserObjectforTreeView) parentNode.getUserObject()).isAxiom());
+						} //else
+							//System.out.println("outside: not posible");
 
 					}
 					System.out.println();

@@ -6,23 +6,15 @@ import java.awt.Color;
 import java.awt.Point;
 import java.net.URL;
 import java.text.NumberFormat;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import org.protege.editor.owl.model.OWLModelManager;
-import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLDatatype;
-import org.semanticweb.owlapi.model.OWLLiteral;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.w3c.dom.Document;
 
 import com.mxgraph.io.mxCodec;
-import com.mxgraph.layout.mxParallelEdgeLayout;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxICell;
@@ -105,8 +97,8 @@ public class GraphEditor extends BasicGraphEditor {
 		});
 
 		shapesPalette.addTemplate(CustomEntityType.CLASS.getName(),
-				new ImageIcon(GraphEditor.class.getResource("/images/rectangle.png")), "rectangle;fillColor=#33CCFF;gradientColor=#33CCFF", vertexWidth,
-				vertexHeight, "");
+				new ImageIcon(GraphEditor.class.getResource("/images/rectangle.png")),
+				"rectangle;fillColor=#33CCFF;gradientColor=#33CCFF", vertexWidth, vertexHeight, "");
 
 		shapesPalette.addTemplate(CustomEntityType.NAMED_INDIVIDUAL.getName(),
 				new ImageIcon(GraphEditor.class.getResource("/images/ellipse.png")),
@@ -157,21 +149,18 @@ public class GraphEditor extends BasicGraphEditor {
 		public CustomGraphComponent(mxGraph graph) {
 			super(graph);
 
-			//set editor to get reference not sure it will work or not
+			// set editor to get reference not sure it will work or not
 			this.setGraphEditor(getGraphEditor());
-			
+
 			/**
 			 * 
 			 */
-			
-			
-			
+
 			// Sets switches typically used in an editor
 			setCenterPage(true);
-			//setPageVisible(true);
-			//setGridVisible(true);
+			// setPageVisible(true);
+			// setGridVisible(true);
 			setToolTips(true);
-			
 
 			// creating annonying auto copying target
 			// getConnectionHandler().setCreateTarget(true);
@@ -216,9 +205,9 @@ public class GraphEditor extends BasicGraphEditor {
 			for (Object cell : cells) {
 				mxCell currentCell = (mxCell) cell;
 				if (currentCell != null) {
-					if (currentCell.getEntityType().getName().equals( CustomEntityType.DATATYPE.getName())) {
+					if (currentCell.getEntityType().getName().equals(CustomEntityType.DATATYPE.getName())) {
 						this.labelChanged(currentCell, cellDataTypeValue, null);
-					}else if(currentCell.getEntityType().getName().equals( CustomEntityType.LITERAL.getName())){ 
+					} else if (currentCell.getEntityType().getName().equals(CustomEntityType.LITERAL.getName())) {
 						String cellValue = "\"" + "\"" + "^^" + cellDataTypeValue;
 						currentCell.setLiteralDataType(cellDataTypeValue);
 						this.labelChanged(currentCell, cellValue, null);
@@ -229,7 +218,6 @@ public class GraphEditor extends BasicGraphEditor {
 		}
 
 	}
-	
 
 	/**
 	 * A graph that creates new edges from a given template edge.
@@ -254,14 +242,14 @@ public class GraphEditor extends BasicGraphEditor {
 		public void setEdgeTemplate(Object template) {
 			edgeTemplate = template;
 		}
-		
+
 		/**
 		 * Sets the status in the status bar.
 		 */
 		@Override
 		public void setStatus(String msg) {
-			//need to implement this
-			
+			// need to implement this
+
 		}
 
 		/**
@@ -312,7 +300,8 @@ public class GraphEditor extends BasicGraphEditor {
 		 * @param style
 		 * @return
 		 */
-		public Object createEdge(Object parent, String id, Object value, Object source, Object target, String style,CustomEntityType entityType) {
+		public Object createEdge(Object parent, String id, Object value, Object source, Object target, String style,
+				CustomEntityType entityType) {
 			if (edgeTemplate != null) {
 				mxCell edge = (mxCell) cloneCells(new Object[] { edgeTemplate })[0];
 				edge.setId(id);
@@ -320,17 +309,18 @@ public class GraphEditor extends BasicGraphEditor {
 				return edge;
 			}
 
-			return super.createEdge(parent, id, value, source, target, style,entityType);
+			return super.createEdge(parent, id, value, source, target, style, entityType);
 		}
 
 	}
 
 	/**
 	 * Only for Debug Purpose
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
+
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e1) {
@@ -341,31 +331,12 @@ public class GraphEditor extends BasicGraphEditor {
 		mxConstants.W3C_SHADOWCOLOR = "#D3D3D3";
 
 		GraphEditor editor = new GraphEditor(null);
-		// IntegrateOntologyWithProtege ontologyobj = new
-		// IntegrateOntologyWithProtege(editor);
-		// editor.createFrame(new EditorMenuBar(editor)).setVisible(true);
 
 		JFrame frame = new JFrame("Dase editor");
 		frame.add(editor);
 		frame.setJMenuBar(new EditorMenuBar(editor));
 		frame.setSize(800, 600);
 		frame.setVisible(true);
-		/*
-		 * String base = "http://example.com/owl/families/#";
-		 * 
-		 * OWLDataFactory df = OWLManager.getOWLDataFactory();
-		 * 
-		 * OWLOntologyManager m = OWLManager.createOWLOntologyManager();
-		 * 
-		 * PrefixManager prefixManager = new DefaultPrefixManager();
-		 * prefixManager.setDefaultPrefix(base);
-		 * 
-		 * prefixManager.getDefaultPrefix(); // Get reference to the :Person class (the
-		 * full IRI: http://example.com/owl/families/Person) OWLClass person =
-		 * df.getOWLClass("Person", prefixManager); System.out.println("iri "+
-		 * person.getIRI()); // Get reference to the :Mary class (the full IRI:
-		 * <http://example.com/owl/families/Mary>) OWLNamedIndividual mary =
-		 * df.getOWLNamedIndividual(":Mary", prefixManager);
-		 */
+
 	}
 }

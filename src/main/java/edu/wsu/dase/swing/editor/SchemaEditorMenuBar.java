@@ -26,8 +26,6 @@ import edu.wsu.dase.swing.editor.EditorActions.HistoryAction;
 import edu.wsu.dase.swing.editor.EditorActions.NewAction;
 import edu.wsu.dase.swing.editor.EditorActions.OpenAction;
 import edu.wsu.dase.swing.editor.EditorActions.PageBackgroundAction;
-import edu.wsu.dase.swing.editor.EditorActions.PageSetupAction;
-import edu.wsu.dase.swing.editor.EditorActions.PrintAction;
 import edu.wsu.dase.swing.editor.EditorActions.PromptPropertyAction;
 import edu.wsu.dase.swing.editor.EditorActions.SaveAction;
 import edu.wsu.dase.swing.editor.EditorActions.ScaleAction;

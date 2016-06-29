@@ -9,7 +9,6 @@ import com.mxgraph.swing.util.mxGraphActions;
 import com.mxgraph.util.mxResources;
 
 import edu.wsu.dase.swing.editor.EditorActions.HistoryAction;
-import edu.wsu.dase.swing.editor.EditorActions.PromptPropertyActionForCardinality;
 
 public class EditorPopupMenu extends JPopupMenu {
 

@@ -4,10 +4,15 @@ import java.awt.Component;
 import java.awt.Rectangle;
 
 import javax.swing.JCheckBox;
-import javax.swing.JList;
 
 import org.protege.editor.owl.OWLEditorKit;
-import edu.wsu.dase.OWLCellRenderer;
+
+
+/**
+ * Not implemented till now
+ * @author sarker
+ *
+ */
 
 public class CustomCheckBoxCellRenderer extends OWLCellRenderer {
 

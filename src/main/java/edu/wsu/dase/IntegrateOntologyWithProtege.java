@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,9 +18,6 @@ import javax.swing.SwingUtilities;
 import org.protege.editor.owl.OWLEditorKit;
 //import org.checkerframework.checker.nullness.qual.NonNull;
 import org.protege.editor.owl.model.OWLModelManager;
-import org.protege.editor.owl.model.find.OWLEntityFinder;
-import org.protege.editor.owl.ui.action.ShowUsageAction;
-import org.protege.editor.owl.ui.prefix.PrefixMapperTables;
 import org.protege.editor.owl.ui.prefix.PrefixUtilities;
 import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxOWLObjectRendererImpl;
 import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxPrefixNameShortFormProvider;
@@ -52,11 +48,10 @@ import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.PrefixManager;
 import org.semanticweb.owlapi.model.parameters.ChangeApplied;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
+
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGraphModel;
 import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraph.mxICellVisitor;
 
 import edu.wsu.dase.swing.editor.BasicGraphEditor;
 import edu.wsu.dase.util.CustomEntityType;
@@ -544,19 +539,16 @@ public class IntegrateOntologyWithProtege {
 			String[] subParts = name.split(":");
 			if (subParts.length == 2) {
 				return name;
-				// prefixValue =
-				// prefixManager.getPrefix((subParts[0].replace(":", "")));
 			} else {
 
-				// shouldNot occur here as validation executed before
-
+				//it can occur only when validation is executing. 
+				// After validation it should not occur here.
 				shouldContinue = false;
 				editor.status(cell.getEntityType() + " " + cell.getValue() + " has Colon(:) " + subParts.length
 						+ " time. Operation aborted.");
 				return null;
 			}
 		} else {
-			// JOptionPane.showMessageDialog(editor, defaultPrefix);
 			return defaultPrefix + name;
 		}
 
