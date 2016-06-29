@@ -223,7 +223,7 @@ public class IntegrateOntologyWithProtege {
 
 	private Map<mxCell, ArrayList<mxCell>> getDisJointtedCells() {
 
-		Object[] e = editor.getGraphComponent().getGraph().getChildEdges(graph.getDefaultParent());
+		Object[] e = graph.getChildEdges(graph.getDefaultParent());
 		ArrayList<mxCell> parentList = new ArrayList<mxCell>();
 		ArrayList<mxCell> edgeList = new ArrayList<mxCell>();
 		Map<mxCell, ArrayList<mxCell>> parentToChildMap = new HashMap<mxCell, ArrayList<mxCell>>();
@@ -232,7 +232,7 @@ public class IntegrateOntologyWithProtege {
 		for (Object edge : e) {
 			if (edge instanceof mxCell) {
 				mxCell edgeCell = (mxCell) edge;
-				if (edgeCell.getEntityType().equals(CustomEntityType.RDFSSUBCLASS_OF)) {
+				if (edgeCell.getEntityType().getName().equals(CustomEntityType.RDFSSUBCLASS_OF.getName())) {
 					edgeList.add(edgeCell);
 				}
 			}
@@ -243,9 +243,7 @@ public class IntegrateOntologyWithProtege {
 			// mxCell child = (mxCell) graph.getModel().getTerminal(edgeCell,
 			// true);
 			mxCell parent = (mxCell) graph.getModel().getTerminal(edgeCell, false);
-
 			parentList.add(parent);
-
 		}
 
 		// add child to specific parent
@@ -294,7 +292,7 @@ public class IntegrateOntologyWithProtege {
 			initilizeProtegeDataFactory();
 		} catch (Exception e) {
 			shouldContinue = false;
-			System.err.println(e.getStackTrace());
+			// System.err.println(e.getStackTrace());
 		}
 	}
 
@@ -421,84 +419,84 @@ public class IntegrateOntologyWithProtege {
 	}
 
 	public void generateOntology() {
-		// try {
-		if (!shouldContinue)
+		try {
+			if (!shouldContinue)
+				return;
+
+			if (!validateGraph())
+				return;
+
+			initializeDataStructure();
+
+			Object[] v = graph.getChildVertices(graph.getDefaultParent());
+			Object[] e = graph.getChildEdges(graph.getDefaultParent());
+
+			if (v.length == 0) {
+				editor.status("Axioms can not be generated with empty vertex.");
+				return;
+			}
+			if (e.length == 0) {
+				editor.status("Axioms can not be generated with empty edge.");
+				return;
+			}
+
+			if (shouldContinue)
+				shouldContinue = makeDeclarations(v);
+
+			if (!shouldContinue)
+				return;
+
+			shouldContinue = makeDeclarations(e);
+			if (!shouldContinue)
+				return;
+
+			// to solve renaming problem commit Declarations is executed
+			// first it is executed to show in axioms dialog
+			// shouldContinue = commitDeclarations();
+			declarationAxioms.clear();
+			if (!shouldContinue) {
+				// editor.status("Entity creation failed. ");
+				// not returned so that axioms can atleast be viewed
+				// return;
+			}
+
+			shouldContinue = createOWLAxioms(e);
+			if (!shouldContinue) {
+				editor.status("Entity creation failed. ");
+				return;
+			}
+
+			// now show dialog to select
+			shouldContinue = showAxiomsDialog();
+			if (!shouldContinue) {
+				return;
+			}
+
+			cleanActiveOntology();
+
+			// to solve renaming problem commit Declarations is executed
+			// 2nd it is executed because ontology is cleaned
+			shouldContinue = commitDeclarations();
+			declarationAxioms.clear();
+			if (!shouldContinue) {
+				// editor.status("Entity creation failed. ");
+				// not returned so that axioms can atleast be viewed
+				// return;
+			}
+
+			shouldContinue = saveOWLAxioms();
+			if (!shouldContinue) {
+				return;
+			}
+			editor.status(SAVING_COMPLETE_MESSAGE);
+			editor.setModified(false);
+			JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), SAVING_COMPLETE_MESSAGE, SAVING_COMPLETE_TITLE,
+					JOptionPane.PLAIN_MESSAGE);
 			return;
 
-		if (!validateGraph())
-			return;
-
-		initializeDataStructure();
-
-		Object[] v = graph.getChildVertices(graph.getDefaultParent());
-		Object[] e = graph.getChildEdges(graph.getDefaultParent());
-
-		if (v.length == 0) {
-			editor.status("Axioms can not be generated with empty vertex.");
-			return;
+		} catch (Exception E) {
+			// System.err.println(E.getStackTrace());
 		}
-		if (e.length == 0) {
-			editor.status("Axioms can not be generated with empty edge.");
-			return;
-		}
-
-		if (shouldContinue)
-			shouldContinue = makeDeclarations(v);
-
-		if (!shouldContinue)
-			return;
-
-		shouldContinue = makeDeclarations(e);
-		if (!shouldContinue)
-			return;
-
-		// to solve renaming problem commit Declarations is executed
-		// first it is executed to show in axioms dialog
-		// shouldContinue = commitDeclarations();
-		declarationAxioms.clear();
-		if (!shouldContinue) {
-			// editor.status("Entity creation failed. ");
-			// not returned so that axioms can atleast be viewed
-			// return;
-		}
-
-		shouldContinue = createOWLAxioms(e);
-		if (!shouldContinue) {
-			editor.status("Entity creation failed. ");
-			return;
-		}
-
-		// now show dialog to select
-		shouldContinue = showAxiomsDialog();
-		if (!shouldContinue) {
-			return;
-		}
-
-		cleanActiveOntology();
-
-		// to solve renaming problem commit Declarations is executed
-		// 2nd it is executed because ontology is cleaned
-		shouldContinue = commitDeclarations();
-		declarationAxioms.clear();
-		if (!shouldContinue) {
-			// editor.status("Entity creation failed. ");
-			// not returned so that axioms can atleast be viewed
-			// return;
-		}
-
-		shouldContinue = saveOWLAxioms();
-		if (!shouldContinue) {
-			return;
-		}
-		editor.status(SAVING_COMPLETE_MESSAGE);
-		editor.setModified(false);
-		JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), SAVING_COMPLETE_MESSAGE, SAVING_COMPLETE_TITLE,
-				JOptionPane.PLAIN_MESSAGE);
-		return;
-
-		// } catch (Exception E) {
-		// System.err.println(E.getStackTrace());
-		// }
 
 	}
 
@@ -811,27 +809,20 @@ public class IntegrateOntologyWithProtege {
 						// }
 					}
 
-				} else {
-					JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), ENTITY_WITH_NO_NAME_MESSAGE,
-							ENTITY_WITH_NO_NAME_TITLE, JOptionPane.ERROR_MESSAGE);
-					initializeDataStructure();
-					return false;
 				}
-
 			}
 		}
 
 		// Generate DisJointOf Axioms
-
 		Map<mxCell, ArrayList<mxCell>> parentToChildMap = getDisJointtedCells();
 
 		// if (parentToChildMap != null) {
 		// JOptionPane.showMessageDialog(editor,
 		// parentToChildMap.entrySet().size());
+		// }
 
 		createDisJointOfAxioms(parentToChildMap);
 
-		// }
 		editor.status("Generated Domain, Range, Existential and Cardinality axioms successfully");
 		return true;
 	}
@@ -1335,7 +1326,7 @@ public class IntegrateOntologyWithProtege {
 					for (Object edge : outGoingEdges) {
 						if (edge instanceof mxCell) {
 							mxCell edgeCell = (mxCell) edge;
-							if (edgeCell.getEntityType().equals(CustomEntityType.RDFSSUBCLASS_OF)) {
+							if (edgeCell.getEntityType().getName().equals(CustomEntityType.RDFSSUBCLASS_OF.getName())) {
 								shouldInclude = false;
 								break;
 							}
