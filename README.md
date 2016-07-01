@@ -72,6 +72,6 @@ Other features:
 3. It doesn't support custom cardinality. Currently it creates maxCardinality 1.
 
 ###Acknowledgement
-This work was supported by the National Science Founda- tion under award 1017225 III: Small: TROn – Tractable Reasoning with Ontolo- gies.
+This work was supported by the National Science Foundation under award 1017225 III: Small: TROn – Tractable Reasoning with Ontologies.
 
 
