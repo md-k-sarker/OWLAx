@@ -21,7 +21,9 @@ See the video <a href="https://github.com/md-k-sarker/OWLAx/blob/master/plugin/d
 1. Start Protege
 2. Select OWLAx Tab from
 	 Window -> Tabs -> OWLAx
+	 
 	 ![Alt Click on OWLAx to Select](https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/ScreenShots/SelectOWLAxTab.png)
+	 
 3. Start Using OWLAx Plugin
 
 ###How to Use
