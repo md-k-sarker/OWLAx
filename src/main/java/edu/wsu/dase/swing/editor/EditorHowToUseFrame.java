@@ -1,3 +1,4 @@
+
 package edu.wsu.dase.swing.editor;
 
 import java.awt.BorderLayout;
@@ -25,7 +26,12 @@ import javax.swing.KeyStroke;
 import com.mxgraph.util.mxResources;
 import com.mxgraph.view.mxGraph;
 
-public class EditorAboutFrame extends JDialog {
+/**
+ * @author sarker
+ *
+ */
+
+public class EditorHowToUseFrame extends JDialog {
 
 	/**
 	 * 
@@ -35,7 +41,7 @@ public class EditorAboutFrame extends JDialog {
 	/**
 	 * 
 	 */
-	public EditorAboutFrame(Frame owner) {
+	public EditorHowToUseFrame(Frame owner) {
 		super(owner);
 		setTitle(mxResources.get("aboutGraphEditor"));
 		setLayout(new BorderLayout());
@@ -66,16 +72,15 @@ public class EditorAboutFrame extends JDialog {
 				BorderFactory.createEmptyBorder(8, 8, 12, 8)));
 
 		// Adds title
-		JLabel titleLabel = new JLabel("OWLAx");
+		JLabel titleLabel = new JLabel(mxResources.get("aboutGraphEditor"));
 		titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD));
 		titleLabel.setBorder(BorderFactory.createEmptyBorder(4, 0, 0, 0));
 		titleLabel.setOpaque(false);
 		panel.add(titleLabel, BorderLayout.NORTH);
 
-		String htmlSubTitle = "<html><br><h3>OWLAx</h3><p>OWL Axiomatizer</p><br><p>For details please visit: <a href=\"http://dase.cs.wright.edu/content/ontology-axiomatization-support\" style=\"text-decoration:none;\">OWLAx Capabilities and How to Use</a></html>";
-
 		// Adds optional subtitle
-		JLabel subtitleLabel = new JLabel("OWL Axiomatizer Plugin for Desktop Protege 5.0+");
+		JLabel subtitleLabel = new JLabel(
+				"For more information visit http://dase.cs.wright.edu/content/ontology-axiomatization-support");
 		subtitleLabel.setBorder(BorderFactory.createEmptyBorder(4, 18, 0, 0));
 		subtitleLabel.setOpaque(false);
 		panel.add(subtitleLabel, BorderLayout.CENTER);
@@ -86,45 +91,28 @@ public class EditorAboutFrame extends JDialog {
 		content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 		content.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
 
-		// content.add(new JLabel("JGraph X - The Swing Portion of mxGraph"));
+		content.add(new JLabel("JGraph X - The Swing Portion of mxGraph"));
 		content.add(new JLabel(" "));
 
-		content.add(new JLabel("Version " + mxResources.get("owlaxVersion")));
-		content.add(new JLabel("Copyright (C) 2016 by Data Semantics Lab."));
+		content.add(new JLabel("mxGraph Version " + mxGraph.VERSION));
+		content.add(new JLabel("Copyright (C) 2016 by Data Semantics Lab(http://dase.cs.wright.edu/)."));
 		content.add(new JLabel("All rights reserved."));
 		content.add(new JLabel(" "));
-		content.add(new JLabel(" "));
-		content.add(new JLabel(" "));
-		
-		//AcknowledgeMent
-		content.add(new JLabel("Acknowledgement:"));
-		content.add(new JLabel("Some graphics part was developed by mxGraph."));
-		content.add(new JLabel("This work was supported by the National Science Foundation under"));
-		content.add(new JLabel("award 1017225 III: Small: TROn – Tractable Reasoning with Ontolo- gies."));
-		
-		// try
-		// {
-		// content.add(new JLabel("Operating System Name: "
-		// + System.getProperty("os.name")));
-		// content.add(new JLabel("Operating System Version: "
-		// + System.getProperty("os.version")));
-		// content.add(new JLabel(" "));
-		//
-		// content.add(new JLabel("Java Vendor: "
-		// + System.getProperty("java.vendor", "undefined")));
-		// content.add(new JLabel("Java Version: "
-		// + System.getProperty("java.version", "undefined")));
-		// content.add(new JLabel(" "));
-		//
-		// content.add(new JLabel("Total Memory: "
-		// + Runtime.getRuntime().totalMemory()));
-		// content.add(new JLabel("Free Memory: "
-		// + Runtime.getRuntime().freeMemory()));
-		// }
-		// catch (Exception e)
-		// {
-		// // ignore
-		// }
+
+//		try {
+//			content.add(new JLabel("Operating System Name: " + System.getProperty("os.name")));
+//			content.add(new JLabel("Operating System Version: " + System.getProperty("os.version")));
+//			content.add(new JLabel(" "));
+//
+//			content.add(new JLabel("Java Vendor: " + System.getProperty("java.vendor", "undefined")));
+//			content.add(new JLabel("Java Version: " + System.getProperty("java.version", "undefined")));
+//			content.add(new JLabel(" "));
+//
+//			content.add(new JLabel("Total Memory: " + Runtime.getRuntime().totalMemory()));
+//			content.add(new JLabel("Free Memory: " + Runtime.getRuntime().freeMemory()));
+//		} catch (Exception e) {
+//			// ignore
+//		}
 
 		getContentPane().add(content, BorderLayout.CENTER);
 
@@ -147,7 +135,7 @@ public class EditorAboutFrame extends JDialog {
 		getRootPane().setDefaultButton(closeButton);
 
 		setResizable(false);
-		setSize(500, 400);
+		setSize(400, 400);
 	}
 
 	/**

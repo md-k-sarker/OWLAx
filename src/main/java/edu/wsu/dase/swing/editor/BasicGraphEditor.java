@@ -731,6 +731,8 @@ public class BasicGraphEditor extends JPanel {
 		}
 	}
 
+	
+	
 	/**
 	 * 
 	 */
@@ -739,6 +741,23 @@ public class BasicGraphEditor extends JPanel {
 
 		if (frame != null) {
 			EditorAboutFrame about = new EditorAboutFrame(frame);
+			about.setModal(true);
+
+			// Centers inside the application frame
+			int x = frame.getX() + (frame.getWidth() - about.getWidth()) / 2;
+			int y = frame.getY() + (frame.getHeight() - about.getHeight()) / 2;
+			about.setLocation(x, y);
+
+			// Shows the modal dialog and waits
+			about.setVisible(true);
+		}
+	}
+	
+	public void howToUse() {
+		JFrame frame = (JFrame) SwingUtilities.windowForComponent(this);
+
+		if (frame != null) {
+			EditorHowToUseFrame about = new EditorHowToUseFrame(frame);
 			about.setModal(true);
 
 			// Centers inside the application frame
