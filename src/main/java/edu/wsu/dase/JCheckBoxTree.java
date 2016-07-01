@@ -295,8 +295,8 @@ public class JCheckBoxTree extends JTree {
 	}
 	
 	public void setSelectedOtherAxioms(TreePath tp){
-		checkSubTree(tp, true);
-		updatePredecessorsWithCheckMode(tp, true);
+		//checkSubTree(tp, true);
+		//updatePredecessorsWithCheckMode(tp, true);
 	}
 
 }
