@@ -7,14 +7,24 @@ Ontology Design Pattern Plugin for Desktop Protege 5.0+
 
 
 ##Installation
-1. Download OWLAx-1.x.x.jar from <a href="https://github.com/md-k-sarker/OWLAx/tree/master/plugin" title="plugin"> plugin</a> folder of this repository
+1. Download OWLAx-1.x.x.jar from <a href="https://github.com/md-k-sarker/OWLAx/tree/master/plugin/binary" title="plugin"> plugin/binary</a> folder of this repository
 2. Put the jar file inside plugins folder of Protege.
+
+###How to find plugin folder of protege 
+####MAC OS
+See the video <a href="https://github.com/md-k-sarker/OWLAx/tree/master/plugin/docs/video/macPluginFolder.mov" title="plugin"> Find Plugin Folder in Protege Mac OS Version</a>
+####Windows OS
+See the video <a href="https://github.com/md-k-sarker/OWLAx/tree/master/plugin/docs/video/windowsPluginFolder.webm" title="plugin"> Find Plugin Folder in Protege Windows OS Version</a>
+
 
 ##Usage
 1. Start Protege
 2. Select OWLAx Tab from
 	 Window -> Tabs -> OWLAx
 3. Start Using OWLAx Plugin
+
+###How to Use
+See the video <a href="https://github.com/md-k-sarker/OWLAx/tree/master/plugin/docs/video/howToUseOWLAx.mov" title="How to use OWLAx"> Using OWLAx</a>
 
 
 ##Capabilities of OWLAx
