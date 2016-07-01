@@ -7,25 +7,25 @@ Ontology Design Pattern Plugin for Desktop Protege 5.0+
 
 
 ##Installation
-1. Download OWLAx-1.x.x.jar from <a href="https://github.com/md-k-sarker/OWLAx/tree/master/plugin/binary" title="plugin"> plugin/binary</a> folder of this repository
+1. Download OWLAx-1.x.x.jar from <a href="https://github.com/md-k-sarker/OWLAx/blob/master/plugin/binary/OWLAx-1.0.0-beta-0.jar?raw=true" title="plugin"> plugin/binary</a> folder of this repository
 2. Put the jar file inside plugins folder of Protege.
 
 ###How to find plugin folder of protege 
 ####MAC OS
-See the video <a href="https://github.com/md-k-sarker/OWLAx/tree/master/plugin/docs/video/macPluginFolder.mov" title="plugin"> Find Plugin Folder in Protege Mac OS Version</a>
+See the video <a href="https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/Video/macPluginFolder.mov?raw=true" title="plugin"> Find Plugin Folder in Protege Mac OS Version</a>
 ####Windows OS
-See the video <a href="https://github.com/md-k-sarker/OWLAx/tree/master/plugin/docs/video/windowsPluginFolder.webm" title="plugin"> Find Plugin Folder in Protege Windows OS Version</a>
+See the video <a href="https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/Video/windowsPluginFolder.webm?raw=true" title="plugin"> Find Plugin Folder in Protege Windows OS Version</a>
 
 
 ##Usage
 1. Start Protege
 2. Select OWLAx Tab from
 	 Window -> Tabs -> OWLAx
-	 ![Alt tag](https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/ScreenShots/SelectOWLAxTab.png)
+	 ![Alt Click on OWLAx to Select](https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/ScreenShots/SelectOWLAxTab.png)
 3. Start Using OWLAx Plugin
 
 ###How to Use
-See the video <a href="https://github.com/md-k-sarker/OWLAx/tree/master/plugin/docs/video/howToUseOWLAx.mov" title="How to use OWLAx"> Using OWLAx</a>
+See the video <a href="https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/Video/howToUseOWLAx.mov?raw=true" title="How to use OWLAx"> Using OWLAx</a>
 
 
 ##Capabilities of OWLAx
