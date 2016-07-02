@@ -509,7 +509,7 @@ public class IntegrateOntologyWithProtege {
 
 			if (ontoID == null) {
 				shouldContinue = false;
-				JOptionPane.showMessageDialog(editor, "1 Please Specify Ontology ID(Ontology IRI) first.");
+				JOptionPane.showMessageDialog(editor, "Please Specify Ontology ID(Ontology IRI) first.");
 				return false;
 			}
 			// ontoID can contain anonymous.
