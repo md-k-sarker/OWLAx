@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTree;
 import javax.swing.event.EventListenerList;
@@ -25,7 +24,6 @@ import javax.swing.tree.TreePath;
 
 import org.protege.editor.owl.OWLEditorKit;
 import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLOntology;
 
 /**
  * The implementation details:
@@ -50,6 +48,12 @@ public class JCheckBoxTree extends JTree {
 	private static final long serialVersionUID = -4194122328392241790L;
 
 	JCheckBoxTree selfPointer = this;
+
+	static Set<OWLAxiom> activeontologyAxioms;
+
+	public JCheckBoxTree() {
+
+	}
 
 	// Defining data structure that will enable to fast check-indicate the state
 	// of each node
@@ -134,38 +138,13 @@ public class JCheckBoxTree extends JTree {
 
 	// Creating data structure of the current model for the checking mechanism
 	private void addSubtreeToCheckingStateTracking(DefaultMutableTreeNode node) {
-		try {
-			TreeNode[] path = node.getPath();
-			TreePath tp = new TreePath(path);
-
-			CheckedNode cn = null;
-			if (node.getUserObject() instanceof UserObjectforTreeView) {
-				UserObjectforTreeView userObject = (UserObjectforTreeView) node.getUserObject();
-				if (userObject.isAxiom()) {
-					OWLAxiom axiom = userObject.getAxiom();
-					if (activeontologyAxioms != null) {
-						if (activeontologyAxioms.contains(axiom)) {
-							cn = new CheckedNode(true, node.getChildCount() > 0, false);
-						}else{
-							cn = new CheckedNode(false, node.getChildCount() > 0, false);
-						}
-					}
-				} else {
-					cn = new CheckedNode(false, node.getChildCount() > 0, false);
-				}
-			}
-			if (cn != null)
-				nodesCheckingState.put(tp, cn);
-			for (int i = 0; i < node.getChildCount(); i++) {
-				addSubtreeToCheckingStateTracking(
-						(DefaultMutableTreeNode) tp.pathByAddingChild(node.getChildAt(i)).getLastPathComponent());
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(getParent(), e.getMessage());
-
-			JOptionPane.showMessageDialog(getParent(), e.getCause());
-
-			JOptionPane.showMessageDialog(getParent(), e.getStackTrace());
+		TreeNode[] path = node.getPath();
+		TreePath tp = new TreePath(path);
+		CheckedNode cn = new CheckedNode(false, node.getChildCount() > 0, false);
+		nodesCheckingState.put(tp, cn);
+		for (int i = 0; i < node.getChildCount(); i++) {
+			addSubtreeToCheckingStateTracking(
+					(DefaultMutableTreeNode) tp.pathByAddingChild(node.getChildAt(i)).getLastPathComponent());
 		}
 	}
 
@@ -193,32 +172,32 @@ public class JCheckBoxTree extends JTree {
 			if (cn == null) {
 				return this;
 			}
-			checkBox.setSelected(cn.isSelected);
+
+			// doing it later
+			 checkBox.setSelected(cn.isSelected);
 			Object obj = node.getUserObject();
 
 			if (obj instanceof UserObjectforTreeView) {
 				UserObjectforTreeView _obj = (UserObjectforTreeView) obj;
 				if (!_obj.isAxiom()) {
 					setForeground(new Color(98, 79, 219));
-				} else if (activeOntology.containsAxiomIgnoreAnnotations(_obj.getAxiom(), true)) {
-					// checkBox.setSelected(true);
-					// updatePredecessorsWithCheckMode(tp, true);
-					// checkedPaths.add(tp);
 				}
-
+				if (_obj.isAxiom()) {
+					//not working
+					// // set as selected
+					// if (activeontologyAxioms.contains(_obj.getAxiom())) {
+					// cn.isSelected = true;
+					// } // no need to select
+					// else {
+					// cn.isSelected = false;
+					// }
+				}
 			}
+			
 			checkBox.setText(obj.toString());
 			checkBox.setOpaque(cn.isSelected && cn.hasChildren && !cn.allChildrenSelected);
 			return this;
 		}
-	}
-
-	// take the activeOntology and save in memory
-	OWLOntology activeOntology;
-	static Set<OWLAxiom> activeontologyAxioms;
-
-	public JCheckBoxTree() {
-
 	}
 
 	public JCheckBoxTree(DefaultMutableTreeNode root, OWLEditorKit editorKit) {
@@ -231,7 +210,6 @@ public class JCheckBoxTree extends JTree {
 		// Overriding cell renderer by new one defined above
 		CheckBoxCellRenderer cellRenderer = new CheckBoxCellRenderer(editorKit);
 		this.setCellRenderer(cellRenderer);
-		activeOntology = editorKit.getOWLModelManager().getActiveOntology();
 
 		// Overriding selection model by an empty one
 		DefaultTreeSelectionModel dtsm = new DefaultTreeSelectionModel() {
@@ -337,12 +315,8 @@ public class JCheckBoxTree extends JTree {
 	}
 
 	public void setSelectedOtherAxioms(TreePath tp) {
-		//checkSubTree(tp, true);
-		//updatePredecessorsWithCheckMode(tp, true);
-		
-		boolean checkMode = nodesCheckingState.get(tp).isSelected;
-		checkSubTree(tp, checkMode);
-		updatePredecessorsWithCheckMode(tp, checkMode);
+		// checkSubTree(tp, true);
+		// updatePredecessorsWithCheckMode(tp, true);
 	}
 
 }
