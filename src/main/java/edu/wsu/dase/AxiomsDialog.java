@@ -82,8 +82,8 @@ public class AxiomsDialog extends JDialog {
 		this.isClickedOK = false;
 
 		new UserObjectforTreeView(parent, integrateOntologyWithProtege.getActiveOntology());
-		
-		//for sorting rendering is accomplished
+
+		// for sorting rendering is accomplished
 		ManchesterOWLSyntaxPrefixNameShortFormProvider shortFormProvider = new ManchesterOWLSyntaxPrefixNameShortFormProvider(
 				this.intgOntWProtege.getActiveOntology());
 		rendering.setShortFormProvider(shortFormProvider);
@@ -157,7 +157,7 @@ public class AxiomsDialog extends JDialog {
 		// set All other axioms as Selected
 		if (existingAxiomsRoot != null) {
 			if (existingAxiomsRoot.getChildCount() > 0) {
-				newAxiomsTree.setSelectedOtherAxioms(new TreePath(existingAxiomsRoot.getPath()));
+				newAxiomsTree.setSelectedOtherAxioms(new TreePath(newAxiomsRoot.getPath()));
 			}
 		}
 	}
@@ -194,6 +194,10 @@ public class AxiomsDialog extends JDialog {
 		lblNewAxioms.setHorizontalAlignment(SwingConstants.CENTER);
 		newAxiomsPnl.add(lblNewAxioms, BorderLayout.NORTH);
 
+		// just for checking
+		new JCheckBoxTree().activeontologyAxioms = intgOntWProtege.owlEditorKit.getOWLModelManager().getActiveOntology()
+				.getAxioms();
+
 		newAxiomsTree = new JCheckBoxTree(getNewAxiomsRoot(), intgOntWProtege.owlEditorKit);
 		newAxiomsScroll = new JScrollPane(newAxiomsTree);
 
@@ -203,7 +207,7 @@ public class AxiomsDialog extends JDialog {
 	}
 
 	static ManchesterOWLSyntaxOWLObjectRendererImpl rendering = new ManchesterOWLSyntaxOWLObjectRendererImpl();
-	
+
 	public DefaultMutableTreeNode getNewAxiomsRoot() {
 		newAxiomsRoot = new DefaultMutableTreeNode(new UserObjectforTreeView(false, "Select All"));
 		DefaultMutableTreeNode subRoot;
@@ -324,6 +328,15 @@ public class AxiomsDialog extends JDialog {
 		return false;
 	}
 
+	private boolean isContainedInActiveOntology(OWLAxiom axiom, OWLOntology _activeOntology) {
+
+		if (_activeOntology.containsAxiomIgnoreAnnotations(axiom, true))
+			return true;
+
+		return false;
+
+	}
+
 	public ArrayList<OWLAxiom> getSelectedAxioms() {
 
 		selectedExistingAxioms.addAll(selectedNewAxioms);
@@ -369,9 +382,7 @@ public class AxiomsDialog extends JDialog {
 		DefaultMutableTreeNode inferredroot = (DefaultMutableTreeNode) cbt.getModel().getRoot();
 		Enumeration e = inferredroot.breadthFirstEnumeration();
 
-	
 		initUI();
-		
 
 		cbt.addCheckChangeEventListener(new JCheckBoxTree.CheckChangeEventListener() {
 
@@ -382,10 +393,11 @@ public class AxiomsDialog extends JDialog {
 					for (Object pathPart : tp.getPath()) {
 						DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
 						if (parentNode.getUserObject() instanceof UserObjectforTreeView) {
-							//System.out.println("outside: can be done");
-							//System.out.println(((UserObjectforTreeView) parentNode.getUserObject()).isAxiom());
-						} //else
-							//System.out.println("outside: not posible");
+							// System.out.println("outside: can be done");
+							// System.out.println(((UserObjectforTreeView)
+							// parentNode.getUserObject()).isAxiom());
+						} // else
+							// System.out.println("outside: not posible");
 
 					}
 					System.out.println();

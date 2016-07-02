@@ -46,6 +46,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLRuntimeException;
 import org.semanticweb.owlapi.model.PrefixManager;
 import org.semanticweb.owlapi.model.parameters.ChangeApplied;
 
@@ -277,6 +278,7 @@ public class IntegrateOntologyWithProtege {
 			initilizeProtegeDataFactory();
 		} catch (Exception e) {
 			shouldContinue = false;
+			JOptionPane.showMessageDialog(editor, "exception");
 			// System.err.println(e.getStackTrace());
 		}
 	}
@@ -421,20 +423,24 @@ public class IntegrateOntologyWithProtege {
 				return;
 			}
 			if (e.length == 0) {
-				editor.status("Axioms can not be generated with empty edge.");
-				return;
+				//need to implement
+				//editor.status("Axioms can not be generated with empty edge.");
+				//return;
 			}
+			try {
+				if (shouldContinue)
+					shouldContinue = makeDeclarations(v);
 
-			if (shouldContinue)
-				shouldContinue = makeDeclarations(v);
+				if (!shouldContinue)
+					return;
 
-			if (!shouldContinue)
-				return;
-
-			shouldContinue = makeDeclarations(e);
-			if (!shouldContinue)
-				return;
-
+				shouldContinue = makeDeclarations(e);
+				if (!shouldContinue)
+					return;
+			} catch (OWLRuntimeException re) {
+				editor.status("Operation aborted.");
+				JOptionPane.showMessageDialog(editor, "exception");
+			}
 			// to solve renaming problem commit Declarations is executed
 			// first it is executed to show in axioms dialog
 			// shouldContinue = commitDeclarations();
@@ -538,10 +544,13 @@ public class IntegrateOntologyWithProtege {
 		if (name.contains(":")) {
 			String[] subParts = name.split(":");
 			if (subParts.length == 2) {
-				return name;
+				if (prefixManager.containsPrefixMapping(subParts[0])) {
+					return name;
+				} else
+					return null;
 			} else {
 
-				//it can occur only when validation is executing. 
+				// it can occur only when validation is executing.
 				// After validation it should not occur here.
 				shouldContinue = false;
 				editor.status(cell.getEntityType() + " " + cell.getValue() + " has Colon(:) " + subParts.length
@@ -796,15 +805,21 @@ public class IntegrateOntologyWithProtege {
 		}
 
 		// Generate DisJointOf Axioms
-		Map<mxCell, ArrayList<mxCell>> parentToChildMap = getDisJointtedCells();
+		// Map<mxCell, ArrayList<mxCell>> parentToChildMap =
+		// getDisJointtedCells();
 
 		// if (parentToChildMap != null) {
 		// JOptionPane.showMessageDialog(editor,
 		// parentToChildMap.entrySet().size());
 		// }
 
-		createDisJointOfAxioms(parentToChildMap);
-
+		// createDisJointOfAxioms(parentToChildMap);
+		try {
+			createDisJointOfAxioms();
+		} catch (Exception E) {
+			JOptionPane.showMessageDialog(editor, E.getCause() + E.getLocalizedMessage());
+			System.out.println(E.getStackTrace());
+		}
 		editor.status("Generated Domain, Range, Existential and Cardinality axioms successfully");
 		return true;
 	}
@@ -1239,6 +1254,110 @@ public class IntegrateOntologyWithProtege {
 
 	}
 
+	private void createDisJointOfAxioms() {
+		OWLAxiom axiom = null;
+
+		Object[] e = graph.getChildVertices(graph.getDefaultParent());
+		Map<OWLClass, Set<OWLClass>> disjointedClassesmap = new HashMap<OWLClass, Set<OWLClass>>();
+
+		// for owlThing
+		Set<OWLClass> owlThingClassSet = new HashSet<OWLClass>();
+		owlThingClassSet.add(owlDataFactory.getOWLThing());
+		disjointedClassesmap.put(owlDataFactory.getOWLThing(), owlThingClassSet);
+
+		for (Object Vertex : e) {
+			if (Vertex instanceof mxCell) {
+				mxCell eachCell = (mxCell) Vertex;
+				if (eachCell.getEntityType().getName().equals(CustomEntityType.CLASS.getName())) {
+
+					Set<OWLClass> owlClassSet = new HashSet<OWLClass>();
+
+					owlClassSet.add(owlDataFactory.getOWLThing());
+
+					OWLClass classC = owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(eachCell),
+							prefixManager);
+
+					disjointedClassesmap.put(classC, owlClassSet);
+				}
+			}
+		}
+
+		for (OWLClass eachClass : disjointedClassesmap.keySet()) {
+			Object[] outGoingEdges = graph.getEdges(eachClass, null, false, true, true, false);
+			for (Object edge : outGoingEdges) {
+				if (isOutgoingSubCLassOf(edge)) {
+					// get destinations
+					mxCell edgeCell = (mxCell) edge;
+					OWLClass owlDestinationClass = getDestinationClass(edgeCell);
+					disjointedClassesmap.get(eachClass).add(owlDestinationClass);
+				}
+			}
+		}
+
+		for (OWLClass _class : disjointedClassesmap.keySet()) {
+			String s = "initializing value: ";
+			for (OWLClass __class : disjointedClassesmap.get(_class)) {
+				s += "" + __class.toString() + "\n";
+				}
+			JOptionPane.showMessageDialog(editor, "Class with values: " + _class.toString() +"  "+s);
+			
+		}
+
+		boolean unsaturated = true;
+
+		while (unsaturated) {
+			unsaturated = false;
+			for (OWLClass eachClass : disjointedClassesmap.keySet()) {
+				int no = disjointedClassesmap.get(eachClass).size();
+				for (OWLClass eachDestinationClass : disjointedClassesmap.get(eachClass)) {
+
+					disjointedClassesmap.get(eachClass).addAll(disjointedClassesmap.get(eachDestinationClass));
+				}
+				if (disjointedClassesmap.get(eachClass).size() > no) {
+					unsaturated = true;
+				}
+			}
+		}
+
+		ArrayList<OWLClass> l = new ArrayList<OWLClass>();
+		l.addAll(disjointedClassesmap.keySet());
+
+		for (int i = 0; i < l.size(); i++) {
+			for (int j = i + 1; j < l.size(); j++) {
+
+				if (!(disjointedClassesmap.get(l.get(i)).contains(l.get(j)))
+						&& !(disjointedClassesmap.get(l.get(j)).contains(l.get(i)))) {
+					Set<OWLClass> _disjointedClasses = new HashSet<OWLClass>();
+					_disjointedClasses.add(l.get(i));
+					_disjointedClasses.add(l.get(j));
+
+					axiom = owlDataFactory.getOWLDisjointClassesAxiom(_disjointedClasses);
+				}
+			}
+		}
+
+		disJointOfAxioms.add(axiom);
+	}
+
+	private boolean isOutgoingSubCLassOf(Object edge) {
+
+		if (edge instanceof mxCell) {
+			mxCell edgeCell = (mxCell) edge;
+			if (edgeCell.getEntityType().getName().equals(CustomEntityType.RDFSSUBCLASS_OF.getName())) {
+				return true;
+			}
+		}
+		return false;
+
+	}
+
+	private OWLClass getDestinationClass(mxCell dest) {
+		mxCell trg = (mxCell) graph.getModel().getTerminal(dest, false);
+		OWLClass owlclass = owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(trg), prefixManager);
+
+		return owlclass;
+	}
+
 	private void createDisJointOfAxioms(Map<mxCell, ArrayList<mxCell>> parentToChildMap) {
 
 		// set disjointof with respect to subclassof edges in graph
@@ -1263,9 +1382,11 @@ public class IntegrateOntologyWithProtege {
 				}
 			}
 		}
+
 		// set disjointof with respect to owl:Thing
 		ArrayList<mxCell> defaultDisjointedClasses = new ArrayList<>();
 		defaultDisjointedClasses = getOWLClassesFromGraph();
+		JOptionPane.showMessageDialog(editor, defaultDisjointedClasses.size());
 		if (defaultDisjointedClasses.size() > 1) {
 			Set<OWLClass> owlClasses = new HashSet<OWLClass>();
 			for (mxCell eachChild : defaultDisjointedClasses) {
