@@ -598,16 +598,16 @@ public class IntegrateOntologyWithProtege {
 				// it can occur only when validation is executing.
 				// After validation it should not occur here.
 				// print error here
-				String time = ""; 
-				if(subParts.length > 2){
-					time = "times";
+				String time = "time.";
+				if (subParts.length > 2) {
+					time = "times.";
 				}
 				JOptionPane.showMessageDialog(editor.getProtegeMainWindow(),
-						cell.getEntityType() + " " + cell.getValue() + " has Colon(:) " + (subParts.length-1) + time+".",
+						cell.getEntityType() + " " + cell.getValue() + " has Colon(:) " + (subParts.length - 1) + time,
 						"Syntax Error", JOptionPane.ERROR_MESSAGE);
 
 				editor.status("Operation aborted.   " + cell.getEntityType() + " " + cell.getValue() + " has Colon(:) "
-						+ (subParts.length-1) + time+".");
+						+ (subParts.length - 1) + time);
 
 				shouldContinue = false;
 				return null;
@@ -1333,6 +1333,7 @@ public class IntegrateOntologyWithProtege {
 
 		Object[] e = graph.getChildVertices(graph.getDefaultParent());
 		Map<OWLClass, Set<OWLClass>> disjointedClassesmap = new HashMap<OWLClass, Set<OWLClass>>();
+		Map<OWLClass, mxCell> owlClassToGraphNodemap = new HashMap<OWLClass, mxCell>();
 
 		// for owlThing
 		Set<OWLClass> owlThingClassSet = new HashSet<OWLClass>();
@@ -1352,18 +1353,23 @@ public class IntegrateOntologyWithProtege {
 							prefixManager);
 
 					disjointedClassesmap.put(classC, owlClassSet);
+					owlClassToGraphNodemap.put(classC, eachCell);
 				}
 			}
 		}
 
 		for (OWLClass eachClass : disjointedClassesmap.keySet()) {
-			Object[] outGoingEdges = graph.getEdges(eachClass, null, false, true, true, false);
-			for (Object edge : outGoingEdges) {
-				if (isOutgoingSubCLassOf(edge)) {
-					// get destinations
-					mxCell edgeCell = (mxCell) edge;
-					OWLClass owlDestinationClass = getDestinationClass(edgeCell);
-					disjointedClassesmap.get(eachClass).add(owlDestinationClass);
+			
+			if (owlClassToGraphNodemap.containsKey(eachClass)) {
+				mxCell cell = owlClassToGraphNodemap.get(eachClass);
+				Object[] outGoingEdges = graph.getEdges(cell, null, false, true, true, false);
+				for (Object edge : outGoingEdges) {
+					if (isOutgoingSubCLassOf(edge)) {
+						// get destinations
+						mxCell edgeCell = (mxCell) edge;
+						OWLClass owlDestinationClass = getDestinationClass(edgeCell);
+						disjointedClassesmap.get(eachClass).add(owlDestinationClass);
+					}
 				}
 			}
 		}
@@ -1373,8 +1379,8 @@ public class IntegrateOntologyWithProtege {
 			for (OWLClass __class : disjointedClassesmap.get(_class)) {
 				s += "" + __class.toString() + "\n";
 			}
-			JOptionPane.showMessageDialog(editor, "Class with values: " + _class.toString() + "  " + s);
-
+			// JOptionPane.showMessageDialog(editor, "Class with values: " +
+			// _class.toString() + " " + s);
 		}
 
 		boolean unsaturated = true;
@@ -1401,16 +1407,18 @@ public class IntegrateOntologyWithProtege {
 
 				if (!(disjointedClassesmap.get(l.get(i)).contains(l.get(j)))
 						&& !(disjointedClassesmap.get(l.get(j)).contains(l.get(i)))) {
+
 					Set<OWLClass> _disjointedClasses = new HashSet<OWLClass>();
 					_disjointedClasses.add(l.get(i));
 					_disjointedClasses.add(l.get(j));
 
 					axiom = owlDataFactory.getOWLDisjointClassesAxiom(_disjointedClasses);
+					disJointOfAxioms.add(axiom);
 				}
 			}
 		}
-		if (axiom != null)
-			disJointOfAxioms.add(axiom);
+		// if (axiom != null)
+		// disJointOfAxioms.add(axiom);
 	}
 
 	private boolean isOutgoingSubCLassOf(Object edge) {
