@@ -3,6 +3,7 @@ package edu.wsu.dase;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import org.protege.editor.owl.OWLEditorKit;
@@ -31,30 +32,28 @@ public class OdpMainUITab extends OWLWorkspaceViewsTab {
 	public void initialise() {
 
 		super.initialise();
-		
+
 		setToolTipText("OWLAx");
-		
+
 		if (getOWLModelManager() != null) {
-			
-			
-			
-			//first set protege informations
+
+			// first set protege informations
 			this.protegeOWLModelManager = getOWLModelManager();
 			this.protegeOWLModelManager.addListener(listener);
-			
+
 			this.owlEditorKit = getOWLEditorKit();
-			
+
 			setLayout(new BorderLayout());
-			
+
 			editor = new GraphEditor(this.protegeOWLModelManager);
 
 			add(new EditorMenuBar(editor), BorderLayout.NORTH);
-			
+
 			add(editor, BorderLayout.CENTER);
 
 			JFrame mainWindow = (javax.swing.JFrame) SwingUtilities.windowForComponent(this);
 			editor.setProtegeMainWindow(mainWindow);
-			
+
 			update();
 		} else
 			log.warn("OWLAx initialization failed - no model manager");
@@ -77,12 +76,12 @@ public class OdpMainUITab extends OWLWorkspaceViewsTab {
 		if (this.protegeOWLModelManager != null) {
 			editor.setProtegeOWLModelManager(this.protegeOWLModelManager);
 		}
-		if(this.owlEditorKit != null){
+		if (this.owlEditorKit != null) {
 			editor.setProtegeOWLEditorKit(this.owlEditorKit);
 		}
-		if(this.owlEntityFinder != null){
+		if (this.owlEntityFinder != null) {
 			editor.setProtegeEntityFinder(this.owlEntityFinder);
-			
+
 		}
 
 	}
@@ -92,6 +91,7 @@ public class OdpMainUITab extends OWLWorkspaceViewsTab {
 		public void handleChange(OWLModelManagerChangeEvent event) {
 
 			if (event.getType() == EventType.ACTIVE_ONTOLOGY_CHANGED) {
+
 				update();
 			}
 		}

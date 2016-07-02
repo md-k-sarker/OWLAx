@@ -53,8 +53,9 @@ public class UserObjectforTreeView {
 		}
 	}
 
-	static ArrayList<String> boldFaceText = new ArrayList<String>(Arrays.asList("disjointwith", "min", "max", "some",
-			"only", "subclassof", "inverse", "or", "and", "equivalentto", "self", "value", "not"));
+	static ArrayList<String> boldFaceText = new ArrayList<String>(
+			Arrays.asList("disjointwith", "min", "max", "some", "only", "subclassof", "inverse", "or", "and",
+					"equivalentto", "self", "value", "not", "inverseof", "subpropertyof","exactly"));
 
 	public UserObjectforTreeView(boolean isAxiom, OWLAxiom axiom) {
 		if (isAxiom) {
@@ -84,6 +85,7 @@ public class UserObjectforTreeView {
 		String value = "";
 
 		if (this.isAxiom) {
+			
 			String tmpValue = rendering.render(this.axiom);
 			tmpValue = tmpValue.replace("<", "&lt;");
 			value = getCosmetics(tmpValue);

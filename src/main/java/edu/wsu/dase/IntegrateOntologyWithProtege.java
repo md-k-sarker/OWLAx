@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,6 +23,7 @@ import org.protege.editor.owl.ui.prefix.PrefixUtilities;
 import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxOWLObjectRendererImpl;
 import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxPrefixNameShortFormProvider;
 import org.semanticweb.owlapi.model.AddAxiom;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -80,37 +82,52 @@ public class IntegrateOntologyWithProtege {
 	private ArrayList<OWLAxiom> disJointOfAxioms;
 	private String owlThingasStringName = "owl:Thing";
 
-	private ArrayList<OWLAxiom> selectedAxioms;
+	private Set<OWLAxiom> selectedAxioms;
 
 	// means no error occurred till now.
 	private boolean shouldContinue;
 
 	// default prefix
 	private String defaultPrefix;
-	mxGraph graph;
-	Object root;
-	mxGraphModel model;
+	private mxGraph graph;
+	private Object root;
+	private mxGraphModel model;
 	private BasicGraphEditor editor;
 
 	public BasicGraphEditor getEditor() {
 		return this.editor;
 	}
 
-	List<OWLOntologyChange> changes;
-	OWLOntologyID owlOntologyID;
-	String ontologyBaseURI;
-	OWLDataFactory owlDataFactory;
-	OWLModelManager owlModelManager;
-	OWLOntologyManager owlOntologyManager;
-	OWLOntology activeOntology;
-	OWLEditorKit owlEditorKit;
+	private List<OWLOntologyChange> changes;
+	private OWLOntologyID owlOntologyID;
+	private String ontologyBaseURI;
+	private OWLDataFactory owlDataFactory;
+	private OWLModelManager owlModelManager;
+	private OWLOntologyManager owlOntologyManager;
+	private OWLOntology activeOntology;
+	private OWLEditorKit owlEditorKit;
+
+	/**
+	 * @return the owlEditorKit
+	 */
+	public OWLEditorKit getOwlEditorKit() {
+		return owlEditorKit;
+	}
+
+	/**
+	 * @param owlEditorKit
+	 *            the owlEditorKit to set
+	 */
+	public void setOwlEditorKit(OWLEditorKit owlEditorKit) {
+		this.owlEditorKit = owlEditorKit;
+	}
 
 	public OWLOntology getActiveOntology() {
 		return this.activeOntology;
 	}
 
 	// ProtegeIRIResolver iriResolver;
-	PrefixManager prefixManager;
+	private PrefixManager prefixManager;
 
 	/**
 	 * @return the disJointOfAxioms
@@ -278,8 +295,8 @@ public class IntegrateOntologyWithProtege {
 			initilizeProtegeDataFactory();
 		} catch (Exception e) {
 			shouldContinue = false;
-			JOptionPane.showMessageDialog(editor, "exception");
 			// System.err.println(e.getStackTrace());
+			e.printStackTrace();
 		}
 	}
 
@@ -291,7 +308,7 @@ public class IntegrateOntologyWithProtege {
 		subClassOfAxioms = new ArrayList<OWLAxiom>();
 		classAssertionAxioms = new ArrayList<OWLAxiom>();
 		disJointOfAxioms = new ArrayList<OWLAxiom>();
-		selectedAxioms = new ArrayList<OWLAxiom>();
+		selectedAxioms = new HashSet<OWLAxiom>();
 
 		changes = new ArrayList<OWLOntologyChange>();
 
@@ -311,12 +328,9 @@ public class IntegrateOntologyWithProtege {
 					return false;
 				}
 				if ((getCellValueAsOWLCompatibleName((mxCell) entity)) == null) {
-					JOptionPane.showMessageDialog(editor.getProtegeMainWindow(),
-							((mxCell) entity).getValue() + " has incompatible name", "Syntax Error",
-							JOptionPane.ERROR_MESSAGE);
+					// error message was shown inside
+					// getCellValueAsOWLCompatibleName
 					initializeDataStructure();
-					editor.status("Failed. " + "Syntax Error on " + ((mxCell) entity).getEntityType() + " "
-							+ ((mxCell) entity).getValue());
 					return false;
 				}
 			}
@@ -332,12 +346,9 @@ public class IntegrateOntologyWithProtege {
 				}
 			}
 			if ((getCellValueAsOWLCompatibleName((mxCell) entity)) == null) {
-				JOptionPane.showMessageDialog(editor.getProtegeMainWindow(),
-						((mxCell) entity).getValue() + " has incompatible name", "Syntax Error",
-						JOptionPane.ERROR_MESSAGE);
+				// error message was shown inside
+				// getCellValueAsOWLCompatibleName
 				initializeDataStructure();
-				editor.status("Failed. " + "Syntax Error on " + ((mxCell) entity).getEntityType() + " "
-						+ ((mxCell) entity).getValue());
 				return false;
 			}
 		}
@@ -407,6 +418,8 @@ public class IntegrateOntologyWithProtege {
 
 	public void generateOntology() {
 		try {
+
+			// check if initialization of protegevariables is occurred correctly
 			if (!shouldContinue)
 				return;
 
@@ -423,28 +436,35 @@ public class IntegrateOntologyWithProtege {
 				return;
 			}
 			if (e.length == 0) {
-				//need to implement
-				//editor.status("Axioms can not be generated with empty edge.");
-				//return;
+				// need to implement
+				// editor.status("Axioms can not be generated with empty
+				// edge.");
+				// return;
 			}
 			try {
 				if (shouldContinue)
-					shouldContinue = makeDeclarations(v);
+					shouldContinue = makeDeclarations(v, true);
 
 				if (!shouldContinue)
 					return;
 
-				shouldContinue = makeDeclarations(e);
+				// commit vertex declarations
+				shouldContinue = commitDeclarations();
+				declarationAxioms.clear();
+
+				shouldContinue = makeDeclarations(e, false);
 				if (!shouldContinue)
 					return;
+
+				// commit edge declarations
+				shouldContinue = commitDeclarations();
+				declarationAxioms.clear();
+
 			} catch (OWLRuntimeException re) {
-				editor.status("Operation aborted.");
-				JOptionPane.showMessageDialog(editor, "exception");
+				editor.status("OWLRuntimeException. Operation aborted.");
+				re.printStackTrace();
 			}
-			// to solve renaming problem commit Declarations is executed
-			// first it is executed to show in axioms dialog
-			// shouldContinue = commitDeclarations();
-			declarationAxioms.clear();
+
 			if (!shouldContinue) {
 				// editor.status("Entity creation failed. ");
 				// not returned so that axioms can atleast be viewed
@@ -465,16 +485,6 @@ public class IntegrateOntologyWithProtege {
 
 			cleanActiveOntology();
 
-			// to solve renaming problem commit Declarations is executed
-			// 2nd it is executed because ontology is cleaned
-			shouldContinue = commitDeclarations();
-			declarationAxioms.clear();
-			if (!shouldContinue) {
-				// editor.status("Entity creation failed. ");
-				// not returned so that axioms can atleast be viewed
-				// return;
-			}
-
 			shouldContinue = saveOWLAxioms();
 			if (!shouldContinue) {
 				return;
@@ -486,18 +496,35 @@ public class IntegrateOntologyWithProtege {
 			return;
 
 		} catch (Exception E) {
-			// System.err.println(E.getStackTrace());
+			E.printStackTrace();
 		}
 
 	}
 
-	public void addPrefix() {
+	public boolean addPrefix() {
 		try {
-			String uriString = activeOntology.getOntologyID().getDefaultDocumentIRI().get().toString();
+			OWLOntologyID ontoID = activeOntology.getOntologyID();
+
+			if (ontoID == null) {
+				shouldContinue = false;
+				JOptionPane.showMessageDialog(editor, "1 Please Specify Ontology ID(Ontology IRI) first.");
+				return false;
+			}
+			// ontoID can contain anonymous.
+			// need more checking
+
+			com.google.common.base.Optional<IRI> iri = ontoID.getDefaultDocumentIRI();
+			if (!iri.isPresent()) {
+				shouldContinue = false;
+				JOptionPane.showMessageDialog(editor, "Please Specify Ontology ID(Ontology IRI) first.");
+				return false;
+			}
+
+			String uriString = iri.get().toString();
 			if (uriString == null) {
 				shouldContinue = false;
 				JOptionPane.showMessageDialog(editor, "Please Specify Ontology ID(Ontology IRI) first.");
-				return;
+				return false;
 			}
 			String prefix;
 			if (uriString.endsWith("/")) {
@@ -517,14 +544,19 @@ public class IntegrateOntologyWithProtege {
 			if (prefix.length() < 1) {
 				shouldContinue = false;
 				editor.status("Error with Ontology ID. Operation aborted.");
-				return;
+				return false;
 			}
 			prefixManager.setPrefix(prefix, uriString);
 			defaultPrefix = prefix + ":";
+			return true;
 		} catch (IllegalStateException e) {
 			shouldContinue = false;
-			JOptionPane.showMessageDialog(editor, "Please Specify Ontology ID(Ontology IRI) first.");
-			return;
+			e.printStackTrace();
+			return false;
+		} catch (Exception e) {
+			shouldContinue = false;
+			e.printStackTrace();
+			return false;
 		}
 
 	}
@@ -544,17 +576,40 @@ public class IntegrateOntologyWithProtege {
 		if (name.contains(":")) {
 			String[] subParts = name.split(":");
 			if (subParts.length == 2) {
-				if (prefixManager.containsPrefixMapping(subParts[0])) {
+				if (prefixManager.containsPrefixMapping(subParts[0] + ":")) {
 					return name;
-				} else
+				} else {
+					// it can occur only when validation is executing.
+					// After validation it should not occur here.
+					// print error here
+					JOptionPane.showMessageDialog(editor.getProtegeMainWindow(),
+							"Prefix " + subParts[0] + " in  " + cell.getValue() + " (EntityType: "
+									+ cell.getEntityType() + ") " + " has no mapping in prefix manager.",
+							"Prefix not found", JOptionPane.ERROR_MESSAGE);
+
+					editor.status("Operation aborted.   " + "Prefix " + subParts[0] + " in cell " + cell.getValue()
+							+ "(EntityType:" + cell.getEntityType() + ") " + "has no mapping in prefix manager.");
+
+					shouldContinue = false;
 					return null;
+				}
 			} else {
 
 				// it can occur only when validation is executing.
 				// After validation it should not occur here.
+				// print error here
+				String time = ""; 
+				if(subParts.length > 2){
+					time = "times";
+				}
+				JOptionPane.showMessageDialog(editor.getProtegeMainWindow(),
+						cell.getEntityType() + " " + cell.getValue() + " has Colon(:) " + (subParts.length-1) + time+".",
+						"Syntax Error", JOptionPane.ERROR_MESSAGE);
+
+				editor.status("Operation aborted.   " + cell.getEntityType() + " " + cell.getValue() + " has Colon(:) "
+						+ (subParts.length-1) + time+".");
+
 				shouldContinue = false;
-				editor.status(cell.getEntityType() + " " + cell.getValue() + " has Colon(:) " + subParts.length
-						+ " time. Operation aborted.");
 				return null;
 			}
 		} else {
@@ -578,7 +633,10 @@ public class IntegrateOntologyWithProtege {
 		if (activeOntology != null) {
 
 			prefixManager = PrefixUtilities.getPrefixOWLOntologyFormat(activeOntology);
-			addPrefix();
+
+			if (!addPrefix()) {
+				return;
+			}
 
 			// set prefixManager in editor to get reference
 			editor.setProtegePrefixmanager(prefixManager);
@@ -707,7 +765,13 @@ public class IntegrateOntologyWithProtege {
 
 	}
 
-	private boolean makeDeclarations(Object[] VerticesOrEdges) {
+	/**
+	 * 
+	 * @param VerticesOrEdges
+	 * @param isVertex
+	 * @return
+	 */
+	private boolean makeDeclarations(Object[] VerticesOrEdges, boolean isVertex) {
 
 		for (Object vertexOrEdge : VerticesOrEdges) {
 			if (vertexOrEdge instanceof mxCell) {
@@ -744,6 +808,7 @@ public class IntegrateOntologyWithProtege {
 					}
 				} else {
 
+					// this should not occur here
 					JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), ENTITY_WITH_NO_NAME_MESSAGE,
 							ENTITY_WITH_NO_NAME_TITLE, JOptionPane.ERROR_MESSAGE);
 					initializeDataStructure();
@@ -754,9 +819,13 @@ public class IntegrateOntologyWithProtege {
 		}
 		if (!declarationAxioms.isEmpty()) {
 			return true;
-		} else {
+		}
+		if (isVertex && declarationAxioms.isEmpty()) {
 			editor.status("Declaration Axioms empty. Integration terminated.");
 			return false;
+		} else {
+			editor.status("");
+			return true;
 		}
 
 	}
@@ -814,13 +883,15 @@ public class IntegrateOntologyWithProtege {
 		// }
 
 		// createDisJointOfAxioms(parentToChildMap);
+
 		try {
 			createDisJointOfAxioms();
 		} catch (Exception E) {
-			JOptionPane.showMessageDialog(editor, E.getCause() + E.getLocalizedMessage());
 			System.out.println(E.getStackTrace());
+			return false;
 		}
-		editor.status("Generated Domain, Range, Existential and Cardinality axioms successfully");
+		// editor.status("Generated Domain, Range, Existential and Cardinality
+		// axioms successfully");
 		return true;
 	}
 
@@ -833,6 +904,7 @@ public class IntegrateOntologyWithProtege {
 	 * @return
 	 */
 	private void createOWLAxiom(mxCell src, mxCell edge, mxCell dest) {
+
 		editor.status("Creating axioms from " + src.getValue() + " " + edge.getValue() + " " + dest.getValue());
 		if (edge.getEntityType().getName().equals(CustomEntityType.OBJECT_PROPERTY.getName())) {
 
@@ -1255,6 +1327,8 @@ public class IntegrateOntologyWithProtege {
 	}
 
 	private void createDisJointOfAxioms() {
+
+		// editor.status("Generating DisjointOf Axioms");
 		OWLAxiom axiom = null;
 
 		Object[] e = graph.getChildVertices(graph.getDefaultParent());
@@ -1298,9 +1372,9 @@ public class IntegrateOntologyWithProtege {
 			String s = "initializing value: ";
 			for (OWLClass __class : disjointedClassesmap.get(_class)) {
 				s += "" + __class.toString() + "\n";
-				}
-			JOptionPane.showMessageDialog(editor, "Class with values: " + _class.toString() +"  "+s);
-			
+			}
+			JOptionPane.showMessageDialog(editor, "Class with values: " + _class.toString() + "  " + s);
+
 		}
 
 		boolean unsaturated = true;
@@ -1335,8 +1409,8 @@ public class IntegrateOntologyWithProtege {
 				}
 			}
 		}
-
-		disJointOfAxioms.add(axiom);
+		if (axiom != null)
+			disJointOfAxioms.add(axiom);
 	}
 
 	private boolean isOutgoingSubCLassOf(Object edge) {
