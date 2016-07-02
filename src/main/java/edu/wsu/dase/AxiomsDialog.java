@@ -229,8 +229,8 @@ public class AxiomsDialog extends JDialog {
 			String htmlFormattedText = "<html><h3>These type of axioms</h3>" + "<ul>" + "<li>" + existentialAxiomTypeText + "</li>" + "<li>"
 					+ cardinalityAxiomTypeText + "</li>" + "<li>" + domainandRangeAxiomTypeText + "</li>" + "<li>"
 					+ subClassOfAxiomTypeText + "</li>" + "<li>" + disJointAxiomTypeText + "</li>" + "<li>"
-					+ classAssertionAxiomTypeText + "</li>" + "</ul>" + " Could not be generated from the diagram."
-					+ "<br><br><br>" + "<b> But declarations integrated with protege.</b>" + "</html>";
+					+ classAssertionAxiomTypeText + "</li>" + "</ul>" + "<b> Could not be generated from the diagram.<b>"
+					+ "<br><br><br>" + "<h3> But declarations integrated with protege.</h3>" + "</html>";
 
 			JLabel lbl = new JLabel(htmlFormattedText);
 			lbl.setBorder(new EmptyBorder(10, 35, 20, 20));

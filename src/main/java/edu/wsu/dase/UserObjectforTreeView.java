@@ -36,16 +36,8 @@ public class UserObjectforTreeView {
 
 		ManchesterOWLSyntaxPrefixNameShortFormProvider shortFormProvider = new ManchesterOWLSyntaxPrefixNameShortFormProvider(
 				activeOntology);
-		// QNameShortFormProvider shortFormProvider = new
-		// QNameShortFormProvider(activeOntology);
+
 		rendering.setShortFormProvider(shortFormProvider);
-		// for (Map.Entry<String, String> forms :
-		// shortFormProvider.getPrefixName2PrefixMap().entrySet()) {
-		// //JOptionPane.showMessageDialog(parent, "sarker.3 key: " +
-		// forms.getKey() + " value: " + forms.getValue());
-		// System.err.println("sarker.3 key: " + forms.getKey() + " value: " +
-		// forms.getValue());
-		// }
 
 		if (!isAxiom) {
 			this.isAxiom = false;
@@ -55,7 +47,7 @@ public class UserObjectforTreeView {
 
 	static ArrayList<String> boldFaceText = new ArrayList<String>(
 			Arrays.asList("disjointwith", "min", "max", "some", "only", "subclassof", "inverse", "or", "and",
-					"equivalentto", "self", "value", "not", "inverseof", "subpropertyof","exactly"));
+					"equivalentto", "self", "value", "not", "inverseof", "subpropertyof", "exactly"));
 
 	public UserObjectforTreeView(boolean isAxiom, OWLAxiom axiom) {
 		if (isAxiom) {
@@ -85,7 +77,7 @@ public class UserObjectforTreeView {
 		String value = "";
 
 		if (this.isAxiom) {
-			
+
 			String tmpValue = rendering.render(this.axiom);
 			tmpValue = tmpValue.replace("<", "&lt;");
 			value = getCosmetics(tmpValue);

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -411,7 +412,7 @@ public class IntegrateOntologyWithProtege {
 				editor.status("Selected Axioms is empty. Nothing to integrate.");
 			}
 		} else {
-			editor.status("Axiom Selection canceled");
+			editor.status("");
 		}
 		return false;
 	}
@@ -462,6 +463,7 @@ public class IntegrateOntologyWithProtege {
 
 			} catch (OWLRuntimeException re) {
 				editor.status("OWLRuntimeException. Operation aborted.");
+				shouldContinue = false;
 				re.printStackTrace();
 			}
 
@@ -573,6 +575,41 @@ public class IntegrateOntologyWithProtege {
 
 		String name = cellValue.toString().trim().replace(" ", "_");
 
+		if (cell.getEntityType().getName().equals(CustomEntityType.LITERAL.getName())) {
+			String typeValue = getLiteralTypeValue(cell);
+			String nameValue = getLiteralCellValue(cell);
+			if (nameValue.length() < 1) {
+				JOptionPane.showMessageDialog(editor.getProtegeMainWindow(), ENTITY_WITH_NO_NAME_MESSAGE,
+						ENTITY_WITH_NO_NAME_TITLE, JOptionPane.ERROR_MESSAGE);
+
+				editor.status("Failed. " + ENTITY_WITH_NO_NAME_MESSAGE);
+				shouldContinue = false;
+				return null;
+			}
+			if (nameValue.contains(":")) {
+				String[] subParts = nameValue.split(":");
+				String time = " time.";
+				if (subParts.length > 2) {
+					time = " times.";
+				}
+				JOptionPane.showMessageDialog(editor.getProtegeMainWindow(),
+						cell.getEntityType() + " " + nameValue + " has Colon(:) " + (subParts.length - 1) + time,
+						"Syntax Error", JOptionPane.ERROR_MESSAGE);
+
+				editor.status("Operation aborted.   " + cell.getEntityType() + " " + nameValue + " has Colon(:) "
+						+ (subParts.length - 1) + time);
+
+				shouldContinue = false;
+				return null;
+			} else {
+				// for literal empty string is returned.
+				// for literal this means parsing is OK.
+				// return "";
+				name = typeValue;
+			}
+
+		}
+
 		if (name.contains(":")) {
 			String[] subParts = name.split(":");
 			if (subParts.length == 2) {
@@ -598,9 +635,9 @@ public class IntegrateOntologyWithProtege {
 				// it can occur only when validation is executing.
 				// After validation it should not occur here.
 				// print error here
-				String time = "time.";
+				String time = " time.";
 				if (subParts.length > 2) {
-					time = "times.";
+					time = " times.";
 				}
 				JOptionPane.showMessageDialog(editor.getProtegeMainWindow(),
 						cell.getEntityType() + " " + cell.getValue() + " has Colon(:) " + (subParts.length - 1) + time,
@@ -669,7 +706,7 @@ public class IntegrateOntologyWithProtege {
 	}
 
 	private boolean commitDeclarations() {
-		editor.status("Integrating Declaration axioms with Protege");
+		// editor.status("Integrating Declaration axioms with Protege ");
 		if (declarationAxioms != null && !declarationAxioms.isEmpty()) {
 			// declarationAxioms
 			List<OWLOntologyChange> declarations = new ArrayList<OWLOntologyChange>();
@@ -690,8 +727,11 @@ public class IntegrateOntologyWithProtege {
 						"Declaration axioms are duplicate. Possible reason: trying to create new OWL Entity which IRI match with existing OWLEntity IRI.");
 				return false;
 			}
-		} else
+		} else {
+
+			editor.status("");
 			return false;
+		}
 
 		return false;
 	}
@@ -755,6 +795,16 @@ public class IntegrateOntologyWithProtege {
 
 	}
 
+	private OWLAxiom createOWLDataType(String name) {
+
+		OWLDatatype newDataType = owlDataFactory.getOWLDatatype(name, prefixManager);
+
+		OWLAxiom declareaxiom = owlDataFactory.getOWLDeclarationAxiom(newDataType);
+
+		return declareaxiom;
+
+	}
+
 	private OWLAxiom createOWLNamedIndividual(String name) {
 
 		OWLNamedIndividual newIndividual = owlDataFactory.getOWLNamedIndividual(name, prefixManager);
@@ -789,7 +839,7 @@ public class IntegrateOntologyWithProtege {
 					} else if (CustomEntityType.getName().equals(CustomEntityType.NAMED_INDIVIDUAL.getName())) {
 						declarationAxioms.add(createOWLNamedIndividual(cellLabel));
 					} else if (CustomEntityType.getName().equals(CustomEntityType.DATATYPE.getName())) {
-						// if not existing datatype then create
+						declarationAxioms.add(createOWLDataType(cellLabel));
 					} else if (CustomEntityType.getName().equals(CustomEntityType.LITERAL.getName())) {
 						// declarationAxioms.add(createOWLLiteral(cell.getValue().toString()));
 					} else if (CustomEntityType.getName().equals(CustomEntityType.OBJECT_PROPERTY.getName())) {
@@ -838,6 +888,8 @@ public class IntegrateOntologyWithProtege {
 	private OWLDatatype getCustomOWLDataType(String value) {
 		// if custom datatype what will happen ?
 		OWLDatatype dt = owlDataFactory.getOWLDatatype(value, prefixManager);
+		OWLAxiom ax = owlDataFactory.getOWLDeclarationAxiom(dt);
+		declarationAxioms.add(ax);
 		// System.out.println(dt);
 		return dt;
 	}
@@ -888,6 +940,7 @@ public class IntegrateOntologyWithProtege {
 			createDisJointOfAxioms();
 		} catch (Exception E) {
 			System.out.println(E.getStackTrace());
+			E.printStackTrace();
 			return false;
 		}
 		// editor.status("Generated Domain, Range, Existential and Cardinality
@@ -1332,20 +1385,33 @@ public class IntegrateOntologyWithProtege {
 		OWLAxiom axiom = null;
 
 		Object[] e = graph.getChildVertices(graph.getDefaultParent());
-		Map<OWLClass, Set<OWLClass>> disjointedClassesmap = new HashMap<OWLClass, Set<OWLClass>>();
+		Map<OWLClass, Set<OWLClass>> disjointedClassesmap = new ConcurrentHashMap<OWLClass, Set<OWLClass>>();
 		Map<OWLClass, mxCell> owlClassToGraphNodemap = new HashMap<OWLClass, mxCell>();
 
 		// for owlThing
-		Set<OWLClass> owlThingClassSet = new HashSet<OWLClass>();
-		owlThingClassSet.add(owlDataFactory.getOWLThing());
-		disjointedClassesmap.put(owlDataFactory.getOWLThing(), owlThingClassSet);
+		boolean graphHasExplicitOWLThing = false;
 
+		for (Object eachVertex : e) {
+			if (eachVertex instanceof mxCell) {
+				mxCell cell = (mxCell) eachVertex;
+				if (getCellValueAsOWLCompatibleName(cell).equals(owlThingasStringName)) {
+					graphHasExplicitOWLThing = true;
+					break;
+				}
+			}
+		}
+		if (!graphHasExplicitOWLThing) {
+			Set<OWLClass> owlThingClassSet = new HashSet<OWLClass>();
+			owlThingClassSet.add(owlDataFactory.getOWLThing());
+			disjointedClassesmap.put(owlDataFactory.getOWLThing(), owlThingClassSet);
+		}
+		
 		for (Object Vertex : e) {
 			if (Vertex instanceof mxCell) {
 				mxCell eachCell = (mxCell) Vertex;
 				if (eachCell.getEntityType().getName().equals(CustomEntityType.CLASS.getName())) {
 
-					Set<OWLClass> owlClassSet = new HashSet<OWLClass>();
+					Set<OWLClass> owlClassSet = new ConcurrentHashMap().newKeySet();
 
 					owlClassSet.add(owlDataFactory.getOWLThing());
 
@@ -1359,7 +1425,7 @@ public class IntegrateOntologyWithProtege {
 		}
 
 		for (OWLClass eachClass : disjointedClassesmap.keySet()) {
-			
+
 			if (owlClassToGraphNodemap.containsKey(eachClass)) {
 				mxCell cell = owlClassToGraphNodemap.get(eachClass);
 				Object[] outGoingEdges = graph.getEdges(cell, null, false, true, true, false);
@@ -1372,15 +1438,6 @@ public class IntegrateOntologyWithProtege {
 					}
 				}
 			}
-		}
-
-		for (OWLClass _class : disjointedClassesmap.keySet()) {
-			String s = "initializing value: ";
-			for (OWLClass __class : disjointedClassesmap.get(_class)) {
-				s += "" + __class.toString() + "\n";
-			}
-			// JOptionPane.showMessageDialog(editor, "Class with values: " +
-			// _class.toString() + " " + s);
 		}
 
 		boolean unsaturated = true;
@@ -1438,91 +1495,6 @@ public class IntegrateOntologyWithProtege {
 		OWLClass owlclass = owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(trg), prefixManager);
 
 		return owlclass;
-	}
-
-	private void createDisJointOfAxioms(Map<mxCell, ArrayList<mxCell>> parentToChildMap) {
-
-		// set disjointof with respect to subclassof edges in graph
-		editor.status("Creating Disjointof axioms");
-		if (parentToChildMap != null) {
-			for (Map.Entry<mxCell, ArrayList<mxCell>> eachPair : parentToChildMap.entrySet()) {
-				Set<OWLClass> owlClasses = new HashSet<OWLClass>();
-
-				for (mxCell eachChild : eachPair.getValue()) {
-
-					if (!(getCellValueAsOWLCompatibleName(eachChild).equals(owlThingasStringName))) {
-
-						OWLClass class1 = owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(eachChild),
-								prefixManager);
-						owlClasses.add(class1);
-					}
-				}
-				OWLAxiom axiom;
-				if (owlClasses.size() > 1) {
-					axiom = owlDataFactory.getOWLDisjointClassesAxiom(owlClasses);
-					disJointOfAxioms.add(axiom);
-				}
-			}
-		}
-
-		// set disjointof with respect to owl:Thing
-		ArrayList<mxCell> defaultDisjointedClasses = new ArrayList<>();
-		defaultDisjointedClasses = getOWLClassesFromGraph();
-		JOptionPane.showMessageDialog(editor, defaultDisjointedClasses.size());
-		if (defaultDisjointedClasses.size() > 1) {
-			Set<OWLClass> owlClasses = new HashSet<OWLClass>();
-			for (mxCell eachChild : defaultDisjointedClasses) {
-
-				if (!(getCellValueAsOWLCompatibleName(eachChild).equals(owlThingasStringName))) {
-
-					OWLClass class1 = owlDataFactory.getOWLClass(getCellValueAsOWLCompatibleName(eachChild),
-							prefixManager);
-					owlClasses.add(class1);
-				}
-			}
-			OWLAxiom axiom;
-			if (owlClasses.size() > 1) {
-				axiom = owlDataFactory.getOWLDisjointClassesAxiom(owlClasses);
-				disJointOfAxioms.add(axiom);
-			}
-		}
-
-	}
-
-	/*
-	 * Logic 1. Get All Class 2. List those Classes which Don't have subClassOf
-	 * outgoing edge
-	 */
-	private ArrayList<mxCell> getOWLClassesFromGraph() {
-		Object[] v = graph.getChildVertices(graph.getDefaultParent());
-
-		ArrayList<mxCell> classList = new ArrayList<mxCell>();
-
-		for (Object vertex : v) {
-			if (vertex instanceof mxCell) {
-				mxCell cell = (mxCell) vertex;
-				if (cell.getEntityType().equals(CustomEntityType.CLASS)) {
-
-					boolean shouldInclude = true;
-
-					Object[] outGoingEdges = editor.getGraphComponent().getGraph().getEdges(cell, null, false, true,
-							true, false);
-
-					for (Object edge : outGoingEdges) {
-						if (edge instanceof mxCell) {
-							mxCell edgeCell = (mxCell) edge;
-							if (edgeCell.getEntityType().getName().equals(CustomEntityType.RDFSSUBCLASS_OF.getName())) {
-								shouldInclude = false;
-								break;
-							}
-						}
-					}
-					if (shouldInclude)
-						classList.add(cell);
-				}
-			}
-		}
-		return classList;
 	}
 
 	// @formatter:off
