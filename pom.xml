@@ -15,7 +15,6 @@
 	<version>1.0.0-beta-0</version>
 	<name>OWLAx Plugin Protege 5.0+</name>
 	<description>Ontology Design Pattern Plugin for Desktop Protege 5.0+</description>
-	<!-- <url>https://github.com/...../wiki</url> -->
 	<packaging>bundle</packaging>
 
 	<developers>

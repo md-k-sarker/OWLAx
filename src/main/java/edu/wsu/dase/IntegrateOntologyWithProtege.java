@@ -95,10 +95,6 @@ public class IntegrateOntologyWithProtege {
 	private mxGraphModel model;
 	private BasicGraphEditor editor;
 
-	public BasicGraphEditor getEditor() {
-		return this.editor;
-	}
-
 	private List<OWLOntologyChange> changes;
 	private OWLOntologyID owlOntologyID;
 	private String ontologyBaseURI;
@@ -107,7 +103,13 @@ public class IntegrateOntologyWithProtege {
 	private OWLOntologyManager owlOntologyManager;
 	private OWLOntology activeOntology;
 	private OWLEditorKit owlEditorKit;
+	// ProtegeIRIResolver iriResolver;
+	private PrefixManager prefixManager;
 
+	public BasicGraphEditor getEditor() {
+		return this.editor;
+	}
+	
 	/**
 	 * @return the owlEditorKit
 	 */
@@ -127,9 +129,6 @@ public class IntegrateOntologyWithProtege {
 		return this.activeOntology;
 	}
 
-	// ProtegeIRIResolver iriResolver;
-	private PrefixManager prefixManager;
-
 	/**
 	 * @return the disJointOfAxioms
 	 */
@@ -143,38 +142,6 @@ public class IntegrateOntologyWithProtege {
 	 */
 	public void setDisJointOfAxioms(ArrayList<OWLAxiom> disJointOfAxioms) {
 		this.disJointOfAxioms = disJointOfAxioms;
-	}
-
-	static ManchesterOWLSyntaxOWLObjectRendererImpl rendering = new ManchesterOWLSyntaxOWLObjectRendererImpl();
-
-	/**
-	 * First removing duplicates and then sorting
-	 * 
-	 * @param axiomArray
-	 * @return
-	 */
-	private ArrayList<OWLAxiom> removeDuplicateAndSort(ArrayList<OWLAxiom> axiomArray) {
-		ArrayList<OWLAxiom> sortedAxiomArray = new ArrayList<>();
-		Set<OWLAxiom> axiomSet = new HashSet<>();
-		axiomSet.addAll(axiomArray);
-		sortedAxiomArray.addAll(axiomSet);
-
-		// before sorting it uses manchester encoding
-		Collections.sort(sortedAxiomArray, new Comparator<OWLAxiom>() {
-
-			@Override
-			public int compare(OWLAxiom o1, OWLAxiom o2) {
-				// TODO Auto-generated method stub
-
-				String a1 = rendering.render(o1);
-				String a2 = rendering.render(o2);
-
-				return a1.compareToIgnoreCase(a2);
-			}
-
-		});
-
-		return sortedAxiomArray;
 	}
 
 	public ArrayList<OWLAxiom> getDeclarationAxioms() {
@@ -224,6 +191,106 @@ public class IntegrateOntologyWithProtege {
 
 	public void setClassAssertionAxioms(ArrayList<OWLAxiom> classAssertionAxiom) {
 		this.classAssertionAxioms = classAssertionAxiom;
+	}
+
+	static ManchesterOWLSyntaxOWLObjectRendererImpl rendering = new ManchesterOWLSyntaxOWLObjectRendererImpl();
+
+	public IntegrateOntologyWithProtege(BasicGraphEditor editor) {
+		shouldContinue = true;
+		this.editor = editor;
+		this.graph = editor.getGraphComponent().getGraph();
+		this.model = (mxGraphModel) graph.getModel();
+		this.root = graph.getDefaultParent();
+		this.owlEditorKit = editor.getProtegeOWLEditorKit();
+		try {
+			initilizeProtegeDataFactory();
+		} catch (Exception e) {
+			shouldContinue = false;
+			// System.err.println(e.getStackTrace());
+			e.printStackTrace();
+		}
+	}
+
+	public void initilizeProtegeDataFactory() {
+		owlModelManager = editor.getProtegeOWLModelManager();
+		owlDataFactory = owlModelManager.getOWLDataFactory();
+		owlOntologyManager = owlModelManager.getOWLOntologyManager();
+		// OWLEntityFinder finder = owlModelManager.getOWLEntityFinder();
+		// finder.getOWLClass("cls");
+		changes = null;
+
+		activeOntology = owlModelManager.getActiveOntology();
+
+		// prefixManager = new DefaultPrefixManager();
+
+		if (activeOntology != null) {
+
+			prefixManager = PrefixUtilities.getPrefixOWLOntologyFormat(activeOntology);
+
+			if (!addPrefix()) {
+				return;
+			}
+
+			// set prefixManager in editor to get reference
+			editor.setProtegePrefixmanager(prefixManager);
+
+			owlOntologyID = activeOntology.getOntologyID();
+			ontologyBaseURI = owlOntologyID.getOntologyIRI().get().toQuotedString();
+			ontologyBaseURI = ontologyBaseURI.substring(1, ontologyBaseURI.length() - 1) + "#";
+			editor.getGraphComponent().setOWLFileTitle(ontologyBaseURI);
+
+			// set renderings for sorting
+			ManchesterOWLSyntaxPrefixNameShortFormProvider shortFormProvider = new ManchesterOWLSyntaxPrefixNameShortFormProvider(
+					activeOntology);
+			rendering.setShortFormProvider(shortFormProvider);
+
+		}
+
+	}
+
+	
+	private void initializeDataStructure() {
+		declarationAxioms = new ArrayList<OWLAxiom>();
+		domainAndRangeAxioms = new ArrayList<OWLAxiom>();
+		existentialAxioms = new ArrayList<OWLAxiom>();
+		cardinalityAxioms = new ArrayList<OWLAxiom>();
+		subClassOfAxioms = new ArrayList<OWLAxiom>();
+		classAssertionAxioms = new ArrayList<OWLAxiom>();
+		disJointOfAxioms = new ArrayList<OWLAxiom>();
+		selectedAxioms = new HashSet<OWLAxiom>();
+
+		changes = new ArrayList<OWLOntologyChange>();
+
+	}
+
+	/**
+	 * First removing duplicates and then sorting
+	 * 
+	 * @param axiomArray
+	 * @return
+	 */
+	private ArrayList<OWLAxiom> removeDuplicateAndSort(ArrayList<OWLAxiom> axiomArray) {
+		ArrayList<OWLAxiom> sortedAxiomArray = new ArrayList<>();
+		Set<OWLAxiom> axiomSet = new HashSet<>();
+		axiomSet.addAll(axiomArray);
+		sortedAxiomArray.addAll(axiomSet);
+
+		// before sorting it uses manchester encoding
+		Collections.sort(sortedAxiomArray, new Comparator<OWLAxiom>() {
+
+			@Override
+			public int compare(OWLAxiom o1, OWLAxiom o2) {
+				// TODO Auto-generated method stub
+
+				String a1 = rendering.render(o1);
+				String a2 = rendering.render(o2);
+
+				return a1.compareToIgnoreCase(a2);
+			}
+
+		});
+
+		return sortedAxiomArray;
 	}
 
 	private boolean isEqualCell(mxCell cell1, mxCell cell2) {
@@ -283,36 +350,6 @@ public class IntegrateOntologyWithProtege {
 		} else {
 			return null;
 		}
-	}
-
-	public IntegrateOntologyWithProtege(BasicGraphEditor editor) {
-		shouldContinue = true;
-		this.editor = editor;
-		this.graph = editor.getGraphComponent().getGraph();
-		this.model = (mxGraphModel) graph.getModel();
-		this.root = graph.getDefaultParent();
-		this.owlEditorKit = editor.getProtegeOWLEditorKit();
-		try {
-			initilizeProtegeDataFactory();
-		} catch (Exception e) {
-			shouldContinue = false;
-			// System.err.println(e.getStackTrace());
-			e.printStackTrace();
-		}
-	}
-
-	private void initializeDataStructure() {
-		declarationAxioms = new ArrayList<OWLAxiom>();
-		domainAndRangeAxioms = new ArrayList<OWLAxiom>();
-		existentialAxioms = new ArrayList<OWLAxiom>();
-		cardinalityAxioms = new ArrayList<OWLAxiom>();
-		subClassOfAxioms = new ArrayList<OWLAxiom>();
-		classAssertionAxioms = new ArrayList<OWLAxiom>();
-		disJointOfAxioms = new ArrayList<OWLAxiom>();
-		selectedAxioms = new HashSet<OWLAxiom>();
-
-		changes = new ArrayList<OWLOntologyChange>();
-
 	}
 
 	private boolean validateEntityNameasOWLCompatible() {
@@ -651,43 +688,6 @@ public class IntegrateOntologyWithProtege {
 			}
 		} else {
 			return defaultPrefix + name;
-		}
-
-	}
-
-	public void initilizeProtegeDataFactory() {
-		owlModelManager = editor.getProtegeOWLModelManager();
-		owlDataFactory = owlModelManager.getOWLDataFactory();
-		owlOntologyManager = owlModelManager.getOWLOntologyManager();
-		// OWLEntityFinder finder = owlModelManager.getOWLEntityFinder();
-		// finder.getOWLClass("cls");
-		changes = null;
-
-		activeOntology = owlModelManager.getActiveOntology();
-
-		// prefixManager = new DefaultPrefixManager();
-
-		if (activeOntology != null) {
-
-			prefixManager = PrefixUtilities.getPrefixOWLOntologyFormat(activeOntology);
-
-			if (!addPrefix()) {
-				return;
-			}
-
-			// set prefixManager in editor to get reference
-			editor.setProtegePrefixmanager(prefixManager);
-
-			owlOntologyID = activeOntology.getOntologyID();
-			ontologyBaseURI = owlOntologyID.getOntologyIRI().get().toQuotedString();
-			ontologyBaseURI = ontologyBaseURI.substring(1, ontologyBaseURI.length() - 1) + "#";
-			editor.getGraphComponent().setOWLFileTitle(ontologyBaseURI);
-
-			// set renderings for sorting
-			ManchesterOWLSyntaxPrefixNameShortFormProvider shortFormProvider = new ManchesterOWLSyntaxPrefixNameShortFormProvider(
-					activeOntology);
-			rendering.setShortFormProvider(shortFormProvider);
-
 		}
 
 	}
@@ -1386,7 +1386,7 @@ public class IntegrateOntologyWithProtege {
 
 		Object[] e = graph.getChildVertices(graph.getDefaultParent());
 		Map<OWLClass, Set<OWLClass>> disjointedClassesmap = new ConcurrentHashMap<OWLClass, Set<OWLClass>>();
-		Map<OWLClass, mxCell> owlClassToGraphNodemap = new HashMap<OWLClass, mxCell>();
+		Map<OWLClass, mxCell> owlClassToGraphNodemap = new ConcurrentHashMap<OWLClass, mxCell>();
 
 		// for owlThing
 		boolean graphHasExplicitOWLThing = false;
@@ -1405,7 +1405,7 @@ public class IntegrateOntologyWithProtege {
 			owlThingClassSet.add(owlDataFactory.getOWLThing());
 			disjointedClassesmap.put(owlDataFactory.getOWLThing(), owlThingClassSet);
 		}
-		
+
 		for (Object Vertex : e) {
 			if (Vertex instanceof mxCell) {
 				mxCell eachCell = (mxCell) Vertex;

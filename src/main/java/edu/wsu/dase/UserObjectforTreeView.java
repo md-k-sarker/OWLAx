@@ -56,19 +56,27 @@ public class UserObjectforTreeView {
 		}
 	}
 
-	private String getCosmetics(String value) {
+	private String getCosmetics(String fullAxiomAsString) {
 
-		String[] values = value.split(" ");
+		fullAxiomAsString = fullAxiomAsString.replace("  ", " ");
+		String fullAxiomAsFormattedString = " ";
 
-		for (String v : values) {
-			if (boldFaceText.contains(v.toLowerCase())) {
+		String[] values = fullAxiomAsString.split(" ");
+		// System.out.println("-------------");
 
-				value = value.replace(v, "<b style=\"color:#F09128;\">" + v + "</b>");
+		for (String eachToken : values) {
+			// System.out.println(eachToken);
+			if (boldFaceText.contains(eachToken.toLowerCase())) {
+				// fullAxiomAsString = fullAxiomAsString.replace(eachToken, "<b
+				// style=\"color:#F09128;\">" + eachToken + "</b>");
+				fullAxiomAsFormattedString += "<b style=\"color:#F09128;\">" + eachToken + "</b>" + " ";
+			} else {
+				fullAxiomAsFormattedString += eachToken + " ";
 			}
-
 		}
+		// System.out.println("-------------");
 
-		return "<html>" + value + "</html>";
+		return "<html>" + fullAxiomAsFormattedString + "</html>";
 	}
 
 	@Override
