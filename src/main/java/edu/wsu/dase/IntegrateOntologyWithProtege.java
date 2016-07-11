@@ -109,7 +109,7 @@ public class IntegrateOntologyWithProtege {
 	public BasicGraphEditor getEditor() {
 		return this.editor;
 	}
-	
+
 	/**
 	 * @return the owlEditorKit
 	 */
@@ -248,7 +248,6 @@ public class IntegrateOntologyWithProtege {
 
 	}
 
-	
 	private void initializeDataStructure() {
 		declarationAxioms = new ArrayList<OWLAxiom>();
 		domainAndRangeAxioms = new ArrayList<OWLAxiom>();
@@ -585,8 +584,14 @@ public class IntegrateOntologyWithProtege {
 				editor.status("Error with Ontology ID. Operation aborted.");
 				return false;
 			}
+			String _defaultPrefix = prefixManager.getDefaultPrefix();
+			if (_defaultPrefix != null) {
+				defaultPrefix = ":";
+			} else {
+				defaultPrefix = prefix + ":";
+			}
 			prefixManager.setPrefix(prefix, uriString);
-			defaultPrefix = prefix + ":";
+
 			return true;
 		} catch (IllegalStateException e) {
 			shouldContinue = false;
@@ -597,7 +602,6 @@ public class IntegrateOntologyWithProtege {
 			e.printStackTrace();
 			return false;
 		}
-
 	}
 
 	private String getCellValueAsOWLCompatibleName(mxCell cell) {
@@ -1151,11 +1155,11 @@ public class IntegrateOntologyWithProtege {
 			cardinalityAxioms.add(axiom);
 
 			// for inverse objectProperty
-			owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop.getInverseProperty(), dest);
-			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);
+			owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop.getInverseProperty(), src);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(dest, owlObjectMaxCardinality);
 			cardinalityAxioms.add(axiom);
 
-			owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop.getInverseProperty(), dest);
+			owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop.getInverseProperty(), src);
 			axiom = owlDataFactory.getOWLSubClassOfAxiom(owlDataFactory.getOWLThing(), owlObjectMaxCardinality);
 			cardinalityAxioms.add(axiom);
 
@@ -1166,7 +1170,7 @@ public class IntegrateOntologyWithProtege {
 
 			owlObjectMaxCardinality = owlDataFactory.getOWLObjectMaxCardinality(1, objprop.getInverseProperty(),
 					owlDataFactory.getOWLThing());
-			axiom = owlDataFactory.getOWLSubClassOfAxiom(src, owlObjectMaxCardinality);
+			axiom = owlDataFactory.getOWLSubClassOfAxiom(dest, owlObjectMaxCardinality);
 			cardinalityAxioms.add(axiom);
 		}
 		// need to implement custom cardinality axiom

@@ -65,7 +65,6 @@ Other features:
  <li>Then write entity name as prefixName : entityName 
  </ol>
 
-####Sample
      
 ##Current Limitations:
 1. It can't create complex axioms.
