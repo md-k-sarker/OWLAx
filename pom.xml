@@ -10,10 +10,10 @@
 		<version>7</version>
 	</parent>
 
-	<groupId>edu.wsu.dase</groupId>
+	<groupId>edu.wright.dase</groupId>
 	<artifactId>OWLAx</artifactId>
-	<version>1.0.0-beta-0</version>
-	<name>OWLAx Plugin Protege 5.0+</name>
+	<version>0.0.1</version>
+	<name>OWLAx Protege 5.0+ Plugin</name>
 	<description>Ontology Design Pattern Plugin for Desktop Protege 5.0+</description>
 	<packaging>bundle</packaging>
 
