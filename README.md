@@ -22,7 +22,7 @@ Ontology Design Pattern Plugin for Desktop Protege 5.0+
 <li>Select OWLAx: OWL Axiomatizer and Click <b>Install</b></li>
 </br>
 
-		<img src="https://github.com/md-k-sarker/OWLAx/blob/master/plugin/doc/screenshot/InstallOWLAx.png"></img>
+		<img src="https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/ScreenShots/InstallOWLAx.png"></img>
 		
 <br>
 
