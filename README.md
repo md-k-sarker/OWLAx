@@ -6,15 +6,27 @@ For details please visit: http://dase.cs.wright.edu/content/ontology-axiomatizat
 Ontology Design Pattern Plugin for Desktop Protege 5.0+
 
 
-##Installation
-1. Download OWLAx plugin jar from <a href="https://github.com/md-k-sarker/OWLAx/blob/master/plugin/binary/OWLAx-0.0.1.jar?raw=true" title="plugin"> plugin/binary</a> folder of git repository
-2. Put the jar file inside plugins folder of Protege.
+###Installation
+<ol>
+<li>Click <b>Check for plugins</b> from <b>File</b> Menu </li>
+	</br>
+		<img src="https://github.com/md-k-sarker/ROWL/blob/master/plugin/doc/screenshot/ProtegeFileMenu.png"></img> 
+	
+	</br>
+	</br>
+<p>You will a see list of plugin. </p>
 
-###How to find plugin folder of protege 
-####MAC OS
-See the video <a href="https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/Video/macPluginFolder.mov?raw=true" title="plugin"> Find Plugin Folder in Protege Mac OS Version</a>
-####Windows OS
-See the video <a href="https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/Video/windowsPluginFolder.webm?raw=true" title="plugin"> Find Plugin Folder in Protege Windows OS Version</a>
+</br>
+<img src="https://github.com/md-k-sarker/ROWL/blob/master/plugin/doc/screenshot/ProtegePluginsList.png"></img>
+</br>
+<li>Select OWLAx: OWL Axiomatizer and Click <b>Install</b></li>
+</br>
+
+		<img src="https://github.com/md-k-sarker/ROWL/blob/master/plugin/doc/screenshot/InstallOWLAx.png"></img>
+		
+<br>
+
+</ol>
 
 
 ##Usage
