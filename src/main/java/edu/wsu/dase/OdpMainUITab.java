@@ -63,7 +63,7 @@ public class OdpMainUITab extends OWLWorkspaceViewsTab {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		super.dispose();
+		//super.dispose();
 		getOWLModelManager().removeListener(this.listener);
 	}
 
