@@ -32,7 +32,7 @@ import com.mxgraph.view.mxConnectionConstraint;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphView;
 
-import edu.wsu.dase.util.CustomEntityType;
+import edu.wright.dase.util.CustomEntityType;
 
 /**
  *

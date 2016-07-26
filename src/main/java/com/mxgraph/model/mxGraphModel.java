@@ -22,7 +22,7 @@ import com.mxgraph.util.mxEventSource;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxUndoableEdit;
 
-import edu.wsu.dase.util.CustomEntityType;
+import edu.wright.dase.util.CustomEntityType;
 
 /**
  * Extends mxEventSource to implement a graph model. The graph model acts as a

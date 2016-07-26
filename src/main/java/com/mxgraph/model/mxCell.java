@@ -10,7 +10,7 @@ import java.util.List;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import edu.wsu.dase.util.CustomEntityType;
+import edu.wright.dase.util.CustomEntityType;
 
 /**
  * Cells are the elements of the graph model. They represent the state of the

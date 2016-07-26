@@ -40,7 +40,7 @@ import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxCellState;
 
-import edu.wsu.dase.util.CustomEntityType;
+import edu.wright.dase.util.CustomEntityType;
 
 /**
  * To control this editor, use mxGraph.invokesStopCellEditing, mxGraph.

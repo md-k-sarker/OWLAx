@@ -52,9 +52,10 @@ import com.mxgraph.util.mxResources;
 import com.mxgraph.util.mxStyleUtils;
 import com.mxgraph.util.mxUndoableEdit;
 import com.mxgraph.util.mxUndoableEdit.mxUndoableChange;
-import com.mxgraph.util.mxUtils;
 
-import edu.wsu.dase.util.CustomEntityType;
+import edu.wright.dase.util.CustomEntityType;
+
+import com.mxgraph.util.mxUtils;
 
 /**
  * Implements a graph object that allows to create diagrams from a graph model

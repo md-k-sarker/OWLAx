@@ -6,7 +6,7 @@ package com.mxgraph.model;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.util.mxUndoableEdit.mxUndoableChange;
 
-import edu.wsu.dase.util.CustomEntityType;
+import edu.wright.dase.util.CustomEntityType;
 
 /**
  * Defines the requirements for a graph model to be used with mxGraph.

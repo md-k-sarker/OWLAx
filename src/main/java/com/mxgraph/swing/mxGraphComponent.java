@@ -79,11 +79,12 @@ import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxEdgeStyle;
 import com.mxgraph.view.mxEdgeStyle.mxEdgeStyleFunction;
+
+import edu.wright.dase.swing.editor.BasicGraphEditor;
+
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphView;
 import com.mxgraph.view.mxTemporaryCellStates;
-
-import edu.wsu.dase.swing.editor.BasicGraphEditor;
 
 /**
  * For setting the preferred size of the viewport for scrolling, use

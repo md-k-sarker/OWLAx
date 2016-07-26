@@ -5,7 +5,7 @@
 
 	<extension id="SWRLTab" point="org.protege.editor.core.application.WorkspaceTab">
 		<label value="OWLAx"/>
-		<class value="edu.wsu.dase.OdpMainUITab"/>
+		<class value="edu.wright.dase.OdpMainUITab"/>
 		<index value="X"/>
 		<editorKitId value="OWLEditorKit"/>
   </extension>  

@@ -42,7 +42,7 @@ public class mxCodecRegistry
 	// Registers the known codecs and package names
 	static
 	{
-		addPackage("edu.wsu.dase.util");
+		addPackage("edu.wright.dase.util");
 		addPackage("com.mxgraph");
 		addPackage("com.mxgraph.util");
 		addPackage("com.mxgraph.model");

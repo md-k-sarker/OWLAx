@@ -10,7 +10,7 @@
 //import com.mxgraph.util.mxUtils;
 //import com.mxgraph.view.mxStylesheet;
 //
-//import edu.wsu.dase.util.CustomEntityType;
+//import edu.wright.dase.util.CustomEntityType;
 //
 //public class protegeEntityCodec extends mxObjectCodec {
 //

@@ -3,7 +3,7 @@
  */
 package com.mxgraph.model;
 
-import edu.wsu.dase.util.CustomEntityType;
+import edu.wright.dase.util.CustomEntityType;
 
 /**
  * Defines the requirements for a cell that can be used in an mxGraphModel.
