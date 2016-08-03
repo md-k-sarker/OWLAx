@@ -40,7 +40,7 @@ Ontology Design Pattern Plugin for Desktop Protege 5.0+
 3. Start Using OWLAx Plugin
 
 ###How to Use
-See the video <a href="https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/Video/howToUseOWLAx.mov?raw=true" title="How to use OWLAx"> Using OWLAx</a>
+See the video <a href="https://youtu.be/fRCvdjaKYYQ" title="How to use OWLAx"> Using OWLAx</a>
 
 
 ##Capabilities of OWLAx
