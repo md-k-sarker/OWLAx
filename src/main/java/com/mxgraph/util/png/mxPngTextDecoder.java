@@ -50,7 +50,7 @@ public class mxPngTextDecoder
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new RuntimeException("PNGImageDecoder1");
 		}
 
@@ -100,13 +100,13 @@ public class mxPngTextDecoder
 					}
 					catch (Exception e)
 					{
-						e.printStackTrace();
+						//e.printStackTrace();
 					}
 				}
 			}
 			catch (Exception e)
 			{
-				e.printStackTrace();
+				//e.printStackTrace();
 				return null;
 			}
 		}

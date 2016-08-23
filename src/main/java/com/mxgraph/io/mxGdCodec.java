@@ -143,7 +143,7 @@ public class mxGdCodec
 		
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		finally
 		{

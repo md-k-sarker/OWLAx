@@ -843,7 +843,7 @@ public class OWLCellRenderer implements TableCellRenderer, TreeCellRenderer, Lis
 				}
 			}
 		} catch (BadLocationException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 

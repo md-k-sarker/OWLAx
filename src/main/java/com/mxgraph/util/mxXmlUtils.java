@@ -42,7 +42,7 @@ public class mxXmlUtils
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 		return null;

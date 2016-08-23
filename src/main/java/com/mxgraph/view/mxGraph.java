@@ -184,7 +184,7 @@ public class mxGraph extends mxEventSource {
 		try {
 			mxResources.add("resources.graph");
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			// ignore
 		}
 	}
@@ -3765,9 +3765,7 @@ public class mxGraph extends mxEventSource {
 	public Object connectCell(Object edge, Object terminal, boolean source, mxConnectionConstraint constraint) {
 		model.beginUpdate();
 		try {
-			for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
-				// System.out.println(ste);
-			}
+			
 			Object previous = model.getTerminal(edge, source);
 			cellConnected(edge, terminal, source, constraint);
 			fireEvent(new mxEventObject(mxEvent.CONNECT_CELL, "edge", edge, "terminal", terminal, "source", source,

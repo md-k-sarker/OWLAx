@@ -39,7 +39,7 @@ import com.mxgraph.canvas.mxICanvas2D;
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	

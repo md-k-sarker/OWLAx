@@ -823,7 +823,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 			catch (Exception ex)
 			{
 				// do nothing
-				ex.printStackTrace();
+				//ex.printStackTrace();
 			}
 
 		}

@@ -1845,7 +1845,7 @@ public class mxUtils
 		}
 		catch (NoSuchAlgorithmException ex)
 		{
-			ex.printStackTrace();
+			//ex.printStackTrace();
 		}
 
 		return result.toString();
@@ -2025,7 +2025,7 @@ public class mxUtils
 					}
 					catch (Exception e1)
 					{
-						e1.printStackTrace();
+						//e1.printStackTrace();
 					}
 				}
 			}
@@ -2359,7 +2359,7 @@ public class mxUtils
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 		return null;

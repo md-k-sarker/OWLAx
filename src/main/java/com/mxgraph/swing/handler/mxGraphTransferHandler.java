@@ -341,7 +341,7 @@ public class mxGraphTransferHandler extends TransferHandler
 			}
 			catch (Exception ex)
 			{
-				ex.printStackTrace();
+				//ex.printStackTrace();
 			}
 		}
 
@@ -418,7 +418,7 @@ public class mxGraphTransferHandler extends TransferHandler
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 		return result;

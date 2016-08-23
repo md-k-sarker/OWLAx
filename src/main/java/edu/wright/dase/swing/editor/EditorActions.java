@@ -717,7 +717,7 @@ public class EditorActions {
 						}
 					}
 				} catch (Throwable ex) {
-					ex.printStackTrace();
+					//ex.printStackTrace();
 					JOptionPane.showMessageDialog(graphComponent, ex.toString(), mxResources.get("error"),
 							JOptionPane.ERROR_MESSAGE);
 				}
@@ -941,7 +941,7 @@ public class EditorActions {
 						}
 					}
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					//ex.printStackTrace();
 				}
 			}
 
@@ -1203,7 +1203,7 @@ public class EditorActions {
 								((bold) ? "<b>" : "<i>") + text + ((bold) ? "</b>" : "</i>"), 0, 0,
 								(bold) ? HTML.Tag.B : HTML.Tag.I);
 					} catch (Exception ex) {
-						ex.printStackTrace();
+						//ex.printStackTrace();
 					}
 
 					editorPane.requestFocus();
@@ -1399,7 +1399,7 @@ public class EditorActions {
 									mxResources.get("stencilImported", new String[] { name }));
 						}
 					} catch (IOException e1) {
-						e1.printStackTrace();
+						//e1.printStackTrace();
 					}
 				}
 			}
@@ -1506,7 +1506,7 @@ public class EditorActions {
 
 								}
 							} catch (IOException ex) {
-								ex.printStackTrace();
+								//ex.printStackTrace();
 								JOptionPane.showMessageDialog(editor.getGraphComponent(), ex.toString(),
 										mxResources.get("error"), JOptionPane.ERROR_MESSAGE);
 							}

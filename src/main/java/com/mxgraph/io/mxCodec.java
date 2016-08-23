@@ -262,9 +262,9 @@ public class mxCodec {
 				if (obj instanceof Node) {
 					node = ((Node) obj).cloneNode(true);
 				} else {
-					System.err.println("Before No codec for " + name);
+					//System.err.println("Before No codec for " + name);
 					
-					System.err.println("After No codec for " + name);
+					//System.err.println("After No codec for " + name);
 				}
 			}
 		}
@@ -312,7 +312,7 @@ public class mxCodec {
 				}
 			} catch (Exception e) {
 				System.err.println("Cannot decode " + node.getNodeName() + ": " + e.getMessage());
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 

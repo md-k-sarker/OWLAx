@@ -210,10 +210,10 @@ public class mxObjectCodec {
 			}
 		} catch (InstantiationException e) {
 			// ignore
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			// ignore
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 		return obj;

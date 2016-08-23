@@ -943,8 +943,8 @@ public class IntegrateOntologyWithProtege {
 		try {
 			createDisJointOfAxioms();
 		} catch (Exception E) {
-			System.out.println(E.getStackTrace());
-			E.printStackTrace();
+			//System.out.println(E.getStackTrace());
+			//E.printStackTrace();
 			return false;
 		}
 		// editor.status("Generated Domain, Range, Existential and Cardinality

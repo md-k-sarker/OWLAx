@@ -247,7 +247,7 @@ public class mxGraphicsCanvas2D implements mxICanvas2D
 		}
 		catch (CloneNotSupportedException e)
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 		return null;

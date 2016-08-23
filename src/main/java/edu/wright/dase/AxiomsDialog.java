@@ -454,7 +454,7 @@ public class AxiomsDialog extends JDialog {
 							// System.out.println("outside: not posible");
 
 					}
-					System.out.println();
+					//System.out.println();
 				}
 			}
 		});

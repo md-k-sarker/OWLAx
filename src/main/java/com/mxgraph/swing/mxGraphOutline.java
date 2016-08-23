@@ -118,6 +118,7 @@ public class mxGraphOutline extends JComponent
 	/**
 	 * Specifies if the outline should be zoomed to the page if the graph
 	 * component is in page layout mode. Default is true.
+	 * should be modified
 	 */
 	protected boolean fitPage = true;
 

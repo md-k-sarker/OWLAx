@@ -324,7 +324,7 @@ public class GraphEditor extends BasicGraphEditor {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e1) {
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		}
 
 		mxSwingConstants.SHADOW_COLOR = Color.LIGHT_GRAY;

@@ -69,7 +69,6 @@ public class mxCellCodec extends mxObjectCodec {
 				// XML node, namely the node which denotes
 				// the object boundaries in the file.
 				String id = tmp.getAttribute("id");
-				System.out.println("sarker.10 inside: " + id);
 				((Element) node).setAttribute("id", id);
 				tmp.removeAttribute("id");
 			}

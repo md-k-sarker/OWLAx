@@ -538,7 +538,7 @@ public class mxGraphTransferable implements Transferable, UIResource,
 		catch (ClassNotFoundException cnfe)
 		{
 			// do nothing
-			cnfe.printStackTrace();
+			//cnfe.printStackTrace();
 		}
 	}
 

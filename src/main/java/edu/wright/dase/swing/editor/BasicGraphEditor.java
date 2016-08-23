@@ -122,7 +122,7 @@ public class BasicGraphEditor extends JPanel {
 			mxResources.add("resources/editor");
 		} catch (Exception e) {
 			// ignore
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 
@@ -795,7 +795,7 @@ public class BasicGraphEditor extends JPanel {
 				// Needs to assign the key bindings again
 				keyboardHandler = new EditorKeyboardHandler(graphComponent);
 			} catch (Exception e1) {
-				e1.printStackTrace();
+				//e1.printStackTrace();
 			}
 		}
 	}
