@@ -12,7 +12,7 @@
 
 	<groupId>edu.wright.dase</groupId>
 	<artifactId>OWLAx</artifactId>
-	<version>1.0.1</version>
+	<version>1.1.0</version>
 	<name>OWLAx Protege 5.0+ Plugin</name>
 	<description>Ontology Design Pattern Plugin for Desktop Protege 5.0+</description>
 	<packaging>bundle</packaging>
