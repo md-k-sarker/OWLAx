@@ -21,6 +21,9 @@ local.properties
 # OSX files
 .DS_Store
 
+#Bash Script
+gu
+
 
 # Android Studio
 *.iml

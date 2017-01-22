@@ -62,19 +62,16 @@ public class UserObjectforTreeView {
 		String fullAxiomAsFormattedString = " ";
 
 		String[] values = fullAxiomAsString.split(" ");
-		// System.out.println("-------------");
 
 		for (String eachToken : values) {
-			// System.out.println(eachToken);
+
 			if (boldFaceText.contains(eachToken.toLowerCase())) {
-				// fullAxiomAsString = fullAxiomAsString.replace(eachToken, "<b
-				// style=\"color:#F09128;\">" + eachToken + "</b>");
+
 				fullAxiomAsFormattedString += "<b style=\"color:#F09128;\">" + eachToken + "</b>" + " ";
 			} else {
 				fullAxiomAsFormattedString += eachToken + " ";
 			}
 		}
-		// System.out.println("-------------");
 
 		return "<html>" + fullAxiomAsFormattedString + "</html>";
 	}

@@ -52,6 +52,8 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLRuntimeException;
 import org.semanticweb.owlapi.model.PrefixManager;
 import org.semanticweb.owlapi.model.parameters.ChangeApplied;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGraphModel;
@@ -66,6 +68,8 @@ import edu.wright.dase.util.CustomEntityType;
  */
 public class IntegrateOntologyWithProtege {
 
+	private static final Logger log = LoggerFactory.getLogger(IntegrateOntologyWithProtege.class);
+	
 	private String SAVING_COMPLETE_TITLE = "Ontology Generated";
 	private String SAVING_COMPLETE_MESSAGE = "Changes Integrated with Protege successfully.";
 	private String ONT_GEN_ERROR_TITLE = "Ontology not generated";
@@ -929,26 +933,12 @@ public class IntegrateOntologyWithProtege {
 			}
 		}
 
-		// Generate DisJointOf Axioms
-		// Map<mxCell, ArrayList<mxCell>> parentToChildMap =
-		// getDisJointtedCells();
-
-		// if (parentToChildMap != null) {
-		// JOptionPane.showMessageDialog(editor,
-		// parentToChildMap.entrySet().size());
-		// }
-
-		// createDisJointOfAxioms(parentToChildMap);
-
 		try {
 			createDisJointOfAxioms();
 		} catch (Exception E) {
-			//System.out.println(E.getStackTrace());
-			//E.printStackTrace();
+			log.warn("Exception");
 			return false;
 		}
-		// editor.status("Generated Domain, Range, Existential and Cardinality
-		// axioms successfully");
 		return true;
 	}
 

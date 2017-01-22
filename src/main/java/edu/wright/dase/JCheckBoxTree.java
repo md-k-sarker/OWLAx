@@ -183,7 +183,7 @@ public class JCheckBoxTree extends JTree {
 					setForeground(new Color(98, 79, 219));
 				}
 				if (_obj.isAxiom()) {
-					// not working
+					// not working. need to fix
 					// // set as selected
 					// if (activeontologyAxioms.contains(_obj.getAxiom())) {
 					// cn.isSelected = true;
@@ -314,45 +314,9 @@ public class JCheckBoxTree extends JTree {
 		}
 	}
 
+	//not required
 	public void setSelectedOtherAxioms(TreePath tp) {
-		// checkSubTree(tp, true);
-		// updatePredecessorsWithCheckMode(tp, true);
-
-//		CheckedNode cn = nodesCheckingState.get(tp);
-//		DefaultMutableTreeNode node = (DefaultMutableTreeNode) tp.getLastPathComponent();
-//
-//		boolean check = cn.isSelected;
-//
-//		Object obj = node.getUserObject();
-//
-//		if (obj instanceof UserObjectforTreeView) {
-//			UserObjectforTreeView _obj = (UserObjectforTreeView) obj;
-//			if (_obj.isAxiom()) {
-//				// not working
-//				// // set as selected
-//				if (activeontologyAxioms.contains(_obj.getAxiom())) {
-//					// cn.isSelected = true;
-//					check = true;
-//				} // no need to select
-//				else {
-//					check = false;
-//				}
-//			} else {
-//
-//			}
-//		}
-//
-//		cn.isSelected = check;
-//
-//		for (int i = 0; i < node.getChildCount(); i++) {
-//			checkSubTree(tp.pathByAddingChild(node.getChildAt(i)), check);
-//		}
-//		cn.allChildrenSelected = check;
-//		if (check) {
-//			checkedPaths.add(tp);
-//		} else {
-//			checkedPaths.remove(tp);
-//		}
+		
 	}
 
 }

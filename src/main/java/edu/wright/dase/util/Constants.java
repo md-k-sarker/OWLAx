@@ -6,7 +6,7 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 public class Constants {
 
-	/*Not implemented yet
+	/*Not implemented 
 	*/
 	/*public static String[] entityType = { "OBJECTPROPERTY", "DATAPROPERTY", "ANNOTATIONPROPERTY", "DATATYPE", "CLASS",
 			"INDIVIDUAL" };*/

@@ -34,9 +34,7 @@ public class CustomCheckBoxCellRenderer extends OWLCellRenderer {
 		if (checkBox.getParent() != null) {
 			preferredWidth = checkBox.getParent().getWidth();
 		}
-		// preferredWidth = -1;
-		// textPane.setBorder(BorderFactory.createEmptyBorder(1, 2, 1, 2 +
-		// rightMargin));
+
 		setupLinkedObjectComponent(checkBox, cellBounds);
 		Component c = prepareRenderer(value, isSelected, cellHasFocus);
 		reset();

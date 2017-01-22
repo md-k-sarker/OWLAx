@@ -24,6 +24,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxOWLObjectRendererImpl;
 import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxPrefixNameShortFormProvider;
 import org.semanticweb.owlapi.model.AxiomType;
@@ -33,6 +36,8 @@ import org.semanticweb.owlapi.model.OWLOntology;
 public class AxiomsDialog extends JDialog {
 
 	private static final long serialVersionUID = 4648172894076113183L;
+	private static final Logger log = LoggerFactory.getLogger(AxiomsDialog.class);
+	  
 	private Button integrateBtn;
 	private Button cancelBtn;
 	final String integrateBtnText = "Integrate";
@@ -450,11 +455,8 @@ public class AxiomsDialog extends JDialog {
 							// System.out.println("outside: can be done");
 							// System.out.println(((UserObjectforTreeView)
 							// parentNode.getUserObject()).isAxiom());
-						} // else
-							// System.out.println("outside: not posible");
-
+						} 
 					}
-					//System.out.println();
 				}
 			}
 		});
@@ -467,4 +469,5 @@ public class AxiomsDialog extends JDialog {
 		m.setVisible(true);
 
 	}
+
 }
