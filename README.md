@@ -6,13 +6,14 @@ For details please visit: http://dase.cs.wright.edu/content/ontology-axiomatizat
 Ontology Design Pattern Plugin for Desktop Protege 5.0+
 
 
-### Installation
+###Installation
 <ol>
 <li>Click <b>Check for plugins</b> from <b>File</b> Menu </li>
+	</br>
+		<img src="https://github.com/md-k-sarker/ROWL/blob/master/plugin/doc/screenshot/ProtegeFileMenu.png"></img> 
 	
-		![Plugins](https://github.com/md-k-sarker/ROWL/blob/master/plugin/doc/screenshot/ProtegeFileMenu.png)
-		
-		
+	</br>
+	</br>
 <p>You will a see list of plugin. </p>
 
 </br>
@@ -22,27 +23,27 @@ Ontology Design Pattern Plugin for Desktop Protege 5.0+
 <li>Select OWLAx: OWL Axiomatizer and Click <b>Install</b></li>
 </br>
 
-		![OWLAx](https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/ScreenShots/InstallOWLAx.png)
+		<img src="https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/ScreenShots/InstallOWLAx.png"></img>
 		
 <br>
 
 </ol>
 
 
-## Usage
+##Usage
 1. Start Protege
 2. Select OWLAx Tab from
 	 Window -> Tabs -> OWLAx
 	 
-	 ![Click on OWLAx to Select](https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/ScreenShots/SelectOWLAxTab.png)
+	 ![Alt Click on OWLAx to Select](https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/ScreenShots/SelectOWLAxTab.png)
 	 
 3. Start Using OWLAx Plugin
 
-### How to Use
-Video tutorial: <a href="https://youtu.be/fRCvdjaKYYQ" title="How to use OWLAx"> Using OWLAx</a>
+###How to Use
+See the video <a href="https://youtu.be/fRCvdjaKYYQ" title="How to use OWLAx"> Using OWLAx</a>
 
 
-## Features of OWLAx
+##Capabilities of OWLAx
 <ol>
 <li> Gives user a graphical approach(rather than using whiteboard or flipcharts) to first design a conceptual overview of ontology modules in the form of class diagram. 
 <br>
@@ -78,12 +79,11 @@ Other features:
  </ol>
 
      
-## Current Limitations:
+##Current Limitations:
 1. It can't create complex axioms.
 2. It can't create axioms from reflexivity, transitional relation etc.
 3. It doesn't support custom cardinality. Currently it creates maxCardinality 1.
 
-### Acknowledgement
+###Acknowledgement
 This work was supported by the National Science Foundation under award 1017225 III: Small: TROn – Tractable Reasoning with Ontologies.
-
 
