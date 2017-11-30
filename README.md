@@ -6,7 +6,7 @@ For details please visit: http://dase.cs.wright.edu/content/ontology-axiomatizat
 Ontology Design Pattern Plugin for Desktop Protege 5.0+
 
 
-###Installation
+### Installation
 <ol>
 <li>Click <b>Check for plugins</b> from <b>File</b> Menu </li>
 	</br>
@@ -30,7 +30,7 @@ Ontology Design Pattern Plugin for Desktop Protege 5.0+
 </ol>
 
 
-##Usage
+## Usage
 1. Start Protege
 2. Select OWLAx Tab from
 	 Window -> Tabs -> OWLAx
@@ -39,11 +39,11 @@ Ontology Design Pattern Plugin for Desktop Protege 5.0+
 	 
 3. Start Using OWLAx Plugin
 
-###How to Use
-See the video <a href="https://youtu.be/fRCvdjaKYYQ" title="How to use OWLAx"> Using OWLAx</a>
+### How to Use
+Video tutorial: <a href="https://youtu.be/fRCvdjaKYYQ" title="How to use OWLAx"> Using OWLAx</a>
 
 
-##Capabilities of OWLAx
+## Features of OWLAx
 <ol>
 <li> Gives user a graphical approach(rather than using whiteboard or flipcharts) to first design a conceptual overview of ontology modules in the form of class diagram. 
 <br>
@@ -79,12 +79,12 @@ Other features:
  </ol>
 
      
-##Current Limitations:
+## Current Limitations:
 1. It can't create complex axioms.
 2. It can't create axioms from reflexivity, transitional relation etc.
 3. It doesn't support custom cardinality. Currently it creates maxCardinality 1.
 
-###Acknowledgement
+### Acknowledgement
 This work was supported by the National Science Foundation under award 1017225 III: Small: TROn – Tractable Reasoning with Ontologies.
 
 
