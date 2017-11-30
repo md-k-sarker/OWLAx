@@ -10,7 +10,7 @@ Ontology Design Pattern Plugin for Desktop Protege 5.0+
 <ol>
 <li>Click <b>Check for plugins</b> from <b>File</b> Menu </li>
 	
-		<img src="https://github.com/md-k-sarker/ROWL/blob/master/plugin/doc/screenshot/ProtegeFileMenu.png"></img> 
+		![Plugins](https://github.com/md-k-sarker/ROWL/blob/master/plugin/doc/screenshot/ProtegeFileMenu.png)
 		
 		
 <p>You will a see list of plugin. </p>
@@ -22,7 +22,7 @@ Ontology Design Pattern Plugin for Desktop Protege 5.0+
 <li>Select OWLAx: OWL Axiomatizer and Click <b>Install</b></li>
 </br>
 
-		<img src="https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/ScreenShots/InstallOWLAx.png"></img>
+		![OWLAx](https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/ScreenShots/InstallOWLAx.png)
 		
 <br>
 
@@ -34,7 +34,7 @@ Ontology Design Pattern Plugin for Desktop Protege 5.0+
 2. Select OWLAx Tab from
 	 Window -> Tabs -> OWLAx
 	 
-	 ![Alt Click on OWLAx to Select](https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/ScreenShots/SelectOWLAxTab.png)
+	 ![Click on OWLAx to Select](https://github.com/md-k-sarker/OWLAx/blob/master/plugin/docs/ScreenShots/SelectOWLAxTab.png)
 	 
 3. Start Using OWLAx Plugin
 
