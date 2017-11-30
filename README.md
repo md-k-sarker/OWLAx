@@ -9,11 +9,10 @@ Ontology Design Pattern Plugin for Desktop Protege 5.0+
 ### Installation
 <ol>
 <li>Click <b>Check for plugins</b> from <b>File</b> Menu </li>
-	</br>
-		<img src="https://github.com/md-k-sarker/ROWL/blob/master/plugin/doc/screenshot/ProtegeFileMenu.png"></img> 
 	
-	</br>
-	</br>
+		<img src="https://github.com/md-k-sarker/ROWL/blob/master/plugin/doc/screenshot/ProtegeFileMenu.png"></img> 
+		
+		
 <p>You will a see list of plugin. </p>
 
 </br>
