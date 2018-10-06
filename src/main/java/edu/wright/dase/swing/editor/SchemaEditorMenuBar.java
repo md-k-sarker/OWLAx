@@ -129,7 +129,7 @@ public class SchemaEditorMenuBar extends JMenuBar
 				new ActionListener()
 				{
 					/**
-					 * 
+					 *
 					 */
 					public void actionPerformed(ActionEvent e)
 					{
@@ -220,15 +220,15 @@ public class SchemaEditorMenuBar extends JMenuBar
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("page"), new ZoomPolicyAction(
-				mxGraphComponent.ZOOM_POLICY_PAGE)));
-		menu.add(editor.bind(mxResources.get("width"), new ZoomPolicyAction(
-				mxGraphComponent.ZOOM_POLICY_WIDTH)));
+//		menu.add(editor.bind(mxResources.get("page"), new ZoomPolicyAction(
+//				mxGraphComponent.ZOOM_POLICY_PAGE)));
+//		menu.add(editor.bind(mxResources.get("width"), new ZoomPolicyAction(
+//				mxGraphComponent.ZOOM_POLICY_WIDTH)));
 
-		menu.addSeparator();
-
-		menu.add(editor.bind(mxResources.get("actualSize"), mxGraphActions
-				.getZoomActualAction()));
+//		menu.addSeparator();
+//
+//		menu.add(editor.bind(mxResources.get("actualSize"), mxGraphActions
+//				.getZoomActualAction()));
 
 		// Creates the diagram menu
 		menu = add(new JMenu(mxResources.get("diagram")));

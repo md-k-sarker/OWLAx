@@ -645,7 +645,7 @@ public class EditorActions {
 					} else if (editor.getCurrentFile() != null) {
 						wd = editor.getCurrentFile().getParent();
 					} else {
-						wd = System.getProperty("user.dir");
+						wd = System.getProperty("user.home");
 					}
 
 					JFileChooser fc = new JFileChooser(wd);
@@ -685,7 +685,6 @@ public class EditorActions {
 
 				try {
 					String ext = filename.substring(filename.lastIndexOf('.') + 1);
-
 					{
 						Color bg = null;
 
@@ -1471,7 +1470,7 @@ public class EditorActions {
 					mxGraph graph = editor.getGraphComponent().getGraph();
 
 					if (graph != null) {
-						String wd = (lastDir != null) ? lastDir : System.getProperty("user.dir");
+						String wd = (lastDir != null) ? lastDir : System.getProperty("user.home");
 
 						JFileChooser fc = new JFileChooser(wd);
 

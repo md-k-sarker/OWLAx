@@ -57,28 +57,28 @@ public class mxKeyboardHandler {
 
 			if (OSNAME.indexOf("mac") != -1) {
 				map.put(KeyStroke.getKeyStroke("F2"), "edit");
-				map.put(KeyStroke.getKeyStroke("DELETE"), "delete");
-				map.put(KeyStroke.getKeyStroke("UP"), "selectParent");
-				map.put(KeyStroke.getKeyStroke("DOWN"), "selectChild");
-				map.put(KeyStroke.getKeyStroke("RIGHT"), "selectNext");
-				map.put(KeyStroke.getKeyStroke("LEFT"), "selectPrevious");
+				map.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, KeyEvent.META_DOWN_MASK), "delete");
+				map.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, KeyEvent.META_DOWN_MASK), "selectParent");
+				map.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, KeyEvent.META_DOWN_MASK), "selectChild");
+				map.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, KeyEvent.META_DOWN_MASK), "selectNext");
+				map.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, KeyEvent.META_DOWN_MASK), "selectPrevious");
 				map.put(KeyStroke.getKeyStroke("PAGE_DOWN"), "enterGroup");
 				map.put(KeyStroke.getKeyStroke("PAGE_UP"), "exitGroup");
 				map.put(KeyStroke.getKeyStroke("HOME"), "home");
 				map.put(KeyStroke.getKeyStroke("ENTER"), "expand");
 				map.put(KeyStroke.getKeyStroke("BACK_SPACE"), "collapse");
-				map.put(KeyStroke.getKeyStroke("control A"), "selectAll");
-				map.put(KeyStroke.getKeyStroke("control D"), "selectNone");
+				map.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, KeyEvent.META_DOWN_MASK), "selectAll");
+				map.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, KeyEvent.META_DOWN_MASK), "selectNone");
 				map.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.META_DOWN_MASK), "cut");
 				map.put(KeyStroke.getKeyStroke("CUT"), "cut");
 				map.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.META_DOWN_MASK), "copy");
 				map.put(KeyStroke.getKeyStroke("COPY"), "copy");
 				map.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.META_DOWN_MASK), "paste");
 				map.put(KeyStroke.getKeyStroke("PASTE"), "paste");
-				map.put(KeyStroke.getKeyStroke("control G"), "group");
-				map.put(KeyStroke.getKeyStroke("control U"), "ungroup");
-				map.put(KeyStroke.getKeyStroke("control ADD"), "zoomIn");
-				map.put(KeyStroke.getKeyStroke("control SUBTRACT"), "zoomOut");
+				map.put(KeyStroke.getKeyStroke(KeyEvent.VK_G, KeyEvent.META_DOWN_MASK), "group");
+				map.put(KeyStroke.getKeyStroke(KeyEvent.VK_U, KeyEvent.META_DOWN_MASK), "ungroup");
+				map.put(KeyStroke.getKeyStroke(KeyEvent.VK_ADD, KeyEvent.META_DOWN_MASK), "zoomIn");
+				map.put(KeyStroke.getKeyStroke(KeyEvent.VK_SUBTRACT, KeyEvent.META_DOWN_MASK), "zoomOut");
 			} // if (OSNAME.indexOf("windows") != -1)
 				// windows or linux then similar keyboard
 			else {

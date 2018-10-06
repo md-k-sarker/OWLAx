@@ -142,59 +142,59 @@ public class EditorMenuBar extends JMenuBar {
 		// Creates the view menu
 		menu = add(new JMenu(mxResources.get("view")));
 
-		JMenuItem item = menu.add(new TogglePropertyItem(graphComponent, mxResources.get("pageLayout"), "PageVisible",
-				true, new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						if (graphComponent.isPageVisible() && graphComponent.isCenterPage()) {
-							graphComponent.zoomAndCenter();
-						} else {
-							graphComponent.getGraphControl().updatePreferredSize();
-						}
-					}
-				}));
-
-		item.addActionListener(new ActionListener() {
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see
-			 * java.awt.event.ActionListener#actionPerformed(java.awt.event.
-			 * ActionEvent)
-			 */
-			public void actionPerformed(ActionEvent e) {
-				if (e.getSource() instanceof TogglePropertyItem) {
-					final mxGraphComponent graphComponent = editor.getGraphComponent();
-					TogglePropertyItem toggleItem = (TogglePropertyItem) e.getSource();
-
-					if (toggleItem.isSelected()) {
-						// Scrolls the view to the center
-						SwingUtilities.invokeLater(new Runnable() {
-							/*
-							 * (non-Javadoc)
-							 * 
-							 * @see java.lang.Runnable#run()
-							 */
-							public void run() {
-								graphComponent.scrollToCenter(true);
-								graphComponent.scrollToCenter(false);
-							}
-						});
-					} else {
-						// Resets the translation of the view
-						mxPoint tr = graphComponent.getGraph().getView().getTranslate();
-
-						if (tr.getX() != 0 || tr.getY() != 0) {
-							graphComponent.getGraph().getView().setTranslate(new mxPoint());
-						}
-					}
-				}
-			}
-		});
-
-		// menu.add(new TogglePropertyItem(graphComponent,
-		// mxResources.get("antialias"), "AntiAlias", true));
-
-		menu.addSeparator();
+//		JMenuItem item = menu.add(new TogglePropertyItem(graphComponent, mxResources.get("pageLayout"), "PageVisible",
+//				true, new ActionListener() {
+//					public void actionPerformed(ActionEvent e) {
+//						if (graphComponent.isPageVisible() && graphComponent.isCenterPage()) {
+//							graphComponent.zoomAndCenter();
+//						} else {
+//							graphComponent.getGraphControl().updatePreferredSize();
+//						}
+//					}
+//				}));
+//
+//		item.addActionListener(new ActionListener() {
+//			/*
+//			 * (non-Javadoc)
+//			 *
+//			 * @see
+//			 * java.awt.event.ActionListener#actionPerformed(java.awt.event.
+//			 * ActionEvent)
+//			 */
+//			public void actionPerformed(ActionEvent e) {
+//				if (e.getSource() instanceof TogglePropertyItem) {
+//					final mxGraphComponent graphComponent = editor.getGraphComponent();
+//					TogglePropertyItem toggleItem = (TogglePropertyItem) e.getSource();
+//
+//					if (toggleItem.isSelected()) {
+//						// Scrolls the view to the center
+//						SwingUtilities.invokeLater(new Runnable() {
+//							/*
+//							 * (non-Javadoc)
+//							 *
+//							 * @see java.lang.Runnable#run()
+//							 */
+//							public void run() {
+//								graphComponent.scrollToCenter(true);
+//								graphComponent.scrollToCenter(false);
+//							}
+//						});
+//					} else {
+//						// Resets the translation of the view
+//						mxPoint tr = graphComponent.getGraph().getView().getTranslate();
+//
+//						if (tr.getX() != 0 || tr.getY() != 0) {
+//							graphComponent.getGraph().getView().setTranslate(new mxPoint());
+//						}
+//					}
+//				}
+//			}
+//		});
+//
+//		// menu.add(new TogglePropertyItem(graphComponent,
+//		// mxResources.get("antialias"), "AntiAlias", true));
+//
+//		menu.addSeparator();
 
 		menu.add(new ToggleGridItem(editor, mxResources.get("grid")));
 		menu.add(new ToggleRulersItem(editor, mxResources.get("rulers")));
@@ -219,14 +219,14 @@ public class EditorMenuBar extends JMenuBar {
 		menu.add(editor.bind(mxResources.get("zoomIn"), mxGraphActions.getZoomInAction()));
 		menu.add(editor.bind(mxResources.get("zoomOut"), mxGraphActions.getZoomOutAction()));
 
-		menu.addSeparator();
+		//menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("page"), new ZoomPolicyAction(mxGraphComponent.ZOOM_POLICY_PAGE)));
-		menu.add(editor.bind(mxResources.get("width"), new ZoomPolicyAction(mxGraphComponent.ZOOM_POLICY_WIDTH)));
+//		menu.add(editor.bind(mxResources.get("page"), new ZoomPolicyAction(mxGraphComponent.ZOOM_POLICY_PAGE)));
+//		menu.add(editor.bind(mxResources.get("width"), new ZoomPolicyAction(mxGraphComponent.ZOOM_POLICY_WIDTH)));
 
-		menu.addSeparator();
+		//menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("actualSize"), mxGraphActions.getZoomActualAction()));
+		//menu.add(editor.bind(mxResources.get("actualSize"), mxGraphActions.getZoomActualAction()));
 
 		// Creates the format menu
 		menu = add(new JMenu(mxResources.get("format")));
@@ -552,8 +552,8 @@ public class EditorMenuBar extends JMenuBar {
 		// }
 		// });
 
-		item = menu.add(new JMenuItem(mxResources.get("aboutGraphEditor")));
-		item.addActionListener(new ActionListener() {
+		JMenuItem aboutItem = menu.add(new JMenuItem(mxResources.get("aboutGraphEditor")));
+		aboutItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				editor.about();
 			}
